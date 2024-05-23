@@ -6,8 +6,9 @@ public class Bloon {
   
   private int positionId;
   
-  public Bloon() {
+  public Bloon(String layerName) {
     
+    this.positionId = 0;
   }
   
   public void damage(float count) {
