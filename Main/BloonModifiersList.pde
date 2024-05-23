@@ -17,6 +17,16 @@ public class BloonModifiersList {
     return this.modifiersList;
   }
   
+  public BloonModifier getModifierByName(String name) {
+    for (BloonModifier modifier: modifiersList) {
+      if (modifier.getModifierName().equals(name)) {
+        return modifier;
+      }
+    }
+    
+    return null;
+  }
+  
   public void stepModifiers() {
     for (BloonModifier modifier: modifiersList) {
       modifier.onStep();
@@ -38,4 +48,17 @@ public class BloonModifiersList {
     modifiersList.add(newModifier);
   }
   
+  public void addModifier(BloonModifier newModifier) {
+     modifiersList.add(newModifier);
+  }
+  
+  public void addModifierNoStack(BloonModifier newModifier) {
+    BloonModifier existingModifier = getModifierByName(newModifier.getModifierName());
+    if (existingModifier == null) {
+      addModifier(newModifier); 
+      return;
+    }
+    
+    existingModifier.onStackAttempt(newModifier);
+  }
 }

@@ -28,6 +28,10 @@ public class BloonModifier {
     
   }
   
+  public void onStackAttempt(BloonModifier otherModifier) {
+    
+  }
+  
   public void onStep() {
     
   }

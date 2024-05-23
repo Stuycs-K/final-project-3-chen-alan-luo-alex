@@ -3,10 +3,12 @@ public class Bloon {
   private float layerHealth;
   private float speed;
   private PImage sprite;
+  private BloonModifiersList modifiersList;
   
   private int positionId;
   
   public Bloon(String layerName) {
+    this.modifiersList = new BloonModifiersList(this);
     
     this.positionId = 0;
   }
