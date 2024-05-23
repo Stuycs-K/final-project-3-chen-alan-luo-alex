@@ -1,9 +1,11 @@
 public class Tower{
   private int x;
   private int y; 
+  private int radius;
   /*private int fireRate; 
   private int damage;
   private int attackSpeed;
+  
   
   public Tower(int x, int y){
     this.x = x;
