@@ -13,6 +13,10 @@ public class Bloon {
     this.positionId = 0;
   }
   
+  public void render() {
+     
+  }
+  
   public void damage(float count) {
     
   }
