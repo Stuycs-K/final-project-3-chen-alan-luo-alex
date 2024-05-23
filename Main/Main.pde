@@ -9,7 +9,9 @@ void setup(){
 void draw(){
   background(255);
   game.update();
-  game.draw();
+  game.render();
+  
+  
 }
 
 void mousePressed(){
