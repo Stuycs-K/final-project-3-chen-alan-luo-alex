@@ -20,6 +20,10 @@ public class Game{
         health = 100;
         gameActive = true;
     }
+    
+    public Map getMap() {
+      return map;
+    }
 
     public void startGame(){
 

@@ -1,0 +1,22 @@
+[
+    {
+        "id": 0,
+        "layerName": "Red",
+        "layerHealth": 1,
+        "speed": 6,
+        "sprite": "images/bloons/red.png"
+    },
+    {
+        "id": 1,
+        "layerName": "Blue",
+        "layerHealth": 1,
+        "speedMultiplier": 1.4,
+        "sprite": "images/bloons/blue.png",
+        "children": [
+            {
+                "count": 1,
+                "layerName": "Red"
+            }
+        ]
+    }
+]

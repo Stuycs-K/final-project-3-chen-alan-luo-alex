@@ -1,7 +1,11 @@
 Game game;
+BloonPropertyLookup bloonPropertyLookup;
 
 void setup(){
   size(800, 600);
+  
+  bloonPropertyLookup = new BloonPropertyLookup();
+  
   game = new Game();
   game.startGame();
 }
