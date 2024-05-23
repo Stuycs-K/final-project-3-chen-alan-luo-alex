@@ -1,6 +1,6 @@
 public class Tower{
-  private int x;
-  private int y; 
+  public int x;
+  public int y; 
   private int radius;
   private int fireRate; 
   private int damage;
@@ -21,7 +21,7 @@ public class Tower{
     
   }
   
-  public void attack(ArrayList<Bloons> bloon){
+  public void attack(ArrayList<Bloon> bloon){
   }
   
   public void upgrade(){

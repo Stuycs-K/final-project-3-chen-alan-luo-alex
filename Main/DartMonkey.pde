@@ -3,14 +3,14 @@ public class DartMonkey extends Tower{
     super(x,y,40,20,5,10);
   }
   
-  public void attack(ArrayList<Bloon> bloons){
-    for (Bloon bloon: bloons){
-      if(PVector.dist(new PVector(x,y), new PVector(bloon.getX(), bloon.getY())) < radius){
-        bloon.damage(this.damage);
+  /*public void attack(ArrayList<Bloon> bloon){
+    for (Bloon currentBloon: bloon){
+      if(PVector.dist(new PVector(x,y), new PVector(currentBloon.x, currentBloon.y)) < radius){
+        currentBloon.damage(this.damage);
         break;
       }
     }
-  }
+  }*/
   
   public void upgrade(){
   }

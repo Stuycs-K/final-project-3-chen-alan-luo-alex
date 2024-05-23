@@ -1,14 +1,18 @@
 public class Slow extends IceMonkey{
   private int time;
-  private int x;
-  private int y;
-  private int upgradeLevel;
+
   
-  public void Slow(int x, int y, int upgradeLevel){
+  public Slow(int x, int y){
+    super(x, y);
+    this.time = 5;
+ 
+  }
+  
+  public void attack(ArrayList<Bloon> bloons){
   }
   
   public void upgrade(int upgradeLevel){
-    if (
+   
   }
   
   
