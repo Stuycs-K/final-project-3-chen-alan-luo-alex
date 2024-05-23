@@ -1,10 +1,13 @@
 # Work Log
 
-## GROUP MEMBER 1
+## Alan Chen
 
-### date x
+### 5/22/2024
 
-info
+- Write Map class, which stores the positions of path waypoints
+- Can render the path defined by the Map
+- Write MapSegment class for Map
+- Can check whether points are within the bounds of the path
 
 ### date y
 
