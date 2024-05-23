@@ -20,6 +20,10 @@ public class Map {
     }
   }
   
+  public PVector getPositionOfId(int positionIndex) {
+    return pathWaypointArray.get(positionIndex); 
+  }
+  
   public PVector getNextPosition(int positionIndex) {
     // Return invalid position if we're at the end
     if (positionIndex + 1 >= pathWaypointArray.size()) {
@@ -27,6 +31,18 @@ public class Map {
     }
     
     return pathWaypointArray.get(positionIndex + 1);
+  }
+  
+  public PVector getNextPosition(PVector position) {
+    for (int i = 0; i < mapSegments.size(); i++) {
+      MapSegment segment = mapSegments.get(i);
+      
+      if (segment.isBetweenStartAndEnd(position)) {
+        return getNextPosition(i);
+      }
+    }
+    
+    return END_POSITION;
   }
   
   public void drawPath() {
