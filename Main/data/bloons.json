@@ -18,5 +18,97 @@
                 "layerName": "Red"
             }
         ]
+    },
+    {
+        "id": 2,
+        "layerName": "Green",
+        "layerHealth": 1,
+        "speedMultiplier": 1.8,
+        "sprite": "images/bloons/green.png",
+        "children": [
+            {
+                "count": 1,
+                "layerName": "Blue"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "layerName": "Yellow",
+        "layerHealth": 1,
+        "speedMultiplier": 3.2,
+        "sprite": "images/bloons/yellow.png",
+        "children": [
+            {
+                "count": 1,
+                "layerName": "Green"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "layerName": "Pink",
+        "layerHealth": 1,
+        "speedMultiplier": 3.5,
+        "sprite": "images/bloons/pink.png",
+        "children": [
+            {
+                "count": 1,
+                "layerName": "Yellow"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "layerName": "Black",
+        "layerHealth": 1,
+        "speedMultiplier": 1.8,
+        "sprite": "images/bloons/black.png",
+        "modifiers": {
+            "blastImmunity": true
+        },
+        "children": [
+            {
+                "count": 2,
+                "layerName": "Pink"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "layerName": "White",
+        "layerHealth": 1,
+        "speedMultiplier": 2,
+        "sprite": "images/bloons/white.png",
+        "modifiers": {
+            "freezeImmunity": true
+        },
+        "children": [
+            {
+                "count": 2,
+                "layerName": "Pink"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "layerName": "Zebra",
+        "layerHealth": 1,
+        "speedMultiplier": 1.8,
+        "sprite": "images/bloons/zebra.png",
+        "modifiers": {
+            "freezeImmunity": true,
+            "blastImmunity": true
+        },
+        "children": [
+            {
+                "count": 1,
+                "layerName": "Black"
+            },
+            {
+                "count": 1,
+                "layerName": "White"
+            }
+        ]
     }
 ]
