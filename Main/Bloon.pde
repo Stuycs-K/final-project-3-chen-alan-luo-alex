@@ -71,7 +71,7 @@ public class Bloon {
     
     while (true) {
       MapSegment segment = game.getMap().getMapSegment(positionId);
-      
+      println("se" + positionId);
       PVector direction = PVector.sub(segment.end, segment.start).normalize();
       
       float remainingDistanceToEnd = PVector.dist(position, segment.end);
@@ -84,6 +84,12 @@ public class Bloon {
         totalDistanceToMove -= remainingDistanceToEnd;
         
         positionId += 1;
+        
+        // We reached the end
+        if (positionId >= game.getMap().getSegmentCount()) {
+          return;
+        }
+        
         targetPositionId += 1;
       }
       
