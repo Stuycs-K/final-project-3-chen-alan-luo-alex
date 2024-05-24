@@ -1,6 +1,8 @@
 Game game;
 BloonPropertyLookup bloonPropertyLookup;
 
+Bloon test;
+
 void setup(){
   size(800, 600);
   
@@ -8,6 +10,8 @@ void setup(){
   
   game = new Game();
   game.startGame();
+  
+  test = new Bloon("Blue");
 }
 
 void draw(){
@@ -15,7 +19,7 @@ void draw(){
   game.update();
   game.render();
   
-  
+  test.render();
 }
 
 void mousePressed(){

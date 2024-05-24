@@ -37,6 +37,7 @@ public class Bloon {
     this.position = game.getMap().getPositionOfId(0);
   }
   
+  // Spawn a bloon at a particular position
   public Bloon(String layerName, PVector position) {
     this(layerName);
     
@@ -47,7 +48,8 @@ public class Bloon {
   }
   
   public void render() {
-     
+     imageMode(CENTER);
+     image(sprite, position.x, position.y);
   }
   
   public void damage(float count) {
