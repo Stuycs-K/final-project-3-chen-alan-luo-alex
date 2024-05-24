@@ -4,7 +4,7 @@ BloonPropertyLookup bloonPropertyLookup;
 Bloon test;
 
 void setup(){
-  size(800, 600);
+  size(1200, 800);
   
   bloonPropertyLookup = new BloonPropertyLookup();
   
