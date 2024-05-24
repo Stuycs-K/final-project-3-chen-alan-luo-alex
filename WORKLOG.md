@@ -19,12 +19,17 @@
 info
 
 
-## GROUP MEMBER 2
+## Alex Luo
 
-### date x
+### 5/22/2024
 
-info
+- Wrote the basis of Game class (prim functions of the game)
+- Wrote the basis of Main class (main class for the game to run in processing)
 
-### date y
+### 5/23/2024
+
+- Began Tower Class (prim functions and constructor)
+- Created it's respective subclasses (BombShooter, IceMonkey, SuperMonkey, DartMonkey)
+- attack method for towers
 
 info
