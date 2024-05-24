@@ -2,11 +2,13 @@ public class MapSegment {
   public PVector[] vertices;
   public PVector start;
   public PVector end;
+  public float distance;
   
   public MapSegment(PVector start, PVector end, float segmentWidth) {
     vertices = new PVector[4];
     this.start = start;
     this.end = end;
+    this.distance = PVector.dist(start, end);
     
     PVector slope = PVector.sub(end, start).normalize();
     PVector normal = new PVector(slope.y, -slope.x);
