@@ -12,6 +12,7 @@ void setup(){
   game.startGame();
   
   test = new Bloon("Blue");
+  game.bloons.add(test);
 }
 
 void draw(){

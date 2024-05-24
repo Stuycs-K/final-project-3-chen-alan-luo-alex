@@ -1,4 +1,4 @@
-static final int BASE_BLOON_SPEED = 6;
+static final int BASE_BLOON_SPEED = 300;
 
 public class Bloon {
   private int layerId;
@@ -56,8 +56,38 @@ public class Bloon {
     
   }
   
+  public void step() {
+    move();
+    render();
+  }
+  
   public void move() {
+    // We reached the end !
+    if (positionId >= game.getMap().getSegmentCount()) {
+      return;
+    }
     
+    float totalDistanceToMove = this.speed * (1 / frameRate);
+    
+    while (true) {
+      MapSegment segment = game.getMap().getMapSegment(positionId);
+      
+      PVector direction = PVector.sub(segment.end, segment.start).normalize();
+      
+      float remainingDistanceToEnd = PVector.dist(position, segment.end);
+      
+      if (totalDistanceToMove <= remainingDistanceToEnd) {
+        position.add(direction.mult(totalDistanceToMove));
+        break;
+      } else {
+        position = segment.end;
+        totalDistanceToMove -= remainingDistanceToEnd;
+        
+        positionId += 1;
+        targetPositionId += 1;
+      }
+      
+    }
   }
   
   public void handleLayerDeath() {

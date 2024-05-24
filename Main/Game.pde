@@ -1,7 +1,7 @@
 public class Game{
     private Map map;
-    private ArrayList<Tower> towers;
-    private ArrayList<Bloon> bloons;
+    public ArrayList<Tower> towers;
+    public ArrayList<Bloon> bloons;
     private int currency;
     private int health;
     private boolean gameActive;
@@ -29,7 +29,9 @@ public class Game{
 
     }
     public void update(){
-        
+      for (Bloon bloon : bloons) {
+        bloon.step();
+      }
     }
     public void placeTower(String towerName, int x, int y){
 

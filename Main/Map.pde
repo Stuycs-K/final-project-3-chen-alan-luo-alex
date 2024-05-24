@@ -21,6 +21,10 @@ public class Map {
     }
   }
   
+  public int getSegmentCount() {
+    return mapSegments.size(); 
+  }
+  
   public PVector getPositionOfId(int positionIndex) {
     return pathWaypointArray.get(positionIndex); 
   }
@@ -56,6 +60,13 @@ public class Map {
     }
     
     return END_POSITION;
+  }
+  
+  public MapSegment getMapSegment(int id) {
+    if (id >= mapSegments.size()) {
+      return null;
+    }
+    return mapSegments.get(id); 
   }
   
   public void drawPath() {
