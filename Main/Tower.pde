@@ -7,6 +7,7 @@ public class Tower{
   private int attackSpeed;
   private int upgradeLevel;
   private int attackCooldown;
+  private String currentUpgrade;
   
   
   public Tower(int x, int y, int radius, int fireRate, int damage, int attackSpeed){

@@ -7,10 +7,17 @@ public class IceMonkey extends Tower{
   }
   public void upgrade(int path){
     if (path == 1){
-      String[] upgradesPathOne = new String []{"Default","Long Range Darts", "Enchanced Eyesight","Spike-O-Pult","Juggernaut"};
+      String[] upgradesPathOne = new String []{"Permafrost","Cold Snap","Ice Shards","Embrittlement","Super Brittle"};
+      for (int i = 0; i< upgradesPathOne.length; i++){
+        currentUpgrade == upgradesPathOne[upGradeLevel-1];
+        if (currentUpgrade.equals("Permafrost"){
+          
+        }
+        if(currentUpg
+      }
     }
     if(path == 2){
-      String[] upgradePathTwo = new String[]{"Sharp Shots","Razor Sharp Shots","Triple Darts","Super Monkey Fan Club"};
+      String[] upgradePathTwo = new String[]{"Enhanced Freeze","Deep Freeze","Artic Wind","Snowstorm","Absolute Zero"};
     }
   }
 }
