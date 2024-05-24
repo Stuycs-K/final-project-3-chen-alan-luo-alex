@@ -1,4 +1,4 @@
-static final int BASE_BLOON_SPEED = 300;
+static final int BASE_BLOON_SPEED = 200;
 
 public class Bloon {
   private int layerId;

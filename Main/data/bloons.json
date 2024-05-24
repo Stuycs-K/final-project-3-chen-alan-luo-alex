@@ -3,7 +3,7 @@
         "id": 0,
         "layerName": "Red",
         "layerHealth": 1,
-        "speed": 6,
+        "speed": 200,
         "sprite": "images/bloons/red.png"
     },
     {
