@@ -1,4 +1,5 @@
 static final PVector END_POSITION = new PVector(-1e5, -1e5);
+static final int END_POSITION_ID = -1;
 
 public class Map {
   private float pathWidth;
@@ -31,6 +32,18 @@ public class Map {
     }
     
     return pathWaypointArray.get(positionIndex + 1);
+  }
+  
+  public int getNextPositionId(PVector position) {
+    for (int i = 0; i < mapSegments.size(); i++) {
+      MapSegment segment = mapSegments.get(i);
+      
+      if (segment.isBetweenStartAndEnd(position)) {
+        return i + 1;
+      }
+    }
+    
+    return END_POSITION_ID;
   }
   
   public PVector getNextPosition(PVector position) {
