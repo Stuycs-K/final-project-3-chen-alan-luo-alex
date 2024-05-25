@@ -30,7 +30,7 @@ public class Map {
   }
   
   public PVector getPositionOfId(int positionIndex) {
-    return pathWaypointArray.get(positionIndex); 
+    return pathWaypointArray.get(positionIndex).copy(); 
   }
   
   public PVector getNextPosition(int positionIndex) {
@@ -45,7 +45,7 @@ public class Map {
   public int getSegmentIdFromPosition(PVector position) {
     for (int i = 0; i < mapSegments.size(); i++) {
       MapSegment segment = mapSegments.get(i);
-      
+
       if (segment.isBetweenStartAndEnd(position)) {
         return i;
       }

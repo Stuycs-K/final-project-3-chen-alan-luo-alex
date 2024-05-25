@@ -1,8 +1,8 @@
 public class MapSegment {
-  public PVector[] vertices;
-  public PVector start;
-  public PVector end;
-  public float distance;
+  public final PVector[] vertices;
+  private final PVector start;
+  private final PVector end;
+  public final float distance;
   
   public MapSegment(PVector start, PVector end, float segmentWidth) {
     vertices = new PVector[4];
@@ -32,10 +32,22 @@ public class MapSegment {
     vertices[3].add(PVector.mult(normal, -1));
   }
   
+  public String toString() {
+    return "MapSegment: " + start + " " + end; 
+  }
+  
+  public PVector getStart() {
+    return start; 
+  }
+  
+  public PVector getEnd() {
+    return end;
+  }
+  
   public boolean isBetweenStartAndEnd(PVector position) {
-    float startToPositionDistance = PVector.dist(start, position);
-    float positionToEndDistance = PVector.dist(position, end);
-    float totalDistance = PVector.dist(start, end);
+    float startToPositionDistance = start.dist(position);
+    float positionToEndDistance = position.dist(end);
+    float totalDistance = start.dist(end);
     
     float compareDistance = startToPositionDistance + positionToEndDistance;
     

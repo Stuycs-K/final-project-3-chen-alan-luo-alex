@@ -146,15 +146,15 @@ public class Bloon {
     while (true) {
       MapSegment segment = game.getMap().getMapSegment(positionId);
 
-      PVector direction = PVector.sub(segment.end, segment.start).normalize();
+      PVector direction = PVector.sub(segment.getEnd(), segment.getStart()).normalize();
       
-      float remainingDistanceToEnd = PVector.dist(position, segment.end);
+      float remainingDistanceToEnd = PVector.dist(position, segment.getEnd());
       
       if (totalDistanceToMove <= remainingDistanceToEnd) {
         position.add(direction.mult(totalDistanceToMove));
         break;
       } else {
-        position = segment.end.copy();
+        position = segment.getEnd().copy();
         totalDistanceToMove -= remainingDistanceToEnd;
         
         positionId += 1;

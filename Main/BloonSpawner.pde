@@ -19,19 +19,23 @@ public class BloonSpawner {
     
     // Get segments
     int currentMapSegmentId = game.getMap().getSegmentIdFromPosition(startPosition);
-    //MapSegment segment = game.getMap().getMapSegmentFromPosition(startPosition);
-    
+
     for (int j = 0; j < numberOfChildren; j++) {
-      float distanceOffset = spawnSpacing * j; // The first child will spawn in the exact same position; subsequent bloons will spawn behind
+      float distanceOffset = -1 * spawnSpacing * j; // The first child will spawn in the exact same position; subsequent bloons will spawn behind
       
       int currentSegmentId = currentMapSegmentId;
-      PVector finalSpawnPosition = startPosition.copy();
+      PVector finalSpawnPosition = startPosition;
       
       while (true) {
+        // Invalid segment id, so spawn where we currently are
+        if (currentSegmentId < 0) {
+          finalSpawnPosition = startPosition;
+          break;
+        }
         MapSegment currentSegment = game.getMap().getMapSegment(currentSegmentId);
         
         // Direction to move from the original spawn position
-        PVector direction = PVector.sub(currentSegment.end, currentSegment.start).normalize();
+        PVector direction = PVector.sub(currentSegment.getEnd(), currentSegment.getStart()).normalize();
         direction.mult(distanceOffset);
         
         // Try to move by distance; if we're outside the current map segment, move the child bloon to the previous map segment
@@ -39,13 +43,22 @@ public class BloonSpawner {
         
         // This would spawn the bloon too far back, so try again with the previous segment
         if (!currentSegment.isBetweenStartAndEnd(resultSpawnPosition)) {
-          float distanceToStart = PVector.dist(finalSpawnPosition, currentSegment.start);
-          finalSpawnPosition = currentSegment.start.copy();
+          float distanceToStart = PVector.dist(finalSpawnPosition, currentSegment.getStart());
           
-          distanceOffset -= distanceToStart;
+          if (distanceOffset < 0) {
+            distanceOffset += distanceToStart;
+          } else {
+            distanceOffset -= distanceToStart;
+          }
+          
+          finalSpawnPosition = currentSegment.getStart();
           
           // Go to the previous map segment
-          currentSegmentId -= 1;
+          if (distanceOffset < 0) {
+            currentSegmentId -= 1;
+          } else {
+            currentSegmentId += 1;
+          }
           
         } else {
           finalSpawnPosition = resultSpawnPosition;
