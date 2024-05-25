@@ -13,7 +13,7 @@ void setup(){
   game = new Game();
   game.startGame();
   
-  test = new Bloon("Zebra");
+  test = new Bloon("Black");
   game.bloons.add(test);
 }
 

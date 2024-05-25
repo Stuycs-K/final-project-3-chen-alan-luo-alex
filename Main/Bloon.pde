@@ -1,4 +1,4 @@
-static final int BASE_BLOON_SPEED = 200;
+static final int BASE_BLOON_SPEED = 100;
 
 private static JSONObject toSpawnParams(String layerName) {
   JSONObject spawnParams = new JSONObject();
@@ -125,7 +125,7 @@ public class Bloon {
     
     for (int i = 0; i < children.size(); i++) {
       JSONObject childrenSpawnInformation = children.getJSONObject(i);
-      bloonSpawner.spawn(childrenSpawnInformation, position);
+      bloonSpawner.spawnChildren(childrenSpawnInformation, position);
     }
   }
   
@@ -146,15 +146,15 @@ public class Bloon {
     while (true) {
       MapSegment segment = game.getMap().getMapSegment(positionId);
 
-      PVector direction = PVector.sub(segment.end, segment.start).normalize();
+      PVector direction = PVector.sub(segment.getEnd(), segment.getStart()).normalize();
       
-      float remainingDistanceToEnd = PVector.dist(position, segment.end);
+      float remainingDistanceToEnd = PVector.dist(position, segment.getEnd());
       
       if (totalDistanceToMove <= remainingDistanceToEnd) {
         position.add(direction.mult(totalDistanceToMove));
         break;
       } else {
-        position = segment.end.copy();
+        position = segment.getEnd().copy();
         totalDistanceToMove -= remainingDistanceToEnd;
         
         positionId += 1;
