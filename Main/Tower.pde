@@ -1,13 +1,13 @@
 public class Tower{
   public int x;
   public int y; 
-  private int radius;
-  private int fireRate; 
-  private int damage;
-  private int attackSpeed;
-  private int upgradeLevel;
-  private int attackCooldown;
-  private String currentUpgrade;
+  public int radius;
+  public int fireRate; 
+  public int damage;
+  public int attackSpeed;
+  public int upgradeLevel;
+  public int attackCooldown;
+  public String currentUpgrade;
   
   
   public Tower(int x, int y, int radius, int fireRate, int damage, int attackSpeed){
@@ -41,6 +41,10 @@ public class Tower{
   public void draw(){
     fill(255);
     ellipse(x,y,20,20);
+  }
+  
+  public int getCost(){
+    return 0;
   }
   
 }
