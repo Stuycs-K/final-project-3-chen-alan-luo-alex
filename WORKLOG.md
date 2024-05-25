@@ -16,7 +16,10 @@
 - Write Bloon constructors and move method
 - Write BloonPropertiesLookup and BloonPropertiesTable, which read from bloons.json and get the corresponding properties for a given layer name
 
-info
+## 5/24/2024
+
+- Bloons able to spawn children on death
+- Basic damage method
 
 
 ## Alex Luo
