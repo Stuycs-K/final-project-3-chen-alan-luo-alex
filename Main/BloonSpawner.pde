@@ -74,10 +74,28 @@ public class BloonSpawner {
   
   public void spawn(JSONObject childrenSpawnInformation, PVector position) {
     String layerName = childrenSpawnInformation.getString("layerName");
-    int numberOfChildren = childrenSpawnInformation.getInt("count");
+    
+    int numberOfChildren = 1;
+    if (!childrenSpawnInformation.isNull("count")) {
+      numberOfChildren = childrenSpawnInformation.getInt("count");
+    }
     
     for (int j = 0; j < numberOfChildren; j++) {
       Bloon newBloon = new Bloon(layerName, position);
+      createdBloonQueue.add(newBloon);
+    }
+  }
+  
+  public void spawn(JSONObject childrenSpawnInformation) {
+    String layerName = childrenSpawnInformation.getString("layerName");
+    
+    int numberOfChildren = 1;
+    if (!childrenSpawnInformation.isNull("count")) {
+      numberOfChildren = childrenSpawnInformation.getInt("count");
+    }
+    
+    for (int j = 0; j < numberOfChildren; j++) {
+      Bloon newBloon = new Bloon(layerName);
       createdBloonQueue.add(newBloon);
     }
   }

@@ -41,17 +41,11 @@ public class Bloon {
     // Setting fields from the JSON
     this.sprite = properties.getSprite();
     
-    this.speed = properties.getFloatProperty("speed"); // Try to set base speed
-    if (this.speed == NULL_FLOAT) { // There must be a speed multiplier key if no speed was defined
-      float speedMultiplier = properties.getFloatProperty("speedMultiplier");
-      this.speed = BASE_BLOON_SPEED * speedMultiplier;
-    }
-    
-    this.layerHealth = properties.getIntProperty("layerHealth");
-    if (this.layerHealth == NULL_INT) { // Default layer health is 1
-      this.layerHealth = 1;
-    }
-   
+    this.speed = properties.getFloatProperty("speed", BASE_BLOON_SPEED);
+    this.speed *= properties.getFloatProperty("speedMultiplier", 1); // There must be a speed multiplier key if no speed was defined
+
+    this.layerHealth = properties.getIntProperty("layerHealth", 1);
+
     this.layerId = properties.getLayerId();
     
     JSONObject spawnPosition = spawnParams.getJSONObject("spawnPosition");
@@ -68,11 +62,6 @@ public class Bloon {
     
     // Modifiers
     this.modifiersList = new BloonModifiersList(this);
-    JSONObject spawnModifiers = spawnParams.getJSONObject("modifiers");
-    if (spawnModifiers != null) {
-      
-    }
-    
   }
   
   public Bloon(String layerName) {

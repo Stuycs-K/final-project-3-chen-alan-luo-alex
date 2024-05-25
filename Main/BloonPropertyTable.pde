@@ -1,6 +1,3 @@
-static final int NULL_INT = Integer.MIN_VALUE;
-static final float NULL_FLOAT = Float.MIN_VALUE;
-
 public class BloonPropertyTable {
   private JSONObject data;
   
@@ -11,26 +8,27 @@ public class BloonPropertyTable {
     
     String spritePath = data.getString("sprite");
     this.sprite = loadImage(dataPath(spritePath));
+    this.sprite.resize(this.sprite.width / 2, this.sprite.height / 2);
   }
   
   public JSONArray getChildren() {
     return data.getJSONArray("children");
   }
   
-  public int getIntProperty(String keyName) {
-    try {
-      return data.getInt(keyName);
-    } catch (Exception exception) {
-      return NULL_INT;
+  public int getIntProperty(String keyName, int defaultValue) {
+    if (data.isNull(keyName)) {
+      return defaultValue; 
     }
+    
+    return data.getInt(keyName);
   }
   
-  public float getFloatProperty(String keyName) {
-    try {
-      return data.getFloat(keyName);
-    } catch (Exception exception) {
-      return NULL_FLOAT;
+  public float getFloatProperty(String keyName, float defaultValue) {
+    if (data.isNull(keyName)) {
+      return defaultValue; 
     }
+    
+    return data.getFloat(keyName);
   }
   
   public String getStringProperty(String keyName) {
