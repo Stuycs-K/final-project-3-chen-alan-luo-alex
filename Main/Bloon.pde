@@ -6,15 +6,20 @@ public class Bloon {
   private float speed;
   private PImage sprite;
   private BloonModifiersList modifiersList;
+  private BloonPropertyTable propertiesTable;
   
   private int positionId;
   private int targetPositionId;
   private PVector position;
   
+  private boolean isDead;
+  private boolean reachedEnd;
+  
   public Bloon(String layerName) {
     this.modifiersList = new BloonModifiersList(this);
     
     BloonPropertyTable properties = bloonPropertyLookup.getProperties(layerName);
+    this.propertiesTable = properties;
     
     this.sprite = properties.getSprite();
     
@@ -47,13 +52,51 @@ public class Bloon {
     this.positionId = this.targetPositionId - 1;
   }
   
+  public boolean reachedEnd() {
+    return this.reachedEnd;
+  }
+  
+  public boolean isDead() {
+    return this.isDead;
+  }
+  
   public void render() {
-     imageMode(CENTER);
-     image(sprite, position.x, position.y);
+    if (isDead || reachedEnd) {
+      return;
+    }
+    
+    imageMode(CENTER);
+    image(sprite, position.x, position.y);
   }
   
   public void damage(float count) {
+    // Just damage the layer
+    if (count < layerHealth) {
+      layerHealth -= count;
+      return;
+    }
     
+    isDead = true;
+    
+    // We popped the layer, so make sure the excess damage propagates to all children
+    float excessDamage = layerHealth - count;
+    JSONArray children = propertiesTable.getChildren();
+    
+    // No children to spawn (i.e. we popped a red bloon)
+    if (children == null) {
+      return; 
+    }
+    
+    for (int i = 0; i < children.size(); i++) {
+      JSONObject childrenSpawnInformation = children.getJSONObject(i);
+      
+      String layerName = childrenSpawnInformation.getString("layerName");
+      int numberOfChildren = childrenSpawnInformation.getInt("count");
+      
+      for (int j = 0; j < numberOfChildren; j++) {
+        
+      }
+    }
   }
   
   public void step() {
@@ -64,6 +107,7 @@ public class Bloon {
   public void move() {
     // We reached the end !
     if (positionId >= game.getMap().getSegmentCount()) {
+      reachedEnd = true;
       return;
     }
     
@@ -71,7 +115,6 @@ public class Bloon {
     
     while (true) {
       MapSegment segment = game.getMap().getMapSegment(positionId);
-      println("se" + positionId);
       PVector direction = PVector.sub(segment.end, segment.start).normalize();
       
       float remainingDistanceToEnd = PVector.dist(position, segment.end);
@@ -87,6 +130,7 @@ public class Bloon {
         
         // We reached the end
         if (positionId >= game.getMap().getSegmentCount()) {
+          reachedEnd = true;
           return;
         }
         
