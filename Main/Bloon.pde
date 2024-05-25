@@ -1,4 +1,4 @@
-static final int BASE_BLOON_SPEED = 200;
+static final int BASE_BLOON_SPEED = 100;
 
 private static JSONObject toSpawnParams(String layerName) {
   JSONObject spawnParams = new JSONObject();
@@ -125,7 +125,7 @@ public class Bloon {
     
     for (int i = 0; i < children.size(); i++) {
       JSONObject childrenSpawnInformation = children.getJSONObject(i);
-      bloonSpawner.spawn(childrenSpawnInformation, position);
+      bloonSpawner.spawnChildren(childrenSpawnInformation, position);
     }
   }
   
