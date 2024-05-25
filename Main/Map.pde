@@ -38,12 +38,12 @@ public class Map {
     return pathWaypointArray.get(positionIndex + 1);
   }
   
-  public int getNextPositionId(PVector position) {
+  public int getSegmentIdFromPosition(PVector position) {
     for (int i = 0; i < mapSegments.size(); i++) {
       MapSegment segment = mapSegments.get(i);
       
       if (segment.isBetweenStartAndEnd(position)) {
-        return i + 1;
+        return i;
       }
     }
     

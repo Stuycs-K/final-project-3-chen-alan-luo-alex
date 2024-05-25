@@ -35,11 +35,11 @@ public class MapSegment {
   public boolean isBetweenStartAndEnd(PVector position) {
     float startToPositionDistance = PVector.dist(start, position);
     float positionToEndDistance = PVector.dist(position, end);
-    float totalDistance = PVector.dist(start, position);
+    float totalDistance = PVector.dist(start, end);
     
     float compareDistance = startToPositionDistance + positionToEndDistance;
     
-    return Math.abs(compareDistance - totalDistance) < 1e-3;
+    return Math.abs(compareDistance - totalDistance) < 1;
   }
   
   // https://stackoverflow.com/questions/2752725/finding-whether-a-point-lies-inside-a-rectangle-or-not

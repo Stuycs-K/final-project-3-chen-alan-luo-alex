@@ -3,8 +3,9 @@ public class TowerTargetFilter{
   
   public boolean canAttack(ArrayList<String> bloonNames){
     for (String x : bloonNames){
-      if (
+      //if (
     }
     
     return false;
   }
+}

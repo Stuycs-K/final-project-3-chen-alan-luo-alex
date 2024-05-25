@@ -13,6 +13,10 @@ public class BloonPropertyTable {
     this.sprite = loadImage(dataPath(spritePath));
   }
   
+  public JSONArray getChildren() {
+    return data.getJSONArray("children");
+  }
+  
   public int getIntProperty(String keyName) {
     try {
       return data.getInt(keyName);

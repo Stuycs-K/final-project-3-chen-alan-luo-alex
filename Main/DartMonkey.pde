@@ -6,12 +6,14 @@ public class DartMonkey extends Tower{
   
   public void attack(ArrayList<Bloon> bloon){
     for (Bloon currentBloon: bloon){
-      if(TowerTargetFilter.canAttack(bloon)){
+      /*
+      if(TowerTargetFilter.canAttack(currentBloon)){
         if(PVector.dist(new PVector(x,y), new PVector(currentBloon.x, currentBloon.y)) < radius){
           currentBloon.damage(this.damage);
           break;
         }
       }
+      */
     }
   }
   

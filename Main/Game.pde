@@ -12,6 +12,7 @@ public class Game{
         waypoints.add(new PVector(500, 500));
         waypoints.add(new PVector(500, 250));
         waypoints.add(new PVector(750, 250));
+        waypoints.add(new PVector(1000, 500));
       
         map = new Map(waypoints, 5);
         towers = new ArrayList<>();
@@ -29,9 +30,24 @@ public class Game{
 
     }
     public void update(){
+      ArrayList<Bloon> scheduledForRemoval = new ArrayList<Bloon>();
       for (Bloon bloon : bloons) {
+        if (bloon.shouldRemove()) {
+          scheduledForRemoval.add(bloon);
+          continue;
+        }
+        
         bloon.step();
+        
+        if (frameCount % 40 == 0) {
+          bloon.damage(1); 
+        }
       }
+      // Remove bloons that need to be removed
+      bloons.removeAll(scheduledForRemoval);
+      
+      // Insert all bloons that have been created
+      bloonSpawner.emptyQueue();
     }
     public void placeTower(String towerName, int x, int y){
 

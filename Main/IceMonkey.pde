@@ -9,11 +9,11 @@ public class IceMonkey extends Tower{
     if (path == 1){
       String[] upgradesPathOne = new String []{"Permafrost","Cold Snap","Ice Shards","Embrittlement","Super Brittle"};
       for (int i = 0; i< upgradesPathOne.length; i++){
-        currentUpgrade == upgradesPathOne[upGradeLevel-1];
-        if (currentUpgrade.equals("Permafrost"){
+        //currentUpgrade = upgradesPathOne[upGradeLevel-1];
+        //if (currentUpgrade.equals("Permafrost")){
           
-        }
-        if(currentUpg
+        //}
+        //if(currentUpg
       }
     }
     if(path == 2){
