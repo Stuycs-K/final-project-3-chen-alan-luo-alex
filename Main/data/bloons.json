@@ -110,5 +110,50 @@
                 "layerName": "White"
             }
         ]
+    },
+    {
+        "id": 8,
+        "layerName": "Lead",
+        "layerHealth": 1,
+        "speedMultiplier": 1,
+        "sprite": "images/bloons/lead.png",
+        "modifiers": {
+            "sharpImmunity": true
+        },
+        "children": [
+            {
+                "count": 2,
+                "layerName": "Black"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "layerName": "Rainbow",
+        "layerHealth": 1,
+        "speedMultiplier": 2.2,
+        "sprite": "images/bloons/rainbow.png",
+        "children": [
+            {
+                "count": 2,
+                "layerName": "Zebra"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "layerName": "Ceramic",
+        "layerHealth": 10,
+        "speedMultiplier": 2.5,
+        "sprite": "images/bloons/ceramic.png",
+        "modifiers": {
+            "isCeramic": true
+        },
+        "children": [
+            {
+                "count": 2,
+                "layerName": "Rainbow"
+            }
+        ]
     }
 ]

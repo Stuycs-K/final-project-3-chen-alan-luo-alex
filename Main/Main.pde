@@ -2,8 +2,6 @@ Game game;
 BloonPropertyLookup bloonPropertyLookup;
 BloonSpawner bloonSpawner;
 
-Bloon test;
-
 void setup(){
   size(1200, 800);
   
@@ -13,8 +11,10 @@ void setup(){
   game = new Game();
   game.startGame();
   
-  test = new Bloon("Black");
-  game.bloons.add(test);
+  JSONObject spawnInformation = new JSONObject();
+  spawnInformation.setString("layerName", "Rainbow");
+  //spawnInformation.setInt("count", 5);
+  bloonSpawner.spawn(spawnInformation);
 }
 
 void draw(){

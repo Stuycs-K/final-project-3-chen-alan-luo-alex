@@ -35,29 +35,17 @@ public class Bloon {
   public Bloon(JSONObject spawnParams) {
     String layerName = spawnParams.getString("layerName");
     
-    this.modifiersList = new BloonModifiersList(this);
-    JSONObject spawnModifiers = spawnParams.getJSONObject("modifiers");
-    if (spawnModifiers != null) {
-      
-    }
-    
     BloonPropertyTable properties = bloonPropertyLookup.getProperties(layerName);
     this.propertiesTable = properties;
     
     // Setting fields from the JSON
     this.sprite = properties.getSprite();
     
-    this.speed = properties.getFloatProperty("speed"); // Try to set base speed
-    if (this.speed == NULL_FLOAT) { // There must be a speed multiplier key if no speed was defined
-      float speedMultiplier = properties.getFloatProperty("speedMultiplier");
-      this.speed = BASE_BLOON_SPEED * speedMultiplier;
-    }
-    
-    this.layerHealth = properties.getIntProperty("layerHealth");
-    if (this.layerHealth == NULL_INT) { // Default layer health is 1
-      this.layerHealth = 1;
-    }
-   
+    this.speed = properties.getFloatProperty("speed", BASE_BLOON_SPEED);
+    this.speed *= properties.getFloatProperty("speedMultiplier", 1); // There must be a speed multiplier key if no speed was defined
+
+    this.layerHealth = properties.getIntProperty("layerHealth", 1);
+
     this.layerId = properties.getLayerId();
     
     JSONObject spawnPosition = spawnParams.getJSONObject("spawnPosition");
@@ -72,7 +60,8 @@ public class Bloon {
       this.position = game.getMap().getPositionOfId(0);
     }
     
-    
+    // Modifiers
+    this.modifiersList = new BloonModifiersList(this);
   }
   
   public Bloon(String layerName) {
@@ -85,15 +74,27 @@ public class Bloon {
   }
   
   public boolean reachedEnd() {
-    return this.reachedEnd;
+    return reachedEnd;
   }
   
   public boolean isDead() {
-    return this.isDead;
+    return isDead;
   }
   
   public boolean shouldRemove() {
     return isDead || reachedEnd; 
+  }
+  
+  public PVector getPosition() {
+    return position;
+  }
+  
+  public BloonPropertyTable getProperties() {
+    return propertiesTable; 
+  }
+  
+  public BloonModifiersList getModifiersList() {
+    return modifiersList;
   }
   
   public void render() {
@@ -115,18 +116,8 @@ public class Bloon {
     isDead = true;
     
     // We popped the layer, so make sure the excess damage propagates to all children
-    float excessDamage = layerHealth - count;
-    JSONArray children = propertiesTable.getChildren();
-    
-    // No children to spawn (i.e. we popped a red bloon)
-    if (children == null) {
-      return; 
-    }
-    
-    for (int i = 0; i < children.size(); i++) {
-      JSONObject childrenSpawnInformation = children.getJSONObject(i);
-      bloonSpawner.spawnChildren(childrenSpawnInformation, position);
-    }
+    float excessDamage = count - layerHealth;
+    handleLayerDeath(excessDamage);
   }
   
   public void step() {
@@ -169,8 +160,26 @@ public class Bloon {
     }
   }
   
-  public void handleLayerDeath() {
+  public void handleLayerDeath(float excessDamage) {
+    JSONArray children = propertiesTable.getChildren();
     
+    // No children to spawn (i.e. we popped a red bloon)
+    if (children == null) {
+      return; 
+    }
+    
+    for (int i = 0; i < children.size(); i++) {
+      JSONObject childrenSpawnInformation = children.getJSONObject(i);
+      ArrayList<Bloon> spawnedChildren = bloonSpawner.spawnChildren(childrenSpawnInformation, this);
+      
+      // Potentially very, very laggy !
+      if (excessDamage > 0) {
+        for (Bloon childBloon : spawnedChildren) {
+          childBloon.damage(excessDamage); 
+        }
+      }
+      
+    }
   }
   
 }

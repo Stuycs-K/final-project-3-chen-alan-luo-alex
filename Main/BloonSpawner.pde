@@ -7,7 +7,9 @@ public class BloonSpawner {
     createdBloonQueue = new ArrayList<Bloon>();
   }
   
-  public void spawnChildren(JSONObject childrenSpawnInformation, PVector startPosition) {
+  public ArrayList<Bloon> spawnChildren(JSONObject childrenSpawnInformation, Bloon parent) {
+    ArrayList<Bloon> createdBloons = new ArrayList<Bloon>();
+    
     String layerName = childrenSpawnInformation.getString("layerName");
     int numberOfChildren = childrenSpawnInformation.getInt("count");
     String spawnSpacingString = childrenSpawnInformation.getString("spacing");
@@ -18,6 +20,7 @@ public class BloonSpawner {
     }
     
     // Get segments
+    PVector startPosition = parent.getPosition();
     int currentMapSegmentId = game.getMap().getSegmentIdFromPosition(startPosition);
 
     for (int j = 0; j < numberOfChildren; j++) {
@@ -69,22 +72,67 @@ public class BloonSpawner {
       Bloon newBloon = new Bloon(layerName, finalSpawnPosition);
       createdBloonQueue.add(newBloon);
       
+      createdBloons.add(newBloon);
     }
+    
+    ArrayList<BloonModifier> heritableModifiers = parent.getModifiersList().getHeritableModifiers();
+    for (Bloon newBloon : createdBloons) {
+      newBloon.getModifiersList().copyModifiers(heritableModifiers);
+    }
+    
+    
+    return createdBloons;
   }
   
-  public void spawn(JSONObject childrenSpawnInformation, PVector position) {
+  public ArrayList<Bloon> spawn(JSONObject childrenSpawnInformation, PVector position) {
+    ArrayList<Bloon> createdBloons = new ArrayList<Bloon>();
+    
     String layerName = childrenSpawnInformation.getString("layerName");
-    int numberOfChildren = childrenSpawnInformation.getInt("count");
+    
+    int numberOfChildren = 1;
+    if (!childrenSpawnInformation.isNull("count")) {
+      numberOfChildren = childrenSpawnInformation.getInt("count");
+    }
     
     for (int j = 0; j < numberOfChildren; j++) {
       Bloon newBloon = new Bloon(layerName, position);
       createdBloonQueue.add(newBloon);
+      
+      createdBloons.add(newBloon);
     }
+    
+    return createdBloons;
+  }
+  
+  public ArrayList<Bloon> spawn(JSONObject childrenSpawnInformation) {
+    ArrayList<Bloon> createdBloons = new ArrayList<Bloon>();
+    
+    String layerName = childrenSpawnInformation.getString("layerName");
+    
+    int numberOfChildren = 1;
+    if (!childrenSpawnInformation.isNull("count")) {
+      numberOfChildren = childrenSpawnInformation.getInt("count");
+    }
+    
+    for (int j = 0; j < numberOfChildren; j++) {
+      Bloon newBloon = new Bloon(layerName);
+      createdBloonQueue.add(newBloon);
+      
+      createdBloons.add(newBloon);
+    }
+    
+    return createdBloons;
   }
   
   // Actually spawns the bloons
   public void emptyQueue() {
     for (Bloon bloon : createdBloonQueue) {
+      
+      // If we've killed the bloon to trigger the children spawn because we did a lot of damage
+      if (bloon.shouldRemove()) {
+        continue;
+      }
+      
       game.bloons.add(bloon);
     }
     
