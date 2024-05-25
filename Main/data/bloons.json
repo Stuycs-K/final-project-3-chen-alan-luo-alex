@@ -146,6 +146,9 @@
         "layerHealth": 10,
         "speedMultiplier": 2.5,
         "sprite": "images/bloons/ceramic.png",
+        "modifiers": {
+            "isCeramic": true
+        },
         "children": [
             {
                 "count": 2,

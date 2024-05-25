@@ -1,6 +1,7 @@
 public class BloonModifier {
   private float duration;
   private String name;
+  private JSONObject properties;
   
   public BloonModifier(String name) {
     this.duration = -1; // Infinite duration
@@ -8,12 +9,17 @@ public class BloonModifier {
   }
   
   public BloonModifier(String name, float duration) {
-    this.duration = duration; // Infinite duration
+    this.duration = duration;
     this.name = name;
+    this.properties = bloonPropertyLookup.getModifier(name);
   }
   
   public void setDuration(float duration) {
     this.duration = duration;
+  }
+  
+  public boolean isHeritable() {
+    return properties.getBoolean("heritable"); 
   }
   
   public float getDuration() {

@@ -37,6 +37,10 @@ public class BloonPropertyTable {
     return data.getString(keyName);
   }
   
+  public JSONObject getModifierArray() {
+    return data.getJSONObject("modifiers"); 
+  }
+  
   public String getLayerName() {
     return data.getString("layerName"); 
   }

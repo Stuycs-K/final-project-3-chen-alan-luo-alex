@@ -35,12 +35,6 @@ public class Bloon {
   public Bloon(JSONObject spawnParams) {
     String layerName = spawnParams.getString("layerName");
     
-    this.modifiersList = new BloonModifiersList(this);
-    JSONObject spawnModifiers = spawnParams.getJSONObject("modifiers");
-    if (spawnModifiers != null) {
-      
-    }
-    
     BloonPropertyTable properties = bloonPropertyLookup.getProperties(layerName);
     this.propertiesTable = properties;
     
@@ -72,6 +66,12 @@ public class Bloon {
       this.position = game.getMap().getPositionOfId(0);
     }
     
+    // Modifiers
+    this.modifiersList = new BloonModifiersList(this);
+    JSONObject spawnModifiers = spawnParams.getJSONObject("modifiers");
+    if (spawnModifiers != null) {
+      
+    }
     
   }
   
@@ -85,15 +85,19 @@ public class Bloon {
   }
   
   public boolean reachedEnd() {
-    return this.reachedEnd;
+    return reachedEnd;
   }
   
   public boolean isDead() {
-    return this.isDead;
+    return isDead;
   }
   
   public boolean shouldRemove() {
     return isDead || reachedEnd; 
+  }
+  
+  public BloonPropertyTable getProperties() {
+    return propertiesTable; 
   }
   
   public void render() {
