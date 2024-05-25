@@ -29,9 +29,24 @@ public class Game{
 
     }
     public void update(){
+      ArrayList<Bloon> scheduledForRemoval = new ArrayList<Bloon>();
       for (Bloon bloon : bloons) {
+        if (bloon.shouldRemove()) {
+          scheduledForRemoval.add(bloon);
+          continue;
+        }
+        
         bloon.step();
+        
+        if (frameCount % 60 == 0) {
+          bloon.damage(1); 
+        }
       }
+      // Remove bloons that need to be removed
+      bloons.removeAll(scheduledForRemoval);
+      
+      // Insert all bloons that have been created
+      bloonSpawner.emptyQueue();
     }
     public void placeTower(String towerName, int x, int y){
 

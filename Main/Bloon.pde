@@ -60,6 +60,10 @@ public class Bloon {
     return this.isDead;
   }
   
+  public boolean shouldRemove() {
+    return isDead || reachedEnd; 
+  }
+  
   public void render() {
     if (isDead || reachedEnd) {
       return;
@@ -89,13 +93,7 @@ public class Bloon {
     
     for (int i = 0; i < children.size(); i++) {
       JSONObject childrenSpawnInformation = children.getJSONObject(i);
-      
-      String layerName = childrenSpawnInformation.getString("layerName");
-      int numberOfChildren = childrenSpawnInformation.getInt("count");
-      
-      for (int j = 0; j < numberOfChildren; j++) {
-        
-      }
+      bloonSpawner.spawn(childrenSpawnInformation, position);
     }
   }
   

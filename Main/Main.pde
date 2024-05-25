@@ -1,5 +1,6 @@
 Game game;
 BloonPropertyLookup bloonPropertyLookup;
+BloonSpawner bloonSpawner;
 
 Bloon test;
 
@@ -7,6 +8,7 @@ void setup(){
   size(1200, 800);
   
   bloonPropertyLookup = new BloonPropertyLookup();
+  bloonSpawner = new BloonSpawner();
   
   game = new Game();
   game.startGame();
