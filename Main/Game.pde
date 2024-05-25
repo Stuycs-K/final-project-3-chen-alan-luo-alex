@@ -61,9 +61,9 @@ public class Game{
         newTower = new SuperMonkey(x,y);
       }
       
-      //if(newTower != null && currency >= newTower.getcost()){
-      //  towers.add(newTower);
-      //  currency -= newTower.getCost();
+      if(newTower != null && currency >= newTower.getCost()){
+        towers.add(newTower);
+        currency -= newTower.getCost();
       }
 
     }
