@@ -39,7 +39,7 @@ public class Game{
         
         bloon.step();
         
-        if (frameCount % 20 == 0) {
+        if (frameCount % 40 == 0) {
           bloon.damage(1); 
         }
       }

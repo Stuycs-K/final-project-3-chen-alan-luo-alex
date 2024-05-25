@@ -43,6 +43,10 @@ public class BloonModifiersList {
     return false;
   }
   
+  public void addModifiers(JSONObject modifiers) {
+    
+  }
+  
   public void addModifier(String name) {
     BloonModifier newModifier = new BloonModifier(name);
     modifiersList.add(newModifier);

@@ -1,5 +1,23 @@
 static final int BASE_BLOON_SPEED = 200;
 
+private static JSONObject toSpawnParams(String layerName) {
+  JSONObject spawnParams = new JSONObject();
+  spawnParams.setString("layerName", layerName);
+  return spawnParams;
+}
+
+private static JSONObject toSpawnParams(String layerName, PVector position) {
+  JSONObject spawnParams = new JSONObject();
+  spawnParams.setString("layerName", layerName);
+  
+  JSONObject positionData = new JSONObject();
+  positionData.setFloat("x", position.x);
+  positionData.setFloat("y", position.y);
+  
+  spawnParams.setJSONObject("spawnPosition", positionData);
+  return spawnParams;
+}
+  
 public class Bloon {
   private int layerId;
   private float layerHealth;
@@ -9,18 +27,24 @@ public class Bloon {
   private BloonPropertyTable propertiesTable;
   
   private int positionId;
-  private int targetPositionId;
   private PVector position;
   
   private boolean isDead;
   private boolean reachedEnd;
   
-  public Bloon(String layerName) {
+  public Bloon(JSONObject spawnParams) {
+    String layerName = spawnParams.getString("layerName");
+    
     this.modifiersList = new BloonModifiersList(this);
+    JSONObject spawnModifiers = spawnParams.getJSONObject("modifiers");
+    if (spawnModifiers != null) {
+      
+    }
     
     BloonPropertyTable properties = bloonPropertyLookup.getProperties(layerName);
     this.propertiesTable = properties;
     
+    // Setting fields from the JSON
     this.sprite = properties.getSprite();
     
     this.speed = properties.getFloatProperty("speed"); // Try to set base speed
@@ -33,24 +57,31 @@ public class Bloon {
     if (this.layerHealth == NULL_INT) { // Default layer health is 1
       this.layerHealth = 1;
     }
-    
+   
     this.layerId = properties.getLayerId();
     
-    // Set the bloon's position to the start
-    this.positionId = 0;
-    this.targetPositionId = 1;
-    this.position = game.getMap().getPositionOfId(0);
+    JSONObject spawnPosition = spawnParams.getJSONObject("spawnPosition");
+    if (spawnPosition != null) {
+      PVector positionVector = new PVector(spawnPosition.getFloat("x"), spawnPosition.getFloat("y"));
+
+      this.position = positionVector;
+      this.positionId = game.getMap().getSegmentIdFromPosition(positionVector);
+    } else {
+      // Set the bloon's position to the start
+      this.positionId = 0;
+      this.position = game.getMap().getPositionOfId(0);
+    }
+    
+    
+  }
+  
+  public Bloon(String layerName) {
+    this(toSpawnParams(layerName));
   }
   
   // Spawn a bloon at a particular position
   public Bloon(String layerName, PVector position) {
-    this(layerName);
-    
-    this.position = position;
-    
-    this.targetPositionId = game.getMap().getNextPositionId(position);
-    println(targetPositionId);
-    this.positionId = this.targetPositionId - 1;
+    this(toSpawnParams(layerName, position));
   }
   
   public boolean reachedEnd() {
@@ -114,6 +145,7 @@ public class Bloon {
     
     while (true) {
       MapSegment segment = game.getMap().getMapSegment(positionId);
+
       PVector direction = PVector.sub(segment.end, segment.start).normalize();
       
       float remainingDistanceToEnd = PVector.dist(position, segment.end);
@@ -122,7 +154,7 @@ public class Bloon {
         position.add(direction.mult(totalDistanceToMove));
         break;
       } else {
-        position = segment.end;
+        position = segment.end.copy();
         totalDistanceToMove -= remainingDistanceToEnd;
         
         positionId += 1;
@@ -132,8 +164,6 @@ public class Bloon {
           reachedEnd = true;
           return;
         }
-        
-        targetPositionId += 1;
       }
       
     }
