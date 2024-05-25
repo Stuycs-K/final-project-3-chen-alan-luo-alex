@@ -1,0 +1,45 @@
+[
+    {
+        "wave": 1,
+        "spawns": {
+            "red": {
+                "count": 20,
+                "timeBetweenSpawns": 1,
+                "layerName": "Red"
+            }
+        }
+    },
+    {
+        "wave": 2,
+        "spawns": {
+            "red": {
+                "count": 35,
+                "timeBetweenSpawns": 0.5,
+                "layerName": "Red"
+            }
+        }
+    },
+    {
+        "wave": 3,
+        "spawns": {
+            "red1": {
+                "count": 10,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Red"
+            },
+            "blue": {
+                "count": 5,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Blue",
+                "waitForAllSpawned": "red1"
+            },
+            "red2": {
+                "count": 15,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Red",
+                "waitForAllSpawned": "blue",
+                "waitBeforeSpawning": 3
+            }
+        }
+    }
+]
