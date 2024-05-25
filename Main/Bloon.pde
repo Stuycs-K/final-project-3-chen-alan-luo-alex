@@ -85,8 +85,16 @@ public class Bloon {
     return isDead || reachedEnd; 
   }
   
+  public PVector getPosition() {
+    return position;
+  }
+  
   public BloonPropertyTable getProperties() {
     return propertiesTable; 
+  }
+  
+  public BloonModifiersList getModifiersList() {
+    return modifiersList;
   }
   
   public void render() {
@@ -109,24 +117,7 @@ public class Bloon {
     
     // We popped the layer, so make sure the excess damage propagates to all children
     float excessDamage = count - layerHealth;
-    JSONArray children = propertiesTable.getChildren();
-    
-    // No children to spawn (i.e. we popped a red bloon)
-    if (children == null) {
-      return; 
-    }
-    
-    for (int i = 0; i < children.size(); i++) {
-      JSONObject childrenSpawnInformation = children.getJSONObject(i);
-      ArrayList<Bloon> spawnedChildren = bloonSpawner.spawnChildren(childrenSpawnInformation, position);
-      
-      if (excessDamage > 0) {
-        for (Bloon childBloon : spawnedChildren) {
-          childBloon.damage(excessDamage); 
-        }
-      }
-      
-    }
+    handleLayerDeath(excessDamage);
   }
   
   public void step() {
@@ -169,8 +160,26 @@ public class Bloon {
     }
   }
   
-  public void handleLayerDeath() {
+  public void handleLayerDeath(float excessDamage) {
+    JSONArray children = propertiesTable.getChildren();
     
+    // No children to spawn (i.e. we popped a red bloon)
+    if (children == null) {
+      return; 
+    }
+    
+    for (int i = 0; i < children.size(); i++) {
+      JSONObject childrenSpawnInformation = children.getJSONObject(i);
+      ArrayList<Bloon> spawnedChildren = bloonSpawner.spawnChildren(childrenSpawnInformation, this);
+      
+      // Potentially very, very laggy !
+      if (excessDamage > 0) {
+        for (Bloon childBloon : spawnedChildren) {
+          childBloon.damage(excessDamage); 
+        }
+      }
+      
+    }
   }
   
 }

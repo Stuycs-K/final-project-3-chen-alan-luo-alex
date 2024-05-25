@@ -36,6 +36,17 @@ public class BloonModifiersList {
     return this.modifiersList;
   }
   
+  public ArrayList<BloonModifier> getHeritableModifiers() {
+    ArrayList<BloonModifier> heritableModifiers = new ArrayList<BloonModifier>();
+    
+    for (BloonModifier modifier : modifiersList) {
+      if (modifier.isHeritable()) {
+        heritableModifiers.add(modifier); 
+      }
+    }
+    return heritableModifiers;
+  }
+  
   public BloonModifier getModifierByName(String name) {
     for (BloonModifier modifier: modifiersList) {
       if (modifier.getModifierName().equals(name)) {
@@ -60,6 +71,12 @@ public class BloonModifiersList {
     }
     
     return false;
+  }
+  
+  public void copyModifiers(ArrayList<BloonModifier> modifiers) {
+    for (BloonModifier modifier : modifiers) {
+      addModifier(modifier.clone());
+    }
   }
   
   public void addModifiers(JSONObject modifiers) {

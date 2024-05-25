@@ -12,7 +12,7 @@ void setup(){
   game.startGame();
   
   JSONObject spawnInformation = new JSONObject();
-  spawnInformation.setString("layerName", "Ceramic");
+  spawnInformation.setString("layerName", "Rainbow");
   //spawnInformation.setInt("count", 5);
   bloonSpawner.spawn(spawnInformation);
 }

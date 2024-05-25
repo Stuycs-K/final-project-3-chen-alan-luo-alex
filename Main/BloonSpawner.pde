@@ -7,7 +7,7 @@ public class BloonSpawner {
     createdBloonQueue = new ArrayList<Bloon>();
   }
   
-  public ArrayList<Bloon> spawnChildren(JSONObject childrenSpawnInformation, PVector startPosition) {
+  public ArrayList<Bloon> spawnChildren(JSONObject childrenSpawnInformation, Bloon parent) {
     ArrayList<Bloon> createdBloons = new ArrayList<Bloon>();
     
     String layerName = childrenSpawnInformation.getString("layerName");
@@ -20,6 +20,7 @@ public class BloonSpawner {
     }
     
     // Get segments
+    PVector startPosition = parent.getPosition();
     int currentMapSegmentId = game.getMap().getSegmentIdFromPosition(startPosition);
 
     for (int j = 0; j < numberOfChildren; j++) {
@@ -73,6 +74,12 @@ public class BloonSpawner {
       
       createdBloons.add(newBloon);
     }
+    
+    ArrayList<BloonModifier> heritableModifiers = parent.getModifiersList().getHeritableModifiers();
+    for (Bloon newBloon : createdBloons) {
+      newBloon.getModifiersList().copyModifiers(heritableModifiers);
+    }
+    
     
     return createdBloons;
   }

@@ -3,19 +3,23 @@ public class BloonModifier {
   private String name;
   private JSONObject properties;
   
-  public BloonModifier(String name) {
-    this.duration = -1; // Infinite duration
-    this.name = name;
-  }
-  
   public BloonModifier(String name, float duration) {
     this.duration = duration;
     this.name = name;
     this.properties = bloonPropertyLookup.getModifier(name);
   }
   
+  public BloonModifier(String name) {
+    this(name, -1);
+  }
+  
   public void setDuration(float duration) {
     this.duration = duration;
+  }
+  
+  public BloonModifier clone() {
+    BloonModifier copy = new BloonModifier(name, duration);
+    return copy;
   }
   
   public boolean isHeritable() {
