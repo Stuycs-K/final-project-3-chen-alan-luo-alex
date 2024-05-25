@@ -50,6 +50,21 @@ public class Game{
       bloonSpawner.emptyQueue();
     }
     public void placeTower(String towerName, int x, int y){
+      Tower newTower = null;
+      if(towerName.equals("DartMonkey")){
+        newTower = new DartMonkey(x,y);
+      }else if (towerName.equals("BombShooter")){
+        newTower = new BombShooter(x,y);
+      }else if (towerName.equals("IceMonkey")){
+        newTower = new IceMonkey(x,y);
+      }else if(towerName.equals("SuperMonkey")){
+        newTower = new SuperMonkey(x,y);
+      }
+      
+      if(newTower != null && currency >= newTower.getCost()){
+        towers.add(newTower);
+        currency -= newTower.getCost();
+      }
 
     }
     public Tower selectTower(int x, int y){
