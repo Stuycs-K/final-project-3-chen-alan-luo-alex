@@ -40,7 +40,7 @@ public class Game{
         bloon.step();
         
         if (frameCount % 40 == 0) {
-          bloon.damage(1); 
+          bloon.damage(2); 
         }
       }
       // Remove bloons that need to be removed

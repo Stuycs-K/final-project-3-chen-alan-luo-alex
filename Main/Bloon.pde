@@ -108,7 +108,7 @@ public class Bloon {
     isDead = true;
     
     // We popped the layer, so make sure the excess damage propagates to all children
-    float excessDamage = layerHealth - count;
+    float excessDamage = count - layerHealth;
     JSONArray children = propertiesTable.getChildren();
     
     // No children to spawn (i.e. we popped a red bloon)
@@ -118,7 +118,14 @@ public class Bloon {
     
     for (int i = 0; i < children.size(); i++) {
       JSONObject childrenSpawnInformation = children.getJSONObject(i);
-      bloonSpawner.spawnChildren(childrenSpawnInformation, position);
+      ArrayList<Bloon> spawnedChildren = bloonSpawner.spawnChildren(childrenSpawnInformation, position);
+      
+      if (excessDamage > 0) {
+        for (Bloon childBloon : spawnedChildren) {
+          childBloon.damage(excessDamage); 
+        }
+      }
+      
     }
   }
   
