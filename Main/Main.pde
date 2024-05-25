@@ -13,16 +13,15 @@ void setup(){
   game = new Game();
   game.startGame();
   
-  test = new Bloon("Blue");
+  test = new Bloon("Black");
   game.bloons.add(test);
 }
 
 void draw(){
   background(255);
-  game.update();
   game.render();
-  
-  test.render();
+  game.update();
+
 }
 
 void mousePressed(){

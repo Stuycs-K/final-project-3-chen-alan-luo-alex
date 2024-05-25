@@ -49,6 +49,7 @@ public class Bloon {
     this.position = position;
     
     this.targetPositionId = game.getMap().getNextPositionId(position);
+    println(targetPositionId);
     this.positionId = this.targetPositionId - 1;
   }
   

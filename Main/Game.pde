@@ -12,6 +12,7 @@ public class Game{
         waypoints.add(new PVector(500, 500));
         waypoints.add(new PVector(500, 250));
         waypoints.add(new PVector(750, 250));
+        waypoints.add(new PVector(1000, 500));
       
         map = new Map(waypoints, 5);
         towers = new ArrayList<>();
@@ -38,7 +39,7 @@ public class Game{
         
         bloon.step();
         
-        if (frameCount % 60 == 0) {
+        if (frameCount % 20 == 0) {
           bloon.damage(1); 
         }
       }
