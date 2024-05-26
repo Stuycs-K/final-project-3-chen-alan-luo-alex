@@ -35,4 +35,12 @@
 - Created it's respective subclasses (BombShooter, IceMonkey, SuperMonkey, DartMonkey)
 - attack method for towers
 
+### 5/24/2024
+- wrote attack method for tower subclasses
+- started working on upgrade paths
+- wrote Slow
+
+### 5/25/2024
+ - began writing code to placeTowers
+ - added more tower functionality (such as getCost())
 info
