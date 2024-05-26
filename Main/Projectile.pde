@@ -5,7 +5,7 @@ public class Projectile{
   int damage;
   boolean finished;
   int dx,dy;
-  int distance;
+  float distance;
   
   public Projectile(int x, int y, int targetX, int targetY, int damage){
     this.x=x;
@@ -21,11 +21,21 @@ public class Projectile{
   }
   
   public void update(){
-    
+    if (distance>0){
+      float stepX = (dx/distance) * speed;
+      float stepY = (dy/distance) * speed;
+      x+= stepX;
+      y += stepY;
+      if(dist(x,y,targetX,targetY) < speed){
+        finished = true;
+      }
+    }
   }
   
   
   public void draw(){
+    fill(255,0,0);
+    ellipse(x,y,5,5);
   }
   
 }
