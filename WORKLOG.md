@@ -21,6 +21,13 @@
 - Bloons able to spawn children on death
 - Basic damage method
 
+## 5/25/2024
+
+- Children spawn with offsets behind the parent position
+- Damage method deals damage to children as well
+- Add slightly more functionality for BloonModifiers
+- Write WaveManager, which reads data to spawn Bloons from waves.json
+
 
 ## Alex Luo
 
@@ -43,4 +50,3 @@
 ### 5/25/2024
  - began writing code to placeTowers
  - added more tower functionality (such as getCost())
-info
