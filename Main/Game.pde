@@ -31,12 +31,12 @@ public class Game{
     }
 
     public void startGame(){
-      waveManager.setWave(2);
+      waveManager.setWave(1);
       waveManager.startNextWave();
     }
     
     public void update(){
-      
+      // TODO
       if (waveManager.waveFinishedSpawning()) {
         waveManager.startNextWave();
       }
