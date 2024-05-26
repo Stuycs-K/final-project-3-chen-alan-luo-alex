@@ -9,21 +9,7 @@ public class BloonModifiersList {
     // Set default properties
     BloonPropertyTable properties = bloon.getProperties();
     JSONObject modifiers = properties.getModifierArray();
-    if (modifiers == null) {
-      return;
-    }
-    
-    String[] keyNames = new String[modifiers.size()];
-    keyNames = (String[]) modifiers.keys().toArray(keyNames);
-    for (String keyName : keyNames) {
-      
-      try { // If our entry is "true," apply it with no extra information
-        modifiers.getBoolean(keyName);
-        addModifier(keyName);
-      } catch (Exception exception) {
-        
-      }
-    }
+    addModifiers(modifiers);
   }
   
   public void applyModifierVisuals() {
@@ -80,7 +66,19 @@ public class BloonModifiersList {
   }
   
   public void addModifiers(JSONObject modifiers) {
+    if (modifiers == null) {
+      return;
+    }
     
+    Set<String> keySet = modifiers.keys();
+    for (String keyName : keySet) {
+      try { // If our entry is "true," apply it with no extra information
+        modifiers.getBoolean(keyName);
+        addModifier(keyName);
+      } catch (Exception exception) {
+        
+      }
+    }
   }
   
   public void addModifier(String name) {
