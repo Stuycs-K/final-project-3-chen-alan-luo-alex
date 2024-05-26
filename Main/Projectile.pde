@@ -1,13 +1,13 @@
 public class Projectile{
-  int x,y;
-  int targetX, targetY;
+  float x,y;
+  float targetX, targetY;
   int speed;
   int damage;
   boolean finished;
-  int dx,dy;
+  float dx,dy;
   float distance;
   
-  public Projectile(int x, int y, int targetX, int targetY, int damage){
+  public Projectile(float x, float y, float targetX, float targetY, int damage){
     this.x=x;
     this.y=y;
     this.targetX = targetX;
@@ -15,9 +15,9 @@ public class Projectile{
     this.damage = damage;
     this.speed = 5;
     this.finished = false;
-    dy= targetY - y;
-    dx= targetX -x;
-    distance = dist(x,y,targetX,targetY);
+    this.dy= targetY - y;
+    this.dx= targetX -x;
+    this.distance = dist(x,y,targetX,targetY);
   }
   
   public void update(){
@@ -33,8 +33,8 @@ public class Projectile{
   }
   
   
-  public void draw(){
-    fill(255,0,0);
+  public void drawProjectile(){
+    
     ellipse(x,y,5,5);
   }
   
