@@ -5,6 +5,8 @@ public class Game{
     private int currency;
     private int health;
     private boolean gameActive;
+    
+    public WaveManager waveManager;
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -20,6 +22,8 @@ public class Game{
         currency = 100;
         health = 100;
         gameActive = true;
+        
+        waveManager = new WaveManager();
     }
     
     public Map getMap() {
@@ -27,9 +31,16 @@ public class Game{
     }
 
     public void startGame(){
-
+      waveManager.setWave(2);
+      waveManager.startNextWave();
     }
+    
     public void update(){
+      
+      if (waveManager.waveFinishedSpawning()) {
+        waveManager.startNextWave();
+      }
+      
       ArrayList<Bloon> scheduledForRemoval = new ArrayList<Bloon>();
       for (Bloon bloon : bloons) {
         if (bloon.shouldRemove()) {
@@ -40,7 +51,7 @@ public class Game{
         bloon.step();
         
         if (frameCount % 40 == 0) {
-          bloon.damage(2); 
+          //bloon.damage(2); 
         }
       }
       // Remove bloons that need to be removed
@@ -49,6 +60,7 @@ public class Game{
       // Insert all bloons that have been created
       bloonSpawner.emptyQueue();
     }
+    
     public void placeTower(String towerName, int x, int y){
       Tower newTower = null;
       println("Attempting to place tower: " + towerName + " at (" + x + "," + y + ")");

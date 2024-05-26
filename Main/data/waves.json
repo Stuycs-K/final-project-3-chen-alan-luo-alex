@@ -4,7 +4,7 @@
         "spawns": {
             "red": {
                 "count": 20,
-                "timeBetweenSpawns": 1,
+                "timeBetweenSpawns": 0.8,
                 "layerName": "Red"
             }
         }
@@ -38,7 +38,7 @@
                 "timeBetweenSpawns": 0.3,
                 "layerName": "Red",
                 "waitForAllSpawned": "blue",
-                "waitBeforeSpawning": 3
+                "waitBeforeSpawning": 2
             }
         }
     }

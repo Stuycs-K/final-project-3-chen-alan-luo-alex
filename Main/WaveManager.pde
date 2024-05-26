@@ -85,9 +85,18 @@ public class WaveManager {
   
   public WaveManager() {
     this.waveStructure = loadJSONArray("waves.json");
-    this.currentWaveNumber = 0;
+    this.currentWaveNumber = -1;
     this.currentWave = null;
     this.currentWaveSpawns = new HashMap<String, WaveSpawn>();
+  }
+  
+  public boolean waveFinishedSpawning() {
+    for (WaveSpawn waveSpawn : currentWaveSpawns.values()) {
+      if (!waveSpawn.finishedSpawning()) {
+        return false;
+      }
+    }
+    return true;
   }
   
   public void startNextWave() {
@@ -95,8 +104,17 @@ public class WaveManager {
     
     currentWaveSpawns.clear();
     
+    if (currentWaveNumber >= waveStructure.size()) {
+      return;
+    }
+    
     currentWave = waveStructure.getJSONObject(currentWaveNumber);
     spawnWave();
+  }
+  
+  // Subtract 1 because things are zero-indexed !!!
+  public void setWave(int waveNumber) {
+    currentWaveNumber = waveNumber - 1; 
   }
   
   public void stopAllWaves() {
@@ -123,6 +141,6 @@ public class WaveManager {
   }
   
   public int getCurrentWaveNumber() {
-    return currentWaveNumber;
+    return currentWaveNumber + 1;
   }
 }
