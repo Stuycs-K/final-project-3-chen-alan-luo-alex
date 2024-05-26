@@ -84,18 +84,28 @@ public class BloonSpawner {
     return createdBloons;
   }
   
-  public ArrayList<Bloon> spawn(JSONObject childrenSpawnInformation, PVector position) {
+  private void setModifiers(JSONObject spawnInformation, Bloon bloon) {
+    if (spawnInformation.isNull("modifiers")) {
+      return;
+    }
+    
+    JSONObject modifiers = spawnInformation.getJSONObject("modifiers");
+    bloon.getModifiersList().addModifiers(modifiers);
+  }
+  
+  public ArrayList<Bloon> spawn(JSONObject spawnInformation, PVector position) {
     ArrayList<Bloon> createdBloons = new ArrayList<Bloon>();
     
-    String layerName = childrenSpawnInformation.getString("layerName");
+    String layerName = spawnInformation.getString("layerName");
     
     int numberOfChildren = 1;
-    if (!childrenSpawnInformation.isNull("count")) {
-      numberOfChildren = childrenSpawnInformation.getInt("count");
+    if (!spawnInformation.isNull("count")) {
+      numberOfChildren = spawnInformation.getInt("count");
     }
     
     for (int j = 0; j < numberOfChildren; j++) {
       Bloon newBloon = new Bloon(layerName, position);
+      setModifiers(spawnInformation, newBloon);
       createdBloonQueue.add(newBloon);
       
       createdBloons.add(newBloon);
@@ -104,18 +114,19 @@ public class BloonSpawner {
     return createdBloons;
   }
   
-  public ArrayList<Bloon> spawn(JSONObject childrenSpawnInformation) {
+  public ArrayList<Bloon> spawn(JSONObject spawnInformation) {
     ArrayList<Bloon> createdBloons = new ArrayList<Bloon>();
     
-    String layerName = childrenSpawnInformation.getString("layerName");
+    String layerName = spawnInformation.getString("layerName");
     
     int numberOfChildren = 1;
-    if (!childrenSpawnInformation.isNull("count")) {
-      numberOfChildren = childrenSpawnInformation.getInt("count");
+    if (!spawnInformation.isNull("count")) {
+      numberOfChildren = spawnInformation.getInt("count");
     }
     
     for (int j = 0; j < numberOfChildren; j++) {
       Bloon newBloon = new Bloon(layerName);
+      setModifiers(spawnInformation, newBloon);
       createdBloonQueue.add(newBloon);
       
       createdBloons.add(newBloon);

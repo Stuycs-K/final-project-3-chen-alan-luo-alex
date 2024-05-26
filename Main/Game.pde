@@ -5,6 +5,8 @@ public class Game{
     private int currency;
     private int health;
     private boolean gameActive;
+    
+    public WaveManager waveManager;
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -20,6 +22,8 @@ public class Game{
         currency = 100;
         health = 100;
         gameActive = true;
+        
+        waveManager = new WaveManager();
     }
     
     public Map getMap() {
@@ -27,9 +31,16 @@ public class Game{
     }
 
     public void startGame(){
-
+      waveManager.setWave(1);
+      waveManager.startNextWave();
     }
+    
     public void update(){
+      // TODO
+      if (waveManager.waveFinishedSpawning()) {
+        waveManager.startNextWave();
+      }
+      
       ArrayList<Bloon> scheduledForRemoval = new ArrayList<Bloon>();
       for (Bloon bloon : bloons) {
         if (bloon.shouldRemove()) {
@@ -40,7 +51,7 @@ public class Game{
         bloon.step();
         
         if (frameCount % 40 == 0) {
-          bloon.damage(2); 
+          //bloon.damage(2); 
         }
       }
       // Remove bloons that need to be removed
@@ -49,8 +60,10 @@ public class Game{
       // Insert all bloons that have been created
       bloonSpawner.emptyQueue();
     }
+    
     public void placeTower(String towerName, int x, int y){
       Tower newTower = null;
+      println("Attempting to place tower: " + towerName + " at (" + x + "," + y + ")");
       if(towerName.equals("DartMonkey")){
         newTower = new DartMonkey(x,y);
       }else if (towerName.equals("BombShooter")){
@@ -61,12 +74,21 @@ public class Game{
         newTower = new SuperMonkey(x,y);
       }
       
-      if(newTower != null && currency >= newTower.getCost()){
-        towers.add(newTower);
-        currency -= newTower.getCost();
+      if(newTower != null){
+        //println("New tower cost: " + newTower.getCost() + ", current currency: " + currency);
+        //if(currency >= newTower.getCost()){
+          towers.add(newTower);
+        //  currency -= newTower.getCost();
+          println("tower placed at: " + x + "," + y);
+      //}else{
+      //  println("not enough money");
+      //}
+      }else{
+        println("tower failed to place");
       }
-
     }
+
+    
     public Tower selectTower(int x, int y){
         return null;
     }
@@ -79,6 +101,9 @@ public class Game{
     
     public void render() {
       map.drawPath();
+      for (Tower tower: towers){
+        println("Drawing tower at: " + tower.x + ", " + tower.y);
+        tower.draw();
     }
-
+    }
 }

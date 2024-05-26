@@ -21,6 +21,13 @@
 - Bloons able to spawn children on death
 - Basic damage method
 
+## 5/25/2024
+
+- Children spawn with offsets behind the parent position
+- Damage method deals damage to children as well
+- Add slightly more functionality for BloonModifiers
+- Write WaveManager, which reads data to spawn Bloons from waves.json
+
 
 ## Alex Luo
 
@@ -35,4 +42,11 @@
 - Created it's respective subclasses (BombShooter, IceMonkey, SuperMonkey, DartMonkey)
 - attack method for towers
 
-info
+### 5/24/2024
+- wrote attack method for tower subclasses
+- started working on upgrade paths
+- wrote Slow
+
+### 5/25/2024
+ - began writing code to placeTowers
+ - added more tower functionality (such as getCost())
