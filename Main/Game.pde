@@ -10,13 +10,21 @@ public class Game{
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
-        waypoints.add(new PVector(0, 500));
-        waypoints.add(new PVector(500, 500));
-        waypoints.add(new PVector(500, 250));
-        waypoints.add(new PVector(750, 250));
-        waypoints.add(new PVector(1000, 500));
+        waypoints.add(new PVector(0, 100));
+        waypoints.add(new PVector(500, 300));
+        waypoints.add(new PVector(500, 100));
+        waypoints.add(new PVector(750, 100));
+        waypoints.add(new PVector(1000, 400));
+        waypoints.add(new PVector(1000, 600));
+        waypoints.add(new PVector(800, 600));
+        waypoints.add(new PVector(800, 400));
+        waypoints.add(new PVector(300, 400));
+        waypoints.add(new PVector(300, 700));
+        waypoints.add(new PVector(500, 700));
+        waypoints.add(new PVector(500, 550));
+        waypoints.add(new PVector(100, 550));
       
-        map = new Map(waypoints, 5);
+        map = new Map(waypoints, 7);
         towers = new ArrayList<>();
         bloons = new ArrayList<>();
         currency = 100;
