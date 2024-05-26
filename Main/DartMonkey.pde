@@ -27,7 +27,12 @@ public class DartMonkey extends Tower{
   }
   
   public void draw(){
+    println("Drawing DartMonkey at: " + x + ", " + y);
     fill(255);
     ellipse(x,y,20,20);
+  }
+  
+  public int getCost(){
+    return 0;
   }
 }
