@@ -26,7 +26,7 @@ void draw(){
 
 void mousePressed(){
   println("Mousse pressed at: " + mouseX + "," + mouseY);
-  game.placeTower("Dart Monkey", mouseX, mouseY);
+  game.placeTower("DartMonkey", mouseX, mouseY);
   
   
 }

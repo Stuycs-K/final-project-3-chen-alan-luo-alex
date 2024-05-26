@@ -51,6 +51,7 @@ public class Game{
     }
     public void placeTower(String towerName, int x, int y){
       Tower newTower = null;
+      println("Attempting to place tower: " + towerName + " at (" + x + "," + y + ")");
       if(towerName.equals("DartMonkey")){
         newTower = new DartMonkey(x,y);
       }else if (towerName.equals("BombShooter")){
@@ -62,14 +63,14 @@ public class Game{
       }
       
       if(newTower != null){
-        println("New tower cost: " + newTower.getCost() + ", current currency: " + currency);
-        if(currency >= newTower.getCost()){
+        //println("New tower cost: " + newTower.getCost() + ", current currency: " + currency);
+        //if(currency >= newTower.getCost()){
           towers.add(newTower);
-          currency -= newTower.getCost();
+        //  currency -= newTower.getCost();
           println("tower placed at: " + x + "," + y);
-      }else{
-        println("not enough money");
-      }
+      //}else{
+      //  println("not enough money");
+      //}
       }else{
         println("tower failed to place");
       }

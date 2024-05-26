@@ -31,4 +31,8 @@ public class DartMonkey extends Tower{
     fill(255);
     ellipse(x,y,20,20);
   }
+  
+  public int getCost(){
+    return 0;
+  }
 }
