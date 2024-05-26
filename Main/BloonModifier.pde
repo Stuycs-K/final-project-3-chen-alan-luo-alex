@@ -1,6 +1,7 @@
 public class BloonModifier {
   private float duration;
   private String name;
+  private Bloon bloon;
   private JSONObject properties;
   
   public BloonModifier(String name, float duration) {
@@ -11,6 +12,11 @@ public class BloonModifier {
   
   public BloonModifier(String name) {
     this(name, -1);
+  }
+  
+  // Must call this after constructor!
+  public void setBloon(Bloon bloon) {
+    this.bloon = bloon;
   }
   
   public void setDuration(float duration) {
@@ -34,23 +40,61 @@ public class BloonModifier {
     return this.name;
   }
   
-  public void drawVisuals(Bloon bloon) {
-    
+  public void drawVisuals() {
+    return;
   }
   
   public void onStackAttempt(BloonModifier otherModifier) {
-    
+    return;
   }
   
   public void onStep() {
-    
+    return;
   }
   
   public void onRemove() {
-    
+    return;
   }
   
   public void onApply() {
+    return;
+  }
+}
+
+public class Camo extends BloonModifier {
+  public Camo() {
+    super("camo");
+  }
+  
+  public void drawVisuals(Bloon bloon) {
+    
+  }
+}
+
+public class Regrow extends BloonModifier {
+  private float regrowRate;
+  private int maxLayerId;
+  
+  public Regrow() {
+    super("regrow");
+  }
+  
+  public void drawVisuals() {
+    
+  }
+  
+  public float getRegrowRate() {
+    return regrowRate; 
+  }
+  
+  public void onStackAttempt(Regrow otherModifier) {
+    float otherRegrowRate = otherModifier.getRegrowRate();
+    if (otherRegrowRate < regrowRate) {
+      regrowRate = otherRegrowRate;
+    }
+  }
+  
+  public void onStep() {
     
   }
 }
