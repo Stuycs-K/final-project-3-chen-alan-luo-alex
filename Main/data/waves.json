@@ -402,5 +402,119 @@
                 }
             }
         }
+    },
+    {
+        "wave": 21,
+        "spawns": {
+            "pink": {
+                "count": 23,
+                "timeBetweenSpawns": 0.15,
+                "layerName": "Pink"
+            },
+            "zebra": {
+                "count": 4,
+                "layerName": "Zebra",
+                "timeBetweenSpawns": 0.4,
+                "waitForAllSpawned": "pink"
+            }
+        }
+    },
+    {
+        "wave": 22,
+        "spawns": {
+            "red": {
+                "count": 100,
+                "timeBetweenSpawns": 0.1,
+                "layerName": "Red"
+            },
+            "blue": {
+                "count": 60,
+                "layerName": "Blue",
+                "timeBetweenSpawns": 0.1,
+                "waitForAllSpawned": "red"
+            },
+            "green": {
+                "count": 45,
+                "layerName": "Green",
+                "timeBetweenSpawns": 0.1,
+                "waitForAllSpawned": "blue"
+            },
+            "yellow": {
+                "count": 45,
+                "layerName": "Yellow",
+                "timeBetweenSpawns": 0.1,
+                "waitForAllSpawned": "green"
+            }
+        }
+    },
+    {
+        "wave": 23,
+        "spawns": {
+            "yellow": {
+                "count": 50,
+                "timeBetweenSpawns": 0.1,
+                "layerName": "Yellow"
+            },
+            "regrowYellow": {
+                "count": 15,
+                "layerName": "Yellow",
+                "timeBetweenSpawns": 0.1,
+                "waitForAllSpawned": "yellow",
+                "modifiers": {
+                    "regrow": true
+                }
+            }
+        }
+    },
+    {
+        "wave": 24,
+        "spawns": {
+            "lead": {
+                "count": 6,
+                "timeBetweenSpawns": 0.5,
+                "layerName": "Lead"
+            },
+            "pink": {
+                "count": 10,
+                "layerName": "Pink",
+                "timeBetweenSpawns": 0.4,
+                "waitForAllSpawned": "lead",
+                "modifiers": {
+                    "camo": true
+                }
+            }
+        }
+    },
+    {
+        "wave": 25,
+        "spawns": {
+            "black": {
+                "count": 8,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Black"
+            },
+            "white": {
+                "count": 8,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "White",
+                "waitForAllSpawned": "black"
+            },
+            "zebra": {
+                "count": 8,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Zebra",
+                "waitForAllSpawned": "white"
+            },
+            "regrowZebra": {
+                "count": 2,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Zebra",
+                "waitForAllSpawned": "zebra",
+                "waitBeforeSpawning": 3,
+                "modifiers": {
+                    "regrow": true
+                }
+            }
+        }
     }
 ]

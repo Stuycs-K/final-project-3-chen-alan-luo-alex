@@ -38,7 +38,7 @@ public class Game{
     }
 
     public void startGame(){
-      waveManager.setWave(19);
+      waveManager.setWave(1);
       waveManager.startNextWave();
     }
     
