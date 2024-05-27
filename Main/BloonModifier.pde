@@ -39,6 +39,11 @@ public class BloonModifier {
   
   public BloonModifier clone() {
     BloonModifier copy = new BloonModifier(name, duration);
+    
+    if (customProperties != null) {
+      copy.setCustomProperties(customProperties);
+    }
+
     return copy;
   }
   
@@ -84,6 +89,10 @@ public class Camo extends BloonModifier {
   public Camo() {
     super("camo");
     this.blendedImage = false;
+  }
+  
+  public Camo clone() {
+    return new Camo(); 
   }
   
   public void drawVisuals() {
@@ -135,6 +144,12 @@ public class Regrow extends BloonModifier {
     this.regrowRate = regrowRate;
   }
   
+  public Regrow clone() {
+    Regrow newModifier = new Regrow(getCustomProperties().getString("maxLayerName"));
+    
+    return newModifier;
+  }
+  
   public void drawVisuals() {
     
   }
@@ -151,9 +166,18 @@ public class Regrow extends BloonModifier {
   }
   
   public void onStep() {
-    BloonPropertyTable properties = getBloon().getProperties();
+    Bloon bloon = getBloon();
+    BloonPropertyTable properties = bloon.getProperties();
+    
     if (properties.getLayerName().equals(getCustomProperties().getString("maxLayerName"))) {
       return;
+    }
+    
+    if (cooldown >= regrowRate) {
+      bloon.setLayer(properties.getLayerId() + 1);
+      cooldown = 0;
+    } else {
+      cooldown++;
     }
   }
 }
