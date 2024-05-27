@@ -1,6 +1,7 @@
 Game game;
 BloonPropertyLookup bloonPropertyLookup;
 BloonSpawner bloonSpawner;
+ArrayList<Tower>towers;
 
 void setup(){
   size(1200, 800);

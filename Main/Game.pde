@@ -65,8 +65,32 @@ public class Game{
       // Remove bloons that need to be removed
       bloons.removeAll(scheduledForRemoval);
       
+      //for(Tower tower: towers){
+      //  tower.attack(bloons);
+      //}
+      
+      for(Tower tower: towers){
+        for (Projectile projectile: tower.projectiles){
+          projectile.update();
+        }
+      }
+      
+      for(Tower tower: towers){
+        tower.attack(bloons);
+        ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
+        for(Projectile projectile : tower.projectiles){
+          projectile.update();
+          if(projectile.finished){
+            projectilesToRemove.add(projectile);
+          }
+        }
+        tower.projectiles.removeAll(projectilesToRemove);
+      }
+      
       // Insert all bloons that have been created
       bloonSpawner.emptyQueue();
+      
+      
     }
     
     public void placeTower(String towerName, int x, int y){
@@ -87,7 +111,7 @@ public class Game{
         //if(currency >= newTower.getCost()){
           towers.add(newTower);
         //  currency -= newTower.getCost();
-          println("tower placed at: " + x + "," + y);
+          //println("tower placed at: " + x + "," + y);
       //}else{
       //  println("not enough money");
       //}
@@ -108,9 +132,10 @@ public class Game{
     }
     
     public void render() {
+      
       map.drawPath();
       for (Tower tower: towers){
-        println("Drawing tower at: " + tower.x + ", " + tower.y);
+        //println("Drawing tower at: " + tower.x + ", " + tower.y);
         tower.draw();
     }
     }
