@@ -23,7 +23,11 @@ private class WaveSpawn extends Thread {
     int count = waveSpawnInformation.getInt("count");
     String layerName = waveSpawnInformation.getString("layerName");
     JSONObject modifiers = waveSpawnInformation.getJSONObject("modifiers");
-    long timeBetweenSpawns = (long) (waveSpawnInformation.getFloat("timeBetweenSpawns") * 1000);
+    
+    long timeBetweenSpawns = 500;
+    if (!waveSpawnInformation.isNull("timeBetweenSpawns")) {
+      timeBetweenSpawns = (long) (waveSpawnInformation.getFloat("timeBetweenSpawns") * 1000);
+    }
     
     JSONObject bloonSpawnInformation = new JSONObject();
     bloonSpawnInformation.setString("layerName", layerName);
@@ -34,7 +38,10 @@ private class WaveSpawn extends Thread {
     try {
       for (int i = 0; i < count; i++) {
         bloonSpawner.spawn(bloonSpawnInformation);
-        Thread.sleep(timeBetweenSpawns);
+        
+        if (count > 1) {
+          Thread.sleep(timeBetweenSpawns);
+        }
       }
     } catch (InterruptedException exception) {
       finishedSpawning = true;
