@@ -1,4 +1,4 @@
-public class Projectile{
+ public class Projectile{
   float x,y;
   float targetX, targetY;
   int speed;

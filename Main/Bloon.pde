@@ -38,15 +38,7 @@ public class Bloon {
     BloonPropertyTable properties = bloonPropertyLookup.getProperties(layerName);
     this.propertiesTable = properties;
     
-    // Setting fields from the JSON
-    this.sprite = properties.getSprite().copy();
-    
-    this.speed = properties.getFloatProperty("speed", BASE_BLOON_SPEED);
-    this.speed *= properties.getFloatProperty("speedMultiplier", 1); // There must be a speed multiplier key if no speed was defined
-
-    this.layerHealth = properties.getIntProperty("layerHealth", 1);
-
-    this.layerId = properties.getLayerId();
+    applyProperties();
     
     JSONObject spawnPosition = spawnParams.getJSONObject("spawnPosition");
     if (spawnPosition != null) {
@@ -71,6 +63,17 @@ public class Bloon {
   // Spawn a bloon at a particular position
   public Bloon(String layerName, PVector position) {
     this(toSpawnParams(layerName, position));
+  }
+  
+  public void applyProperties() {
+    this.sprite = propertiesTable.getSprite().copy();
+    
+    this.speed = propertiesTable.getFloatProperty("speed", BASE_BLOON_SPEED);
+    this.speed *= propertiesTable.getFloatProperty("speedMultiplier", 1); // There must be a speed multiplier key if no speed was defined
+
+    this.layerHealth = propertiesTable.getIntProperty("layerHealth", 1);
+
+    this.layerId = propertiesTable.getLayerId();
   }
   
   public boolean reachedEnd() {
@@ -112,6 +115,18 @@ public class Bloon {
     
     imageMode(CENTER);
     image(sprite, position.x, position.y);
+  }
+  
+  public void setLayer(int id) {
+    String layerName = bloonPropertyLookup.getLayerNameFromId(id);
+    setLayer(layerName);
+  }
+  
+  public void setLayer(String layerName) {
+    BloonPropertyTable properties = bloonPropertyLookup.getProperties(layerName);
+    this.propertiesTable = properties;
+    
+    applyProperties();
   }
   
   public void damage(float count) {

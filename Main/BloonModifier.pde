@@ -2,16 +2,26 @@ public class BloonModifier {
   private float duration;
   private String name;
   private Bloon bloon;
-  private JSONObject properties;
+  
+  private JSONObject baseProperties;
+  private JSONObject customProperties;
   
   public BloonModifier(String name, float duration) {
     this.duration = duration;
     this.name = name;
-    this.properties = bloonPropertyLookup.getModifier(name);
+    this.baseProperties = bloonPropertyLookup.getModifier(name);
   }
   
   public BloonModifier(String name) {
     this(name, -1);
+  }
+  
+  public void setCustomProperties(JSONObject customProperties) {
+    this.customProperties = customProperties; 
+  }
+  
+  public JSONObject getCustomProperties() {
+    return customProperties;
   }
   
   // Must call this after constructor!
@@ -33,7 +43,7 @@ public class BloonModifier {
   }
   
   public boolean isHeritable() {
-    return properties.getBoolean("heritable"); 
+    return baseProperties.getBoolean("heritable"); 
   }
   
   public float getDuration() {
@@ -105,29 +115,45 @@ public class Camo extends BloonModifier {
 }
 
 public class Regrow extends BloonModifier {
-  private float regrowRate; // Ticks
-  private int maxLayerId;
+  private int regrowRate; // 1 layer per this number of ticks
+  private int cooldown;
   
-  public Regrow() {
+  public Regrow(String maxLayerName) {
     super("regrow");
+    
+    JSONObject properties = new JSONObject();
+    properties.setString("maxLayerName", maxLayerName);
+    
+    super.setCustomProperties(properties);
+    
+    this.regrowRate = 60;
+    this.cooldown = 0;
+  }
+  
+  public Regrow(String maxLayerName, int regrowRate) {
+    this(maxLayerName);
+    this.regrowRate = regrowRate;
   }
   
   public void drawVisuals() {
     
   }
   
-  public float getRegrowRate() {
+  public int getRegrowRate() {
     return regrowRate; 
   }
   
   public void onStackAttempt(Regrow otherModifier) {
-    float otherRegrowRate = otherModifier.getRegrowRate();
+    int otherRegrowRate = otherModifier.getRegrowRate();
     if (otherRegrowRate < regrowRate) {
       regrowRate = otherRegrowRate;
     }
   }
   
   public void onStep() {
-    
+    BloonPropertyTable properties = getBloon().getProperties();
+    if (properties.getLayerName().equals(getCustomProperties().getString("maxLayerName"))) {
+      return;
+    }
   }
 }

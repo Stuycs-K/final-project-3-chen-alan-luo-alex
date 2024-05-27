@@ -25,6 +25,10 @@ public class BloonPropertyLookup {
     }
   }
   
+  public String getLayerNameFromId(int id) {
+    return bloonPropertyTables.get(id).getLayerName();
+  }
+  
   public BloonPropertyTable getProperties(String layerName) {
      for (BloonPropertyTable propertyTable: bloonPropertyTables) {
        if (propertyTable.getLayerName().equals(layerName)) {

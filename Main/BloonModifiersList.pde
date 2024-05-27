@@ -85,7 +85,7 @@ public class BloonModifiersList {
     BloonModifier newModifier;
     switch (name) {
       case "regrow":
-        newModifier = new Regrow();
+        newModifier = new Regrow(bloon.getProperties().getLayerName());
         break;
       case "camo":
         newModifier = new Camo();
