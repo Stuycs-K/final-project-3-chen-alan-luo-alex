@@ -17,7 +17,7 @@ void setup(){
   
   JSONObject modifiers = new JSONObject();
   modifiers.setBoolean("regrow", true);
-  //modifiers.setBoolean("camo", true);
+  modifiers.setBoolean("camo", true);
   spawnInformation.setJSONObject("modifiers", modifiers);
   //spawnInformation.setInt("count", 5);
   bloonSpawner.spawn(spawnInformation);

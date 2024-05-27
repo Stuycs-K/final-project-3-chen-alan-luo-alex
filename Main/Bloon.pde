@@ -66,7 +66,7 @@ public class Bloon {
   }
   
   public void applyProperties() {
-    this.sprite = propertiesTable.getSprite().copy();
+    this.sprite = propertiesTable.getSprite();
     
     this.speed = propertiesTable.getFloatProperty("speed", BASE_BLOON_SPEED);
     this.speed *= propertiesTable.getFloatProperty("speedMultiplier", 1); // There must be a speed multiplier key if no speed was defined

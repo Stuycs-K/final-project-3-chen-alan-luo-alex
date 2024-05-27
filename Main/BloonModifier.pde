@@ -69,7 +69,6 @@ public class BloonModifier {
   
   public void onStep() {
     drawVisuals();
-    return;
   }
   
   public void onRemove() {
@@ -84,11 +83,9 @@ public class BloonModifier {
 
 public class Camo extends BloonModifier {
   private static final String camoLayerPath = "images/camo.png";
-  private boolean blendedImage;
   
   public Camo() {
     super("camo");
-    this.blendedImage = false;
   }
   
   public Camo clone() {
@@ -96,30 +93,12 @@ public class Camo extends BloonModifier {
   }
   
   public void drawVisuals() {
-    if (blendedImage == true) {
-      return; 
-    }
+    Bloon bloon = getBloon();
     
-    PImage bloonSprite = getBloon().getSprite();
-    PImage camoLayerImage = loadImage(dataPath(camoLayerPath));
-    //bloonSprite.mask(camoLayerImage);
-    bloonSprite.blend(camoLayerImage, 0, 0, camoLayerImage.width, camoLayerImage.height, 0, 0, bloonSprite.width, bloonSprite.height, OVERLAY);
+    BloonPropertyTable properties = bloon.getProperties();
+    PImage camo = properties.getSpriteVariant("camo");
     
-    PImage originalSprite = getBloon().getProperties().getSprite();
-    for (int x = 0; x < originalSprite.width; x++) {
-      for (int y = 0; y < originalSprite.height; y++) {
-        color c = originalSprite.pixels[x + y];
-        float a = alpha(c);
-        
-        if (a < 1e-2) {
-          
-          bloonSprite.pixels[x + y] = color(150, 0, 0, 0);
-        }
-      }
-    }
-    bloonSprite.updatePixels();
-    
-    blendedImage = true;
+    bloon.setSprite(camo);
   }
 }
 
@@ -151,7 +130,12 @@ public class Regrow extends BloonModifier {
   }
   
   public void drawVisuals() {
+    Bloon bloon = getBloon();
     
+    BloonPropertyTable properties = bloon.getProperties();
+    PImage regrowSprite = properties.getSpriteVariant("regrow");
+    
+    bloon.setSprite(regrowSprite);
   }
   
   public int getRegrowRate() {
