@@ -11,6 +11,7 @@
     public ArrayList<Projectile> projectiles;
     
     
+    
     public Tower(int x, int y, int radius, int fireRate, int damage, int attackSpeed){
       this.x = x;
       this.y = y;
