@@ -34,8 +34,10 @@ public class Projectile{
   
   
   public void drawProjectile(){
-    
+    pushStyle();
+    fill(0,255,0);
     ellipse(x,y,5,5);
+    popStyle();
   }
   
 }

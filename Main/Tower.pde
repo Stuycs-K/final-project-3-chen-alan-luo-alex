@@ -55,7 +55,7 @@
     }
   
     public void draw(){
-      
+      fill(255);
       ellipse(x,y,20,20);
       for(Projectile projectile : projectiles){
         projectile.drawProjectile();
