@@ -19,7 +19,20 @@ public class DartMonkey extends Tower{
     } else if (upgradeLevel == 2){
       if(path==1){
         radius+=25;
-        targetFilter.a
+        targetFilter.setCamoDetection(true);
+      }else if(path == 2){
+        damage += 1;
+      }
+    } else if(upgradeLevel == 3){
+      if(path ==1){
+        fireRate = 154;
+        damage = 18;
+      } else if (path == 2){
+        damage = 3;
+      }
+    }
+    upgradeLevel++;
+  }
   
   
   

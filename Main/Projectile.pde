@@ -21,11 +21,22 @@
   }
   
   public void update(){
-    if (distance>0){
-      float stepX = (dx/distance) * speed;
-      float stepY = (dy/distance) * speed;
-      x+= stepX;
-      y += stepY;
+    if(!finished){
+    
+      if (distance>0){
+        float stepX = (dx/distance) * speed;
+        float stepY = (dy/distance) * speed;
+        x+= stepX;
+        y += stepY;
+        
+       for(int i = 0; i < bloons.size(); i++){
+         Bloon bloon = bloons.get(i);
+         float distance = dist(x,y,bloon.getPosition().x, bloon.getPosition().y);
+         if(distance<5){
+           bloon.damage(damage);
+           finished = true;
+           break;
+         }
       if(dist(x,y,targetX,targetY) < speed){
         finished = true;
       }
