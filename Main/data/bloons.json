@@ -4,7 +4,12 @@
         "layerName": "Red",
         "layerHealth": 1,
         "speed": 100,
-        "sprite": "images/bloons/red.png"
+        "sprite": "images/bloons/red.png",
+        "spriteVariants": {
+            "camo": "images/camo/red.png",
+            "regrow": "images/regrow/red.png",
+            "camoRegrow": "images/camoRegrow/red.png"
+        }
     },
     {
         "id": 1,
@@ -12,6 +17,11 @@
         "layerHealth": 1,
         "speedMultiplier": 1.4,
         "sprite": "images/bloons/blue.png",
+        "spriteVariants": {
+            "camo": "images/camo/blue.png",
+            "regrow": "images/regrow/blue.png",
+            "camoRegrow": "images/camoRegrow/blue.png"
+        },
         "children": [
             {
                 "count": 1,
@@ -25,6 +35,11 @@
         "layerHealth": 1,
         "speedMultiplier": 1.8,
         "sprite": "images/bloons/green.png",
+        "spriteVariants": {
+            "camo": "images/camo/green.png",
+            "regrow": "images/regrow/green.png",
+            "camoRegrow": "images/camoRegrow/green.png"
+        },
         "children": [
             {
                 "count": 1,
@@ -38,6 +53,11 @@
         "layerHealth": 1,
         "speedMultiplier": 3.2,
         "sprite": "images/bloons/yellow.png",
+        "spriteVariants": {
+            "camo": "images/camo/yellow.png",
+            "regrow": "images/regrow/yellow.png",
+            "camoRegrow": "images/camoRegrow/yellow.png"
+        },
         "children": [
             {
                 "count": 1,
@@ -51,6 +71,11 @@
         "layerHealth": 1,
         "speedMultiplier": 3.5,
         "sprite": "images/bloons/pink.png",
+        "spriteVariants": {
+            "camo": "images/camo/pink.png",
+            "regrow": "images/regrow/pink.png",
+            "camoRegrow": "images/camoRegrow/pink.png"
+        },
         "children": [
             {
                 "count": 1,
@@ -64,6 +89,11 @@
         "layerHealth": 1,
         "speedMultiplier": 1.8,
         "sprite": "images/bloons/black.png",
+        "spriteVariants": {
+            "camo": "images/camo/black.png",
+            "regrow": "images/regrow/black.png",
+            "camoRegrow": "images/camoRegrow/black.png"
+        },
         "modifiers": {
             "blastImmunity": true
         },
@@ -80,6 +110,11 @@
         "layerHealth": 1,
         "speedMultiplier": 2,
         "sprite": "images/bloons/white.png",
+        "spriteVariants": {
+            "camo": "images/camo/white.png",
+            "regrow": "images/regrow/white.png",
+            "camoRegrow": "images/camoRegrow/white.png"
+        },
         "modifiers": {
             "freezeImmunity": true
         },
@@ -96,6 +131,11 @@
         "layerHealth": 1,
         "speedMultiplier": 1.8,
         "sprite": "images/bloons/zebra.png",
+        "spriteVariants": {
+            "camo": "images/camo/zebra.png",
+            "regrow": "images/regrow/zebra.png",
+            "camoRegrow": "images/camoRegrow/zebra.png"
+        },
         "modifiers": {
             "freezeImmunity": true,
             "blastImmunity": true
@@ -117,6 +157,11 @@
         "layerHealth": 1,
         "speedMultiplier": 1,
         "sprite": "images/bloons/lead.png",
+        "spriteVariants": {
+            "camo": "images/camo/lead.png",
+            "regrow": "images/regrow/lead.png",
+            "camoRegrow": "images/camoRegrow/lead.png"
+        },
         "modifiers": {
             "sharpImmunity": true
         },
@@ -133,6 +178,11 @@
         "layerHealth": 1,
         "speedMultiplier": 2.2,
         "sprite": "images/bloons/rainbow.png",
+        "spriteVariants": {
+            "camo": "images/camo/rainbow.png",
+            "regrow": "images/regrow/rainbow.png",
+            "camoRegrow": "images/camoRegrow/rainbow.png"
+        },
         "children": [
             {
                 "count": 2,
@@ -146,6 +196,11 @@
         "layerHealth": 10,
         "speedMultiplier": 2.5,
         "sprite": "images/bloons/ceramic.png",
+        "spriteVariants": {
+            "camo": "images/camo/ceramic.png",
+            "regrow": "images/regrow/ceramic.png",
+            "camoRegrow": "images/camoRegrow/ceramic.png"
+        },
         "modifiers": {
             "isCeramic": true
         },
