@@ -10,13 +10,16 @@ public class DartMonkey extends Tower{
   
   
   public void upgrade(int path){
-    if (path == 1){
-      String[] upgradesPathOne = new String []{"Default","Long Range Darts", "Enchanced Eyesight","Spike-O-Pult","Juggernaut"};
-    }
-    if(path == 2){
-      String[] upgradePathTwo = new String[]{"Sharp Shots","Razor Sharp Shots","Triple Darts","Super Monkey Fan Club"};
-    }
-  }
+    if(upgradeLevel == 1){
+      if(path==1){
+        radius+=25;
+      }else if(path ==2){
+        damage += 1; //not sure how to implement sharpshots yet
+      }
+    } else if (upgradeLevel == 2){
+      if(path==1){
+        radius+=25;
+        targetFilter.a
   
   
   

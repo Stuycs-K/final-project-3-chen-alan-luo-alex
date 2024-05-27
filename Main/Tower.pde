@@ -29,6 +29,7 @@
       attackCooldown--;
       if(attackCooldown <=0){
         for (Bloon targetBloon: bloons){
+          
           float distance = dist(x,y,targetBloon.position.x,targetBloon.position.y);
             if(distance<=radius){
               projectiles.add(new Projectile(x,y,targetBloon.position.x,targetBloon.position.y,damage));
