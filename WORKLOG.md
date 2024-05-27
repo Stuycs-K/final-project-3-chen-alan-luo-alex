@@ -28,6 +28,10 @@
 - Add slightly more functionality for BloonModifiers
 - Write WaveManager, which reads data to spawn Bloons from waves.json
 
+## 5/26/2024
+
+- Work on Camo and Regrow modifiers
+
 
 ## Alex Luo
 
