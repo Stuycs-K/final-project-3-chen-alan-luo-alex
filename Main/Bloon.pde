@@ -39,7 +39,7 @@ public class Bloon {
     this.propertiesTable = properties;
     
     // Setting fields from the JSON
-    this.sprite = properties.getSprite();
+    this.sprite = properties.getSprite().copy();
     
     this.speed = properties.getFloatProperty("speed", BASE_BLOON_SPEED);
     this.speed *= properties.getFloatProperty("speedMultiplier", 1); // There must be a speed multiplier key if no speed was defined
@@ -79,6 +79,14 @@ public class Bloon {
   
   public boolean isDead() {
     return isDead;
+  }
+  
+  public PImage getSprite() {
+     return sprite;
+  }
+  
+  public void setSprite(PImage sprite) {
+    this.sprite = sprite;
   }
   
   public boolean shouldRemove() {
@@ -122,6 +130,7 @@ public class Bloon {
   
   public void step() {
     move();
+    modifiersList.stepModifiers();
     render();
   }
   

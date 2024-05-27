@@ -1,6 +1,7 @@
 Game game;
 BloonPropertyLookup bloonPropertyLookup;
 BloonSpawner bloonSpawner;
+ArrayList<Tower>towers;
 
 void setup(){
   size(1200, 800);
@@ -12,7 +13,11 @@ void setup(){
   game.startGame();
   
   JSONObject spawnInformation = new JSONObject();
-  spawnInformation.setString("layerName", "Rainbow");
+  spawnInformation.setString("layerName", "Green");
+  
+  JSONObject modifiers = new JSONObject();
+  modifiers.setBoolean("camo", true);
+  spawnInformation.setJSONObject("modifiers", modifiers);
   //spawnInformation.setInt("count", 5);
   bloonSpawner.spawn(spawnInformation);
 }

@@ -14,7 +14,7 @@ public class BloonModifiersList {
   
   public void applyModifierVisuals() {
     for (BloonModifier modifier: modifiersList) {
-      modifier.drawVisuals(this.bloon);
+      modifier.drawVisuals();
     }
   }
   
@@ -82,11 +82,23 @@ public class BloonModifiersList {
   }
   
   public void addModifier(String name) {
-    BloonModifier newModifier = new BloonModifier(name);
-    modifiersList.add(newModifier);
+    BloonModifier newModifier;
+    switch (name) {
+      case "regrow":
+        newModifier = new Regrow();
+        break;
+      case "camo":
+        newModifier = new Camo();
+        break;
+      default:
+        newModifier = new BloonModifier(name);
+    }
+
+    addModifier(newModifier);
   }
   
   public void addModifier(BloonModifier newModifier) {
+     newModifier.setBloon(bloon);
      modifiersList.add(newModifier);
   }
   
