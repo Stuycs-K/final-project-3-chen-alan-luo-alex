@@ -9,6 +9,8 @@ public class BloonPropertyTable {
     String spritePath = data.getString("sprite");
     this.sprite = loadImage(dataPath(spritePath));
     this.sprite.resize(this.sprite.width / 2, this.sprite.height / 2);
+    
+    this.sprite.loadPixels();
   }
   
   public JSONArray getChildren() {
