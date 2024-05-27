@@ -21,7 +21,7 @@ public class BloonSpawner {
     
     // Get segments
     PVector startPosition = parent.getPosition();
-    int currentMapSegmentId = game.getMap().getSegmentIdFromPosition(startPosition);
+    int currentMapSegmentId = parent.getPositionId();
 
     for (int j = 0; j < numberOfChildren; j++) {
       float distanceOffset = -1 * spawnSpacing * j; // The first child will spawn in the exact same position; subsequent bloons will spawn behind

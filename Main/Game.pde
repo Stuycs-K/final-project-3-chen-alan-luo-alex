@@ -22,7 +22,6 @@ public class Game{
         waypoints.add(new PVector(300, 700));
         waypoints.add(new PVector(500, 700));
         waypoints.add(new PVector(500, 550));
-        waypoints.add(new PVector(100, 550));
       
         map = new Map(waypoints, 7);
         towers = new ArrayList<>();

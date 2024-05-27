@@ -100,6 +100,10 @@ public class Bloon {
     return position;
   }
   
+  public int getPositionId() {
+    return positionId;
+  }
+  
   public BloonPropertyTable getProperties() {
     return propertiesTable; 
   }
