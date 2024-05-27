@@ -70,7 +70,7 @@ public class Map {
     if (id >= mapSegments.size()) {
       return null;
     }
-    return mapSegments.get(id); 
+    return mapSegments.get(id);
   }
   
   public MapSegment getMapSegmentFromPosition(PVector position) {
