@@ -1,10 +1,11 @@
 public class BloonModifiersList {
-  private ArrayList<BloonModifier> modifiersList;
+  private HashMap<String, BloonModifier> modifierMap;
   private Bloon bloon;
   
   public BloonModifiersList(Bloon bloon) {
     this.bloon = bloon;
-    this.modifiersList = new ArrayList<BloonModifier>();
+
+    this.modifierMap = new HashMap<String, BloonModifier>();
     
     // Set default properties
     BloonPropertyTable properties = bloon.getProperties();
@@ -12,20 +13,36 @@ public class BloonModifiersList {
     addModifiers(modifiers);
   }
   
-  public void applyModifierVisuals() {
-    for (BloonModifier modifier: modifiersList) {
-      modifier.drawVisuals();
+  public void setSprite() {
+    String spriteName = "";
+    if (hasModifier("camo")) {
+      spriteName += "camo";
     }
+    
+    if (hasModifier("regrow")) {
+      if (spriteName.length() == 0) {
+        spriteName += "regrow";
+      } else {
+        spriteName += "Regrow";
+      }
+    }
+    
+    PImage sprite = bloon.getProperties().getSpriteVariant(spriteName);
+    if (sprite == null) {
+      return;
+    }
+    
+    bloon.setSprite(sprite);
   }
   
-  public ArrayList<BloonModifier> getModifiers() {
-    return this.modifiersList;
+  public HashMap<String, BloonModifier> getModifiers() {
+    return this.modifierMap;
   }
   
   public ArrayList<BloonModifier> getHeritableModifiers() {
     ArrayList<BloonModifier> heritableModifiers = new ArrayList<BloonModifier>();
     
-    for (BloonModifier modifier : modifiersList) {
+    for (BloonModifier modifier : modifierMap.values()) {
       if (modifier.isHeritable()) {
         heritableModifiers.add(modifier); 
       }
@@ -34,29 +51,19 @@ public class BloonModifiersList {
   }
   
   public BloonModifier getModifierByName(String name) {
-    for (BloonModifier modifier: modifiersList) {
-      if (modifier.getModifierName().equals(name)) {
-        return modifier;
-      }
-    }
-    
-    return null;
+    return modifierMap.get(name);
   }
   
   public void stepModifiers() {
-    for (BloonModifier modifier: modifiersList) {
+    setSprite();
+    
+    for (BloonModifier modifier : modifierMap.values()) {
       modifier.onStep();
     }
   }
   
   public boolean hasModifier(String name) {
-    for (BloonModifier modifier: modifiersList) {
-      if (modifier.getModifierName().equals(name)) {
-        return true;
-      }
-    }
-    
-    return false;
+    return (modifierMap.get(name) != null);
   }
   
   public void copyModifiers(ArrayList<BloonModifier> modifiers) {
@@ -99,7 +106,7 @@ public class BloonModifiersList {
   
   public void addModifier(BloonModifier newModifier) {
      newModifier.setBloon(bloon);
-     modifiersList.add(newModifier);
+     modifierMap.put(newModifier.getName(), newModifier);
   }
   
   public void addModifierNoStack(BloonModifier newModifier) {

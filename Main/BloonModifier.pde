@@ -33,6 +33,10 @@ public class BloonModifier {
     return bloon;
   }
   
+  public String getName() {
+    return name;
+  }
+  
   public void setDuration(float duration) {
     this.duration = duration;
   }
@@ -92,14 +96,21 @@ public class Camo extends BloonModifier {
     return new Camo(); 
   }
   
+  /*
   public void drawVisuals() {
     Bloon bloon = getBloon();
-    
     BloonPropertyTable properties = bloon.getProperties();
+    
+    // Already a camo sprite
+    String currentSpriteName = properties.getSpriteVariantName(bloon.getSprite());
+    if (currentSpriteName.indexOf("camo") != -1) {
+      return; 
+    }
+    
     PImage camo = properties.getSpriteVariant("camo");
     
     bloon.setSprite(camo);
-  }
+  }*/
 }
 
 public class Regrow extends BloonModifier {
@@ -129,6 +140,7 @@ public class Regrow extends BloonModifier {
     return newModifier;
   }
   
+  /*
   public void drawVisuals() {
     Bloon bloon = getBloon();
     
@@ -136,7 +148,7 @@ public class Regrow extends BloonModifier {
     PImage regrowSprite = properties.getSpriteVariant("regrow");
     
     bloon.setSprite(regrowSprite);
-  }
+  }*/
   
   public int getRegrowRate() {
     return regrowRate; 

@@ -4,6 +4,7 @@ public class BloonPropertyTable {
   private PImage sprite;
   
   private HashMap<String, PImage> spriteVariantMap;
+  private HashMap<PImage, String> spriteVariantReverseMap;
   
   public BloonPropertyTable(JSONObject data) {
     this.data = data;
@@ -14,6 +15,8 @@ public class BloonPropertyTable {
     
     // Load sprite variants
     spriteVariantMap = new HashMap<String, PImage>();
+    spriteVariantReverseMap = new HashMap<PImage, String>();
+    
     JSONObject spriteVariants = data.getJSONObject("spriteVariants");
     
     Set<String> keySet = spriteVariants.keys();
@@ -21,7 +24,9 @@ public class BloonPropertyTable {
       String path = spriteVariants.getString(keyName);
       PImage loadedImage = loadImage(dataPath(path));
       loadedImage.resize(loadedImage.width / 3, loadedImage.height / 3);
+      
       spriteVariantMap.put(keyName, loadedImage);
+      spriteVariantReverseMap.put(loadedImage, keyName);
     }
   }
   
@@ -31,6 +36,10 @@ public class BloonPropertyTable {
   
   public PImage getSpriteVariant(String variantName) {
     return spriteVariantMap.get(variantName); 
+  }
+  
+  public String getSpriteVariantName(PImage image) {
+    return spriteVariantReverseMap.get(image); 
   }
   
   public int getIntProperty(String keyName, int defaultValue) {
