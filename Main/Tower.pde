@@ -20,7 +20,7 @@
       this.fireRate = fireRate;
       this.damage = damage;
       this.attackSpeed = attackSpeed;
-      this.upgradeLevel = 1;
+      this.upgradeLevel = 0;
       this.attackCooldown = 0;
       this.projectiles = new ArrayList<Projectile>();
       this.targetFilter = new TowerTargetFilter();
@@ -45,6 +45,7 @@
         }
       
     }
+    
     
     
     

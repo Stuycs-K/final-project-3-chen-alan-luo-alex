@@ -1,7 +1,7 @@
 public class DartMonkey extends Tower{
   
   public DartMonkey (int x, int y){
-    super(x,y,150,20,5,10);
+    super(x,y,200,20,1,10);
   }
   
   public void attack(ArrayList<Bloon> bloon){

@@ -42,38 +42,28 @@ public class Game{
       waveManager.startNextWave();
     }
     
-    public void update(){
+     public void update(){
       // TODO
       if (waveManager.waveFinishedSpawning()) {
         waveManager.startNextWave();
       }
       
       ArrayList<Bloon> scheduledForRemoval = new ArrayList<Bloon>();
-      for(int i = bloons.size() -1; i>= 0; i--){
-        Bloon bloon = bloons.get(i);
-        if(bloon.shouldRemove()){
+      for (Bloon bloon : bloons) {
+        if (bloon.shouldRemove()) {
           scheduledForRemoval.add(bloon);
-        }else{
-          bloon.step();
-          if(frameCount % 150 ==0){
-            bloon.damage(1);
-          }
+          continue;
         }
+        
+        bloon.step();
+        
+        //if (frameCount % 150 == 0) {
+        //  bloon.damage(1); 
+        //}
       }
-      //for (Bloon bloon : bloons) {
-      //  if (bloon.shouldRemove()) {
-      //    scheduledForRemoval.add(bloon);
-      //    continue;
-      //  }
-        
-      //  bloon.step();
-        
-      //  if (frameCount % 150 == 0) {
-      //    bloon.damage(1); 
-      //  }
-      //}
-      //// Remove bloons that need to be removed
+      // Remove bloons that need to be removed
       bloons.removeAll(scheduledForRemoval);
+      
       
      
       
@@ -132,10 +122,7 @@ public class Game{
     public void towerUpgrade(Tower tower){
 
     }
-    public void removeBloon(Bloon bloon){
-      bloons.remove(bloon);
-    }
-    
+
     public void render() {
       
       map.drawPath();

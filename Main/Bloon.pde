@@ -32,6 +32,7 @@ public class Bloon {
   private boolean isDead;
   private boolean reachedEnd;
   
+  
   public Bloon(JSONObject spawnParams) {
     String layerName = spawnParams.getString("layerName");
     
@@ -54,6 +55,7 @@ public class Bloon {
     
     // Modifiers
     this.modifiersList = new BloonModifiersList(this);
+    
   }
   
   public Bloon(String layerName) {
@@ -146,9 +148,6 @@ public class Bloon {
     float excessDamage = count - layerHealth;
     handleLayerDeath(excessDamage);
     
-    if(isDead){
-      game.removeBloon(this);
-    }
   }
   
   public void step() {
