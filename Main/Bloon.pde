@@ -23,6 +23,7 @@ public class Bloon {
   private float layerHealth;
   private float speed;
   private PImage sprite;
+  private float spriteRotation;
   private BloonModifiersList modifiersList;
   private BloonPropertyTable propertiesTable;
   
@@ -55,6 +56,7 @@ public class Bloon {
     
     // Modifiers
     this.modifiersList = new BloonModifiersList(this);
+    this.spriteRotation = 0;
     
   }
   
@@ -90,6 +92,12 @@ public class Bloon {
      return sprite;
   }
   
+  public PVector getMoveDirection() {
+    MapSegment segment = game.getMap().getMapSegment(positionId);
+    PVector direction = PVector.sub(segment.getEnd(), segment.getStart()).normalize();    
+    return direction;
+  }
+  
   public void setSprite(PImage sprite) {
     this.sprite = sprite;
   }
@@ -114,13 +122,22 @@ public class Bloon {
     return modifiersList;
   }
   
+  public void setSpriteRotation(float rotation) {
+    spriteRotation = rotation;
+  }
+  
   public void render() {
     if (isDead || reachedEnd) {
       return;
     }
     
+    pushMatrix();
     imageMode(CENTER);
+
+    rotate(spriteRotation);
+    
     image(sprite, position.x, position.y);
+    popMatrix();
   }
   
   public void setLayer(int id) {

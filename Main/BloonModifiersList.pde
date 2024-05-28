@@ -14,6 +14,16 @@ public class BloonModifiersList {
   }
   
   public void setSprite() {
+    if (hasModifier("isMoab")) {
+      PVector moveDirection = bloon.getMoveDirection();
+      
+      PVector base = new PVector(0, -1, 0);
+      float angle = PVector.angleBetween(base, moveDirection);
+      
+      bloon.setSpriteRotation(angle);
+      return;
+    }
+    
     String spriteName = "";
     if (hasModifier("camo")) {
       spriteName += "camo";
