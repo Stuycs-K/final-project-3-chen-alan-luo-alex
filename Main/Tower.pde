@@ -11,7 +11,7 @@
     public String currentUpgrade;
     public ArrayList<Projectile> projectiles;
     private TowerTargetFilter targetFilter;
-    public PImage sprite;
+    public ArrayList<PImage> sprites;
     
     
     
