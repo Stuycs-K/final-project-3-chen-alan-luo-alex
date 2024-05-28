@@ -1,0 +1,262 @@
+[
+    {
+        "id": 0,
+        "layerName": "Red",
+        "layerHealth": 1,
+        "speed": 100,
+        "sprite": "images/bloons/red.png",
+        "spriteVariants": {
+            "camo": "images/camo/red.png",
+            "regrow": "images/regrow/red.png",
+            "camoRegrow": "images/camoRegrow/red.png"
+        }
+    },
+    {
+        "id": 1,
+        "layerName": "Blue",
+        "layerHealth": 1,
+        "speedMultiplier": 1.4,
+        "sprite": "images/bloons/blue.png",
+        "spriteVariants": {
+            "camo": "images/camo/blue.png",
+            "regrow": "images/regrow/blue.png",
+            "camoRegrow": "images/camoRegrow/blue.png"
+        },
+        "children": [
+            {
+                "count": 1,
+                "layerName": "Red"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "layerName": "Green",
+        "layerHealth": 1,
+        "speedMultiplier": 1.8,
+        "sprite": "images/bloons/green.png",
+        "spriteVariants": {
+            "camo": "images/camo/green.png",
+            "regrow": "images/regrow/green.png",
+            "camoRegrow": "images/camoRegrow/green.png"
+        },
+        "children": [
+            {
+                "count": 1,
+                "layerName": "Blue"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "layerName": "Yellow",
+        "layerHealth": 1,
+        "speedMultiplier": 3.2,
+        "sprite": "images/bloons/yellow.png",
+        "spriteVariants": {
+            "camo": "images/camo/yellow.png",
+            "regrow": "images/regrow/yellow.png",
+            "camoRegrow": "images/camoRegrow/yellow.png"
+        },
+        "children": [
+            {
+                "count": 1,
+                "layerName": "Green"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "layerName": "Pink",
+        "layerHealth": 1,
+        "speedMultiplier": 3.5,
+        "sprite": "images/bloons/pink.png",
+        "spriteVariants": {
+            "camo": "images/camo/pink.png",
+            "regrow": "images/regrow/pink.png",
+            "camoRegrow": "images/camoRegrow/pink.png"
+        },
+        "children": [
+            {
+                "count": 1,
+                "layerName": "Yellow"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "layerName": "Black",
+        "layerHealth": 1,
+        "speedMultiplier": 1.8,
+        "sprite": "images/bloons/black.png",
+        "spriteVariants": {
+            "camo": "images/camo/black.png",
+            "regrow": "images/regrow/black.png",
+            "camoRegrow": "images/camoRegrow/black.png"
+        },
+        "modifiers": {
+            "blastImmunity": true
+        },
+        "children": [
+            {
+                "count": 2,
+                "layerName": "Pink"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "layerName": "White",
+        "layerHealth": 1,
+        "speedMultiplier": 2,
+        "sprite": "images/bloons/white.png",
+        "spriteVariants": {
+            "camo": "images/camo/white.png",
+            "regrow": "images/regrow/white.png",
+            "camoRegrow": "images/camoRegrow/white.png"
+        },
+        "modifiers": {
+            "freezeImmunity": true
+        },
+        "children": [
+            {
+                "count": 2,
+                "layerName": "Pink"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "layerName": "Zebra",
+        "layerHealth": 1,
+        "speedMultiplier": 1.8,
+        "sprite": "images/bloons/zebra.png",
+        "spriteVariants": {
+            "camo": "images/camo/zebra.png",
+            "regrow": "images/regrow/zebra.png",
+            "camoRegrow": "images/camoRegrow/zebra.png"
+        },
+        "modifiers": {
+            "freezeImmunity": true,
+            "blastImmunity": true
+        },
+        "children": [
+            {
+                "count": 1,
+                "layerName": "Black"
+            },
+            {
+                "count": 1,
+                "layerName": "White"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "layerName": "Lead",
+        "layerHealth": 1,
+        "speedMultiplier": 1,
+        "sprite": "images/bloons/lead.png",
+        "spriteVariants": {
+            "camo": "images/camo/lead.png",
+            "regrow": "images/regrow/lead.png",
+            "camoRegrow": "images/camoRegrow/lead.png"
+        },
+        "modifiers": {
+            "sharpImmunity": true
+        },
+        "children": [
+            {
+                "count": 2,
+                "layerName": "Black"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "layerName": "Rainbow",
+        "layerHealth": 1,
+        "speedMultiplier": 2.2,
+        "sprite": "images/bloons/rainbow.png",
+        "spriteVariants": {
+            "camo": "images/camo/rainbow.png",
+            "regrow": "images/regrow/rainbow.png",
+            "camoRegrow": "images/camoRegrow/rainbow.png"
+        },
+        "children": [
+            {
+                "count": 2,
+                "layerName": "Zebra"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "layerName": "Ceramic",
+        "layerHealth": 10,
+        "speedMultiplier": 2.5,
+        "sprite": "images/bloons/ceramic.png",
+        "spriteVariants": {
+            "camo": "images/camo/ceramic.png",
+            "regrow": "images/regrow/ceramic.png",
+            "camoRegrow": "images/camoRegrow/ceramic.png"
+        },
+        "modifiers": {
+            "isCeramic": true
+        },
+        "children": [
+            {
+                "count": 2,
+                "layerName": "Rainbow"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "layerName": "MOAB",
+        "layerHealth": 616,
+        "speedMultiplier": 1,
+        "sprite": "images/moabs/moab.png",
+        "modifiers": {
+            "isMoab": true
+        },
+        "children": [
+            {
+                "count": 4,
+                "layerName": "Ceramic"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "layerName": "BFB",
+        "layerHealth": 3164,
+        "speedMultiplier": 0.25,
+        "sprite": "images/moabs/bfb.png",
+        "modifiers": {
+            "isMoab": true
+        },
+        "children": [
+            {
+                "count": 4,
+                "layerName": "MOAB"
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "layerName": "ZOMG",
+        "layerHealth": 16656,
+        "speedMultiplier": 0.18,
+        "sprite": "images/moabs/zomg.png",
+        "modifiers": {
+            "isMoab": true
+        },
+        "children": [
+            {
+                "count": 4,
+                "layerName": "BFB"
+            }
+        ]
+    }
+]

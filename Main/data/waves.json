@@ -1,0 +1,520 @@
+[
+    {
+        "wave": 1,
+        "spawns": {
+            "red": {
+                "count": 20,
+                "timeBetweenSpawns": 0.7,
+                "layerName": "Red"
+            }
+        }
+    },
+    {
+        "wave": 2,
+        "spawns": {
+            "red": {
+                "count": 35,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Red"
+            }
+        }
+    },
+    {
+        "wave": 3,
+        "spawns": {
+            "red1": {
+                "count": 10,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Red"
+            },
+            "blue": {
+                "count": 5,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Blue",
+                "waitForAllSpawned": "red1"
+            },
+            "red2": {
+                "count": 15,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Red",
+                "waitForAllSpawned": "blue",
+                "waitBeforeSpawning": 2
+            }
+        }
+    },
+    {
+        "wave": 4,
+        "spawns": {
+            "red": {
+                "count": 35,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Red"
+            },
+            "blue": {
+                "count": 18,
+                "timeBetweenSpawns": 0.15,
+                "layerName": "Blue",
+                "waitBeforeSpawning": 3
+            }
+        }
+    },
+    {
+        "wave": 5,
+        "spawns": {
+            "blue1": {
+                "count": 10,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Blue"
+            },
+            "red": {
+                "count": 5,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Red",
+                "waitForAllSpawned": "blue1"
+            },
+            "blue2": {
+                "count": 17,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Blue",
+                "waitForAllSpawned": "red"
+            }
+        }
+    },
+    {
+        "wave": 6,
+        "spawns": {
+            "green": {
+                "count": 4,
+                "timeBetweenSpawns": 0.25,
+                "layerName": "Green"
+            },
+            "red": {
+                "count": 15,
+                "timeBetweenSpawns": 0.15,
+                "layerName": "Red",
+                "waitForAllSpawned": "green",
+                "waitBeforeSpawning": 2
+            },
+            "blue": {
+                "count": 15,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Blue",
+                "waitForAllSpawned": "red"
+            }
+        }
+    },
+    {
+        "wave": 7,
+        "spawns": {
+            "blue1": {
+                "count": 10,
+                "timeBetweenSpawns": 0.25,
+                "layerName": "Blue"
+            },
+            "green": {
+                "count": 5,
+                "timeBetweenSpawns": 0.7,
+                "layerName": "Green",
+                "waitForAllSpawned": "blue1",
+                "waitBeforeSpawning": 1
+            },
+            "red": {
+                "count": 20,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Red",
+                "waitForAllSpawned": "green"
+            },
+            "blue2": {
+                "count": 10,
+                "timeBetweenSpawns": 0.25,
+                "layerName": "Blue",
+                "waitForAllSpawned": "red"
+            }
+        }
+    },
+    {
+        "wave": 8,
+        "spawns": {
+            "green1": {
+                "count": 7,
+                "timeBetweenSpawns": 0.6,
+                "layerName": "Green"
+            },
+            "blue": {
+                "count": 20,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Blue",
+                "waitForAllSpawned": "green1"
+            },
+            "green2": {
+                "count": 7,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Green",
+                "waitForAllSpawned": "blue"
+            },
+            "red": {
+                "count": 20,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Red",
+                "waitForAllSpawned": "blue"
+            }
+        }
+    },
+    {
+        "wave": 9,
+        "spawns": {
+            "green": {
+                "count": 30,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Green"
+            }
+        }
+    },
+    {
+        "wave": 10,
+        "spawns": {
+            "blue": {
+                "count": 102,
+                "timeBetweenSpawns": 0.1,
+                "layerName": "Blue"
+            }
+        }
+    },
+    {
+        "wave": 11,
+        "spawns": {
+            "red": {
+                "count": 10,
+                "timeBetweenSpawns": 0.1,
+                "layerName": "Red"
+            },
+            "blue": {
+                "count": 10,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Blue",
+                "waitForAllSpawned": "red"
+            },
+            "green": {
+                "count": 12,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Green",
+                "waitForAllSpawned": "red",
+                "waitBeforeSpawning": 0.5
+            },
+            "yellow": {
+                "count": 3,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Yellow",
+                "waitForAllSpawned": "blue"
+            }
+        }
+    },
+    {
+        "wave": 12,
+        "spawns": {
+            "red": {
+                "count": 49,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Red"
+            },
+            "blue": {
+                "count": 15,
+                "timeBetweenSpawns": 0.5,
+                "layerName": "Blue",
+                "waitBeforeSpawning": 3
+            },
+            "green": {
+                "count": 10,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Green",
+                "waitForAllSpawned": "blue"
+            },
+            "yellow": {
+                "count": 9,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Yellow"
+            }
+        }
+    },
+    {
+        "wave": 13,
+        "spawns": {
+            "red": {
+                "count": 20,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Red"
+            },
+            "blue": {
+                "count": 15,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Blue",
+                "waitForAllSpawned": "red"
+            },
+            "green": {
+                "count": 12,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Green",
+                "waitForAllSpawned": "blue"
+            },
+            "yellow": {
+                "count": 10,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Yellow",
+                "waitForAllSpawned": "green"
+            },
+            "pink": {
+                "count": 5,
+                "timeBetweenSpawns": 0.4,
+                "layerName": "Pink",
+                "waitForAllSpawned": "green"
+            }
+        }
+    },
+    {
+        "wave": 14,
+        "spawns": {
+            "green": {
+                "count": 40,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Green"
+            },
+            "yellow": {
+                "count": 8,
+                "timeBetweenSpawns": 1,
+                "layerName": "Yellow"
+            }
+        }
+    },
+    {
+        "wave": 15,
+        "spawns": {
+            "yellow": {
+                "count": 12,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Yellow",
+                "modifiers": {
+                    "regrow": true
+                }
+            }
+        }
+    },
+    {
+        "wave": 16,
+        "spawns": {
+            "green1": {
+                "count": 40,
+                "timeBetweenSpawns": 0.25,
+                "layerName": "Green"
+            },
+            "yellow": {
+                "count": 5,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Yellow",
+                "modifiers": {
+                    "regrow": true
+                }
+            },
+            "pink": {
+                "count": 15,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Pink",
+                "waitForAllSpawned": "green1"
+            },
+            "green2": {
+                "count": 40,
+                "timeBetweenSpawns": 0.15,
+                "layerName": "Green",
+                "waitForAllSpawned": "pink"
+            }
+        }
+    },
+    {
+        "wave": 17,
+        "spawns": {
+            "yellow": {
+                "count": 40,
+                "timeBetweenSpawns": 0.35,
+                "layerName": "Yellow"
+            },
+            "pink": {
+                "count": 15,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Pink",
+                "waitBeforeSpawning": 3
+            },
+            "black": {
+                "count": 6,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Black",
+                "waitForAllSpawned": "yellow"
+            }
+        }
+    },
+    {
+        "wave": 18,
+        "spawns": {
+            "black": {
+                "count": 8,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Black"
+            },
+            "white": {
+                "count": 8,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "White",
+                "waitForAllSpawned": "black"
+            }
+        }
+    },
+    {
+        "wave": 19,
+        "spawns": {
+            "yellow": {
+                "count": 20,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Yellow"
+            },
+            "white": {
+                "count": 6,
+                "timeBetweenSpawns": 0.5,
+                "layerName": "White",
+                "modifiers": {
+                    "regrow": true
+                }
+            }
+        }
+    },
+    {
+        "wave": 20,
+        "spawns": {
+            "blue": {
+                "count": 20,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Blue"
+            },
+            "green": {
+                "count": 1,
+                "layerName": "Green",
+                "waitForAllSpawned": "blue",
+                "waitBeforeSpawning": 3,
+                "modifiers": {
+                    "camo": true
+                }
+            }
+        }
+    },
+    {
+        "wave": 21,
+        "spawns": {
+            "pink": {
+                "count": 23,
+                "timeBetweenSpawns": 0.15,
+                "layerName": "Pink"
+            },
+            "zebra": {
+                "count": 4,
+                "layerName": "Zebra",
+                "timeBetweenSpawns": 0.4,
+                "waitForAllSpawned": "pink"
+            }
+        }
+    },
+    {
+        "wave": 22,
+        "spawns": {
+            "red": {
+                "count": 100,
+                "timeBetweenSpawns": 0.1,
+                "layerName": "Red"
+            },
+            "blue": {
+                "count": 60,
+                "layerName": "Blue",
+                "timeBetweenSpawns": 0.1,
+                "waitForAllSpawned": "red"
+            },
+            "green": {
+                "count": 45,
+                "layerName": "Green",
+                "timeBetweenSpawns": 0.1,
+                "waitForAllSpawned": "blue"
+            },
+            "yellow": {
+                "count": 45,
+                "layerName": "Yellow",
+                "timeBetweenSpawns": 0.1,
+                "waitForAllSpawned": "green"
+            }
+        }
+    },
+    {
+        "wave": 23,
+        "spawns": {
+            "yellow": {
+                "count": 50,
+                "timeBetweenSpawns": 0.1,
+                "layerName": "Yellow"
+            },
+            "regrowYellow": {
+                "count": 15,
+                "layerName": "Yellow",
+                "timeBetweenSpawns": 0.1,
+                "waitForAllSpawned": "yellow",
+                "modifiers": {
+                    "regrow": true
+                }
+            }
+        }
+    },
+    {
+        "wave": 24,
+        "spawns": {
+            "lead": {
+                "count": 6,
+                "timeBetweenSpawns": 0.5,
+                "layerName": "Lead"
+            },
+            "pink": {
+                "count": 10,
+                "layerName": "Pink",
+                "timeBetweenSpawns": 0.4,
+                "waitForAllSpawned": "lead",
+                "modifiers": {
+                    "camo": true
+                }
+            }
+        }
+    },
+    {
+        "wave": 25,
+        "spawns": {
+            "black": {
+                "count": 8,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Black"
+            },
+            "white": {
+                "count": 8,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "White",
+                "waitForAllSpawned": "black"
+            },
+            "zebra": {
+                "count": 8,
+                "timeBetweenSpawns": 0.3,
+                "layerName": "Zebra",
+                "waitForAllSpawned": "white"
+            },
+            "regrowZebra": {
+                "count": 2,
+                "timeBetweenSpawns": 0.2,
+                "layerName": "Zebra",
+                "waitForAllSpawned": "zebra",
+                "waitBeforeSpawning": 3,
+                "modifiers": {
+                    "regrow": true
+                }
+            }
+        }
+    }
+]

@@ -9,17 +9,48 @@
 - Write MapSegment class for Map
 - Can check whether points are within the bounds of the path
 
-### date y
+### 5/23/2024
 
-info
+- Add more utility methods to Map and MapSegment
+- Write BloonModifiersList and BloonModifier superclass (no implemented subclasses yet)
+- Write Bloon constructors and move method
+- Write BloonPropertiesLookup and BloonPropertiesTable, which read from bloons.json and get the corresponding properties for a given layer name
+
+## 5/24/2024
+
+- Bloons able to spawn children on death
+- Basic damage method
+
+## 5/25/2024
+
+- Children spawn with offsets behind the parent position
+- Damage method deals damage to children as well
+- Add slightly more functionality for BloonModifiers
+- Write WaveManager, which reads data to spawn Bloons from waves.json
+
+## 5/26/2024
+
+- Work on Camo and Regrow modifiers
 
 
-## GROUP MEMBER 2
+## Alex Luo
 
-### date x
+### 5/22/2024
 
-info
+- Wrote the basis of Game class (prim functions of the game)
+- Wrote the basis of Main class (main class for the game to run in processing)
 
-### date y
+### 5/23/2024
 
-info
+- Began Tower Class (prim functions and constructor)
+- Created it's respective subclasses (BombShooter, IceMonkey, SuperMonkey, DartMonkey)
+- attack method for towers
+
+### 5/24/2024
+- wrote attack method for tower subclasses
+- started working on upgrade paths
+- wrote Slow
+
+### 5/25/2024
+ - began writing code to placeTowers
+ - added more tower functionality (such as getCost())

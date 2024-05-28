@@ -1,0 +1,30 @@
+[
+    {
+        "name": "blastImmunity",
+        "heritable": false
+    },
+    {
+        "name": "freezeImmunity",
+        "heritable": false
+    },
+    {
+        "name": "sharpImmunity",
+        "heritable": false
+    },
+    {
+        "name": "camo",
+        "heritable": true
+    },
+    {
+        "name": "regrow",
+        "heritable": true
+    },
+    {
+        "name": "isCeramic",
+        "heritable": false
+    },
+    {
+        "name": "isMoab",
+        "heritable": false
+    }
+]

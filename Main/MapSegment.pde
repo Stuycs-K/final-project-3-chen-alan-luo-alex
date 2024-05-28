@@ -1,8 +1,14 @@
 public class MapSegment {
-  public PVector[] vertices;
+  public final PVector[] vertices;
+  private final PVector start;
+  private final PVector end;
+  public final float distance;
   
   public MapSegment(PVector start, PVector end, float segmentWidth) {
     vertices = new PVector[4];
+    this.start = start;
+    this.end = end;
+    this.distance = PVector.dist(start, end);
     
     PVector slope = PVector.sub(end, start).normalize();
     PVector normal = new PVector(slope.y, -slope.x);
@@ -24,6 +30,28 @@ public class MapSegment {
     
     vertices[3] = PVector.add(start, PVector.mult(slope, -1));
     vertices[3].add(PVector.mult(normal, -1));
+  }
+  
+  public String toString() {
+    return "MapSegment: " + start + " " + end; 
+  }
+  
+  public PVector getStart() {
+    return start; 
+  }
+  
+  public PVector getEnd() {
+    return end;
+  }
+  
+  public boolean isBetweenStartAndEnd(PVector position) {
+    float startToPositionDistance = start.dist(position);
+    float positionToEndDistance = position.dist(end);
+    float totalDistance = start.dist(end);
+    
+    float compareDistance = startToPositionDistance + positionToEndDistance;
+    
+    return Math.abs(compareDistance - totalDistance) < 1;
   }
   
   // https://stackoverflow.com/questions/2752725/finding-whether-a-point-lies-inside-a-rectangle-or-not

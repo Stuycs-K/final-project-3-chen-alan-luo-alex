@@ -1,4 +1,5 @@
 static final PVector END_POSITION = new PVector(-1e5, -1e5);
+static final int END_POSITION_ID = -1;
 
 public class Map {
   private float pathWidth;
@@ -20,6 +21,18 @@ public class Map {
     }
   }
   
+  public int getSegmentCount() {
+    return mapSegments.size(); 
+  }
+  
+  public PVector getStartPosition() {
+    return getPositionOfId(0); 
+  }
+  
+  public PVector getPositionOfId(int positionIndex) {
+    return pathWaypointArray.get(positionIndex).copy(); 
+  }
+  
   public PVector getNextPosition(int positionIndex) {
     // Return invalid position if we're at the end
     if (positionIndex + 1 >= pathWaypointArray.size()) {
@@ -27,6 +40,47 @@ public class Map {
     }
     
     return pathWaypointArray.get(positionIndex + 1);
+  }
+  
+  public int getSegmentIdFromPosition(PVector position) {
+    for (int i = 0; i < mapSegments.size(); i++) {
+      MapSegment segment = mapSegments.get(i);
+
+      if (segment.isBetweenStartAndEnd(position)) {
+        return i;
+      }
+    }
+    
+    return END_POSITION_ID;
+  }
+  
+  public PVector getNextPosition(PVector position) {
+    for (int i = 0; i < mapSegments.size(); i++) {
+      MapSegment segment = mapSegments.get(i);
+      
+      if (segment.isBetweenStartAndEnd(position)) {
+        return getNextPosition(i);
+      }
+    }
+    
+    return END_POSITION;
+  }
+  
+  public MapSegment getMapSegment(int id) {
+    if (id >= mapSegments.size()) {
+      return null;
+    }
+    return mapSegments.get(id);
+  }
+  
+  public MapSegment getMapSegmentFromPosition(PVector position) {
+    for (MapSegment segment : mapSegments) {
+      if (segment.isBetweenStartAndEnd(position)) {
+        return segment;
+      }
+    }
+    
+    return null;
   }
   
   public void drawPath() {
