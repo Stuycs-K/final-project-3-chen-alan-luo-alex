@@ -22,5 +22,9 @@
     {
         "name": "isCeramic",
         "heritable": false
+    },
+    {
+        "name": "isMoab",
+        "heritable": false
     }
 ]

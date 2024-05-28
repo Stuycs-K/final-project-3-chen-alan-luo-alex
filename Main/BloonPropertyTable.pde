@@ -21,6 +21,10 @@ public class BloonPropertyTable {
     
     JSONObject spriteVariants = data.getJSONObject("spriteVariants");
     
+    if (spriteVariants == null) {
+      return;
+    }
+    
     Set<String> keySet = spriteVariants.keys();
     for (String keyName : keySet) {
       String path = spriteVariants.getString(keyName);
