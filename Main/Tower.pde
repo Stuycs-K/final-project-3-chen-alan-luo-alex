@@ -2,6 +2,7 @@
     public int x;
     public int y; 
     public int radius;
+    public int range;
     public int fireRate; 
     public int damage;
     public int attackSpeed;
@@ -14,10 +15,11 @@
     
     
     
-    public Tower(int x, int y, int radius, int fireRate, int damage, int attackSpeed){
+    public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius){
       this.x = x;
       this.y = y;
       this.radius = radius;
+      this.range = range;
       this.fireRate = fireRate;
       this.damage = damage;
       this.attackSpeed = attackSpeed;
@@ -35,7 +37,7 @@
         for (Bloon targetBloon: bloons){
           if(targetFilter.canAttack(targetBloon)){
             float distance = dist(x,y,targetBloon.position.x,targetBloon.position.y);
-            if(distance<=radius){
+            if(distance<=range){
               projectiles.add(new Projectile(x,y,targetBloon.position.x,targetBloon.position.y,damage));
               attackCooldown = fireRate;
               break;
