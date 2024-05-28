@@ -2,6 +2,7 @@ public class DartMonkey extends Tower{
   
   public DartMonkey (int x, int y){
     super(x,y,200,20,1,10);
+    this.sprite = loadImage("images/Towers/dartmonkey.png");
   }
   
   public void attack(ArrayList<Bloon> bloon){
@@ -39,8 +40,11 @@ public class DartMonkey extends Tower{
   
   public void draw(){
     //println("Drawing DartMonkey at: " + x + ", " + y);
+    if (sprite != null) {
+      imageMode(CENTER);
+      image(sprite, x, y);
     
-    ellipse(x,y,20,20);
+    }
     for(Projectile projectile : projectiles){
       projectile.drawProjectile();
     }
