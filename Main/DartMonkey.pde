@@ -4,6 +4,7 @@ public class DartMonkey extends Tower{
     super(x,y,200,20,1,10,20);
     this.sprites = new ArrayList<PImage>();
     sprites.add(loadImage("images/Towers/dartmonkey.png"));
+    this.path = 0;
     //this.sprite = loadImage("images/Towers/dartmonkey.png");
   }
   
@@ -42,11 +43,18 @@ public class DartMonkey extends Tower{
   
   public void draw(){
     //println("Drawing DartMonkey at: " + x + ", " + y);
-    PImage sprite = sprites.get(0);
+    if (upgradeLevel == 0){
+      
+     
+    PImage spriteZero = sprites.get(0);
     if (sprite != null) {
       imageMode(CENTER);
       image(sprite, x, y);
     
+    }
+   }
+   if(upgradeLevel ==1){
+   }
     }
     for(Projectile projectile : projectiles){
       projectile.drawProjectile();

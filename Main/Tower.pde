@@ -12,6 +12,7 @@
     public ArrayList<Projectile> projectiles;
     private TowerTargetFilter targetFilter;
     public ArrayList<PImage> sprites;
+    public int path;
     
     
     
