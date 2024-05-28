@@ -1,8 +1,11 @@
 public class DartMonkey extends Tower{
   
   public DartMonkey (int x, int y){
-    super(x,y,200,20,1,10);
-    this.sprite = loadImage("images/Towers/dartmonkey.png");
+    super(x,y,200,20,1,10,20);
+    this.sprites = new ArrayList<PImage>();
+    sprites.add(loadImage("images/Towers/dartmonkey.png"));
+    this.path = 0;
+    //this.sprite = loadImage("images/Towers/dartmonkey.png");
   }
   
   public void attack(ArrayList<Bloon> bloon){
@@ -13,13 +16,13 @@ public class DartMonkey extends Tower{
   public void upgrade(int path){
     if(upgradeLevel == 1){
       if(path==1){
-        radius+=25;
+        range+=25;
       }else if(path ==2){
         damage += 1; //not sure how to implement sharpshots yet
       }
     } else if (upgradeLevel == 2){
       if(path==1){
-        radius+=25;
+        range+=25;
         TowerTargetFilter targetFilter = new TowerTargetFilter();
         targetFilter.setCamoDetection(true);
       }else if(path == 2){
@@ -40,10 +43,18 @@ public class DartMonkey extends Tower{
   
   public void draw(){
     //println("Drawing DartMonkey at: " + x + ", " + y);
+    if (upgradeLevel == 0){
+      
+     
+    PImage spriteZero = sprites.get(0);
     if (sprite != null) {
       imageMode(CENTER);
       image(sprite, x, y);
     
+    }
+   }
+   if(upgradeLevel ==1){
+   }
     }
     for(Projectile projectile : projectiles){
       projectile.drawProjectile();
