@@ -145,6 +145,10 @@ public class Bloon {
     // We popped the layer, so make sure the excess damage propagates to all children
     float excessDamage = count - layerHealth;
     handleLayerDeath(excessDamage);
+    
+    if(isDead){
+      game.removeBloon(this);
+    }
   }
   
   public void step() {

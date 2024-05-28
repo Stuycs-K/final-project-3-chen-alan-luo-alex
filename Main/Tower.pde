@@ -9,6 +9,7 @@
     public int attackCooldown;
     public String currentUpgrade;
     public ArrayList<Projectile> projectiles;
+    private TowerTargetFilter targetFilter;
     
     
     
@@ -22,14 +23,16 @@
       this.upgradeLevel = 1;
       this.attackCooldown = 0;
       this.projectiles = new ArrayList<Projectile>();
+      this.targetFilter = new TowerTargetFilter();
       
     }
     
     public void attack(ArrayList<Bloon> bloons){
       attackCooldown--;
       if(attackCooldown <=0){
+      
         for (Bloon targetBloon: bloons){
-          if(targetFilter.canAttack(targetBloon){
+          if(targetFilter.canAttack(targetBloon)){
             float distance = dist(x,y,targetBloon.position.x,targetBloon.position.y);
             if(distance<=radius){
               projectiles.add(new Projectile(x,y,targetBloon.position.x,targetBloon.position.y,damage));
@@ -38,6 +41,7 @@
             }
             }
           }
+         
         }
       
     }

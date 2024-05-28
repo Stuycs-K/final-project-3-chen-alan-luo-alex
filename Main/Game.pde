@@ -49,36 +49,39 @@ public class Game{
       }
       
       ArrayList<Bloon> scheduledForRemoval = new ArrayList<Bloon>();
-      for (Bloon bloon : bloons) {
-        if (bloon.shouldRemove()) {
+      for(int i = bloons.size() -1; i>= 0; i--){
+        Bloon bloon = bloons.get(i);
+        if(bloon.shouldRemove()){
           scheduledForRemoval.add(bloon);
-          continue;
-        }
-        
-        bloon.step();
-        
-        if (frameCount % 150 == 0) {
-          bloon.damage(1); 
+        }else{
+          bloon.step();
+          if(frameCount % 150 ==0){
+            bloon.damage(1);
+          }
         }
       }
-      // Remove bloons that need to be removed
+      //for (Bloon bloon : bloons) {
+      //  if (bloon.shouldRemove()) {
+      //    scheduledForRemoval.add(bloon);
+      //    continue;
+      //  }
+        
+      //  bloon.step();
+        
+      //  if (frameCount % 150 == 0) {
+      //    bloon.damage(1); 
+      //  }
+      //}
+      //// Remove bloons that need to be removed
       bloons.removeAll(scheduledForRemoval);
       
-      //for(Tower tower: towers){
-      //  tower.attack(bloons);
-      //}
-      
-      for(Tower tower: towers){
-        for (Projectile projectile: tower.projectiles){
-          projectile.update();
-        }
-      }
+     
       
       for(Tower tower: towers){
         tower.attack(bloons);
         ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
         for(Projectile projectile : tower.projectiles){
-          projectile.update();
+          projectile.update(bloons);
           if(projectile.finished){
             projectilesToRemove.add(projectile);
           }
@@ -128,6 +131,9 @@ public class Game{
     }
     public void towerUpgrade(Tower tower){
 
+    }
+    public void removeBloon(Bloon bloon){
+      bloons.remove(bloon);
     }
     
     public void render() {

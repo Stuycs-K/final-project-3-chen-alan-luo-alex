@@ -19,6 +19,7 @@ public class DartMonkey extends Tower{
     } else if (upgradeLevel == 2){
       if(path==1){
         radius+=25;
+        TowerTargetFilter targetFilter = new TowerTargetFilter();
         targetFilter.setCamoDetection(true);
       }else if(path == 2){
         damage += 1;

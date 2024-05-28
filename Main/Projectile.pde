@@ -20,7 +20,7 @@
     this.distance = dist(x,y,targetX,targetY);
   }
   
-  public void update(){
+  public void update(ArrayList<Bloon> bloons){
     if(!finished){
     
       if (distance>0){
@@ -37,11 +37,14 @@
            finished = true;
            break;
          }
+       }
+      }
       if(dist(x,y,targetX,targetY) < speed){
         finished = true;
       }
     }
   }
+  
   
   
   public void drawProjectile(){

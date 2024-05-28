@@ -6,7 +6,7 @@ public class TowerTargetFilter{
   }
   
   public void setCamoDetection(boolean canDetectCamo){
-    this.canDetectCamo = true;
+    this.canDetectCamo = canDetectCamo;
   }
   
   public boolean canAttack(Bloon bloon){
