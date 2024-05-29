@@ -74,20 +74,20 @@
   
 
 
-public class ProjectileImages{
-  private ArrayList<PImage> images;
+//public class ProjectileImages{
+//  private ArrayList<PImage> images;
   
-  public ProjectileImages() {
-        this.images = new ArrayList<>();
-        addImagesDartMonkey(); 
-    }
+//  public ProjectileImages() {
+//        this.images = new ArrayList<>();
+//        addImagesDartMonkey(); 
+//    }
   
-  public void addImagesDartMonkey(){
-    images.add((loadImage("images/projectiles/basicDart.png")));
+//  public void addImagesDartMonkey(){
+//    images.add((loadImage("images/projectiles/basicDart.png")));
     
-  }
+//  }
   
-  public PImage getImage(int index){
-    return images.get(index);
-  }
-}
+//  public PImage getImage(int index){
+//    return images.get(index);
+//  }
+//}
