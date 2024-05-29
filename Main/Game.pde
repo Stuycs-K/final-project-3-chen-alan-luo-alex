@@ -5,6 +5,7 @@ public class Game{
     private int currency;
     private int health;
     private boolean gameActive;
+    private ProjectileImages projectileImages;
     
     public WaveManager waveManager;
 
@@ -90,13 +91,13 @@ public class Game{
       println("Attempting to place tower: " + towerName + " at (" + x + "," + y + ")");
       if(towerName.equals("DartMonkey")){
         newTower = new DartMonkey(x,y);
-      }else if (towerName.equals("BombShooter")){
-        newTower = new BombShooter(x,y);
-      }else if (towerName.equals("IceMonkey")){
-        newTower = new IceMonkey(x,y);
-      }else if(towerName.equals("SuperMonkey")){
-        newTower = new SuperMonkey(x,y);
-      }
+      //}else if (towerName.equals("BombShooter")){
+      //  newTower = new BombShooter(x,y);
+      //}else if (towerName.equals("IceMonkey")){
+      //  newTower = new IceMonkey(x,y);
+      //}else if(towerName.equals("SuperMonkey")){
+      //  newTower = new SuperMonkey(x,y);
+        }
       
       if(newTower != null){
         //println("New tower cost: " + newTower.getCost() + ", current currency: " + currency);
