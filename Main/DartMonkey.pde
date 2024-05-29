@@ -42,20 +42,23 @@ public class DartMonkey extends Tower{
   
   
   public void draw(){
-    //println("Drawing DartMonkey at: " + x + ", " + y);
+    pushMatrix();
+    translate(x,y);
+    rotate(angle+HALF_PI);
     if (upgradeLevel == 0){
       
      
     PImage spriteZero = sprites.get(0);
-    if (sprite != null) {
+    if (spriteZero != null) {
       imageMode(CENTER);
-      image(sprite, x, y);
+      image(spriteZero, 0, 0);
     
     }
    }
+   popMatrix();
    if(upgradeLevel ==1){
    }
-    }
+    
     for(Projectile projectile : projectiles){
       projectile.drawProjectile();
     }
