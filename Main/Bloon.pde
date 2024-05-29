@@ -23,6 +23,7 @@ public class Bloon {
   private float layerHealth;
   private float speed;
   private PImage sprite;
+  private float spriteRotation;
   private BloonModifiersList modifiersList;
   private BloonPropertyTable propertiesTable;
   
@@ -31,6 +32,7 @@ public class Bloon {
   
   private boolean isDead;
   private boolean reachedEnd;
+  
   
   public Bloon(JSONObject spawnParams) {
     String layerName = spawnParams.getString("layerName");
@@ -54,6 +56,8 @@ public class Bloon {
     
     // Modifiers
     this.modifiersList = new BloonModifiersList(this);
+    this.spriteRotation = 0;
+    
   }
   
   public Bloon(String layerName) {
@@ -88,6 +92,12 @@ public class Bloon {
      return sprite;
   }
   
+  public PVector getMoveDirection() {
+    MapSegment segment = game.getMap().getMapSegment(positionId);
+    PVector direction = PVector.sub(segment.getEnd(), segment.getStart()).normalize();    
+    return direction;
+  }
+  
   public void setSprite(PImage sprite) {
     this.sprite = sprite;
   }
@@ -112,13 +122,24 @@ public class Bloon {
     return modifiersList;
   }
   
+  public void setSpriteRotation(float rotation) {
+    spriteRotation = rotation;
+  }
+  
   public void render() {
     if (isDead || reachedEnd) {
       return;
     }
     
+    pushMatrix();
+    
+    translate(position.x, position.y);
+    rotate(spriteRotation);
+    
     imageMode(CENTER);
-    image(sprite, position.x, position.y);
+    
+    image(sprite, 0, 0);
+    popMatrix();
   }
   
   public void setLayer(int id) {
@@ -145,6 +166,7 @@ public class Bloon {
     // We popped the layer, so make sure the excess damage propagates to all children
     float excessDamage = count - layerHealth;
     handleLayerDeath(excessDamage);
+    
   }
   
   public void step() {

@@ -210,5 +210,53 @@
                 "layerName": "Rainbow"
             }
         ]
+    },
+    {
+        "id": 11,
+        "layerName": "MOAB",
+        "layerHealth": 616,
+        "speedMultiplier": 1,
+        "sprite": "images/moabs/moab.png",
+        "modifiers": {
+            "isMoab": true
+        },
+        "children": [
+            {
+                "count": 4,
+                "layerName": "Ceramic"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "layerName": "BFB",
+        "layerHealth": 3164,
+        "speedMultiplier": 0.25,
+        "sprite": "images/moabs/bfb.png",
+        "modifiers": {
+            "isMoab": true
+        },
+        "children": [
+            {
+                "count": 4,
+                "layerName": "MOAB"
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "layerName": "ZOMG",
+        "layerHealth": 16656,
+        "speedMultiplier": 0.18,
+        "sprite": "images/moabs/zomg.png",
+        "modifiers": {
+            "isMoab": true
+        },
+        "children": [
+            {
+                "count": 4,
+                "layerName": "BFB"
+            }
+        ]
     }
 ]

@@ -5,6 +5,7 @@ public class Game{
     private int currency;
     private int health;
     private boolean gameActive;
+    private ProjectileImages projectileImages;
     
     public WaveManager waveManager;
 
@@ -42,7 +43,7 @@ public class Game{
       waveManager.startNextWave();
     }
     
-    public void update(){
+     public void update(){
       // TODO
       if (waveManager.waveFinishedSpawning()) {
         waveManager.startNextWave();
@@ -57,28 +58,21 @@ public class Game{
         
         bloon.step();
         
-        if (frameCount % 150 == 0) {
-          bloon.damage(1); 
-        }
+        //if (frameCount % 150 == 0) {
+        //  bloon.damage(1); 
+        //}
       }
       // Remove bloons that need to be removed
       bloons.removeAll(scheduledForRemoval);
       
-      //for(Tower tower: towers){
-      //  tower.attack(bloons);
-      //}
       
-      for(Tower tower: towers){
-        for (Projectile projectile: tower.projectiles){
-          projectile.update();
-        }
-      }
+     
       
       for(Tower tower: towers){
         tower.attack(bloons);
         ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
         for(Projectile projectile : tower.projectiles){
-          projectile.update();
+          projectile.update(bloons);
           if(projectile.finished){
             projectilesToRemove.add(projectile);
           }
@@ -97,13 +91,13 @@ public class Game{
       println("Attempting to place tower: " + towerName + " at (" + x + "," + y + ")");
       if(towerName.equals("DartMonkey")){
         newTower = new DartMonkey(x,y);
-      }else if (towerName.equals("BombShooter")){
-        newTower = new BombShooter(x,y);
-      }else if (towerName.equals("IceMonkey")){
-        newTower = new IceMonkey(x,y);
-      }else if(towerName.equals("SuperMonkey")){
-        newTower = new SuperMonkey(x,y);
-      }
+      //}else if (towerName.equals("BombShooter")){
+      //  newTower = new BombShooter(x,y);
+      //}else if (towerName.equals("IceMonkey")){
+      //  newTower = new IceMonkey(x,y);
+      //}else if(towerName.equals("SuperMonkey")){
+      //  newTower = new SuperMonkey(x,y);
+        }
       
       if(newTower != null){
         //println("New tower cost: " + newTower.getCost() + ", current currency: " + currency);
@@ -129,7 +123,7 @@ public class Game{
     public void towerUpgrade(Tower tower){
 
     }
-    
+
     public void render() {
       
       map.drawPath();

@@ -1,4 +1,6 @@
 public class BloonPropertyTable {
+  private static final int SPRITE_SCALE = 4;
+  
   private JSONObject data;
   
   private PImage sprite;
@@ -11,7 +13,7 @@ public class BloonPropertyTable {
     
     String spritePath = data.getString("sprite");
     this.sprite = loadImage(dataPath(spritePath));
-    this.sprite.resize(this.sprite.width / 2, this.sprite.height / 2);
+    this.sprite.resize(this.sprite.width / SPRITE_SCALE, this.sprite.height / SPRITE_SCALE);
     
     // Load sprite variants
     spriteVariantMap = new HashMap<String, PImage>();
@@ -19,11 +21,15 @@ public class BloonPropertyTable {
     
     JSONObject spriteVariants = data.getJSONObject("spriteVariants");
     
+    if (spriteVariants == null) {
+      return;
+    }
+    
     Set<String> keySet = spriteVariants.keys();
     for (String keyName : keySet) {
       String path = spriteVariants.getString(keyName);
       PImage loadedImage = loadImage(dataPath(path));
-      loadedImage.resize(loadedImage.width / 3, loadedImage.height / 3);
+      loadedImage.resize(loadedImage.width / SPRITE_SCALE, loadedImage.height / SPRITE_SCALE);
       
       spriteVariantMap.put(keyName, loadedImage);
       spriteVariantReverseMap.put(loadedImage, keyName);

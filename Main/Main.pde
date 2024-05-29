@@ -13,12 +13,8 @@ void setup(){
   game.startGame();
   
   JSONObject spawnInformation = new JSONObject();
-  spawnInformation.setString("layerName", "Rainbow");
+  spawnInformation.setString("layerName", "MOAB");
   
-  JSONObject modifiers = new JSONObject();
-  modifiers.setBoolean("regrow", true);
-  modifiers.setBoolean("camo", true);
-  spawnInformation.setJSONObject("modifiers", modifiers);
   //spawnInformation.setInt("count", 5);
   bloonSpawner.spawn(spawnInformation);
 }
