@@ -62,3 +62,15 @@
 ### 5/25/2024
  - began writing code to placeTowers
  - added more tower functionality (such as getCost())
+
+### 5/26/2024
+ - wrote towerTargetFilter class
+ - created Projectile class and it's respective methods
+
+### 5/27/2024
+ - improved update from Projectile to destroy bloons
+ - added tower sprites
+
+### 5/28/2024
+ - implemented rotating towers and rotating projectiles
+ - added sprites for darts
