@@ -3,7 +3,7 @@ public class DartMonkey extends Tower{
   public DartMonkey (int x, int y){
     super(x,y,200,20,1,10,20);
     this.sprites = new ArrayList<PImage>();
-    sprites.add(loadImage("images/Towers/dartmonkey.png"));
+    sprites.add(loadImage("images/towers/dartmonkey.png"));
     this.path = 0;
     //this.sprite = loadImage("images/Towers/dartmonkey.png");
   }

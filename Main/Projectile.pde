@@ -55,3 +55,16 @@
   }
   
 }
+
+public class ProjectileImages{
+  private static ArrayList<PImage> images = new ArrayList<>();
+  
+  public void addImagesDartMonkey(){
+    images.add((loadImage("images/projectiles/dartmonkey.png"));
+    
+  }
+  
+  public PImage getImage(int index){
+    return images.get(index);
+  }
+}
