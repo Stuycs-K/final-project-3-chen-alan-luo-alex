@@ -15,10 +15,10 @@ public class BloonModifiersList {
   
   public void setSprite() {
     if (hasModifier("isMoab")) {
-      PVector moveDirection = bloon.getMoveDirection();
-      
-      PVector base = new PVector(0, -1, 0);
-      float angle = PVector.angleBetween(base, moveDirection);
+      MapSegment currentMapSegment = game.getMap().getMapSegment(bloon.getPositionId());
+      PVector target = currentMapSegment.getEnd();
+      PVector currentPosition = bloon.getPosition();
+      float angle = atan2(target.y - currentPosition.y, target.x - currentPosition.x) - PI / 2;
       
       bloon.setSpriteRotation(angle);
       return;

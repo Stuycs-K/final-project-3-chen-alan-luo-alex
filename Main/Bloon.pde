@@ -132,11 +132,13 @@ public class Bloon {
     }
     
     pushMatrix();
-    imageMode(CENTER);
-
+    
+    translate(position.x, position.y);
     rotate(spriteRotation);
     
-    image(sprite, position.x, position.y);
+    imageMode(CENTER);
+    
+    image(sprite, 0, 0);
     popMatrix();
   }
   
