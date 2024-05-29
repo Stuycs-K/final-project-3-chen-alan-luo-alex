@@ -56,8 +56,6 @@
   public void drawProjectile(){
     spritesP.add((loadImage("images/projectiles/basicDart.png")));
     PImage sprite1 = spritesP.get(0);
-    
-    //PImage projectileImage = projectileImages.getImage(imageIndex);
     if(sprite1 != null){
       pushMatrix();
       translate(x,y);
@@ -71,9 +69,6 @@
   }
  }
   
-  
-
-
 //public class ProjectileImages{
 //  private ArrayList<PImage> images;
   
