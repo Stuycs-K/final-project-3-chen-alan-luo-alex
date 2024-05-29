@@ -5,7 +5,6 @@ public class Game{
     private int currency;
     private int health;
     private boolean gameActive;
-    private ProjectileImages projectileImages;
     
     public WaveManager waveManager;
 

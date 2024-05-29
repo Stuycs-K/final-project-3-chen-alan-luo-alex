@@ -16,6 +16,9 @@ public class BloonModifiersList {
   public void setSprite() {
     if (hasModifier("isMoab")) {
       MapSegment currentMapSegment = game.getMap().getMapSegment(bloon.getPositionId());
+      if(currentMapSegment == null){
+        return;
+      }
       PVector target = currentMapSegment.getEnd();
       PVector currentPosition = bloon.getPosition();
       float angle = atan2(target.y - currentPosition.y, target.x - currentPosition.x) - PI / 2;
