@@ -20,7 +20,10 @@ public class HealthManager {
   }
   
   public void takeDamageFromBloon(Bloon bloon) {
+    BloonPropertyTable properties = bloon.getProperties();
+    int damageTaken = properties.getRbe();
     
+    currentHealth -= damageTaken;
   }
   
   public boolean didLose() {
