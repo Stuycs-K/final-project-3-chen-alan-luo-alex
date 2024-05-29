@@ -32,6 +32,14 @@
 
 - Work on Camo and Regrow modifiers
 
+## 5/27/2024
+
+- Finish Camo and Regrow modifiers
+- Add more waves to waves.json
+
+## 5/28/2024
+
+- Add MOAB-class Bloons and sprite rotations
 
 ## Alex Luo
 
