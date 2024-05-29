@@ -5,6 +5,7 @@
         "layerHealth": 1,
         "speed": 100,
         "sprite": "images/bloons/red.png",
+        "rbe": 1,
         "spriteVariants": {
             "camo": "images/camo/red.png",
             "regrow": "images/regrow/red.png",
@@ -17,6 +18,7 @@
         "layerHealth": 1,
         "speedMultiplier": 1.4,
         "sprite": "images/bloons/blue.png",
+        "rbe": 2,
         "spriteVariants": {
             "camo": "images/camo/blue.png",
             "regrow": "images/regrow/blue.png",
@@ -35,6 +37,7 @@
         "layerHealth": 1,
         "speedMultiplier": 1.8,
         "sprite": "images/bloons/green.png",
+        "rbe": 3,
         "spriteVariants": {
             "camo": "images/camo/green.png",
             "regrow": "images/regrow/green.png",
@@ -53,6 +56,7 @@
         "layerHealth": 1,
         "speedMultiplier": 3.2,
         "sprite": "images/bloons/yellow.png",
+        "rbe": 4,
         "spriteVariants": {
             "camo": "images/camo/yellow.png",
             "regrow": "images/regrow/yellow.png",
@@ -71,6 +75,7 @@
         "layerHealth": 1,
         "speedMultiplier": 3.5,
         "sprite": "images/bloons/pink.png",
+        "rbe": 5,
         "spriteVariants": {
             "camo": "images/camo/pink.png",
             "regrow": "images/regrow/pink.png",
@@ -89,6 +94,7 @@
         "layerHealth": 1,
         "speedMultiplier": 1.8,
         "sprite": "images/bloons/black.png",
+        "rbe": 11,
         "spriteVariants": {
             "camo": "images/camo/black.png",
             "regrow": "images/regrow/black.png",
@@ -110,6 +116,7 @@
         "layerHealth": 1,
         "speedMultiplier": 2,
         "sprite": "images/bloons/white.png",
+        "rbe": 11,
         "spriteVariants": {
             "camo": "images/camo/white.png",
             "regrow": "images/regrow/white.png",
@@ -130,6 +137,7 @@
         "layerName": "Zebra",
         "layerHealth": 1,
         "speedMultiplier": 1.8,
+        "rbe": 23,
         "sprite": "images/bloons/zebra.png",
         "spriteVariants": {
             "camo": "images/camo/zebra.png",
@@ -156,6 +164,7 @@
         "layerName": "Lead",
         "layerHealth": 1,
         "speedMultiplier": 1,
+        "rbe": 23,
         "sprite": "images/bloons/lead.png",
         "spriteVariants": {
             "camo": "images/camo/lead.png",
@@ -178,6 +187,7 @@
         "layerHealth": 1,
         "speedMultiplier": 2.2,
         "sprite": "images/bloons/rainbow.png",
+        "rbe": 47,
         "spriteVariants": {
             "camo": "images/camo/rainbow.png",
             "regrow": "images/regrow/rainbow.png",
@@ -196,6 +206,7 @@
         "layerHealth": 10,
         "speedMultiplier": 2.5,
         "sprite": "images/bloons/ceramic.png",
+        "rbe": 102,
         "spriteVariants": {
             "camo": "images/camo/ceramic.png",
             "regrow": "images/regrow/ceramic.png",
@@ -214,9 +225,10 @@
     {
         "id": 11,
         "layerName": "MOAB",
-        "layerHealth": 616,
+        "layerHealth": 200,
         "speedMultiplier": 1,
         "sprite": "images/moabs/moab.png",
+        "rbe": 616,
         "modifiers": {
             "isMoab": true
         },
@@ -230,9 +242,10 @@
     {
         "id": 12,
         "layerName": "BFB",
-        "layerHealth": 3164,
+        "layerHealth": 700,
         "speedMultiplier": 0.25,
         "sprite": "images/moabs/bfb.png",
+        "rbe": 3164,
         "modifiers": {
             "isMoab": true
         },
@@ -246,9 +259,10 @@
     {
         "id": 13,
         "layerName": "ZOMG",
-        "layerHealth": 16656,
+        "layerHealth": 4000,
         "speedMultiplier": 0.18,
         "sprite": "images/moabs/zomg.png",
+        "rbe": 16656,
         "modifiers": {
             "isMoab": true
         },

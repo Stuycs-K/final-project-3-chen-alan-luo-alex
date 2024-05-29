@@ -3,6 +3,7 @@ public class Game{
     public ArrayList<Tower> towers;
     public ArrayList<Bloon> bloons;
     private int currency;
+    private HealthManager healthManager;
     private int health;
     private boolean gameActive;
     
@@ -30,6 +31,8 @@ public class Game{
         health = 100;
         gameActive = true;
         
+        healthManager = new HealthManager(200);
+        
         waveManager = new WaveManager();
     }
     
@@ -43,6 +46,11 @@ public class Game{
     }
     
      public void update(){
+      if (healthManager.didLose()) {
+        waveManager.stopAllWaves();
+        println("YOU LOSE");
+        return;
+      }
       // TODO
       if (waveManager.waveFinishedSpawning()) {
         waveManager.startNextWave();
@@ -52,6 +60,11 @@ public class Game{
       for (Bloon bloon : bloons) {
         if (bloon.shouldRemove()) {
           scheduledForRemoval.add(bloon);
+          
+          if (bloon.reachedEnd()) {
+            healthManager.takeDamageFromBloon(bloon); 
+          }
+          
           continue;
         }
         

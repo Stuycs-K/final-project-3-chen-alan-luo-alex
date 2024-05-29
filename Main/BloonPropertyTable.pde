@@ -48,6 +48,10 @@ public class BloonPropertyTable {
     return spriteVariantReverseMap.get(image); 
   }
   
+  public int getRbe() {
+    return data.getInt("rbe"); 
+  }
+  
   public int getIntProperty(String keyName, int defaultValue) {
     if (data.isNull(keyName)) {
       return defaultValue; 
