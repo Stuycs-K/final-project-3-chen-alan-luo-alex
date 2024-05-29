@@ -47,6 +47,11 @@ public class Game{
     }
     
      public void update(){
+      if (healthManager.didLose()) {
+        waveManager.stopAllWaves();
+        println("YOU LOSE");
+        return;
+      }
       // TODO
       if (waveManager.waveFinishedSpawning()) {
         waveManager.startNextWave();

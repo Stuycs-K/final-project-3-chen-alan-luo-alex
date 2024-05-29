@@ -27,6 +27,6 @@ public class HealthManager {
   }
   
   public boolean didLose() {
-    return (currentHealth == 0);
+    return (currentHealth <= 0);
   }
 }
