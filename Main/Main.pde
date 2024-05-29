@@ -3,6 +3,8 @@ BloonPropertyLookup bloonPropertyLookup;
 BloonSpawner bloonSpawner;
 ArrayList<Tower>towers;
 
+
+
 void setup(){
   size(1200, 800);
   
@@ -17,6 +19,14 @@ void setup(){
   
   //spawnInformation.setInt("count", 5);
   bloonSpawner.spawn(spawnInformation);
+  
+  //temp setup below
+  //text("UpdateTower", 100, 100);
+  //fill(0,255,0);
+  //text("SellTower", 100, 100);
+  //fill(255,0,0);
+  
+  
 }
 
 void draw(){
@@ -26,8 +36,14 @@ void draw(){
 
 }
 
+//void drawTowerOptions(int x, int y, String name){
+//  if(mousePressed
+//  text(name,x,y);
+  
+//}
+
 void mousePressed(){
-  println("Mousse pressed at: " + mouseX + "," + mouseY);
+  
   game.placeTower("DartMonkey", mouseX, mouseY);
   
   

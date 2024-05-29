@@ -53,10 +53,7 @@
       
     }
     
-    
-    
-    
-    public void upgrade(){
+   public void upgrade(){
       this.upgradeLevel++;
     
     }
@@ -70,8 +67,6 @@
     }
   
     public void draw(){
-      fill(255);
-      ellipse(x,y,20,20);
       for(Projectile projectile : projectiles){
         projectile.drawProjectile();
       }
@@ -79,6 +74,15 @@
     
     public int getCost(){
       return 0;
+    }
+    
+    public int getTowerX(){
+      return x;
+      
+    }
+    
+    public int getTowerY(){
+      return y;
     }
     
   }

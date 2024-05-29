@@ -58,6 +58,9 @@ public class Bloon {
     this.modifiersList = new BloonModifiersList(this);
     this.spriteRotation = 0;
     
+    this.reachedEnd = false;
+    this.isDead = false;
+    
   }
   
   public Bloon(String layerName) {
