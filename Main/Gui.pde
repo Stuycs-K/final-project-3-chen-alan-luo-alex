@@ -6,14 +6,39 @@ private class ZIndexSorter implements Comparator<GuiBase> {
   }
 }
 
+private class FontManager {
+  private HashMap<String, PFont> fontMap;
+  
+  public FontManager() {
+    fontMap = new HashMap<String, PFont>();
+    
+    JSONObject schema = loadJSONObject(dataPath("guiDefinitions/schema.json"));
+    JSONObject fonts = schema.getJSONObject("fonts");
+
+    Set<String> fontAliases = fonts.keys();
+    for (String alias : fontAliases) {
+      String fontPath = fonts.getString(alias);
+      
+      PFont loadedFont = createFont(dataPath("fonts/" + fontPath), 24);
+      fontMap.put(alias, loadedFont);
+    }
+  }
+  
+  public PFont getFont(String alias) {
+    return fontMap.get(alias);
+  }
+}
+
 public class GuiManager {
   private ArrayList<GuiBase> guiList;
   private HashMap<String, GuiBase> guiTemplateMap;
+  private FontManager fontManager;
   
   public GuiManager() {
     guiList = new ArrayList<GuiBase>();
     guiTemplateMap = new HashMap<String, GuiBase>();
-    
+    fontManager = new FontManager();
+        
     for (String path : guiDefinitionFiles) {
       loadGui(dataPath("guiDefinitions/" + path));
     }
@@ -314,6 +339,8 @@ public class TextLabel extends GuiBase {
   private int textXAlignment;
   private int textYAlignment;
   
+  private PFont textFont;
+  
   public TextLabel(JSONObject definition) {
     super(definition);
     this.text = "";
@@ -373,6 +400,9 @@ public class TextLabel extends GuiBase {
       default:
         this.textYAlignment = CENTER;
     }
+        
+    String textFontAlias = readString(definition, "textFont", "regular");
+    this.textFont = fontManager.getFont(textFontAlias);
   }
   
   public void render() {
@@ -380,6 +410,7 @@ public class TextLabel extends GuiBase {
     
     fill(this.textColor);
     textSize(this.textSize);
+    textFont(this.textFont);
 
     PVector position = getPosition();
     text(this.text, position.x + this.textPositionOffset.x, position.y + this.textPositionOffset.y);

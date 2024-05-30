@@ -86,6 +86,7 @@ public class Map {
   public void drawPath() {
     for (MapSegment segment : mapSegments) {
        PVector[] vertices = segment.vertices;
+       stroke(2);
        fill(255, 255, 255);
        beginShape();
        
