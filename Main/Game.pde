@@ -8,6 +8,8 @@ public class Game{
     private int health;
     private boolean gameActive;
     
+    private float currencyPerPopMultiplier;
+    
     public WaveManager waveManager;
 
     public Game() {
@@ -32,6 +34,8 @@ public class Game{
         health = 100;
         gameActive = true;
         
+        currencyPerPopMultiplier = 1;
+        
         healthManager = new HealthManager(200);
         currencyManager = new CurrencyManager();
         
@@ -40,6 +44,14 @@ public class Game{
     
     public Map getMap() {
       return map;
+    }
+    
+    public CurrencyManager getCurrencyManager() {
+      return currencyManager;
+    }
+    
+    public float getCurrencyPerPopMultiplier() {
+      return currencyPerPopMultiplier;
     }
 
     public void startGame(){

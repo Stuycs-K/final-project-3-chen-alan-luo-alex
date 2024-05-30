@@ -8,8 +8,7 @@
         "zIndex": 2000,
         "textColor": "0 0 0 0",
         "stroke": {
-            "color": "0 0 0 0",
-            "weight": 2
+            "type": "NONE"
         },
         "textXAlignment": "LEFT",
         "textYAlignment": "CENTER",
@@ -42,8 +41,7 @@
         "zIndex": 2000,
         "textColor": "0 0 0 0",
         "stroke": {
-            "color": "0 0 0 0",
-            "weight": 2
+            "type": "NONE"
         },
         "textXAlignment": "LEFT",
         "textYAlignment": "CENTER",

@@ -166,6 +166,9 @@ public class Bloon {
     
     isDead = true;
     
+    // Reward 1 money
+    game.getCurrencyManager().rewardCurrency(1 * game.getCurrencyPerPopMultiplier());
+    
     // We popped the layer, so make sure the excess damage propagates to all children
     float excessDamage = count - layerHealth;
     handleLayerDeath(excessDamage);
