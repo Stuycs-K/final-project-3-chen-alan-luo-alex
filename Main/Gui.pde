@@ -291,6 +291,10 @@ public class ImageLabel extends GuiBase {
     return new ImageLabel(getDefinition());
   }
   
+  public void setImage(PImage image) {
+    this.image = image;
+  }
+  
   public void updateProperties() {
     super.updateProperties();
     
