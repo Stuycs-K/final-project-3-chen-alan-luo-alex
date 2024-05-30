@@ -1,5 +1,11 @@
 static final String[] guiDefinitionFiles = new String[] {"game.json"};
-  
+
+private class ZIndexSorter implements Comparator<GuiBase> {
+  public int compare(GuiBase a, GuiBase b) {
+    return a.getZIndex() - b.getZIndex();
+  }
+}
+
 public class GuiManager {
   private ArrayList<GuiBase> guiList;
   private HashMap<String, GuiBase> guiTemplateMap;
@@ -41,18 +47,10 @@ public class GuiManager {
     }
   }
   
-  // Has to sort the list based on ZIndex
-  // A binary tree would be ideal, but this will do for now and probably forever...
-  private void insertGui(GuiBase gui) {
-    int zIndex = gui.getZIndex();
-    
-    
-  }
-  
   // Copies the template
   public GuiBase create(String name) {
     GuiBase copy = getTemplate(name).clone();
-    
+    insertGui(copy);
     return copy;
   }
   
@@ -69,6 +67,14 @@ public class GuiManager {
   public GuiBase getTemplate(String name) {
     return guiTemplateMap.get(name);
   }
+  
+  // Has to sort the list based on ZIndex
+  // A binary tree would be ideal, but this will do for now and probably forever...
+  private void insertGui(GuiBase gui) {
+    guiList.add(gui);
+    Collections.sort(guiList, new ZIndexSorter());
+  }
+  
   
 }
 
@@ -97,7 +103,7 @@ private static float readFloat(JSONObject object, String keyName, float defaultV
 }
 
 private color readColor(JSONObject object, String keyName) {
-  String colorString = readString(object, keyName, "0 0 0 0");
+  String colorString = readString(object, keyName, "255 255 255 0");
   String[] colorValues = colorString.split(" ");
     
   int r = Integer.parseInt(colorValues[0]);
@@ -290,8 +296,9 @@ public class TextLabel extends GuiBase {
     
     fill(this.textColor);
     textSize(this.textSize);
-    textAlign(this.textXAlignment, this.textYAlignment);
+
     PVector position = getPosition();
     text(this.text, position.x + this.textPositionOffset.x, position.y + this.textPositionOffset.y);
+    textAlign(this.textXAlignment, this.textYAlignment);
   }
 }

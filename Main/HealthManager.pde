@@ -6,8 +6,9 @@ public class HealthManager {
   
   public HealthManager(int maxHealth) {
     this.maxHealth = maxHealth;
-    this.currentHealth = maxHealth;
     this.gui = new HealthGui();
+    
+    setHealth(maxHealth);
   }
   
   public int getCurrentHealth() {

@@ -1,3 +1,5 @@
+import java.util.*;
+
 Game game;
 BloonPropertyLookup bloonPropertyLookup;
 BloonSpawner bloonSpawner;
@@ -35,6 +37,8 @@ void draw(){
   background(255);
   game.render();
   game.update();
+  
+  guiManager.render();
 
 }
 

@@ -5,6 +5,11 @@
         "y": 0,
         "sizeX": 80,
         "sizeY": 40,
-        "zIndex": 1000
+        "zIndex": 1000,
+        "textColor": "0 0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "textXOffset": 40,
+        "textYOffset": 20
     }
 }
