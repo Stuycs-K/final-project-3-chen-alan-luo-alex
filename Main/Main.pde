@@ -1,6 +1,13 @@
+import java.util.*;
+
 Game game;
 BloonPropertyLookup bloonPropertyLookup;
 BloonSpawner bloonSpawner;
+
+// GUI
+FontManager fontManager;
+GuiManager guiManager;
+
 ArrayList<Tower>towers;
 
 
@@ -10,6 +17,9 @@ void setup(){
   
   bloonPropertyLookup = new BloonPropertyLookup();
   bloonSpawner = new BloonSpawner();
+  
+  fontManager = new FontManager();
+  guiManager = new GuiManager();
   
   game = new Game();
   game.startGame();
@@ -33,6 +43,8 @@ void draw(){
   background(255);
   game.render();
   game.update();
+  
+  guiManager.render();
 
 }
 
