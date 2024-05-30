@@ -17,9 +17,12 @@ private class FontManager {
 
     Set<String> fontAliases = fonts.keys();
     for (String alias : fontAliases) {
-      String fontPath = fonts.getString(alias);
+      JSONObject fontInfo = fonts.getJSONObject(alias);
       
-      PFont loadedFont = createFont(dataPath("fonts/" + fontPath), 24);
+      String fontPath = fontInfo.getString("path");
+      int fontSize = fontInfo.getInt("size");
+      
+      PFont loadedFont = createFont(dataPath("fonts/" + fontPath), fontSize);
       fontMap.put(alias, loadedFont);
     }
   }
@@ -330,8 +333,10 @@ public class ImageLabel extends GuiBase {
   public void render() {
     super.render();
     
+    PVector position = getPosition();
+    
     imageMode(this.imagePositionMode);
-    image(this.image, this.imagePosition.x, this.imagePosition.y, this.imageSize.x, this.imageSize.y);
+    image(this.image, position.x + this.imagePosition.x, position.y + this.imagePosition.y, this.imageSize.x, this.imageSize.y);
   }
 }
 
@@ -402,11 +407,14 @@ public class TextLabel extends GuiBase {
         this.textYAlignment = BOTTOM;
         break;
       default:
-        this.textYAlignment = CENTER;
+        this.textYAlignment = TOP;
     }
         
     String textFontAlias = readString(definition, "textFont", "regular");
-    this.textFont = fontManager.getFont(textFontAlias);
+    // Use the default processing font otherwise
+    if (!textFontAlias.equals("DEFAULT")) {
+      this.textFont = fontManager.getFont(textFontAlias);
+    }
   }
   
   public void render() {
@@ -414,7 +422,10 @@ public class TextLabel extends GuiBase {
     
     fill(this.textColor);
     textSize(this.textSize);
-    textFont(this.textFont);
+    
+    if (this.textFont != null) {
+      textFont(this.textFont);
+    }
 
     PVector position = getPosition();
     text(this.text, position.x + this.textPositionOffset.x, position.y + this.textPositionOffset.y);

@@ -4,6 +4,7 @@ public class Game{
     public ArrayList<Bloon> bloons;
     private int currency;
     private HealthManager healthManager;
+    private CurrencyManager currencyManager;
     private int health;
     private boolean gameActive;
     
@@ -32,6 +33,7 @@ public class Game{
         gameActive = true;
         
         healthManager = new HealthManager(200);
+        currencyManager = new CurrencyManager();
         
         waveManager = new WaveManager();
     }
