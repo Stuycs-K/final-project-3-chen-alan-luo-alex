@@ -8,6 +8,10 @@ public class Game{
     private boolean gameActive;
     
     public WaveManager waveManager;
+    private Tower selectedTower;
+    private boolean showTowerOptions;
+    private float buttonX, buttonY;
+    private float buttonWidth, buttonHeight;
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -34,6 +38,12 @@ public class Game{
         healthManager = new HealthManager(200);
         
         waveManager = new WaveManager();
+        
+        showTowerOptions = false;
+        buttonX = 0;
+        buttonY = 0;
+        buttonWidth = 80;
+        buttonHeight = 30;
     }
     
     public Map getMap() {

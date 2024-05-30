@@ -60,6 +60,7 @@
     
     public void sellTower(Game game){
        game.currency += getSellPrice();
+       game.towers.remove(this);
     }
     
     public int getSellPrice(){
