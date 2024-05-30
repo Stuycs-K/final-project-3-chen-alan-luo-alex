@@ -112,48 +112,43 @@ public class Game{
       sellButton = (Button) guiManager.create("sellButton");
       
     }
-    
-    private void selectTower(Tower tower){
-      selectedTower = tower;
-      showTowerOptions = true;
-      updateGuiPostions(tower);
-    }
-    
+
     private void updateGuiPositions(Tower tower){
       float buttonX = tower.getTowerX() + 50;
       float buttonY = tower.getTowerY();
     }
     
     public void placeTower(String towerName, int x, int y){
-      Tower newTower = null;
-      println("Attempting to place tower: " + towerName + " at (" + x + "," + y + ")");
-      if(towerName.equals("DartMonkey")){
-        newTower = new DartMonkey(x,y);
+       if(towerType.equals("DartMonkey")){
+        DartMonkey dartMonkey = new DartMonkey(x, y);
+        towers.add(dartMonkey);
+      }
       //}else if (towerName.equals("BombShooter")){
       //  newTower = new BombShooter(x,y);
       //}else if (towerName.equals("IceMonkey")){
       //  newTower = new IceMonkey(x,y);
       //}else if(towerName.equals("SuperMonkey")){
       //  newTower = new SuperMonkey(x,y);
-        }
+        
       
-      if(newTower != null){
+   
         //println("New tower cost: " + newTower.getCost() + ", current currency: " + currency);
         //if(currency >= newTower.getCost()){
-          towers.add(newTower);
+       
         //  currency -= newTower.getCost();
           //println("tower placed at: " + x + "," + y);
       //}else{
       //  println("not enough money");
       //}
-      }else{
-        println("tower failed to place");
-      }
+      
+       
     }
 
     
-    public Tower selectTower(int x, int y){
-        return null;
+    public Tower selectTower(Tower tower){
+      selectedTower = tower;
+      showTowerOptions = true;
+      updateGuiPostions(tower);
     }
     public void sellTower(Tower towerName, int x, int y){
 
@@ -174,4 +169,39 @@ public class Game{
       }
      
     }
+    
+    private boolean isMouseOverButton(Button button, int mx, int my){
+      PVector buttonPos = button.getPosition();
+      PVector buttonSize = button.getSize();
+      
+      return mx > buttonPos.x && mx < buttonPos.x + buttonSize.x &&  my > buttonPos.y && my < buttonPos.y + buttonSize.y;
+    }
+    
+    public void mousePressed(int mx, int my) {
+     if (showTowerOptions) {
+       if (isMouseOverButton(upgradeButton, mx, my)) {
+         selectedTower.upgrade(selectedTower.path);
+         showTowerOptions = false;
+         selectedTower = null;
+         return;
+       }
+
+       if (isMouseOverButton(sellButton, mx, my)) {
+         selectedTower.sellTower(this);
+         showTowerOptions = false;
+         selectedTower = null;
+         return;
+       }
+      }
+    for (Tower tower : towers) {
+        if (dist(mx, my, tower.getTowerX(), tower.getTowerY()) < tower.radius) {
+         selectTower(tower);
+          return;
+       }
+     }
+
+        placeTower("DartMonkey", mx, my);
+    }
+    
+
 }

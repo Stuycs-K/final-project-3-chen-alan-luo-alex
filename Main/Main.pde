@@ -45,8 +45,7 @@ void draw(){
 
 
 void mousePressed(){
-  
-  game.placeTower("DartMonkey", mouseX, mouseY);
+  game.mousePressed(mouseX, mouseY);
   
   
 }

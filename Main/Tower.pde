@@ -53,7 +53,7 @@
       
     }
     
-   public void upgrade(){
+   public void upgrade(int path){
       this.upgradeLevel++;
     
     }
