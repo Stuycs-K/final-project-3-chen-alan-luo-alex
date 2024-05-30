@@ -111,12 +111,68 @@ public class GuiManager {
   
 }
 
+// Utilities for parsing JSON
 private static int readInt(JSONObject object, String keyName, int defaultValue) {
   if (object.isNull(keyName)) {
     return defaultValue;
   }
   
   return object.getInt(keyName);
+}
+
+/*
+  Reading positions:
+  
+  1) Absolute:
+    Relative to the top left corner of the window
+    Implied when using integers
+    
+  2) Center:
+    Relative to the center of the window (width / 2, height / 2)
+    Enter the position as a string beginning with "c":
+      An x position of "c 100" would be equivalent to width / 2 + 100 (100 pixels right of the center)
+      A y position of "c -60" would be equivalent to height / 2 - 60 (60 pixels above the center)
+      
+  3) Right:
+    Relative to the bottom right corner of the window (width, height)
+   
+    Enter the position as a string beginning with "r" (note that negative integers are invalid!):
+      An x position of "r 60" would be equivalent to width - 60 (60 pixels to the left of the right)
+      A y position of "r 40" would be equivalent to height - 40 (40 pixels above the bottom)
+
+*/
+private static int readPosition(JSONObject object, String keyName, int relativePosition) {
+  int position = readInt(object, keyName, Integer.MIN_VALUE);
+  
+  // We entered the position as an integer! We're done.
+  if (position != Integer.MIN_VALUE) {
+    return position;
+  }
+  
+  // There HAS to be a position string
+  String positionString = readString(object, keyName, "");
+  String[] instructions = positionString.split(" ");
+  
+  String relativeTo = instructions[0];
+  int offset = Integer.parseInt(instructions[1]);
+  
+  if (relativeTo.equals("c")) {
+    return relativePosition / 2 + offset; 
+  }
+  
+  if (relativeTo.equals("r")) {
+    return relativePosition - offset;
+  }
+  
+  return 0;
+}
+
+private int readXPosition(JSONObject object, String keyName) {
+  return readPosition(object, keyName, width);
+}
+
+private int readYPosition(JSONObject object, String keyName) {
+  return readPosition(object, keyName, height);
 }
 
 private static String readString(JSONObject object, String keyName, String defaultValue) {
@@ -204,8 +260,8 @@ private class GuiBase {
   }
   
   public void updateProperties() {
-    int xPosition = readInt(definition, "x", 0);
-    int yPosition = readInt(definition, "y", 0);
+    int xPosition = readXPosition(definition, "x");
+    int yPosition = readYPosition(definition, "y");
     
     this.position = new PVector(xPosition, yPosition);
     

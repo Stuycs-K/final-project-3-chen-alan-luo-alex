@@ -109,10 +109,9 @@ public class WaveManager {
   }
   
   public void startNextWave() {
-    currentWaveNumber++;
-    
     gui.setWave(getCurrentWaveNumber());
-    
+    currentWaveNumber++;
+ 
     currentWaveSpawns.clear();
     
     if (currentWaveNumber >= waveStructure.size()) {
