@@ -98,5 +98,29 @@
         "textYAlignment": "CENTER",
         "textXOffset": 65,
         "textYOffset": 15
+    },
+    "upgradeButton": {
+        "className" : "Button",
+        "x":"0",
+        "y":"0",
+        "sizeX": 80,
+        "sizeY": 30,
+        "textXAlignment" : "CENTER",
+        "textYAlignment" : "CENTER"
+    },
+    "sellButton":{
+        "className" : "Button",
+        "x":"0",
+        "y":"0",
+        "sizeX": 80,
+        "sizeY": 30,
+        "textXAlignment" : "CENTER",
+        "textYAlignment" : "CENTER"
+    },
+    "upgradeButtonLabel":{
+
+    },
+    "sellButtonLabel":{
+        
     }
 }

@@ -14,11 +14,12 @@ public class DartMonkey extends Tower{
     } 
 
   public void upgrade(int path){
+    upgradeLevel++;
     if(upgradeLevel == 1){
       if(path==1){
         range+=25;
       }else if(path ==2){
-        damage += 1; //not sure how to implement sharpshots yet
+        damage += 1;
       }
     } else if (upgradeLevel == 2){
       if(path==1){
@@ -36,7 +37,7 @@ public class DartMonkey extends Tower{
         damage = 3;
       }
     }
-    upgradeLevel++;
+    
   }
   
   
@@ -77,6 +78,14 @@ public class DartMonkey extends Tower{
       if(path == 2){
         //implementing projectile changes later
       }
+     if(upgradeLevel ==3){
+       if(path==1){
+       }
+       if(path == 2){
+         
+       }
+       
+     }
     }
   
         

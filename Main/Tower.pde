@@ -14,8 +14,8 @@
     public ArrayList<PImage> sprites;
     public int path;
     public float angle;
-    
-    
+    public int hitBoxX;
+    public int hitBoxY;
     
     public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius){
       this.x = x;
@@ -55,7 +55,7 @@
     
    public void upgrade(int path){
       this.upgradeLevel++;
-    
+      
     }
     
     public void sellTower(Game game){
@@ -84,6 +84,10 @@
     
     public int getTowerY(){
       return y;
+    }
+    
+    public void setHitBox(int hitBoxX, int hitBoxY){
+      
     }
     
   }
