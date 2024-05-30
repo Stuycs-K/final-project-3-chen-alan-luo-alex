@@ -1,6 +1,7 @@
 Game game;
 BloonPropertyLookup bloonPropertyLookup;
 BloonSpawner bloonSpawner;
+GuiManager guiManager;
 ArrayList<Tower>towers;
 
 
@@ -10,6 +11,7 @@ void setup(){
   
   bloonPropertyLookup = new BloonPropertyLookup();
   bloonSpawner = new BloonSpawner();
+  guiManager = new GuiManager();
   
   game = new Game();
   game.startGame();

@@ -2,9 +2,12 @@ public class HealthManager {
   private int maxHealth;
   private int currentHealth;
   
+  private HealthGui gui;
+  
   public HealthManager(int maxHealth) {
     this.maxHealth = maxHealth;
     this.currentHealth = maxHealth;
+    this.gui = new HealthGui();
   }
   
   public int getCurrentHealth() {
@@ -17,13 +20,15 @@ public class HealthManager {
   
   public void setHealth(int health) {
     currentHealth = health;
+    
+    gui.setHealth(currentHealth);
   }
   
   public void takeDamageFromBloon(Bloon bloon) {
     BloonPropertyTable properties = bloon.getProperties();
     int damageTaken = properties.getRbe();
     
-    currentHealth -= damageTaken;
+    setHealth(currentHealth - damageTaken);
   }
   
   public boolean didLose() {
@@ -31,7 +36,14 @@ public class HealthManager {
   }
 }
 
-public class GuiHealthBar {
+private class HealthGui {
+  private TextLabel healthText;
   
+  public HealthGui() {
+    healthText = (TextLabel) guiManager.create("HealthDisplayTextLabel");
+  }
   
+  public void setHealth(int health) {
+    healthText.setText("" + health); 
+  }
 }
