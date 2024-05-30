@@ -13,6 +13,7 @@
     private TowerTargetFilter targetFilter;
     public ArrayList<PImage> sprites;
     public int path;
+    public float angle;
     
     
     
@@ -28,6 +29,7 @@
       this.attackCooldown = 0;
       this.projectiles = new ArrayList<Projectile>();
       this.targetFilter = new TowerTargetFilter();
+      this.angle = PI;
       
     }
     
@@ -39,6 +41,7 @@
           if(targetFilter.canAttack(targetBloon)){
             float distance = dist(x,y,targetBloon.position.x,targetBloon.position.y);
             if(distance<=range){
+              angle = atan2(targetBloon.position.y-y, targetBloon.position.x -x);
               projectiles.add(new Projectile(x,y,targetBloon.position.x,targetBloon.position.y,damage));
               attackCooldown = fireRate;
               break;
@@ -50,16 +53,14 @@
       
     }
     
-    
-    
-    
-    public void upgrade(){
+   public void upgrade(int path){
       this.upgradeLevel++;
     
     }
     
     public void sellTower(Game game){
        game.currency += getSellPrice();
+       game.towers.remove(this);
     }
     
     public int getSellPrice(){
@@ -67,8 +68,6 @@
     }
   
     public void draw(){
-      fill(255);
-      ellipse(x,y,20,20);
       for(Projectile projectile : projectiles){
         projectile.drawProjectile();
       }
@@ -76,6 +75,15 @@
     
     public int getCost(){
       return 0;
+    }
+    
+    public int getTowerX(){
+      return x;
+      
+    }
+    
+    public int getTowerY(){
+      return y;
     }
     
   }

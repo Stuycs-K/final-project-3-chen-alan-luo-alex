@@ -1,0 +1,12 @@
+{
+    "fonts": {
+        "regular": {
+            "path": "LuckiestGuyRegular.ttf",
+            "size": 18
+        },
+        "regularSmall": {
+            "path": "LuckiestGuyRegular.ttf",
+            "size": 12
+        }
+    }
+}

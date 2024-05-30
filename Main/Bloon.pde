@@ -58,6 +58,9 @@ public class Bloon {
     this.modifiersList = new BloonModifiersList(this);
     this.spriteRotation = 0;
     
+    this.reachedEnd = false;
+    this.isDead = false;
+    
   }
   
   public Bloon(String layerName) {
@@ -132,11 +135,13 @@ public class Bloon {
     }
     
     pushMatrix();
-    imageMode(CENTER);
-
+    
+    translate(position.x, position.y);
     rotate(spriteRotation);
     
-    image(sprite, position.x, position.y);
+    imageMode(CENTER);
+    
+    image(sprite, 0, 0);
     popMatrix();
   }
   
@@ -160,6 +165,9 @@ public class Bloon {
     }
     
     isDead = true;
+    
+    // Reward 1 money
+    game.getCurrencyManager().rewardCurrency(1 * game.getCurrencyPerPopMultiplier());
     
     // We popped the layer, so make sure the excess damage propagates to all children
     float excessDamage = count - layerHealth;

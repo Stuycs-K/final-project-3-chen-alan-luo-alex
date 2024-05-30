@@ -3,16 +3,16 @@ public class DartMonkey extends Tower{
   public DartMonkey (int x, int y){
     super(x,y,200,20,1,10,20);
     this.sprites = new ArrayList<PImage>();
-    sprites.add(loadImage("images/Towers/dartmonkey.png"));
+    sprites.add(loadImage("images/towers/dartmonkey.png"));
+    sprites.add(loadImage("images/towers/LongRangeDarts.png"));
+    //sprites.add(loadImage("images/towers/
     this.path = 0;
-    //this.sprite = loadImage("images/Towers/dartmonkey.png");
   }
   
   public void attack(ArrayList<Bloon> bloon){
     super.attack(bloon);
-    }
-  
-  
+    } 
+
   public void upgrade(int path){
     if(upgradeLevel == 1){
       if(path==1){
@@ -42,26 +42,56 @@ public class DartMonkey extends Tower{
   
   
   public void draw(){
-    //println("Drawing DartMonkey at: " + x + ", " + y);
+    pushMatrix();
+    translate(x,y);
+    rotate(angle+HALF_PI);
     if (upgradeLevel == 0){
-      
-     
-    PImage spriteZero = sprites.get(0);
-    if (sprite != null) {
-      imageMode(CENTER);
-      image(sprite, x, y);
+      PImage spriteZero = sprites.get(0);
+      if (spriteZero != null) {
+        imageMode(CENTER);
+        image(spriteZero, 0, 0);
+    }
+   }
+    if(upgradeLevel == 1){
+      PImage spriteOne = sprites.get(1);
+      if(spriteOne != null){
+          imageMode(CENTER);
+          image(spriteOne, 0, 0);
+        }
+      if(path == 1){
     
+       }
+      if(path == 2){
+        //implementing projectile changes later
+      }
     }
-   }
-   if(upgradeLevel ==1){
-   }
+    if(upgradeLevel == 2){
+      PImage spriteTwo = sprites.get(2);
+      if(spriteTwo != null){
+          imageMode(CENTER);
+          image(spriteTwo, 0, 0);
+        }
+      if(path == 1){
+
+       }
+      if(path == 2){
+        //implementing projectile changes later
+      }
     }
+  
+        
+        
+  popMatrix();
     for(Projectile projectile : projectiles){
       projectile.drawProjectile();
     }
   }
   
+  public int getSellPrice(){
+    return (int) (getCost() * 0.75);
+  }
+  
   public int getCost(){
-    return 0;
+    return 200;
   }
 }

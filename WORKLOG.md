@@ -32,6 +32,21 @@
 
 - Work on Camo and Regrow modifiers
 
+## 5/27/2024
+
+- Finish Camo and Regrow modifiers
+- Add more waves to waves.json
+
+## 5/28/2024
+
+- Add MOAB-class Bloons and sprite rotations
+
+## 5/29/2024
+
+- Write a simple GUI library
+- Write HealthManager and implement leaked Bloons dealing damage and losing when your health dips below 0
+- Write CurrencyManager and implement damaging Bloons rewarding money
+- Add GUI for health, currency, and wave count
 
 ## Alex Luo
 
@@ -54,3 +69,15 @@
 ### 5/25/2024
  - began writing code to placeTowers
  - added more tower functionality (such as getCost())
+
+### 5/26/2024
+ - wrote towerTargetFilter class
+ - created Projectile class and it's respective methods
+
+### 5/27/2024
+ - improved update from Projectile to destroy bloons
+ - added tower sprites
+
+### 5/28/2024
+ - implemented rotating towers and rotating projectiles
+ - added sprites for darts
