@@ -47,6 +47,34 @@ public class GuiManager {
     }
   }
   
+  
+  public void onMouseMove() {
+    for (GuiBase gui : guiList) {
+      if (gui.isMouseInBounds()) {
+        gui.onHover();
+      } else {
+        gui.onLeave(); 
+      }
+    }
+  }
+  
+  public boolean onMousePress() {
+    boolean pressedSomething = false;
+    
+    for (GuiBase gui : guiList) {
+      if (!gui.isButton()) {
+        continue;
+      }
+      
+      Button button = (Button) gui;
+      button.onInput();
+      
+      pressedSomething = true;
+    }
+    
+    return pressedSomething;
+  }
+  
   private void loadGui(String filePath) {
     JSONObject data = loadJSONObject(filePath);
     
@@ -92,7 +120,7 @@ public class GuiManager {
       gui.render();
     }
   }
-  
+
   public void destroy(GuiBase object) {
     guiList.remove(object); 
   }
@@ -217,7 +245,6 @@ private class GuiBase {
   private PVector position;
   private PVector size;
   
-  private boolean isButton;
   private boolean isVisible;
   
   private JSONObject definition;
@@ -234,9 +261,14 @@ private class GuiBase {
   public JSONObject getDefinition() {
     return definition;
   }
+    
+  public boolean isMouseInBounds() {
+    return (mouseX > this.position.x - this.size.x && mouseX < this.position.x + this.size.x) 
+      && (mouseY > this.position.y - this.size.y && mouseY < this.position.y + this.size.y);
+  }
   
-  public void setButton(boolean state) {
-    isButton = state;
+  public boolean isButton() {
+    return false;
   }
   
   public PVector getPosition() {
@@ -284,7 +316,13 @@ private class GuiBase {
     return new GuiBase(definition);
   }
   
+  // Called when mouse enters bounds
   public void onHover() {
+    return;
+  }
+  
+  // Called when mouse leaves bounds
+  public void onLeave() {
     return;
   }
   
@@ -340,13 +378,14 @@ public class Button extends GuiBase {
     return new Button(getDefinition());
   }
   
-  public void onClick() {
-    
+  public boolean isButton() {
+    return true;
   }
   
-  public void onRelease() {
-    
+  public void onInput() {
+    return;
   }
+  
 }
 
 public class ImageLabel extends GuiBase {
