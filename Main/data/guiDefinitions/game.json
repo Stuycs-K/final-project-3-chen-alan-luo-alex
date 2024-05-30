@@ -7,6 +7,10 @@
         "sizeY": 40,
         "zIndex": 1000,
         "textColor": "0 0 0 0",
+        "stroke": {
+            "color": "0 0 0 0",
+            "weight": 2
+        },
         "textXAlignment": "CENTER",
         "textYAlignment": "CENTER",
         "textXOffset": 40,
@@ -19,7 +23,13 @@
         "sizeX": 40,
         "sizeY": 40,
         "zIndex": 2000,
+        "stroke": {
+            "type": "NONE"
+        },
         "image": "gui/healthIcon.png",
+        "imageX": 0,
+        "imageY": 0,
+        "imagePositionMode": "CORNER",
         "imageSizeX": 40,
         "imageSizeY": 40
     }

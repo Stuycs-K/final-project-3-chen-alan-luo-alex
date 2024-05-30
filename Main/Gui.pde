@@ -189,8 +189,44 @@ private class GuiBase {
     return;
   }
   
+  private void renderStroke() {
+    if (definition.isNull("stroke")) {
+      return;
+    }
+    JSONObject strokeData = definition.getJSONObject("stroke");
+    
+    String strokeType = readString(strokeData, "type", "MITER");
+    if (strokeType.equals("NONE")) {
+      noStroke();
+      return;
+    }
+    
+    int joinMode;
+    switch (strokeType) {
+      case "MITER":
+        joinMode = MITER;
+        break;
+      case "BEVEL":
+        joinMode = BEVEL;
+        break;
+      case "ROUND":
+        joinMode = ROUND;
+        break;
+      default:
+        joinMode = MITER;
+    }
+    strokeJoin(joinMode);
+    
+    float weight = readFloat(strokeData, "weight", 1);
+    strokeWeight(weight);
+    
+    color strokeColor = readColor(strokeData, "color");
+    stroke(strokeColor);
+  }
+  
   public void render() {
     fill(backgroundColor);
+    renderStroke();
     rect(position.x, position.y, size.x, size.y);
   }
 }
@@ -289,6 +325,10 @@ public class TextLabel extends GuiBase {
   
   public void setText(String text) {
     this.text = text;
+  }
+  
+  public void setTextColor(color textColor) {
+    this.textColor = textColor;
   }
   
   public void updateProperties() {

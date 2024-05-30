@@ -43,6 +43,7 @@ private class HealthGui {
   
   public HealthGui() {
     healthText = (TextLabel) guiManager.create("HealthDisplayTextLabel");
+    healthImage = (ImageLabel) guiManager.create("HealthDisplayImageLabel");
   }
   
   public void setHealth(int health) {
