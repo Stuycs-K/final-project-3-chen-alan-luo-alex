@@ -1,6 +1,7 @@
 public class BombProjectile extends Projectile{
   private float explosionRadius;
   private boolean isClusterBombs;
+  private ArrayList<Projectile> projectiles;
   
   public BombProjectile(float x, float y, float targetX, float targetY, int damage, float explosionRadius, boolean isClusterBombs){
     super(x,y,targetX,targetY,damage);
@@ -32,9 +33,17 @@ public class BombProjectile extends Projectile{
         bloon.damage(damage);
       }
     }
+    if(isClusterBombs){
+      for(int i = 0; i < 8; i++){
+        float angle = TWO_PI/8;
+        float clusterTargetX = x * explosionRadius;
+        float clusterTargetY = y * explosionRadius;
+        projectiles.add(new BombProjectile(x,y,clusterTargetX,clusterTargetY, damage/3, explosionRadius/3, false));
+      }
+    }
   }
   
-  private void drawProjectile(){
+  public void drawProjectile(){
     //implementing sprites later
     pushMatrix();
     translate(x,y);
@@ -43,6 +52,4 @@ public class BombProjectile extends Projectile{
     popMatrix();
     
   }
-}
-}
 }
