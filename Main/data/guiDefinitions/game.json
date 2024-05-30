@@ -1,7 +1,7 @@
 {
     "HealthDisplayTextLabel": {
         "className": "TextLabel",
-        "x": 0,
+        "x": 40,
         "y": 0,
         "sizeX": 80,
         "sizeY": 40,
@@ -11,5 +11,16 @@
         "textYAlignment": "CENTER",
         "textXOffset": 40,
         "textYOffset": 20
+    },
+    "HealthDisplayImageLabel": {
+        "className": "ImageLabel",
+        "x": 0,
+        "y": 0,
+        "sizeX": 40,
+        "sizeY": 40,
+        "zIndex": 2000,
+        "image": "gui/healthIcon.png",
+        "imageSizeX": 40,
+        "imageSizeY": 40
     }
 }

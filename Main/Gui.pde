@@ -148,6 +148,10 @@ private class GuiBase {
     return position;
   }
   
+  public PVector getSize() {
+    return size;
+  }
+  
   public int getZIndex() {
     return zIndex;
   }
@@ -212,9 +216,14 @@ public class Button extends GuiBase {
 
 public class ImageLabel extends GuiBase {
   private PImage image;
+  private PVector imageSize;
+  private PVector imagePosition;
+  private int imagePositionMode;
   
   public ImageLabel(JSONObject definition) {
     super(definition);
+    
+    updateProperties();
   }
   
   public ImageLabel clone() {
@@ -223,6 +232,41 @@ public class ImageLabel extends GuiBase {
   
   public void updateProperties() {
     super.updateProperties();
+    
+    JSONObject definition = getDefinition();
+    String imagePath = definition.getString("image");
+    this.image = loadImage(dataPath("images/" + imagePath));
+    
+    PVector defaultSize = getSize();
+    int imageSizeX = readInt(definition, "imageSizeX", int(defaultSize.x));
+    int imageSizeY = readInt(definition, "imageSizeY", int(defaultSize.y));
+    
+    this.imageSize = new PVector(imageSizeX, imageSizeY);
+    
+    int x = readInt(definition, "imageX", 0);
+    int y = readInt(definition, "imageY", 0);
+    
+    this.imagePosition = new PVector(x, y);
+    
+    String imagePositionModeName = readString(definition, "imagePositionMode", "CORNER");
+    
+    switch (imagePositionModeName) {
+      case "CENTER":
+        this.imagePositionMode = CENTER;
+        break;
+      case "CORNER":
+        this.imagePositionMode = CORNER;
+        break;
+      default:
+        this.imagePositionMode = CORNER;
+    }
+  }
+  
+  public void render() {
+    super.render();
+    
+    imageMode(this.imagePositionMode);
+    image(this.image, this.imagePosition.x, this.imagePosition.y, this.imageSize.x, this.imageSize.y);
   }
 }
 
