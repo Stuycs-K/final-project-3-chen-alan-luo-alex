@@ -67,7 +67,7 @@
     },
     "WaveCounterHeader": {
         "className": "TextLabel",
-        "x": 300,
+        "x": "r 50",
         "y": 0,
         "sizeX": 50,
         "sizeY": 30,
@@ -85,8 +85,8 @@
     },
     "WaveCounterTextLabel": {
         "className": "TextLabel",
-        "x": 300,
-        "y": 30,
+        "x": "r 80",
+        "y": 20,
         "sizeX": 80,
         "sizeY": 30,
         "zIndex": 2000,
@@ -94,9 +94,9 @@
         "stroke": {
             "type": "NONE"
         },
-        "textXAlignment": "CENTER",
+        "textXAlignment": "RIGHT",
         "textYAlignment": "CENTER",
-        "textXOffset": 40,
+        "textXOffset": 65,
         "textYOffset": 15
     }
 }

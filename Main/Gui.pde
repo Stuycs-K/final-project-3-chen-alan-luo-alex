@@ -117,7 +117,11 @@ private static int readInt(JSONObject object, String keyName, int defaultValue) 
     return defaultValue;
   }
   
-  return object.getInt(keyName);
+  try {
+    return object.getInt(keyName);
+  } catch (Exception exception) {
+    return defaultValue;
+  }
 }
 
 /*
