@@ -1,0 +1,9 @@
+{
+    "HealthDisplayTextLabel": {
+        "x": 0,
+        "y": 0,
+        "sizeX": 80,
+        "sizeY": 40,
+        "zIndex": 1000
+    }
+}

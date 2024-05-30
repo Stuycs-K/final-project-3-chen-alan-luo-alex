@@ -30,3 +30,8 @@ public class HealthManager {
     return (currentHealth <= 0);
   }
 }
+
+public class GuiHealthBar {
+  
+  
+}
