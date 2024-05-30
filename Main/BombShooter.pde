@@ -7,14 +7,11 @@ public class BombShooter extends Tower{
   private TowerTargetFilter targetFilterBomb;
   
   public BombShooter(int x, int y){
-    
-    super(x,y);
+    super(x, y, 100, 50, 1, 20, 50, 100);
     this.bombRange = 100;
     this.bombDamage = 1;
     this.explosionRadius = 50;
     this.cost = 100;
-    this.upgradePath = 0;
-    this.upgradeLevel = 0;
     this.isClusterBombs = false;
     this.isMissle = false;
     this.targetFilterBomb = new TowerTargetFilter();
