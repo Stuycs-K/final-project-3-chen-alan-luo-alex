@@ -87,7 +87,11 @@ public class DartMonkey extends Tower{
     }
   }
   
+  public int getSellPrice(){
+    return (int) (getCost() * 0.75);
+  }
+  
   public int getCost(){
-    return 0;
+    return 200;
   }
 }
