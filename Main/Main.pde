@@ -26,8 +26,6 @@ void setup(){
   
   JSONObject spawnInformation = new JSONObject();
   spawnInformation.setString("layerName", "MOAB");
-  
-  //spawnInformation.setInt("count", 5);
   bloonSpawner.spawn(spawnInformation);
   
   //temp setup below
@@ -44,6 +42,7 @@ void draw(){
   game.render();
   game.update();
   
+  // Render UI after everything else to ensure it ends up on top
   guiManager.render();
 
 }

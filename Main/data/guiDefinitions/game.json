@@ -64,5 +64,39 @@
         "imagePositionMode": "CORNER",
         "imageSizeX": 30,
         "imageSizeY": 30
+    },
+    "WaveCounterHeader": {
+        "className": "TextLabel",
+        "x": 300,
+        "y": 0,
+        "sizeX": 50,
+        "sizeY": 30,
+        "zIndex": 2000,
+        "text": "Wave",
+        "textFont": "regularSmall",
+        "textColor": "0 0 0 0",
+        "stroke": {
+            "type": "NONE"
+        },
+        "textXAlignment": "RIGHT",
+        "textYAlignment": "CENTER",
+        "textXOffset": 40,
+        "textYOffset": 15
+    },
+    "WaveCounterTextLabel": {
+        "className": "TextLabel",
+        "x": 300,
+        "y": 30,
+        "sizeX": 80,
+        "sizeY": 30,
+        "zIndex": 2000,
+        "textColor": "0 0 0 0",
+        "stroke": {
+            "type": "NONE"
+        },
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "textXOffset": 40,
+        "textYOffset": 15
     }
 }

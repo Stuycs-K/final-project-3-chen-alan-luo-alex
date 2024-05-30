@@ -84,6 +84,11 @@ public class GuiManager {
   
   public void render() {
     for (GuiBase gui : guiList) {
+      // Don't render invisible components!
+      if (!gui.isVisible()) {
+        continue;
+      }
+      
       gui.render();
     }
   }
@@ -161,6 +166,8 @@ private class GuiBase {
   
   public GuiBase(JSONObject definition) {
     this.definition = definition;
+    
+    this.isVisible = true;
     updateProperties();
   }
   
@@ -186,6 +193,10 @@ private class GuiBase {
   
   public void setVisible(boolean state) {
     isVisible = state; 
+  }
+  
+  public boolean isVisible() {
+    return isVisible;
   }
   
   public void setPosition(PVector position) {
@@ -352,7 +363,6 @@ public class TextLabel extends GuiBase {
   
   public TextLabel(JSONObject definition) {
     super(definition);
-    this.text = "";
   }
   
   public TextLabel clone() {
@@ -378,10 +388,11 @@ public class TextLabel extends GuiBase {
     
     this.textPositionOffset = new PVector(xOffset, yOffset);
     this.textColor = readColor(definition, "textColor");
+    this.text = readString(definition, "text", "");
     
     String textXAlignmentName = readString(definition, "textXAlignment", "CENTER");
     String textYAlignmentName = readString(definition, "textYAlignment", "TOP");
-    
+   
     switch (textXAlignmentName) {
       case "CENTER":
         this.textXAlignment = CENTER;
@@ -421,14 +432,16 @@ public class TextLabel extends GuiBase {
     super.render();
     
     fill(this.textColor);
-    textSize(this.textSize);
-    
+
     if (this.textFont != null) {
       textFont(this.textFont);
+    } else {
+      textSize(this.textSize);
     }
 
     PVector position = getPosition();
-    text(this.text, position.x + this.textPositionOffset.x, position.y + this.textPositionOffset.y);
     textAlign(this.textXAlignment, this.textYAlignment);
+    text(this.text, position.x + this.textPositionOffset.x, position.y + this.textPositionOffset.y);
+
   }
 }

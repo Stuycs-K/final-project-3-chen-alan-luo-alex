@@ -37,6 +37,6 @@ private class CurrencyGui {
   
   public void setCurrencyText(float currency) {
     int roundedDown = int(currency);
-    currencyText.setText("" + roundedDown);
+    currencyText.setText("$" + roundedDown);
   }
 }

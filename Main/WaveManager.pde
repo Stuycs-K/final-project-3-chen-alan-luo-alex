@@ -1,5 +1,3 @@
-import java.util.Set;
-
 private class WaveSpawn extends Thread {
   private String name;
   private JSONObject waveSpawnInformation;
@@ -89,12 +87,16 @@ public class WaveManager {
   private JSONObject currentWave;
   
   private HashMap<String, WaveSpawn> currentWaveSpawns;
+    
+  private WaveCounterGui gui;
   
   public WaveManager() {
     this.waveStructure = loadJSONArray("waves.json");
     this.currentWaveNumber = -1;
     this.currentWave = null;
     this.currentWaveSpawns = new HashMap<String, WaveSpawn>();
+        
+    this.gui = new WaveCounterGui();
   }
   
   public boolean waveFinishedSpawning() {
@@ -108,6 +110,8 @@ public class WaveManager {
   
   public void startNextWave() {
     currentWaveNumber++;
+    
+    gui.setWave(getCurrentWaveNumber());
     
     currentWaveSpawns.clear();
     
@@ -149,5 +153,19 @@ public class WaveManager {
   
   public int getCurrentWaveNumber() {
     return currentWaveNumber + 1;
+  }
+}
+
+public class WaveCounterGui {
+  private TextLabel waveText;
+  private TextLabel header;
+  
+  public WaveCounterGui() {
+    this.waveText = (TextLabel) guiManager.create("WaveCounterTextLabel");
+    this.header = (TextLabel) guiManager.create("WaveCounterHeader");
+  }
+  
+  public void setWave(int waveCount) {
+     waveText.setText("" + waveCount);
   }
 }
