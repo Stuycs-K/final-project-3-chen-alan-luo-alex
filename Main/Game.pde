@@ -10,8 +10,9 @@ public class Game{
     public WaveManager waveManager;
     private Tower selectedTower;
     private boolean showTowerOptions;
-    private float buttonX, buttonY;
-    private float buttonWidth, buttonHeight;
+    private GuiManager guiManager;
+    private Button upgradeButton;
+    private Button sellButton;
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -40,10 +41,8 @@ public class Game{
         waveManager = new WaveManager();
         
         showTowerOptions = false;
-        buttonX = 0;
-        buttonY = 0;
-        buttonWidth = 80;
-        buttonHeight = 30;
+        guiManager = new GuiManager();
+        setupGui();
     }
     
     public Map getMap() {
@@ -108,6 +107,23 @@ public class Game{
       
     }
     
+    private void setupGui(){
+      upgradeButton = (Button) guiManager.create("upgradeButton");
+      sellButton = (Button) guiManager.create("sellButton");
+      
+    }
+    
+    private void selectTower(Tower tower){
+      selectedTower = tower;
+      showTowerOptions = true;
+      updateGuiPostions(tower);
+    }
+    
+    private void updateGuiPositions(Tower tower){
+      float buttonX = tower.getTowerX() + 50;
+      float buttonY = tower.getTowerY();
+    }
+    
     public void placeTower(String towerName, int x, int y){
       Tower newTower = null;
       println("Attempting to place tower: " + towerName + " at (" + x + "," + y + ")");
@@ -153,5 +169,9 @@ public class Game{
         //println("Drawing tower at: " + tower.x + ", " + tower.y);
         tower.draw();
     }
+      if(showTowerOptions && selectedTower != null){
+        guiManager.render();
+      }
+     
     }
 }
