@@ -42,8 +42,18 @@ void draw(){
 
 }
 
+void mouseMoved() {
+  guiManager.mouseMoved();
+}
 
 void mousePressed(){
+  boolean pressedButton = guiManager.mousePressed();
+  
+  // GUI sank input, so don't do anything else!
+  if (pressedButton) {
+    return;
+  }
+  
   game.mousePressed(mouseX, mouseY);
   
   

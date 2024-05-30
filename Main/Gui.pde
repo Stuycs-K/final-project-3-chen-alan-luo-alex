@@ -48,7 +48,7 @@ public class GuiManager {
   }
   
   
-  public void onMouseMove() {
+  public void mouseMoved() {
     for (GuiBase gui : guiList) {
       if (gui.isMouseInBounds()) {
         gui.onHover();
@@ -58,7 +58,7 @@ public class GuiManager {
     }
   }
   
-  public boolean onMousePress() {
+  public boolean mousePressed() {
     boolean pressedSomething = false;
     
     for (GuiBase gui : guiList) {
