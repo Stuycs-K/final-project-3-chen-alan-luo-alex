@@ -140,9 +140,12 @@ public class Game{
 //    }
     
     public void placeTower(String towerName, int x, int y){
+
+      
        if(towerName.equals("DartMonkey")){
         DartMonkey dartMonkey = new DartMonkey(x, y);
         towers.add(dartMonkey);
+      }
       }
       //}else if (towerName.equals("BombShooter")){
       //  newTower = new BombShooter(x,y);
@@ -163,7 +166,7 @@ public class Game{
       //}
       
        
-    }
+    
 
     
     public void selectTower(Tower tower){
@@ -194,7 +197,7 @@ public class Game{
         fill(0);
         textAlign(CENTER, CENTER);
         text("Upgrade", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
-
+        fill(200);
         rect(buttonX, buttonY + buttonHeight + 10, buttonWidth, buttonHeight);
         fill(0);
         textAlign(CENTER, CENTER);
@@ -211,6 +214,7 @@ public class Game{
     //}
     
     public void mousePressed(int mx, int my) {
+      // need to add hitbox so that 
      if (showTowerOptions) {
        if (mx > buttonX && mx < buttonX + buttonWidth && my > buttonY + buttonHeight + 10 && my < buttonY + buttonHeight * 2 + 10) {
          selectedTower.upgrade(selectedTower.path);
