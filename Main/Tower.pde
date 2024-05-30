@@ -16,8 +16,9 @@
     public float angle;
     public int hitBoxX;
     public int hitBoxY;
+    public int cost;
     
-    public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius){
+    public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius, int cost){
       this.x = x;
       this.y = y;
       this.radius = radius;
@@ -30,6 +31,7 @@
       this.projectiles = new ArrayList<Projectile>();
       this.targetFilter = new TowerTargetFilter();
       this.angle = PI;
+      this.cost = cost;
       
     }
     
