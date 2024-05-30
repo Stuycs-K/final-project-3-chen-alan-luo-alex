@@ -41,6 +41,13 @@
 
 - Add MOAB-class Bloons and sprite rotations
 
+## 5/29/2024
+
+- Write a simple GUI library
+- Write HealthManager and implement leaked Bloons dealing damage and losing when your health dips below 0
+- Write CurrencyManager and implement damaging Bloons rewarding money
+- Add GUI for health, currency, and wave count
+
 ## Alex Luo
 
 ### 5/22/2024

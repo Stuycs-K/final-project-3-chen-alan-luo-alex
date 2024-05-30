@@ -53,13 +53,14 @@
       
     }
     
-   public void upgrade(){
+   public void upgrade(int path){
       this.upgradeLevel++;
     
     }
     
     public void sellTower(Game game){
        game.currency += getSellPrice();
+       game.towers.remove(this);
     }
     
     public int getSellPrice(){

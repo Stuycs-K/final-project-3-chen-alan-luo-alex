@@ -17,12 +17,9 @@ private class FontManager {
 
     Set<String> fontAliases = fonts.keys();
     for (String alias : fontAliases) {
-      JSONObject fontInfo = fonts.getJSONObject(alias);
+      String fontPath = fonts.getString(alias);
       
-      String fontPath = fontInfo.getString("path");
-      int fontSize = fontInfo.getInt("size");
-      
-      PFont loadedFont = createFont(dataPath("fonts/" + fontPath), fontSize);
+      PFont loadedFont = createFont(dataPath("fonts/" + fontPath), 24);
       fontMap.put(alias, loadedFont);
     }
   }
@@ -84,11 +81,6 @@ public class GuiManager {
   
   public void render() {
     for (GuiBase gui : guiList) {
-      // Don't render invisible components!
-      if (!gui.isVisible()) {
-        continue;
-      }
-      
       gui.render();
     }
   }
@@ -111,72 +103,12 @@ public class GuiManager {
   
 }
 
-// Utilities for parsing JSON
 private static int readInt(JSONObject object, String keyName, int defaultValue) {
   if (object.isNull(keyName)) {
     return defaultValue;
   }
   
-  try {
-    return object.getInt(keyName);
-  } catch (Exception exception) {
-    return defaultValue;
-  }
-}
-
-/*
-  Reading positions:
-  
-  1) Absolute:
-    Relative to the top left corner of the window
-    Implied when using integers
-    
-  2) Center:
-    Relative to the center of the window (width / 2, height / 2)
-    Enter the position as a string beginning with "c":
-      An x position of "c 100" would be equivalent to width / 2 + 100 (100 pixels right of the center)
-      A y position of "c -60" would be equivalent to height / 2 - 60 (60 pixels above the center)
-      
-  3) Right:
-    Relative to the bottom right corner of the window (width, height)
-   
-    Enter the position as a string beginning with "r" (note that negative integers are invalid!):
-      An x position of "r 60" would be equivalent to width - 60 (60 pixels to the left of the right)
-      A y position of "r 40" would be equivalent to height - 40 (40 pixels above the bottom)
-
-*/
-private static int readPosition(JSONObject object, String keyName, int relativePosition) {
-  int position = readInt(object, keyName, Integer.MIN_VALUE);
-  
-  // We entered the position as an integer! We're done.
-  if (position != Integer.MIN_VALUE) {
-    return position;
-  }
-  
-  // There HAS to be a position string
-  String positionString = readString(object, keyName, "");
-  String[] instructions = positionString.split(" ");
-  
-  String relativeTo = instructions[0];
-  int offset = Integer.parseInt(instructions[1]);
-  
-  if (relativeTo.equals("c")) {
-    return relativePosition / 2 + offset; 
-  }
-  
-  if (relativeTo.equals("r")) {
-    return relativePosition - offset;
-  }
-  
-  return 0;
-}
-
-private int readXPosition(JSONObject object, String keyName) {
-  return readPosition(object, keyName, width);
-}
-
-private int readYPosition(JSONObject object, String keyName) {
-  return readPosition(object, keyName, height);
+  return object.getInt(keyName);
 }
 
 private static String readString(JSONObject object, String keyName, String defaultValue) {
@@ -226,8 +158,6 @@ private class GuiBase {
   
   public GuiBase(JSONObject definition) {
     this.definition = definition;
-    
-    this.isVisible = true;
     updateProperties();
   }
   
@@ -255,17 +185,13 @@ private class GuiBase {
     isVisible = state; 
   }
   
-  public boolean isVisible() {
-    return isVisible;
-  }
-  
   public void setPosition(PVector position) {
     this.position = position;
   }
   
   public void updateProperties() {
-    int xPosition = readXPosition(definition, "x");
-    int yPosition = readYPosition(definition, "y");
+    int xPosition = readInt(definition, "x", 0);
+    int yPosition = readInt(definition, "y", 0);
     
     this.position = new PVector(xPosition, yPosition);
     
@@ -365,10 +291,6 @@ public class ImageLabel extends GuiBase {
     return new ImageLabel(getDefinition());
   }
   
-  public void setImage(PImage image) {
-    this.image = image;
-  }
-  
   public void updateProperties() {
     super.updateProperties();
     
@@ -404,10 +326,8 @@ public class ImageLabel extends GuiBase {
   public void render() {
     super.render();
     
-    PVector position = getPosition();
-    
     imageMode(this.imagePositionMode);
-    image(this.image, position.x + this.imagePosition.x, position.y + this.imagePosition.y, this.imageSize.x, this.imageSize.y);
+    image(this.image, this.imagePosition.x, this.imagePosition.y, this.imageSize.x, this.imageSize.y);
   }
 }
 
@@ -423,6 +343,7 @@ public class TextLabel extends GuiBase {
   
   public TextLabel(JSONObject definition) {
     super(definition);
+    this.text = "";
   }
   
   public TextLabel clone() {
@@ -448,11 +369,10 @@ public class TextLabel extends GuiBase {
     
     this.textPositionOffset = new PVector(xOffset, yOffset);
     this.textColor = readColor(definition, "textColor");
-    this.text = readString(definition, "text", "");
     
     String textXAlignmentName = readString(definition, "textXAlignment", "CENTER");
     String textYAlignmentName = readString(definition, "textYAlignment", "TOP");
-   
+    
     switch (textXAlignmentName) {
       case "CENTER":
         this.textXAlignment = CENTER;
@@ -476,32 +396,24 @@ public class TextLabel extends GuiBase {
         break;
       case "BOTTOM":
         this.textYAlignment = BOTTOM;
-        break;
+        break;  
       default:
-        this.textYAlignment = TOP;
+        this.textYAlignment = CENTER;
     }
         
     String textFontAlias = readString(definition, "textFont", "regular");
-    // Use the default processing font otherwise
-    if (!textFontAlias.equals("DEFAULT")) {
-      this.textFont = fontManager.getFont(textFontAlias);
-    }
+    this.textFont = fontManager.getFont(textFontAlias);
   }
   
   public void render() {
     super.render();
     
     fill(this.textColor);
-
-    if (this.textFont != null) {
-      textFont(this.textFont);
-    } else {
-      textSize(this.textSize);
-    }
+    textSize(this.textSize);
+    textFont(this.textFont);
 
     PVector position = getPosition();
-    textAlign(this.textXAlignment, this.textYAlignment);
     text(this.text, position.x + this.textPositionOffset.x, position.y + this.textPositionOffset.y);
-
+    textAlign(this.textXAlignment, this.textYAlignment);
   }
 }

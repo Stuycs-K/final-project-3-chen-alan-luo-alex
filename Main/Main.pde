@@ -26,16 +26,9 @@ void setup(){
   
   JSONObject spawnInformation = new JSONObject();
   spawnInformation.setString("layerName", "MOAB");
-  
-  //spawnInformation.setInt("count", 5);
   bloonSpawner.spawn(spawnInformation);
   
-  //temp setup below
-  //text("UpdateTower", 100, 100);
-  //fill(0,255,0);
-  //text("SellTower", 100, 100);
-  //fill(255,0,0);
-  
+
   
 }
 
@@ -44,19 +37,14 @@ void draw(){
   game.render();
   game.update();
   
+  // Render UI after everything else to ensure it ends up on top
   guiManager.render();
 
 }
 
-//void drawTowerOptions(int x, int y, String name){
-//  if(mousePressed
-//  text(name,x,y);
-  
-//}
 
 void mousePressed(){
-  
-  game.placeTower("DartMonkey", mouseX, mouseY);
+  game.mousePressed(mouseX, mouseY);
   
   
 }

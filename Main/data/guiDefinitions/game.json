@@ -1,28 +1,27 @@
 {
-    "HealthDisplayTextLabel": {
+    "HealthTextLabel": {
         "className": "TextLabel",
-        "x": 40,
+        "x": 30,
         "y": 0,
-        "sizeX": 80,
-        "sizeY": 40,
-        "zIndex": 1000,
+        "sizeX": 60,
+        "sizeY": 30,
+        "zIndex": 2000,
         "textColor": "0 0 0 0",
         "stroke": {
-            "color": "0 0 0 0",
-            "weight": 2
+            "type": "NONE"
         },
-        "textXAlignment": "CENTER",
+        "textXAlignment": "LEFT",
         "textYAlignment": "CENTER",
-        "textXOffset": 40,
-        "textYOffset": 20
+        "textXOffset": 10,
+        "textYOffset": 15
     },
-    "HealthDisplayImageLabel": {
+    "HealthImageLabel": {
         "className": "ImageLabel",
         "x": 0,
         "y": 0,
-        "sizeX": 40,
-        "sizeY": 40,
-        "zIndex": 2000,
+        "sizeX": 30,
+        "sizeY": 30,
+        "zIndex": 1000,
         "stroke": {
             "type": "NONE"
         },
@@ -30,7 +29,74 @@
         "imageX": 0,
         "imageY": 0,
         "imagePositionMode": "CORNER",
-        "imageSizeX": 40,
-        "imageSizeY": 40
+        "imageSizeX": 30,
+        "imageSizeY": 30
+    },
+    "CurrencyTextLabel": {
+        "className": "TextLabel",
+        "x": 30,
+        "y": 30,
+        "sizeX": 100,
+        "sizeY": 30,
+        "zIndex": 2000,
+        "textColor": "0 0 0 0",
+        "stroke": {
+            "type": "NONE"
+        },
+        "textXAlignment": "LEFT",
+        "textYAlignment": "CENTER",
+        "textXOffset": 10,
+        "textYOffset": 15
+    },
+    "CurrencyImageLabel": {
+        "className": "ImageLabel",
+        "x": 0,
+        "y": 30,
+        "sizeX": 30,
+        "sizeY": 30,
+        "zIndex": 1000,
+        "stroke": {
+            "type": "NONE"
+        },
+        "image": "gui/currencyIcon.png",
+        "imageX": 0,
+        "imageY": 0,
+        "imagePositionMode": "CORNER",
+        "imageSizeX": 30,
+        "imageSizeY": 30
+    },
+    "WaveCounterHeader": {
+        "className": "TextLabel",
+        "x": "r 50",
+        "y": 0,
+        "sizeX": 50,
+        "sizeY": 30,
+        "zIndex": 2000,
+        "text": "Wave",
+        "textFont": "regularSmall",
+        "textColor": "0 0 0 0",
+        "stroke": {
+            "type": "NONE"
+        },
+        "textXAlignment": "RIGHT",
+        "textYAlignment": "CENTER",
+        "textXOffset": 40,
+        "textYOffset": 15
+    },
+    "WaveCounterTextLabel": {
+        "className": "TextLabel",
+        "x": "r 80",
+        "y": 20,
+        "sizeX": 80,
+        "sizeY": 30,
+        "zIndex": 2000,
+        "textColor": "0 0 0 0",
+        "stroke": {
+            "type": "NONE"
+        },
+        "textXAlignment": "RIGHT",
+        "textYAlignment": "CENTER",
+        "textXOffset": 65,
+        "textYOffset": 15
     }
 }

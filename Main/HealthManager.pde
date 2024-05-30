@@ -42,8 +42,8 @@ private class HealthGui {
   private ImageLabel healthImage;
   
   public HealthGui() {
-    healthText = (TextLabel) guiManager.create("HealthDisplayTextLabel");
-    healthImage = (ImageLabel) guiManager.create("HealthDisplayImageLabel");
+    healthText = (TextLabel) guiManager.create("HealthTextLabel");
+    healthImage = (ImageLabel) guiManager.create("HealthImageLabel");
   }
   
   public void setHealth(int health) {
