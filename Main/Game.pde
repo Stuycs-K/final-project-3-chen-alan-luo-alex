@@ -10,9 +10,12 @@ public class Game{
     public WaveManager waveManager;
     private Tower selectedTower;
     private boolean showTowerOptions;
-    private GuiManager guiManager;
-    private Button upgradeButton;
-    private Button sellButton;
+    private float buttonX, buttonY;
+    private float buttonWidth, buttonHeight;
+
+    //private GuiManager guiManager;
+    //private Button upgradeButton;
+    //private Button sellButton;
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -41,8 +44,12 @@ public class Game{
         waveManager = new WaveManager();
         
         showTowerOptions = false;
-        guiManager = new GuiManager();
-        setupGui();
+        buttonX=0;
+        buttonY=0;
+        buttonWidth=80;
+        buttonHeight = 30;
+        //guiManager = new GuiManager();
+        //setupGui();
     }
     
     public Map getMap() {
@@ -107,19 +114,19 @@ public class Game{
       
     }
     
-    private void setupGui(){
-      upgradeButton = (Button) guiManager.create("upgradeButton");
-      sellButton = (Button) guiManager.create("sellButton");
+    //private void setupGui(){
+    //  upgradeButton = (Button) guiManager.create("upgradeButton");
+    //  sellButton = (Button) guiManager.create("sellButton");
       
-    }
+    //}
 
-    private void updateGuiPositions(Tower tower){
-      float buttonX = tower.getTowerX() + 50;
-      float buttonY = tower.getTowerY();
-    }
+//    private void updateGuiPositions(Tower tower){
+//      float buttonX = tower.getTowerX() + 50;
+//      float buttonY = tower.getTowerY();
+//    }
     
     public void placeTower(String towerName, int x, int y){
-       if(towerType.equals("DartMonkey")){
+       if(towerName.equals("DartMonkey")){
         DartMonkey dartMonkey = new DartMonkey(x, y);
         towers.add(dartMonkey);
       }
@@ -145,10 +152,13 @@ public class Game{
     }
 
     
-    public Tower selectTower(Tower tower){
+    public void selectTower(Tower tower){
       selectedTower = tower;
       showTowerOptions = true;
-      updateGuiPostions(tower);
+      //updateGuiPositions(tower);
+      //return selectedTower;
+      buttonX = tower.getTowerX() + 50;
+      buttonY = tower.getTowerY();
     }
     public void sellTower(Tower towerName, int x, int y){
 
@@ -165,28 +175,37 @@ public class Game{
         tower.draw();
     }
       if(showTowerOptions && selectedTower != null){
-        guiManager.render();
+        fill(200);
+        rect(buttonX, buttonY, buttonWidth, buttonHeight);
+        fill(0);
+        textAlign(CENTER, CENTER);
+        text("Upgrade", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
+
+        rect(buttonX, buttonY + buttonHeight + 10, buttonWidth, buttonHeight);
+        fill(0);
+        textAlign(CENTER, CENTER);
+        text("Sell", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2 + buttonHeight + 10);
       }
      
     }
     
-    private boolean isMouseOverButton(Button button, int mx, int my){
-      PVector buttonPos = button.getPosition();
-      PVector buttonSize = button.getSize();
+    //private boolean isMouseOverButton(Button button, int mx, int my){
+    //  PVector buttonPos = button.getPosition();
+    //  PVector buttonSize = button.getSize();
       
-      return mx > buttonPos.x && mx < buttonPos.x + buttonSize.x &&  my > buttonPos.y && my < buttonPos.y + buttonSize.y;
-    }
+    //  return mx > buttonPos.x && mx < buttonPos.x + buttonSize.x &&  my > buttonPos.y && my < buttonPos.y + buttonSize.y;
+    //}
     
     public void mousePressed(int mx, int my) {
      if (showTowerOptions) {
-       if (isMouseOverButton(upgradeButton, mx, my)) {
+       if (mx > buttonX && mx < buttonX + buttonWidth && my > buttonY + buttonHeight + 10 && my < buttonY + buttonHeight * 2 + 10) {
          selectedTower.upgrade(selectedTower.path);
          showTowerOptions = false;
          selectedTower = null;
          return;
        }
 
-       if (isMouseOverButton(sellButton, mx, my)) {
+       if (mx > buttonX && mx < buttonX + buttonWidth && my > buttonY + buttonHeight + 10 && my < buttonY + buttonHeight * 2 + 10) {
          selectedTower.sellTower(this);
          showTowerOptions = false;
          selectedTower = null;
