@@ -98,6 +98,9 @@ public class GuiManager {
         case "Frame":
           guiObject = new Frame(guiData);
           break;
+        case "imageButton":
+          guiObject = new imageButton(imageButton);
+          break;
         default:
           guiObject = new GuiBase(guiData);
       }
@@ -482,6 +485,26 @@ public class Frame extends GuiBase {
     PVector size = getSize();
     rect(position.x, position.y, size.x, size.y);
   }
+}
+
+public class imageButton extends ImageLabel{
+  
+  public imageButton(JSONOBject defintion){
+    super(defintion);
+  }
+  
+  public imageButton clone() {
+    return new imageButton(getDefinition());
+  }
+  
+  public boolean isButton(){ 
+    return true;
+  }
+  
+  public void onInput() {
+    return;
+  }
+  
 }
 
 

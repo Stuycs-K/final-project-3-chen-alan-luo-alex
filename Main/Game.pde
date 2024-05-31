@@ -151,8 +151,12 @@ public class Game{
         DartMonkey dartMonkey = new DartMonkey(x, y);
         towers.add(dartMonkey);
       }
-     }
-      //}else if (towerName.equals("BombShooter")){
+     
+       if (towerName.equals("BombShooter")){
+         BombShooter bombShooter = new BombShooter(x,y);
+         towers.add(bombShooter);
+       }
+    }
       //  newTower = new BombShooter(x,y);
       //}else if (towerName.equals("IceMonkey")){
       //  newTower = new IceMonkey(x,y);
