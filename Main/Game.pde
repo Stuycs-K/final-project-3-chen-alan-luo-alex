@@ -21,6 +21,7 @@ public class Game{
     private Button sellButton;
     private TextLabel upgradeLabel;
     private TextLabel sellLabel;
+    private TextLabel towerLabel;
     private Frame horizontalWoodenPadding;
     private Frame verticalWoodenPadding;
 
@@ -137,8 +138,10 @@ public class Game{
       sellButton = (Button) guiManager.create("sellButton");
       upgradeLabel = (TextLabel) guiManager.create("upgradeLabel");
       sellLabel = (TextLabel) guiManager.create("sellLabel");
+      towerLabel = (TextLabel) guiManager.create("towerLabel");
       horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
       verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
+      
      }
     
     public void placeTower(String towerName, int x, int y){

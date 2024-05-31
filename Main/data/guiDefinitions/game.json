@@ -147,7 +147,7 @@
         "y": 650,
         "sizeX": 800,
         "sizeY": 200,
-        "backgroundColor": "139 69 19",
+        "backgroundColor": "139 69 30",
         "backgroundTransparency": 1,
         "zIndex": 0
     },
@@ -157,9 +157,20 @@
         "y":0,
         "sizeX":200,
         "sizeY":800,
-        "backgroundColor": "139 69 19",
+        "backgroundColor": "139 69 30",
         "backgroundTransparency":1,
         "zIndex": 0
+    },
+    "towerLabel" : {
+        "className" : "TextLabel",
+        "x" : "1120",
+        "y" : "60",
+        "text" : "Towers",
+        "textSize" : 16,
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment" : "CENTER",
+        "zIndex" : 2
     }
 
 }
