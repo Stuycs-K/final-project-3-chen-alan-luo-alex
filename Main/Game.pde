@@ -215,6 +215,13 @@ public class Game{
     
     public void mousePressed(int mx, int my) {
       // need to add hitbox so that 
+      PVector mousePosition = new PVector(mx, my);
+      MapSegment mapSegment = map.getMapSegmentFromPosition(mousePosition);
+      
+      if(mapSegment == null){
+        return;
+      }
+     
      if (showTowerOptions) {
        if (mx > buttonX && mx < buttonX + buttonWidth && my > buttonY + buttonHeight + 10 && my < buttonY + buttonHeight * 2 + 10) {
          selectedTower.upgrade(selectedTower.path);
@@ -230,11 +237,17 @@ public class Game{
          return;
        }
       }
+      boolean towerInRange = false;
     for (Tower tower : towers) {
-        if (dist(mx, my, tower.getTowerX(), tower.getTowerY()) < tower.radius) {
-         selectTower(tower);
-          return;
+        float distanceToTower = PVector.dist(mousePosition, new PVector(tower.x, tower.y));
+        if (distanceToTower < tower.radius) {
+          towerInRange = true;
+          break;
        }
+     }
+     
+     if(towerInRange){
+       return;
      }
 
         placeTower("DartMonkey", mx, my);
