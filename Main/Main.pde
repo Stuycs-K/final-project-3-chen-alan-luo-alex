@@ -4,6 +4,8 @@ Game game;
 BloonPropertyLookup bloonPropertyLookup;
 BloonSpawner bloonSpawner;
 
+TowerPropertyLookup towerPropertyLookup;
+
 // GUI
 FontManager fontManager;
 GuiManager guiManager;
@@ -17,6 +19,8 @@ void setup(){
   
   bloonPropertyLookup = new BloonPropertyLookup();
   bloonSpawner = new BloonSpawner();
+  
+  towerPropertyLookup = new TowerPropertyLookup();
   
   fontManager = new FontManager();
   guiManager = new GuiManager();

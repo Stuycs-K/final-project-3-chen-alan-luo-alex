@@ -36,36 +36,58 @@ private class TowerPropertyTable {
 }
 
 private class TowerUpgradeInformation {
-  private ArrayList<LinkedList<TowerUpgrade>> upgradePaths;
+  private ArrayList<ArrayList<TowerUpgrade>> upgradePaths;
   
   public TowerUpgradeInformation(JSONObject upgrades) {
-    upgradePaths = new ArrayList<LinkedList<TowerUpgrade>>();
+    upgradePaths = new ArrayList<ArrayList<TowerUpgrade>>();
     
     for (String upgradePathKey : (Set<String>) upgrades.keys()) {
       JSONArray upgradeArray = upgrades.getJSONArray(upgradePathKey);
       
-      LinkedList<TowerUpgrade> upgradeLinkedList = new LinkedList<TowerUpgrade>();
+      ArrayList<TowerUpgrade> upgradeArrayList = new ArrayList<TowerUpgrade>();
       
       for (int i = 0; i < upgradeArray.size(); i++) {
         JSONObject upgradeData = upgradeArray.getJSONObject(i);
         
         TowerUpgrade towerUpgrade = new TowerUpgrade(upgradeData);
-        upgradeLinkedList.add(towerUpgrade);
+        upgradeArrayList.add(towerUpgrade);
       }
       
       int index = Integer.parseInt(upgradePathKey);
-      upgradePaths.set(index, upgradeLinkedList);
+      upgradePaths.add(upgradeArrayList);
     }
   }
   
-  public LinkedList<TowerUpgrade> getUpgradePath(int pathId) {
+  // NOTE: Path 1 has ID 0, and path 2 has ID 1 !!!
+  public ArrayList<TowerUpgrade> getUpgradePath(int pathId) {
     return upgradePaths.get(pathId); 
+  }
+  
+  public TowerUpgrade getFirstUpgrade(int pathId) {
+    return getNextUpgrade(pathId, -1);
+  }
+  
+  // Have to check if the next upgrade is null with this one
+  public TowerUpgrade getNextUpgrade(int pathId, int currentUpgradeId) {
+    int nextUpgradeId = currentUpgradeId + 1;
+    ArrayList<TowerUpgrade> upgradePathList = getUpgradePath(pathId);
+    
+    if (upgradePathList.size() <= nextUpgradeId) {
+      return null;
+    }
+    
+    return upgradePathList.get(nextUpgradeId);
   }
 }
 
 private class TowerUpgrade {
-  public TowerUpgrade(JSONObject upgradeDefinition) {
+  private JSONObject upgradeData;
+  private PImage upgradeImage;
+  
+  public TowerUpgrade(JSONObject upgradeData) {
+    this.upgradeData = upgradeData;
     
+    this.upgradeImage = loadImage(dataPath("images/" + upgradeData.getString("upgradeImage")));
   }
   
   public void applyUpgrade(Tower tower) {
