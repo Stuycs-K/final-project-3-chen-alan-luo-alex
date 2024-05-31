@@ -146,7 +146,7 @@ public class Game{
         DartMonkey dartMonkey = new DartMonkey(x, y);
         towers.add(dartMonkey);
       }
-      }
+     }
       //}else if (towerName.equals("BombShooter")){
       //  newTower = new BombShooter(x,y);
       //}else if (towerName.equals("IceMonkey")){
@@ -181,38 +181,34 @@ public class Game{
     public void mousePressed(int mx, int my) {
       // need to add hitbox so that 
 
-      PVector mousePosition = new PVector(mx, my);
-      MapSegment mapSegment = map.getMapSegmentFromPosition(mousePosition);
+      //PVector mousePosition = new PVector(mx, my);
+      //MapSegment mapSegment = map.getMapSegmentFromPosition(mousePosition);
       
-      if(mapSegment == null){
-        return;
-      }
+      //if(mapSegment == null){
+      //  return;
+      //}
       if (upgradeButton.isMouseInBounds()) {
-         selectedTower.upgrade(selectedTower.path);
+        if (selectedTower != null) {
+           selectedTower.upgrade(selectedTower.path);
+        }
          return;
-       }
-
- 
-      boolean towerInRange = false;
-
-       if (sellButton.isMouseInBounds()) {
-         selectedTower.sellTower(this);
-         return;
-       }
+        }
        
+       
+      if (sellButton.isMouseInBounds()) {
+        if (selectedTower != null) {
+           selectedTower.sellTower(this);
+        }
+         return;
+       }
 
-    for (Tower tower : towers) {
-        float distanceToTower = PVector.dist(mousePosition, new PVector(tower.x, tower.y));
-        if (distanceToTower < tower.radius) {
-          towerInRange = true;
-          break;
+       for (Tower tower : towers) {
+        if (dist(mx, my, tower.getTowerX(), tower.getTowerY()) < tower.radius) {
+          selectTower(tower);
+          return;
        }
      }
      
-     if(towerInRange){
-       return;
-     }
-
         placeTower("DartMonkey", mx, my);
     }
 
