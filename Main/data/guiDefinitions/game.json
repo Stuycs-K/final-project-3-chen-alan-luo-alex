@@ -171,7 +171,25 @@
         "textXAlignment": "CENTER",
         "textYAlignment" : "CENTER",
         "zIndex" : 2
+    },
+    "towerButton" : {
+        "className": "imageButton",
+        "x": 1110,
+        "y": 80,
+        "sizeX": 30,
+        "sizeY": 30,
+        "zIndex": 1000,
+        "stroke": {
+            "type": "NONE"
+        },
+        "image": "images/tower/dartmonkey.png",
+        "imageX": 0,
+        "imageY": 0,
+        "imagePositionMode": "CENTER",
+        "imageSizeX": 30,
+        "imageSizeY": 30
     }
+    
     
 
 }

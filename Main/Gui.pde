@@ -99,7 +99,7 @@ public class GuiManager {
           guiObject = new Frame(guiData);
           break;
         case "imageButton":
-          guiObject = new imageButton(imageButton);
+          guiObject = new imageButton(guiData);
           break;
         default:
           guiObject = new GuiBase(guiData);

@@ -24,6 +24,7 @@ public class Game{
     private TextLabel towerLabel;
     private Frame horizontalWoodenPadding;
     private Frame verticalWoodenPadding;
+    private imageButton towerButton;
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -141,6 +142,7 @@ public class Game{
       towerLabel = (TextLabel) guiManager.create("towerLabel");
       horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
       verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
+      towerButton = (imageButton) guiManager.create("towerButton");
       
      }
     
