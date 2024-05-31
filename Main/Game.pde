@@ -21,7 +21,8 @@ public class Game{
     private Button sellButton;
     private TextLabel upgradeLabel;
     private TextLabel sellLabel;
-    private Frame woodenPadding;
+    private Frame horizontalWoodenPadding;
+    private Frame verticalWoodenPadding;
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -136,8 +137,9 @@ public class Game{
       sellButton = (Button) guiManager.create("sellButton");
       upgradeLabel = (TextLabel) guiManager.create("upgradeLabel");
       sellLabel = (TextLabel) guiManager.create("sellLabel");
-      woodenPadding = (Frame) guiManager.create("woodenPadding");
-    }
+      horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
+      verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
+     }
     
     public void placeTower(String towerName, int x, int y){
 

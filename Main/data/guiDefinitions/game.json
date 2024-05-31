@@ -141,14 +141,25 @@
         "textYAlignment" : "CENTER",
         "zIndex" : 2
     },
-    "woodenPadding": {
+    "horizontalWoodenPadding": {
         "className": "Frame",
         "x": 515,
         "y": 650,
         "sizeX": 800,
         "sizeY": 200,
         "backgroundColor": "139 69 19",
-        "backgroundTransparency": 0.1,
+        "backgroundTransparency": 1,
+        "zIndex": 0
+    },
+    "verticalWoodenPadding": {
+        "className" : "Frame",
+        "x":1050,
+        "y":0,
+        "sizeX":200,
+        "sizeY":800,
+        "backgroundColor": "139 69 19",
+        "backgroundTransparency":1,
         "zIndex": 0
     }
+
 }
