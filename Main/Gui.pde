@@ -95,6 +95,9 @@ public class GuiManager {
         case "Button":
           guiObject = new Button(guiData);
           break;
+        case "Frame":
+          guiObject = new Frame(guiData);
+          break;
         default:
           guiObject = new GuiBase(guiData);
       }
@@ -366,6 +369,14 @@ private class GuiBase {
     renderStroke();
     rect(position.x, position.y, size.x, size.y);
   }
+  
+  public color getBackgroundColor() {
+    return backgroundColor;
+  }
+  
+  public float getBackgroundTransparency() {
+    return backgroundTransparency;
+  }
 }
 
 public class Button extends GuiBase {
@@ -449,6 +460,30 @@ public class ImageLabel extends GuiBase {
     image(this.image, position.x + this.imagePosition.x, position.y + this.imagePosition.y, this.imageSize.x, this.imageSize.y);
   }
 }
+
+public class Frame extends GuiBase {
+  
+  public Frame(JSONObject definition) {
+    super(definition);
+  }
+  
+  public void updateProperties(){
+    super.updateProperties();
+  }
+    
+  public Frame clone() {
+    return new Frame(getDefinition());
+  }
+  
+  public void render() {
+    fill(getBackgroundColor(), getBackgroundTransparency() * 255);
+    noStroke();
+    PVector position = getPosition();
+    PVector size = getSize();
+    rect(position.x, position.y, size.x, size.y);
+  }
+}
+
 
 public class TextLabel extends GuiBase {
   private String text;
