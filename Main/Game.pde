@@ -13,12 +13,15 @@ public class Game{
     public WaveManager waveManager;
     private Tower selectedTower;
     private boolean showTowerOptions;
-    private float buttonX, buttonY;
-    private float buttonWidth, buttonHeight;
+    //private float buttonX, buttonY;
+    //private float buttonWidth, buttonHeight;
 
-    //private GuiManager guiManager;
-    //private Button upgradeButton;
-    //private Button sellButton;
+    private GuiManager guiManager;
+    private Button upgradeButton;
+    private Button sellButton;
+    private TextLabel upgradeLabel;
+    private TextLabel sellLabel;
+    private Frame woodenPadding;
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -50,12 +53,12 @@ public class Game{
         waveManager = new WaveManager();
         
         showTowerOptions = false;
-        buttonX=0;
-        buttonY=0;
-        buttonWidth=80;
-        buttonHeight = 30;
-        //guiManager = new GuiManager();
-        //setupGui();
+        //buttonX=0;
+        //buttonY=0;
+        //buttonWidth=80;
+        //buttonHeight = 30;
+        guiManager = new GuiManager();
+        setupGui();
     }
     
     public Map getMap() {
@@ -128,11 +131,13 @@ public class Game{
       
     }
     
-    //private void setupGui(){
-    //  upgradeButton = (Button) guiManager.create("upgradeButton");
-    //  sellButton = (Button) guiManager.create("sellButton");
-      
-    //}
+    private void setupGui(){
+      upgradeButton = (Button) guiManager.create("upgradeButton");
+      sellButton = (Button) guiManager.create("sellButton");
+      upgradeLabel = (TextLabel) guiManager.create("upgradeLabel");
+      sellLabel = (TextLabel) guiManager.create("sellLabel");
+      woodenPadding = (Frame) guiManager.create("woodenPadding");
+    }
 
 //    private void updateGuiPositions(Tower tower){
 //      float buttonX = tower.getTowerX() + 50;
@@ -174,8 +179,8 @@ public class Game{
       showTowerOptions = true;
       //updateGuiPositions(tower);
       //return selectedTower;
-      buttonX = tower.getTowerX() + 50;
-      buttonY = tower.getTowerY();
+    //  buttonX = tower.getTowerX() + 50;
+    //  buttonY = tower.getTowerY();
     }
     public void sellTower(Tower towerName, int x, int y){
 
@@ -191,18 +196,20 @@ public class Game{
         //println("Drawing tower at: " + tower.x + ", " + tower.y);
         tower.draw();
     }
-      if(showTowerOptions && selectedTower != null){
-        fill(200);
-        rect(buttonX, buttonY, buttonWidth, buttonHeight);
-        fill(0);
-        textAlign(CENTER, CENTER);
-        text("Upgrade", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
-        fill(200);
-        rect(buttonX, buttonY + buttonHeight + 10, buttonWidth, buttonHeight);
-        fill(0);
-        textAlign(CENTER, CENTER);
-        text("Sell", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2 + buttonHeight + 10);
-      }
+      
+      guiManager.render();
+      //if(showTowerOptions && selectedTower != null){
+      //  fill(200);
+      //  rect(buttonX, buttonY, buttonWidth, buttonHeight);
+      //  fill(0);
+      //  textAlign(CENTER, CENTER);
+      //  text("Upgrade", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
+      //  fill(200);
+      //  rect(buttonX, buttonY + buttonHeight + 10, buttonWidth, buttonHeight);
+      //  fill(0);
+      //  textAlign(CENTER, CENTER);
+      //  text("Sell", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2 + buttonHeight + 10);
+      //}
      
     }
     
@@ -215,6 +222,7 @@ public class Game{
     
     public void mousePressed(int mx, int my) {
       // need to add hitbox so that 
+<<<<<<< HEAD
       PVector mousePosition = new PVector(mx, my);
       MapSegment mapSegment = map.getMapSegmentFromPosition(mousePosition);
       
@@ -229,15 +237,37 @@ public class Game{
          selectedTower = null;
          return;
        }
+=======
+     //if (showTowerOptions) {
+     //  if (mx > buttonX && mx < buttonX + buttonWidth && my > buttonY + buttonHeight + 10 && my < buttonY + buttonHeight * 2 + 10) {
+     //    selectedTower.upgrade(selectedTower.path);
+     //    showTowerOptions = false;
+     //    selectedTower = null;
+     //    return;
+     //  }
+>>>>>>> Alex
 
-       if (mx > buttonX && mx < buttonX + buttonWidth && my > buttonY + buttonHeight + 10 && my < buttonY + buttonHeight * 2 + 10) {
-         selectedTower.sellTower(this);
-         showTowerOptions = false;
-         selectedTower = null;
+     //  if (mx > buttonX && mx < buttonX + buttonWidth && my > buttonY + buttonHeight + 10 && my < buttonY + buttonHeight * 2 + 10) {
+     //    selectedTower.sellTower(this);
+     //    showTowerOptions = false;
+     //    selectedTower = null;
+     //    return;
+     //  }
+     // }
+       if (upgradeButton.isMouseInBounds()) {
+         selectedTower.upgrade(selectedTower.path);
          return;
        }
+<<<<<<< HEAD
       }
       boolean towerInRange = false;
+=======
+       if (sellButton.isMouseInBounds()) {
+         selectedTower.sellTower(this);
+         return;
+       }
+       
+>>>>>>> Alex
     for (Tower tower : towers) {
         float distanceToTower = PVector.dist(mousePosition, new PVector(tower.x, tower.y));
         if (distanceToTower < tower.radius) {

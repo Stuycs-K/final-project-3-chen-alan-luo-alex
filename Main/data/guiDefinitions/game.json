@@ -101,26 +101,54 @@
     },
     "upgradeButton": {
         "className" : "Button",
-        "x":"0",
-        "y":"0",
-        "sizeX": 80,
-        "sizeY": 30,
-        "textXAlignment" : "CENTER",
-        "textYAlignment" : "CENTER"
+        "x":"525",
+        "y":"700",
+        "sizeX": 150,
+        "sizeY": 50,
+        "backgroundColor": "0 150 0",
+        "backgroundTransparency": 0.8,
+        "zIndex":1
     },
     "sellButton":{
         "className" : "Button",
-        "x":"0",
-        "y":"0",
-        "sizeX": 80,
-        "sizeY": 30,
-        "textXAlignment" : "CENTER",
-        "textYAlignment" : "CENTER"
+        "x":"525",
+        "y":"760",
+        "sizeX": 150,
+        "sizeY": 50,
+        "backgroundColor": "150 0 0",
+        "backgroundTransparency": 0.8,
+        "zIndex" :1
     },
-    "upgradeButtonLabel":{
-
+    "upgradeLabel":{
+        "className" : "TextLabel",
+        "x" : "600",
+        "y" : "725",
+        "text" : "Upgrade",
+        "textSize" : 16,
+        "textColor": "255 255 255",
+        "textXAlignment": "CENTER",
+        "textYAlignment" : "CENTER",
+        "zIndex" : 2
     },
-    "sellButtonLabel":{
-        
+    "sellLabel":{
+        "className" : "TextLabel",
+        "x" : "600",
+        "y" : "785",
+        "text" : "Sell",
+        "textSize" : 16,
+        "textColor": "255 255 255",
+        "textXAlignment": "CENTER",
+        "textYAlignment" : "CENTER",
+        "zIndex" : 2
+    },
+    "woodenPadding": {
+        "className": "Frame",
+        "x": 515,
+        "y": 650,
+        "sizeX": 800,
+        "sizeY": 200,
+        "backgroundColor": "139 69 19",
+        "backgroundTransparency": 0.1,
+        "zIndex": 0
     }
 }
