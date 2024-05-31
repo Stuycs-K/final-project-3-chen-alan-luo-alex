@@ -138,6 +138,11 @@ public class Game{
       sellLabel = (TextLabel) guiManager.create("sellLabel");
       woodenPadding = (Frame) guiManager.create("woodenPadding");
     }
+
+//    private void updateGuiPositions(Tower tower){
+//      float buttonX = tower.getTowerX() + 50;
+//      float buttonY = tower.getTowerY();
+//    }
     
     public void placeTower(String towerName, int x, int y){
 
@@ -164,19 +169,56 @@ public class Game{
       //}else{
       //  println("not enough money");
       //}
+      
+       
+    
+
+    
     public void selectTower(Tower tower){
       selectedTower = tower;
       showTowerOptions = true;
+      //updateGuiPositions(tower);
+      //return selectedTower;
+    //  buttonX = tower.getTowerX() + 50;
+    //  buttonY = tower.getTowerY();
+    }
+    public void sellTower(Tower towerName, int x, int y){
+
+    }
+    public void towerUpgrade(Tower tower){
+
     }
 
     public void render() {
+      
       map.drawPath();
       for (Tower tower: towers){
         //println("Drawing tower at: " + tower.x + ", " + tower.y);
         tower.draw();
-      }
-      guiManager.render();
     }
+      
+      guiManager.render();
+      //if(showTowerOptions && selectedTower != null){
+      //  fill(200);
+      //  rect(buttonX, buttonY, buttonWidth, buttonHeight);
+      //  fill(0);
+      //  textAlign(CENTER, CENTER);
+      //  text("Upgrade", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
+      //  fill(200);
+      //  rect(buttonX, buttonY + buttonHeight + 10, buttonWidth, buttonHeight);
+      //  fill(0);
+      //  textAlign(CENTER, CENTER);
+      //  text("Sell", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2 + buttonHeight + 10);
+      //}
+     
+    }
+    
+    //private boolean isMouseOverButton(Button button, int mx, int my){
+    //  PVector buttonPos = button.getPosition();
+    //  PVector buttonSize = button.getSize();
+      
+    //  return mx > buttonPos.x && mx < buttonPos.x + buttonSize.x &&  my > buttonPos.y && my < buttonPos.y + buttonSize.y;
+    //}
     
     public void mousePressed(int mx, int my) {
       // need to add hitbox so that 
@@ -215,5 +257,8 @@ public class Game{
 
         placeTower("DartMonkey", mx, my);
     }
+      
+    
+    
 
 }
