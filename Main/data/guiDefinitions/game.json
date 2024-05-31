@@ -101,26 +101,43 @@
     },
     "upgradeButton": {
         "className" : "Button",
-        "x":"0",
-        "y":"0",
-        "sizeX": 80,
+        "x":"c 0",
+        "y":"r 20",
+        "sizeX": 100,
         "sizeY": 30,
-        "textXAlignment" : "CENTER",
-        "textYAlignment" : "CENTER"
+        "backgroundColor": "100 100 100 200",
+        "backgroundTransparency": 0.8,
+        "zIndex":1
     },
     "sellButton":{
         "className" : "Button",
-        "x":"0",
-        "y":"0",
-        "sizeX": 80,
+        "x":"c 0",
+        "y":"r 60",
+        "sizeX": 100,
         "sizeY": 30,
-        "textXAlignment" : "CENTER",
-        "textYAlignment" : "CENTER"
+        "backgroundTransparency": 0.8,
+        "zIndex" :1
     },
-    "upgradeButtonLabel":{
-
+    "upgradeLabel":{
+        "className" : "TextLabel",
+        "x" : "c 0",
+        "y" : "r 15",
+        "text" : "Upgrade",
+        "textSize" : 16,
+        "textColor": "255 255 255",
+        "textXAlignment": "CENTER",
+        "textYAlignment" : "CENTER",
+        "zIndex" : 2
     },
-    "sellButtonLabel":{
-        
+    "sellLabel":{
+        "className" : "TextLabel",
+        "x" : "c 0",
+        "y" : "r 55",
+        "text" : "Sell",
+        "textSize" : 16,
+        "textColor": "255 255 255",
+        "textXAlignment": "CENTER",
+        "textYAlignment" : "CENTER",
+        "zIndex" : 2
     }
 }
