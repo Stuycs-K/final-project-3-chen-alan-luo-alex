@@ -12,7 +12,7 @@ private class FontManager {
   public FontManager() {
     fontMap = new HashMap<String, PFont>();
     
-    JSONObject schema = loadJSONObject(dataPath("guiDefinitions/schema.json"));
+    JSONObject schema = loadJSONObject("guiDefinitions/schema.json");
     JSONObject fonts = schema.getJSONObject("fonts");
 
     Set<String> fontAliases = fonts.keys();
@@ -22,7 +22,7 @@ private class FontManager {
       String fontPath = fontInfo.getString("path");
       int fontSize = fontInfo.getInt("size");
       
-      PFont loadedFont = createFont(dataPath("fonts/" + fontPath), fontSize);
+      PFont loadedFont = createFont("fonts/" + fontPath, fontSize);
       fontMap.put(alias, loadedFont);
     }
   }
@@ -43,7 +43,7 @@ public class GuiManager {
     fontManager = new FontManager();
         
     for (String path : guiDefinitionFiles) {
-      loadGui(dataPath("guiDefinitions/" + path));
+      loadGui("guiDefinitions/" + path);
     }
   }
   
@@ -435,7 +435,7 @@ public class ImageLabel extends GuiBase {
     
     JSONObject definition = getDefinition();
     String imagePath = definition.getString("image");
-    this.image = loadImage(dataPath("images/" + imagePath));
+    this.image = loadImage("images/" + imagePath);
     
     PVector defaultSize = getSize();
     int imageSizeX = readInt(definition, "imageSizeX", int(defaultSize.x));

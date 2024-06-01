@@ -101,7 +101,7 @@ private class TowerUpgrade {
   public TowerUpgrade(JSONObject upgradeData) {
     this.upgradeData = upgradeData;
     
-    this.upgradeImage = loadImage(dataPath("images/" + upgradeData.getString("upgradeImage")));
+    this.upgradeImage = loadImage("images/" + upgradeData.getString("upgradeImage"));
   }
   
   public void applyUpgrade(Tower tower) {

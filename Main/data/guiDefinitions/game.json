@@ -182,7 +182,7 @@
         "stroke": {
             "type": "NONE"
         },
-        "image": "images/tower/dartmonkey.png",
+        "image": "towers/dartmonkey.png",
         "imageX": 0,
         "imageY": 0,
         "imagePositionMode": "CENTER",
