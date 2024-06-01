@@ -105,6 +105,7 @@ public class Tower{
     this.range = readInt(upgrade.getChanges(), "range", this.range);
     
     PImage newSprite = upgrade.getSprite();
+
     if (newSprite != null) {
       this.sprite = newSprite;
     }
@@ -276,17 +277,24 @@ public class TowerUpgradeManager {
     
     // Now update actions
     JSONObject actionChanges = upgradeChanges.getJSONObject("actions");
-    for (String actionName : (Set<String>) actionChanges.keys()) {
-      TowerAction action = tower.actionMap.get(actionName);
-      action.setProperties(actionChanges.getJSONObject(actionName));
+    if (actionChanges != null) {
+      for (String actionName : (Set<String>) actionChanges.keys()) {
+        TowerAction action = tower.actionMap.get(actionName);
+        action.setProperties(actionChanges.getJSONObject(actionName));
+      }
     }
+
     
     // And then projectiles
     JSONObject projectileChanges = upgradeChanges.getJSONObject("projectiles");
-    for (String projectileName : (Set<String>) projectileChanges.keys()) {
-      ProjectileData projectile = tower.projectileMap.get(projectileName);
-      projectile.updateProperties(projectileChanges.getJSONObject(projectileName));
+    
+    if (projectileChanges != null) {
+      for (String projectileName : (Set<String>) projectileChanges.keys()) {
+        ProjectileData projectile = tower.projectileMap.get(projectileName);
+        projectile.updateProperties(projectileChanges.getJSONObject(projectileName));
+      }
     }
+    
     return true;
   }
   

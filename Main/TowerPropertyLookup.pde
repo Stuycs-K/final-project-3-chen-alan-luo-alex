@@ -112,8 +112,9 @@ private class TowerUpgrade {
     
     this.upgradeImage = loadImage("images/" + upgradeData.getString("upgradeImage"));
     
-    if (!upgradeData.isNull("sprite")) {
-      this.sprite = loadImage("images/" + upgradeData.getString("sprite"));
+    JSONObject changes = upgradeData.getJSONObject("changes");
+    if (!changes.isNull("sprite")) {
+      this.sprite = loadImage("images/" + changes.getString("sprite"));
     }
   }
   
