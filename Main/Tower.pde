@@ -1,3 +1,73 @@
+private int readIntDiff(JSONObject object, String keyName, int originalValue) {
+  if (object.isNull(keyName)) {
+    return originalValue;
+  }
+  
+  int test = readInt(object, keyName, Integer.MIN_VALUE);
+
+  // This is a number we are SETTING a property to
+  // Otherwise, it's a string and we're ADDING to the property
+  if (test != Integer.MIN_VALUE) {
+    return test;
+  }
+  
+  String[] diffInstructions = readString(object, keyName, "").split(" ");
+
+  String operation = diffInstructions[0];
+  String value = diffInstructions[1];
+  
+  switch (operation) {
+    case "+":
+      return originalValue + Integer.parseInt(value);
+    case "-":
+      return originalValue - Integer.parseInt(value);
+      
+    // For multiplication and division, read the value as a float
+    case "*":
+      return int(originalValue * Float.parseFloat(value));
+    case "/":
+      return int(originalValue / Float.parseFloat(value));
+      
+    default:
+      return originalValue + Integer.parseInt(value);
+  }
+}
+
+private float readFloatDiff(JSONObject object, String keyName, float originalValue) {
+  if (object.isNull(keyName)) {
+    return originalValue;
+  }
+  
+  float test = readFloat(object, keyName, Float.MIN_VALUE);
+  
+  // This is a number we are SETTING a property to
+  // Otherwise, it's a string and we're ADDING to the property
+  if (test != Float.MIN_VALUE) {
+    return test;
+  }
+  
+  String[] diffInstructions = readString(object, keyName, "").split(" ");
+  
+  String operation = diffInstructions[0];
+  float value = Float.parseFloat(diffInstructions[1]);
+  
+  switch (operation) {
+    case "+":
+      return originalValue + value;
+    case "-":
+      return originalValue - value;
+      
+    // For multiplication and division, read the value as a float
+    case "*":
+      return originalValue * value;
+    case "/":
+      return originalValue / value;
+      
+    default:
+      return originalValue + value;
+  }
+}
+
 public class Tower{
   public int x;
   public int y; 
@@ -102,9 +172,10 @@ public class Tower{
   
   // Sets range and sprite and that's it
   public void setPropertiesFromUpgrade(TowerUpgrade upgrade) {
-    this.range = readInt(upgrade.getChanges(), "range", this.range);
+    this.range = readIntDiff(upgrade.getChanges(), "range", this.range);
     
     PImage newSprite = upgrade.getSprite();
+
     if (newSprite != null) {
       this.sprite = newSprite;
     }
@@ -276,17 +347,24 @@ public class TowerUpgradeManager {
     
     // Now update actions
     JSONObject actionChanges = upgradeChanges.getJSONObject("actions");
-    for (String actionName : (Set<String>) actionChanges.keys()) {
-      TowerAction action = tower.actionMap.get(actionName);
-      action.setProperties(actionChanges.getJSONObject(actionName));
+    if (actionChanges != null) {
+      for (String actionName : (Set<String>) actionChanges.keys()) {
+        TowerAction action = tower.actionMap.get(actionName);
+        action.setProperties(actionChanges.getJSONObject(actionName));
+      }
     }
+
     
     // And then projectiles
     JSONObject projectileChanges = upgradeChanges.getJSONObject("projectiles");
-    for (String projectileName : (Set<String>) projectileChanges.keys()) {
-      ProjectileData projectile = tower.projectileMap.get(projectileName);
-      projectile.updateProperties(projectileChanges.getJSONObject(projectileName));
+    
+    if (projectileChanges != null) {
+      for (String projectileName : (Set<String>) projectileChanges.keys()) {
+        ProjectileData projectile = tower.projectileMap.get(projectileName);
+        projectile.updateProperties(projectileChanges.getJSONObject(projectileName));
+      }
     }
+    
     return true;
   }
   
@@ -312,6 +390,7 @@ public class TowerUpgradeManager {
 public class TowerAction {
   private int cooldownTicks; // In ticks
   private int currentCooldown;
+  private float cooldownSeconds;
   private String actionType;
   
   public TowerAction(JSONObject actionData) {
@@ -321,7 +400,10 @@ public class TowerAction {
   
   public void setProperties(JSONObject actionData) {
     if (!actionData.isNull("cooldown")) {
-      float cooldownSeconds = actionData.getFloat("cooldown");
+      float readCooldownSeconds = readFloatDiff(actionData, "cooldown", this.cooldownSeconds);
+      
+      this.cooldownSeconds = readCooldownSeconds;
+      
       this.cooldownTicks = int(cooldownSeconds * frameRate);
     }
 

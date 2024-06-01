@@ -29,7 +29,7 @@
                     "cost": 90,
                     "changes": {
                         "sprite": "towers/LongRangeDarts.png",
-                        "range": 175
+                        "range": "+ 25"
                     }
                 },
                 {
@@ -38,7 +38,7 @@
                     "cost": 120,
                     "changes": {
                         "sprite": "towers/LongRangeDarts.png",
-                        "range": 200,
+                        "range": "+ 25",
                         "detectCamo": true
                     }
                 },
@@ -55,9 +55,10 @@
                         },
                         "projectiles": {
                             "dart": {
-                                "damage": 1,
+                                "damage": 2,
                                 "pierce": 18,
                                 "speed": 10,
+                                "maxDistance": 400,
                                 "sprite": "projectiles/basicDart.png"
                             }
                         }
@@ -77,9 +78,10 @@
                         },
                         "projectiles": {
                             "dart": {
-                                "damage": 1,
+                                "damage": 4,
                                 "pierce": 100,
                                 "speed": 18,
+                                "maxDistance": 1000,
                                 "sprite": "projectiles/basicDart.png",
                                 "specialDamageProperties": {
                                     "popLead": true,
@@ -99,7 +101,7 @@
                     "changes": {
                         "projectiles": {
                             "dart": {
-                                "pierce": 3
+                                "pierce": "+ 1"
                             }
                         }
                     }
@@ -111,7 +113,7 @@
                     "changes": {
                         "projectiles": {
                             "dart": {
-                                "pierce": 5
+                                "pierce": "+ 1"
                             }
                         }
                     }

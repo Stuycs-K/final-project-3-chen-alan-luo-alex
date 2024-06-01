@@ -198,7 +198,13 @@ public class Game{
     //if(mapSegment == null){
     //  return;
     //}
+    
+    for (Tower tower : towers) {
+      tower.upgrade(0); 
+    }
+    
     if (upgradeButton.isMouseInBounds()) {
+      println(selectedTower);
       if (selectedTower != null) {
          println("hele");
          selectedTower.upgrade(0);
@@ -224,4 +230,8 @@ public class Game{
       placeTower("DartMonkey", mx, my);
   }
 
+}
+
+public class UpgradeButton {
+  
 }

@@ -54,6 +54,8 @@ public class Projectile{
         x += stepX;
         y += stepY;
         
+        distanceTraveled += Math.sqrt((double) stepX * stepX + (double) stepY * stepY);
+        
        for(int i = 0; i < bloons.size(); i++){
          Bloon bloon = bloons.get(i);
          float distance = dist(x,y,bloon.getPosition().x, bloon.getPosition().y);
@@ -69,9 +71,10 @@ public class Projectile{
          }
        }
       }
+      /*
       if(dist(x,y,targetX,targetY) < projectileData.speed){
         finished = true;
-      }
+      }*/
     }
   }  
   
@@ -129,16 +132,16 @@ public class ProjectileData {
       this.extraDamageToCeramics = readInt(specialDamageProperties, "extraDamageToCeramics", this.extraDamageToCeramics);
       this.extraDamageToMoabs = readInt(specialDamageProperties, "extraDamageToMoabs", this.extraDamageToMoabs);
     }
-
-    this.damage = readInt(data, "damage", this.damage);
-    this.pierce = readInt(data, "pierce", this.pierce);
-    this.speed = readInt(data, "speed", this.speed);
-    this.maxDistance = readFloat(data, "maxDistance", this.maxDistance);
     
     if (!data.isNull("sprite")) {
       String spritePath = data.getString("sprite");
       this.sprite = loadImage("images/" + spritePath);
     }
+    
+    this.damage = readIntDiff(data, "damage", this.damage);
+    this.pierce = readIntDiff(data, "pierce", this.pierce);
+    this.speed = readIntDiff(data, "speed", this.speed);
+    this.maxDistance = readFloatDiff(data, "maxDistance", this.maxDistance);
   }
 }
   
