@@ -17,14 +17,14 @@ public class Game{
   //private float buttonWidth, buttonHeight;
 
   private GuiManager guiManager;
-  private Button upgradeButton;
-  private Button sellButton;
+  private TextButton upgradeButton;
+  private TextButton sellButton;
   private TextLabel upgradeLabel;
   private TextLabel sellLabel;
   private TextLabel towerLabel;
   private Frame horizontalWoodenPadding;
   private Frame verticalWoodenPadding;
-  private imageButton towerButton;
+  private ImageButton towerButton;
 
   public Game() {
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -137,14 +137,14 @@ public class Game{
   }
   
   private void setupGui(){
-    upgradeButton = (Button) guiManager.create("upgradeButton");
-    sellButton = (Button) guiManager.create("sellButton");
+    upgradeButton = (TextButton) guiManager.create("upgradeButton");
+    sellButton = (TextButton) guiManager.create("sellButton");
     upgradeLabel = (TextLabel) guiManager.create("upgradeLabel");
     sellLabel = (TextLabel) guiManager.create("sellLabel");
     towerLabel = (TextLabel) guiManager.create("towerLabel");
     horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
     verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
-    //towerButton = (imageButton) guiManager.create("towerButton");
+    //towerButton = (ImageButton) guiManager.create("towerButton");
     
    }
   

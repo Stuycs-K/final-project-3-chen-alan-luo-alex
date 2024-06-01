@@ -1,6 +1,6 @@
 {
     "upgradeButton": {
-        "className": "Button",
+        "className": "TextButton",
         "x": "525",
         "y": "700",
         "sizeX": 150,
@@ -10,7 +10,7 @@
         "zIndex": 1
     },
     "sellButton": {
-        "className": "Button",
+        "className": "TextButton",
         "x": "525",
         "y": "760",
         "sizeX": 150,

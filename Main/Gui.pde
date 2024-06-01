@@ -97,14 +97,14 @@ public class GuiManager {
         case "ImageLabel":
           guiObject = new ImageLabel(guiData);
           break;
-        case "Button":
-          guiObject = new Button(guiData);
-          break;
         case "Frame":
           guiObject = new Frame(guiData);
           break;
-        case "imageButton":
-          guiObject = new imageButton(guiData);
+        case "ImageButton":
+          guiObject = new ImageButton(guiData);
+          break;
+        case "TextButton":
+          guiObject = new TextButton(guiData);
           break;
         default:
           guiObject = new GuiBase(guiData);
@@ -257,7 +257,7 @@ private color readColor(JSONObject object, String keyName) {
   return (a == -1) ? color(r, g, b) : color(r, g, b, a);
 }
 
-private class GuiBase {
+public class GuiBase {
   private color backgroundColor;
   private float backgroundTransparency; // 0 is fully transparent, 1 is fully solid
   
@@ -395,24 +395,8 @@ private class GuiBase {
   }
 }
 
-public class Button extends GuiBase {
-  
-  public Button(JSONObject definition) {
-    super(definition);
-  }
-  
-  public Button clone() {
-    return new Button(getDefinition());
-  }
-  
-  public boolean isButton() {
-    return true;
-  }
-  
-  public void onInput() {
-    return;
-  }
-  
+public interface Button {
+  public void onInput();
 }
 
 public class ImageLabel extends GuiBase {
@@ -500,14 +484,14 @@ public class Frame extends GuiBase {
   }
 }
 
-public class imageButton extends ImageLabel{
+public class ImageButton extends ImageLabel implements Button {
   
-  public imageButton(JSONObject defintion){
+  public ImageButton(JSONObject defintion){
     super(defintion);
   }
   
-  public imageButton clone() {
-    return new imageButton(getDefinition());
+  public ImageButton clone() {
+    return new ImageButton(getDefinition());
   }
   
   public boolean isButton(){ 
@@ -520,6 +504,25 @@ public class imageButton extends ImageLabel{
   
 }
 
+public class TextButton extends TextLabel implements Button {
+  
+  public TextButton(JSONObject defintion){
+    super(defintion);
+  }
+  
+  public TextButton clone() {
+    return new TextButton(getDefinition());
+  }
+  
+  public boolean isButton(){ 
+    return true;
+  }
+  
+  public void onInput() {
+    return;
+  }
+  
+}
 
 public class TextLabel extends GuiBase {
   private String text;
