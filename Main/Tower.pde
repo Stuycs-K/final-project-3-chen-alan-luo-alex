@@ -8,7 +8,6 @@ public class Tower{
   public int attackSpeed;
   public int upgradeLevel;
   public int attackCooldown;
-  public String currentUpgrade;
   public ArrayList<Projectile> projectiles;
   private TowerTargetFilter targetFilter;
   public ArrayList<PImage> sprites;
@@ -18,10 +17,13 @@ public class Tower{
   public int hitBoxY;
   public int cost;
   
+  private int totalCurrencySpent;
   private PImage sprite;
+  private String towerName;
   
   public HashMap<String, TowerAction> actionMap;
   public HashMap<String, ProjectileData> projectileMap;
+  private ArrayList<Integer> currentUpgrade;
   
   public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius, int cost){
     this.x = x;
@@ -42,16 +44,20 @@ public class Tower{
   }
   
   public Tower(String towerName, int x, int y) {
+    this.towerName = towerName;
     this.x = x;
     this.y = y;
     
+    this.currentUpgrade = new ArrayList<Integer>();
     this.targetFilter = new TowerTargetFilter();
     this.angle = PI;
-   
+    
     // Only set the base properties
     TowerPropertyTable properties = towerPropertyLookup.getTowerProperties(towerName);
     JSONObject baseProperties = properties.getBaseProperties();
     this.range = baseProperties.getInt("range");
+    
+    this.totalCurrencySpent = properties.getBaseCost();
     
     // First, load the base tower sprite
     this.sprite = properties.getBaseSprite();
@@ -66,6 +72,7 @@ public class Tower{
       String actionClass = actionDefinition.getString("type");
       TowerAction actionObject = null;
       
+      // Create base actions
       switch (actionClass) {
         case "PROJECTILE":
           actionObject = new ProjectileSpawnAction(actionDefinition);
@@ -129,38 +136,28 @@ public class Tower{
     return results;
   }
   
-  public void attack(ArrayList<Bloon> bloons){
-    attackCooldown--;
-    if(attackCooldown <=0){
+  public void upgrade(int pathId) {
+    TowerUpgradeInformation upgradeInformation = towerPropertyLookup.getTowerProperties(towerName).getUpgradeInformation();
     
-      for (Bloon targetBloon: bloons){
-        if(targetFilter.canAttack(targetBloon)){
-          float distance = dist(x,y,targetBloon.position.x,targetBloon.position.y);
-          if(distance<=range){
-            angle = atan2(targetBloon.position.y-y, targetBloon.position.x -x);
-            projectiles.add(new Projectile(x,y,targetBloon.position.x,targetBloon.position.y,damage));
-            attackCooldown = fireRate;
-            break;
-          }
-          }
-        }
-       
-      }
+    // Have we exceed
     
+    // -1 is unupgraded, 0 is the first upgrade
+    int currentUpgradeForPath = currentUpgrade.get(pathId);
+    TowerUpgrade upgrade = upgradeInformation.getNextUpgrade(pathId, currentUpgradeForPath);
+    
+    // We've probably maxed out this path
+    if (upgrade == null) {
+      return; 
+    }
   }
   
- public void upgrade(int path){
-    this.upgradeLevel++;
-    
-  }
-  
-  public void sellTower(Game game){
-     game.currency += getSellPrice();
+  public void sellTower(){
+     game.getCurrencyManager().rewardCurrency(getSellPrice());
      game.towers.remove(this);
   }
   
-  public int getSellPrice(){
-    return 0;
+  public float getSellPrice(){
+    return totalCurrencySpent * 0.8;
   }
 
   public void draw(){
@@ -195,6 +192,18 @@ public class Tower{
   
 }
 
+private class TowerUpgradeManager {
+  private Tower tower;
+  
+  public TowerUpgradeManager(Tower tower) {
+    this.tower = tower;
+  }
+}
+
+//---------------------------------------------------------------------------------------------------------------
+// GENERIC ACTION TYPES
+// Actions with more specific functionality should be placed in their relevant tower tab and extend one of these
+//---------------------------------------------------------------------------------------------------------------
 public class TowerAction {
   private int cooldownTicks; // In ticks
   private int currentCooldown;
@@ -206,10 +215,12 @@ public class TowerAction {
   }
   
   public void setProperties(JSONObject actionData) {
-    float cooldownSeconds = actionData.getFloat("cooldown");
-    this.cooldownTicks = int(cooldownSeconds * frameRate);
-    
-    this.actionType = actionData.getString("type");
+    if (!actionData.isNull("cooldown")) {
+      float cooldownSeconds = actionData.getFloat("cooldown");
+      this.cooldownTicks = int(cooldownSeconds * frameRate);
+    }
+
+    this.actionType = readString(actionData, "type", this.actionType);
   }
   
   // Called every tick
@@ -245,7 +256,7 @@ public class ProjectileSpawnAction extends TowerAction {
   public void setProperties(JSONObject actionData) {
     super.setProperties(actionData);
     
-    this.projectileName = actionData.getString("projectile"); 
+    this.projectileName = readString(actionData, "projectile", this.projectileName); 
   }
   
   public String getSpawnedProjectileName() {

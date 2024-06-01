@@ -81,6 +81,10 @@ private class TowerUpgradeInformation {
     return getNextUpgrade(pathId, -1);
   }
   
+  public int getNumberOfUpgradesForPath(int pathId) {
+    return upgradePaths.get(pathId).size(); 
+  }
+  
   // Have to check if the next upgrade is null with this one
   public TowerUpgrade getNextUpgrade(int pathId, int currentUpgradeId) {
     int nextUpgradeId = currentUpgradeId + 1;
