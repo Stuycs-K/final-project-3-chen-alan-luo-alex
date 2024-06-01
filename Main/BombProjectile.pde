@@ -13,12 +13,12 @@ public class BombProjectile extends Projectile{
   public void update(ArrayList<Bloon> bloons){
     if(!finished){
       if(distance > 0){
-        float stepX = (dx / distance) * speed;
-        float stepY = (dy / distance) * speed;
+        float stepX = (dx / distance) * projectileData.speed;
+        float stepY = (dy / distance) * projectileData.speed;
         x += stepX;
         y += stepY;
         
-        if(dist(x,y,targetX,targetY) < speed){
+        if(dist(x,y,targetX,targetY) < projectileData.speed){
           explode(bloons);
           finished = true;
         }
@@ -30,7 +30,7 @@ public class BombProjectile extends Projectile{
     for(Bloon bloon : bloons){
       float distanceToBloon = dist(x,y,bloon.getPosition().x, bloon.getPosition().y);
       if(distanceToBloon<=explosionRadius){
-        bloon.damage(damage);
+        bloon.damage(projectileData.damage);
       }
     }
     if(isClusterBombs){
@@ -38,7 +38,7 @@ public class BombProjectile extends Projectile{
         float angle = TWO_PI/8;
         float clusterTargetX = x * explosionRadius;
         float clusterTargetY = y * explosionRadius;
-        projectiles.add(new BombProjectile(x,y,clusterTargetX,clusterTargetY, damage/3, explosionRadius/3, false));
+        projectiles.add(new BombProjectile(x,y,clusterTargetX,clusterTargetY, projectileData.damage/3, explosionRadius/3, false));
       }
     }
   }

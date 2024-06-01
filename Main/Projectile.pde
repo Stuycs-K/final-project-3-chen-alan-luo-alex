@@ -1,30 +1,24 @@
  public class Projectile{
-  float x,y;
-  float targetX, targetY;
-  int speed;
-  int damage;
-  boolean finished;
-  float dx,dy;
-  float distance;
-  int imageIndex;
-  public ArrayList<PImage> spritesP;
+  public float x, y;
+  public float targetX, targetY;
+  public boolean finished;
+  public float dx, dy;
+  public float distance;
   
-  ProjectileData projectileData;
+  private float distanceTraveled;
+  private int hits;
+  
+  public ProjectileData projectileData;
   
   public Projectile(float x, float y, float targetX, float targetY, int damage){
     this.x=x;
     this.y=y;
     this.targetX = targetX;
     this.targetY = targetY;
-    this.damage = damage;
-    this.speed = 5;
     this.finished = false;
     this.dy= targetY - y;
     this.dx= targetX -x;
     this.distance = dist(x,y,targetX,targetY);
-    this.imageIndex = imageIndex;
-    this.spritesP = new ArrayList<PImage>();
-    
   }
   
   public Projectile(PVector origin, PVector goal, ProjectileData data) {
@@ -37,30 +31,36 @@
     this.dx = targetX - x;
     this.distance = dist(x, y, targetX, targetY);
     this.finished = false;
+    this.distanceTraveled = 0;
     
     this.projectileData = data;
+    this.hits = 0; // For pierce
   }
   
   public void update(ArrayList<Bloon> bloons){
+    if (distanceTraveled > projectileData.maxDistance) {
+      finished = true;
+    }
+    
     if(!finished){
     
       if (distance>0){
         float stepX = (dx/distance) * projectileData.speed;
         float stepY = (dy/distance) * projectileData.speed;
-        x+= stepX;
+        x += stepX;
         y += stepY;
         
        for(int i = 0; i < bloons.size(); i++){
          Bloon bloon = bloons.get(i);
          float distance = dist(x,y,bloon.getPosition().x, bloon.getPosition().y);
-         if(distance<5){
+         if(distance < 10){
            bloon.damage(projectileData.damage);
            finished = true;
            break;  
          }
        }
       }
-      if(dist(x,y,targetX,targetY) < speed){
+      if(dist(x,y,targetX,targetY) < projectileData.speed){
         finished = true;
       }
     }
@@ -93,6 +93,8 @@ public class ProjectileData {
   public int extraDamageToCeramics;
   public int extraDamageToMoabs;
   
+  public float maxDistance;
+  
   public ProjectileData(JSONObject projectileData) {
     // By default, we assume the projectile is sharp (can't pop lead)
     this.popLead = false;
@@ -104,6 +106,8 @@ public class ProjectileData {
     this.damage = 1;
     this.pierce = 1;
     this.speed = 30;
+    
+    this.maxDistance = 30;
     
     updateProperties(projectileData);
   }
@@ -122,6 +126,7 @@ public class ProjectileData {
     this.damage = readInt(data, "damage", this.damage);
     this.pierce = readInt(data, "pierce", this.pierce);
     this.speed = readInt(data, "speed", this.speed);
+    this.maxDistance = readFloat(data, "maxDistance", this.maxDistance);
     
     if (!data.isNull("sprite")) {
       String spritePath = data.getString("sprite");

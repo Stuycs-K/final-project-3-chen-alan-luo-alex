@@ -3,7 +3,7 @@
         "base": {
             "cost": 200,
             "sprite": "towers/dartmonkey.png",
-            "range": 100,
+            "range": 150,
             "actions": {
                 "dartAttack": {
                     "cooldown": 0.9,
@@ -15,8 +15,9 @@
                 "dart": {
                     "damage": 1,
                     "pierce": 2,
-                    "speed": 60,
-                    "sprite": "projectiles/basicDart.png"
+                    "speed": 15,
+                    "sprite": "projectiles/basicDart.png",
+                    "maxDistance": 60
                 }
             }
         },
@@ -28,7 +29,7 @@
                     "cost": 90,
                     "changes": {
                         "sprite": "towers/LongRangeDarts.png",
-                        "range": 125
+                        "range": 175
                     }
                 },
                 {
@@ -37,7 +38,7 @@
                     "cost": 120,
                     "changes": {
                         "sprite": "towers/LongRangeDarts.png",
-                        "range": 150,
+                        "range": 200,
                         "detectCamo": true
                     }
                 },
@@ -56,7 +57,7 @@
                             "dart": {
                                 "damage": 1,
                                 "pierce": 18,
-                                "speed": 30,
+                                "speed": 10,
                                 "sprite": "projectiles/basicDart.png"
                             }
                         }
@@ -68,7 +69,7 @@
                     "cost": 1500,
                     "changes": {
                         "sprite": "towers/juggernaut.png",
-                        "range": 175,
+                        "range": 225,
                         "actions": {
                             "dartAttack": {
                                 "cooldown": 1.4
@@ -78,7 +79,7 @@
                             "dart": {
                                 "damage": 1,
                                 "pierce": 100,
-                                "speed": 45,
+                                "speed": 18,
                                 "sprite": "projectiles/basicDart.png",
                                 "specialDamageProperties": {
                                     "popLead": true,
