@@ -54,7 +54,7 @@
          Bloon bloon = bloons.get(i);
          float distance = dist(x,y,bloon.getPosition().x, bloon.getPosition().y);
          if(distance<5){
-           bloon.damage(damage);
+           bloon.damage(projectileData.damage);
            finished = true;
            break;  
          }
@@ -77,7 +77,7 @@
       float angle = atan2(targetY -y, targetX - x);
       rotate(angle);
       imageMode(CENTER);
-      image(sprite1,0,0);
+      image(projectileData.sprite,0,0);
       popMatrix();
     }
    
@@ -114,12 +114,14 @@ public class ProjectileData {
   public void updateProperties(JSONObject data) {
     JSONObject specialDamageProperties = data.getJSONObject("specialDamageProperties");
     
-    this.popLead = readBoolean(specialDamageProperties, "popLead", this.popLead);
-    this.popFrozen = readBoolean(specialDamageProperties, "popFrozen", this.popFrozen);
-    this.popBlack = readBoolean(specialDamageProperties, "popBlack", this.popBlack);
-    this.extraDamageToCeramics = readInt(specialDamageProperties, "extraDamageToCeramics", this.extraDamageToCeramics);
-    this.extraDamageToMoabs = readInt(specialDamageProperties, "extraDamageToMoabs", this.extraDamageToMoabs);
-    
+    if (specialDamageProperties != null) {
+      this.popLead = readBoolean(specialDamageProperties, "popLead", this.popLead);
+      this.popFrozen = readBoolean(specialDamageProperties, "popFrozen", this.popFrozen);
+      this.popBlack = readBoolean(specialDamageProperties, "popBlack", this.popBlack);
+      this.extraDamageToCeramics = readInt(specialDamageProperties, "extraDamageToCeramics", this.extraDamageToCeramics);
+      this.extraDamageToMoabs = readInt(specialDamageProperties, "extraDamageToMoabs", this.extraDamageToMoabs);
+    }
+
     this.damage = readInt(data, "damage", this.damage);
     this.pierce = readInt(data, "pierce", this.pierce);
     this.speed = readInt(data, "speed", this.speed);

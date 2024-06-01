@@ -45,6 +45,9 @@ public class Tower{
     this.x = x;
     this.y = y;
     
+    this.targetFilter = new TowerTargetFilter();
+    this.angle = PI;
+    
     // Only set the base properties
     TowerPropertyTable properties = towerPropertyLookup.getTowerProperties(towerName);
     JSONObject baseProperties = properties.getBaseProperties();
@@ -59,7 +62,16 @@ public class Tower{
     for (String actionName : (Set<String>) actionData.keys()) {
       JSONObject actionDefinition = actionData.getJSONObject(actionName);
       
-      TowerAction actionObject = new TowerAction(actionDefinition);
+      String actionClass = actionDefinition.getString("type");
+      TowerAction actionObject = null;
+      
+      switch (actionClass) {
+        case "PROJECTILE":
+          actionObject = new ProjectileSpawnAction(actionDefinition);
+          break;
+        default:
+          actionObject = new TowerAction(actionDefinition);
+      }
       
       this.actionMap.put(actionName, actionObject);
     }
@@ -75,6 +87,8 @@ public class Tower{
       
       this.projectileMap.put(projectileName, projectileDataObject);
     }
+    
+    this.projectiles = new ArrayList<Projectile>();
   }
   
   public void step(ArrayList<Bloon> bloons) {
@@ -149,6 +163,13 @@ public class Tower{
   }
 
   public void draw(){
+    pushMatrix();
+    translate(x, y);
+    rotate(angle + HALF_PI);
+    imageMode(CENTER);
+    image(sprite, 0, 0);
+    popMatrix();
+    
     for(Projectile projectile : projectiles){
       projectile.drawProjectile();
     }
