@@ -18,7 +18,10 @@ public class Tower{
   public int hitBoxY;
   public int cost;
   
-  private ArrayList<TowerAction> actions;
+  private PImage sprite;
+  
+  private HashMap<String, TowerAction> actionMap;
+  private HashMap<String, ProjectileData> projectileMap;
   
   public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius, int cost){
     this.x = x;
@@ -35,23 +38,47 @@ public class Tower{
     this.angle = PI;
     this.cost = cost;
     
-    this.actions = new ArrayList<TowerAction>();
+    this.actionMap = new HashMap<String, TowerAction>();
   }
   
   public Tower(String towerName, int x, int y) {
     this.x = x;
     this.y = y;
     
+    // Only set the base properties
     TowerPropertyTable properties = towerPropertyLookup.getTowerProperties(towerName);
+    JSONObject baseProperties = properties.getBaseProperties();
     
-  }
-  
-  private void setBaseProperties(TowerPropertyTable properties) {
+    // First, load the base tower sprite
+    this.sprite = loadImage(dataPath("images/" + baseProperties.getString("sprite")));
     
+    // Setup actions
+    this.actionMap = new HashMap<String, TowerAction>();
+    
+    JSONObject actionData = baseProperties.getJSONObject("actions");
+    for (String actionName : (Set<String>) actionData.keys()) {
+      JSONObject actionDefinition = actionData.getJSONObject(actionName);
+      
+      TowerAction actionObject = new TowerAction(actionDefinition);
+      
+      this.actionMap.put(actionName, actionObject);
+    }
+    
+    // Setup projectiles
+    this.projectileMap = new HashMap<String, ProjectileData>();
+    
+    JSONObject projectileData = baseProperties.getJSONObject("projectiles");
+    for (String projectileName : (Set<String>) projectileData.keys()) {
+      JSONObject projectileDefinition = projectileData.getJSONObject(projectileName);
+      
+      ProjectileData projectileDataObject = new ProjectileData(projectileDefinition);
+      
+      this.projectileMap.put(projectileName, projectileDataObject);
+    }
   }
   
   public void step(ArrayList<Bloon> bloons) {
-    for (TowerAction action : actions) {
+    for (TowerAction action : actionMap.values()) {
       if (!action.checkCooldown()) {
         continue;
       }

@@ -68,6 +68,53 @@
    
   }
  }
+ 
+public class ProjectileData {
+  public int damage;
+  public int pierce;
+  public int speed;
+  public PImage sprite;
+  
+  public boolean popLead;
+  public boolean popFrozen;
+  public boolean popBlack;
+  public int extraDamageToCeramics;
+  public int extraDamageToMoabs;
+  
+  public ProjectileData(JSONObject projectileData) {
+    // By default, we assume the projectile is sharp (can't pop lead)
+    this.popLead = false;
+    this.popFrozen = false;
+    this.popBlack = true;
+    this.extraDamageToCeramics = 0;
+    this.extraDamageToMoabs = 0;
+    
+    this.damage = 1;
+    this.pierce = 1;
+    this.speed = 30;
+    
+    updateProperties(projectileData);
+  }
+  
+  public void updateProperties(JSONObject data) {
+    JSONObject specialDamageProperties = data.getJSONObject("specialDamageProperties");
+    
+    this.popLead = readBoolean(specialDamageProperties, "popLead", this.popLead);
+    this.popFrozen = readBoolean(specialDamageProperties, "popFrozen", this.popFrozen);
+    this.popBlack = readBoolean(specialDamageProperties, "popBlack", this.popBlack);
+    this.extraDamageToCeramics = readInt(specialDamageProperties, "extraDamageToCeramics", this.extraDamageToCeramics);
+    this.extraDamageToMoabs = readInt(specialDamageProperties, "extraDamageToMoabs", this.extraDamageToMoabs);
+    
+    this.damage = readInt(data, "damage", this.damage);
+    this.pierce = readInt(data, "pierce", this.pierce);
+    this.speed = readInt(data, "speed", this.speed);
+    
+    if (!data.isNull("sprite")) {
+      String spritePath = data.getString("sprite");
+      this.sprite = loadImage("images/" + spritePath);
+    }
+  }
+}
   
 //public class ProjectileImages{
 //  private ArrayList<PImage> images;

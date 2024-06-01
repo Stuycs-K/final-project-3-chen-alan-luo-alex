@@ -218,6 +218,14 @@ private static String readString(JSONObject object, String keyName, String defau
   return object.getString(keyName);
 }
 
+private static boolean readBoolean(JSONObject object, String keyName, boolean defaultValue) {
+  if (object.isNull(keyName)) {
+    return defaultValue;
+  }
+  
+  return object.getBoolean(keyName);
+}
+
 private static float readFloat(JSONObject object, String keyName, float defaultValue) {
   if (object.isNull(keyName)) {
     return defaultValue;
