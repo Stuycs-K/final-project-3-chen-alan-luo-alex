@@ -48,6 +48,16 @@
 - Write CurrencyManager and implement damaging Bloons rewarding money
 - Add GUI for health, currency, and wave count
 
+## 5/30/2024
+- Begin writing towers.json to refactor tower code
+
+## 5/31/2024
+- Write TowerPropertyLookup and related classes for parsing towers.json and applying properties
+- Write ProjectileData to store projectile properties
+- Write TowerAction to represent a tower attack
+- Cleanup some code in Projectile and Tower in general
+- Add pierce to projectiles
+
 ## Alex Luo
 
 ### 5/22/2024
