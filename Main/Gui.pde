@@ -66,8 +66,7 @@ public class GuiManager {
         continue;
       }
       
-      if (!gui.isMouseInBounds()) {
-        println("no");
+      if (!gui.isMouseInBounds()) {;
         continue;
       }
       

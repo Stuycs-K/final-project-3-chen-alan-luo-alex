@@ -16,7 +16,6 @@ public class Game{
   //private float buttonX, buttonY;
   //private float buttonWidth, buttonHeight;
 
-  private GuiManager guiManager;
   private TextButton upgradeButton;
   private TextButton sellButton;
   private TextLabel upgradeLabel;
@@ -60,7 +59,6 @@ public class Game{
     //buttonY=0;
     //buttonWidth=80;
     //buttonHeight = 30;
-    guiManager = new GuiManager();
     setupGui();
   }
   
