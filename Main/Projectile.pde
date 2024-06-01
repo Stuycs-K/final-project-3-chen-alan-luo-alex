@@ -9,6 +9,7 @@
   int imageIndex;
   public ArrayList<PImage> spritesP;
   
+  ProjectileData projectileData;
   
   public Projectile(float x, float y, float targetX, float targetY, int damage){
     this.x=x;
@@ -24,6 +25,20 @@
     this.imageIndex = imageIndex;
     this.spritesP = new ArrayList<PImage>();
     
+  }
+  
+  public Projectile(PVector origin, PVector goal, ProjectileData data) {
+    this.x = origin.x;
+    this.y = origin.y;
+    this.targetX = goal.x;
+    this.targetY = goal.y;
+    
+    this.dy = targetY - y;
+    this.dx = targetX - x;
+    this.distance = dist(x, y, targetX, targetY);
+    this.finished = false;
+    
+    this.projectileData = data;
   }
   
   public void update(ArrayList<Bloon> bloons){

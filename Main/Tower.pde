@@ -20,8 +20,8 @@ public class Tower{
   
   private PImage sprite;
   
-  private HashMap<String, TowerAction> actionMap;
-  private HashMap<String, ProjectileData> projectileMap;
+  public HashMap<String, TowerAction> actionMap;
+  public HashMap<String, ProjectileData> projectileMap;
   
   public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius, int cost){
     this.x = x;
@@ -50,7 +50,7 @@ public class Tower{
     JSONObject baseProperties = properties.getBaseProperties();
     
     // First, load the base tower sprite
-    this.sprite = loadImage(dataPath("images/" + baseProperties.getString("sprite")));
+    this.sprite = properties.getBaseSprite();
     
     // Setup actions
     this.actionMap = new HashMap<String, TowerAction>();
@@ -93,6 +93,25 @@ public class Tower{
   
   public void lookAt(float targetX, float targetY) {
     angle = atan2(targetY - y, targetX - x);
+  }
+  
+  // The base getTargetPositions only gets the position of the first Bloon in range
+  public ArrayList<PVector> getTargetPositions(ArrayList<Bloon> bloons) {
+    ArrayList<PVector> results = new ArrayList<PVector>();
+    
+    for (Bloon targetBloon : bloons) {
+      if (!targetFilter.canAttack(targetBloon)) {
+        continue;
+      }
+      
+      float distance = dist(x, y, targetBloon.position.x, targetBloon.position.y);
+      if (distance <= range) {
+        results.add(targetBloon.position.copy());
+        break;
+      }
+    }
+    
+    return results;
   }
   
   public void attack(ArrayList<Bloon> bloons){
@@ -192,11 +211,33 @@ public class TowerAction {
     return actionType;
   }
   
-  public String getAssociatedProjectileName() {
+  public void performAction(Tower tower, ArrayList<Bloon> bloons) {
+    return;
+  }
+}
+
+public class ProjectileSpawnAction extends TowerAction {
+  private String projectileName;
+  
+  public ProjectileSpawnAction(JSONObject actionData) {
+    super(actionData);
+  }
+  
+  public void setProperties(JSONObject actionData) {
+    super.setProperties(actionData);
+    
+    this.projectileName = actionData.getString("projectile"); 
+  }
+  
+  public String getSpawnedProjectileName() {
     return projectileName;
   }
   
   public void performAction(Tower tower, ArrayList<Bloon> bloons) {
-    
+    ArrayList<PVector> targetPositions = tower.getTargetPositions(bloons);
+    ProjectileData data = tower.projectileMap.get(getSpawnedProjectileName());
+    for (PVector position : targetPositions) {
+      tower.projectiles.add(new Projectile(new PVector(tower.x, tower.y), new PVector(position.x, position.y), data));
+    }
   }
 }

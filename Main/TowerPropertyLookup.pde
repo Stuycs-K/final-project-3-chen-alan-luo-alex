@@ -21,6 +21,7 @@ public class TowerPropertyLookup {
 private class TowerPropertyTable {
   private JSONObject baseProperties;
   private int baseCost;
+  private PImage baseSprite;
   
   private TowerUpgradeInformation upgrades;
   
@@ -28,6 +29,7 @@ private class TowerPropertyTable {
     JSONObject baseProperties = towerDefinitions.getJSONObject("base");
     this.baseProperties = baseProperties;
     this.upgrades = new TowerUpgradeInformation(towerDefinitions.getJSONObject("upgrades"));
+    this.baseSprite = loadImage("images/" + baseProperties.getString("sprite"));
   }
   
   public int getBaseCost() {
@@ -36,6 +38,10 @@ private class TowerPropertyTable {
   
   public JSONObject getBaseProperties() {
     return baseProperties;
+  }
+  
+  public PImage getBaseSprite() {
+    return baseSprite;
   }
   
   public TowerUpgradeInformation getUpgradeInformation() {
