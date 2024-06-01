@@ -12,10 +12,12 @@ public class DartMonkey extends Tower{
     */
   }
   
+  /*
   public void attack(ArrayList<Bloon> bloon){
     super.attack(bloon);
-    } 
+    } */
 
+  /*
   public void upgrade(int path){
     upgradeLevel++;
     if(upgradeLevel == 1){
@@ -98,10 +100,6 @@ public class DartMonkey extends Tower{
       projectile.drawProjectile();
     }
   }*/
-  
-  public int getSellPrice(){
-    return (int) (getCost() * 0.75);
-  }
   
   public int getCost(){
     return 200;

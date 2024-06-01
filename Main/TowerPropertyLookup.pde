@@ -81,6 +81,14 @@ private class TowerUpgradeInformation {
     return getNextUpgrade(pathId, -1);
   }
   
+  public int getNumberOfUpgradePaths() {
+    return upgradePaths.size(); 
+  }
+  
+  public int getNumberOfUpgradesForPath(int pathId) {
+    return upgradePaths.get(pathId).size(); 
+  }
+  
   // Have to check if the next upgrade is null with this one
   public TowerUpgrade getNextUpgrade(int pathId, int currentUpgradeId) {
     int nextUpgradeId = currentUpgradeId + 1;
@@ -97,22 +105,31 @@ private class TowerUpgradeInformation {
 private class TowerUpgrade {
   private JSONObject upgradeData;
   private PImage upgradeImage;
+  private PImage sprite;
   
   public TowerUpgrade(JSONObject upgradeData) {
     this.upgradeData = upgradeData;
     
-    this.upgradeImage = loadImage(dataPath("images/" + upgradeData.getString("upgradeImage")));
-  }
-  
-  public void applyUpgrade(Tower tower) {
+    this.upgradeImage = loadImage("images/" + upgradeData.getString("upgradeImage"));
     
+    if (!upgradeData.isNull("sprite")) {
+      this.sprite = loadImage("images/" + upgradeData.getString("sprite"));
+    }
   }
   
   public PImage getUpgradeImage() {
     return upgradeImage;
   }
   
+  public PImage getSprite() {
+    return sprite;
+  }
+  
   public int getUpgradeCost() {
     return upgradeData.getInt("cost");
+  }
+  
+  public JSONObject getChanges() {
+    return upgradeData.getJSONObject("changes");
   }
 }

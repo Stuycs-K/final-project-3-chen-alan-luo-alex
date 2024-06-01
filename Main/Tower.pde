@@ -8,7 +8,6 @@ public class Tower{
   public int attackSpeed;
   public int upgradeLevel;
   public int attackCooldown;
-  public String currentUpgrade;
   public ArrayList<Projectile> projectiles;
   private TowerTargetFilter targetFilter;
   public ArrayList<PImage> sprites;
@@ -18,10 +17,13 @@ public class Tower{
   public int hitBoxY;
   public int cost;
   
+  private int totalCurrencySpent;
   private PImage sprite;
+  public String towerName;
   
   public HashMap<String, TowerAction> actionMap;
   public HashMap<String, ProjectileData> projectileMap;
+  public TowerUpgradeManager upgrades;
   
   public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius, int cost){
     this.x = x;
@@ -42,16 +44,19 @@ public class Tower{
   }
   
   public Tower(String towerName, int x, int y) {
+    this.towerName = towerName;
     this.x = x;
     this.y = y;
     
     this.targetFilter = new TowerTargetFilter();
     this.angle = PI;
-   
+    
     // Only set the base properties
     TowerPropertyTable properties = towerPropertyLookup.getTowerProperties(towerName);
     JSONObject baseProperties = properties.getBaseProperties();
     this.range = baseProperties.getInt("range");
+    
+    this.totalCurrencySpent = properties.getBaseCost();
     
     // First, load the base tower sprite
     this.sprite = properties.getBaseSprite();
@@ -66,6 +71,7 @@ public class Tower{
       String actionClass = actionDefinition.getString("type");
       TowerAction actionObject = null;
       
+      // Create base actions
       switch (actionClass) {
         case "PROJECTILE":
           actionObject = new ProjectileSpawnAction(actionDefinition);
@@ -90,6 +96,18 @@ public class Tower{
     }
     
     this.projectiles = new ArrayList<Projectile>();
+    
+    this.upgrades = new TowerUpgradeManager(this);
+  }
+  
+  // Sets range and sprite and that's it
+  public void setPropertiesFromUpgrade(TowerUpgrade upgrade) {
+    this.range = readInt(upgrade.getChanges(), "range", this.range);
+    
+    PImage newSprite = upgrade.getSprite();
+    if (newSprite != null) {
+      this.sprite = newSprite;
+    }
   }
   
   public void step(ArrayList<Bloon> bloons) {
@@ -129,38 +147,21 @@ public class Tower{
     return results;
   }
   
-  public void attack(ArrayList<Bloon> bloons){
-    attackCooldown--;
-    if(attackCooldown <=0){
-    
-      for (Bloon targetBloon: bloons){
-        if(targetFilter.canAttack(targetBloon)){
-          float distance = dist(x,y,targetBloon.position.x,targetBloon.position.y);
-          if(distance<=range){
-            angle = atan2(targetBloon.position.y-y, targetBloon.position.x -x);
-            projectiles.add(new Projectile(x,y,targetBloon.position.x,targetBloon.position.y,damage));
-            attackCooldown = fireRate;
-            break;
-          }
-          }
-        }
-       
-      }
-    
+  public boolean upgrade(int pathId) {
+    return upgrades.upgrade(pathId);
   }
   
- public void upgrade(int path){
-    this.upgradeLevel++;
-    
-  }
-  
-  public void sellTower(Game game){
-     game.currency += getSellPrice();
+  public void sellTower(){
+     game.getCurrencyManager().rewardCurrency(getSellPrice());
      game.towers.remove(this);
   }
   
-  public int getSellPrice(){
-    return 0;
+  public void increaseCurrencySpent(int amount) {
+     totalCurrencySpent += amount;
+  }
+  
+  public float getSellPrice(){
+    return totalCurrencySpent * 0.8;
   }
 
   public void draw(){
@@ -195,6 +196,119 @@ public class Tower{
   
 }
 
+public class TowerUpgradeManager {
+  private static final int MAX_SECONDARY_UPGRADES = 1; // Maximum of 2 upgrades (0 is the first ugprade, 1 is the second)
+  private static final int MAX_PATHS_UPGRADED = 2; // Maximum of 2 upgrade paths upgraded
+  
+  private Tower tower;
+  private ArrayList<Integer> pathUpgradeLevelList;
+  
+  private int mainUpgradePath; // The upgrade path we've put more than 2 upgrades in
+  private int pathsUpgraded;
+  
+  private TowerUpgradeInformation upgradeInformation;
+  
+  public TowerUpgradeManager(Tower tower) {
+    this.tower = tower;
+    this.pathUpgradeLevelList = new ArrayList<Integer>();
+    
+    this.mainUpgradePath = -1;
+    this.pathsUpgraded = 0;
+    
+    this.upgradeInformation = towerPropertyLookup.getTowerProperties(tower.towerName).getUpgradeInformation();
+    
+    // Set all upgrade levels to -1, which is the base upgrade
+    for (int i = 0; i < upgradeInformation.getNumberOfUpgradePaths(); i++) {
+      pathUpgradeLevelList.add(-1); 
+    }
+  }
+  
+  public TowerUpgradeInformation getUpgradeInformation() {
+    return upgradeInformation;
+  }
+  
+  // Returns stuff like "2-0" or "3-2"
+  public String formatUpgradeLevels() {
+    String result = "";
+    
+    for (int upgradeLevel : pathUpgradeLevelList) {
+      result += upgradeLevel + "-";
+    }
+    
+    return result.substring(0, result.length() - 1);
+  }
+  
+  public boolean upgrade(int pathId) {
+    int currentUpgradeLevel = pathUpgradeLevelList.get(pathId);
+    
+    // Can't upgrade a third path, as we've already upgraded two
+    if (currentUpgradeLevel == -1 && pathsUpgraded == MAX_PATHS_UPGRADED) {
+      return false;
+    }
+    
+    // Can't upgrade the secondary upgrade path anymore, as we've already upgraded it twice
+    if (mainUpgradePath != -1 && mainUpgradePath != pathId && currentUpgradeLevel == MAX_SECONDARY_UPGRADES) {
+      return false;
+    }
+    
+    TowerUpgrade upgrade = upgradeInformation.getNextUpgrade(pathId, currentUpgradeLevel);
+    if (upgrade == null) {
+      return false;
+    }
+    
+    // First upgrade in this path, so increase paths upgraded
+    if (currentUpgradeLevel == -1) {
+      pathsUpgraded++; 
+    }
+    
+    // We're about to upgrade this path for the third time, so set it as our main path
+    if (currentUpgradeLevel == MAX_SECONDARY_UPGRADES) {
+      mainUpgradePath = pathId;
+    }
+    
+    // Increment this upgrade path level
+    pathUpgradeLevelList.set(pathId, currentUpgradeLevel + 1);
+    
+    // Set range and sprite
+    tower.setPropertiesFromUpgrade(upgrade);
+    
+    JSONObject upgradeChanges = upgrade.getChanges();
+    
+    // Now update actions
+    JSONObject actionChanges = upgradeChanges.getJSONObject("actions");
+    for (String actionName : (Set<String>) actionChanges.keys()) {
+      TowerAction action = tower.actionMap.get(actionName);
+      action.setProperties(actionChanges.getJSONObject(actionName));
+    }
+    
+    // And then projectiles
+    JSONObject projectileChanges = upgradeChanges.getJSONObject("projectiles");
+    for (String projectileName : (Set<String>) projectileChanges.keys()) {
+      ProjectileData projectile = tower.projectileMap.get(projectileName);
+      projectile.updateProperties(projectileChanges.getJSONObject(projectileName));
+    }
+    return true;
+  }
+  
+  // NOTE: Some values in the ArrayList will be null!
+  // For GUI, mainly
+  public ArrayList<TowerUpgrade> getNextUpgrades() {
+    ArrayList<TowerUpgrade> upgradesList = new ArrayList<TowerUpgrade>();
+    
+    for (int pathId = 0; pathId < upgradeInformation.getNumberOfUpgradePaths(); pathId++) {
+      int currentUpgradeLevel = pathUpgradeLevelList.get(pathId);
+      
+      upgradesList.add(upgradeInformation.getNextUpgrade(pathId, currentUpgradeLevel));
+    }
+    
+    return upgradesList;
+  }
+}
+
+//---------------------------------------------------------------------------------------------------------------
+// GENERIC ACTION TYPES
+// Actions with more specific functionality should be placed in their relevant tower tab and extend one of these
+//---------------------------------------------------------------------------------------------------------------
 public class TowerAction {
   private int cooldownTicks; // In ticks
   private int currentCooldown;
@@ -206,10 +320,12 @@ public class TowerAction {
   }
   
   public void setProperties(JSONObject actionData) {
-    float cooldownSeconds = actionData.getFloat("cooldown");
-    this.cooldownTicks = int(cooldownSeconds * frameRate);
-    
-    this.actionType = actionData.getString("type");
+    if (!actionData.isNull("cooldown")) {
+      float cooldownSeconds = actionData.getFloat("cooldown");
+      this.cooldownTicks = int(cooldownSeconds * frameRate);
+    }
+
+    this.actionType = readString(actionData, "type", this.actionType);
   }
   
   // Called every tick
@@ -245,7 +361,7 @@ public class ProjectileSpawnAction extends TowerAction {
   public void setProperties(JSONObject actionData) {
     super.setProperties(actionData);
     
-    this.projectileName = actionData.getString("projectile"); 
+    this.projectileName = readString(actionData, "projectile", this.projectileName); 
   }
   
   public String getSpawnedProjectileName() {

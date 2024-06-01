@@ -1,4 +1,4 @@
-static final String[] guiDefinitionFiles = new String[] {"game.json"};
+static final String[] GUI_DEFINITION_FILES = new String[] {"game.json", "towerUi.json"};
 
 private class ZIndexSorter implements Comparator<GuiBase> {
   public int compare(GuiBase a, GuiBase b) {
@@ -12,7 +12,7 @@ private class FontManager {
   public FontManager() {
     fontMap = new HashMap<String, PFont>();
     
-    JSONObject schema = loadJSONObject(dataPath("guiDefinitions/schema.json"));
+    JSONObject schema = loadJSONObject("guiDefinitions/schema.json");
     JSONObject fonts = schema.getJSONObject("fonts");
 
     Set<String> fontAliases = fonts.keys();
@@ -22,7 +22,7 @@ private class FontManager {
       String fontPath = fontInfo.getString("path");
       int fontSize = fontInfo.getInt("size");
       
-      PFont loadedFont = createFont(dataPath("fonts/" + fontPath), fontSize);
+      PFont loadedFont = createFont("fonts/" + fontPath, fontSize);
       fontMap.put(alias, loadedFont);
     }
   }
@@ -42,8 +42,8 @@ public class GuiManager {
     guiTemplateMap = new HashMap<String, GuiBase>();
     fontManager = new FontManager();
         
-    for (String path : guiDefinitionFiles) {
-      loadGui(dataPath("guiDefinitions/" + path));
+    for (String path : GUI_DEFINITION_FILES) {
+      loadGui("guiDefinitions/" + path);
     }
   }
   
@@ -63,6 +63,11 @@ public class GuiManager {
     
     for (GuiBase gui : guiList) {
       if (!gui.isButton()) {
+        continue;
+      }
+      
+      if (!gui.isMouseInBounds()) {
+        println("no");
         continue;
       }
       
@@ -92,14 +97,14 @@ public class GuiManager {
         case "ImageLabel":
           guiObject = new ImageLabel(guiData);
           break;
-        case "Button":
-          guiObject = new Button(guiData);
-          break;
         case "Frame":
           guiObject = new Frame(guiData);
           break;
-        case "imageButton":
-          guiObject = new imageButton(guiData);
+        case "ImageButton":
+          guiObject = new ImageButton(guiData);
+          break;
+        case "TextButton":
+          guiObject = new TextButton(guiData);
           break;
         default:
           guiObject = new GuiBase(guiData);
@@ -252,7 +257,7 @@ private color readColor(JSONObject object, String keyName) {
   return (a == -1) ? color(r, g, b) : color(r, g, b, a);
 }
 
-private class GuiBase {
+public class GuiBase {
   private color backgroundColor;
   private float backgroundTransparency; // 0 is fully transparent, 1 is fully solid
   
@@ -390,24 +395,8 @@ private class GuiBase {
   }
 }
 
-public class Button extends GuiBase {
-  
-  public Button(JSONObject definition) {
-    super(definition);
-  }
-  
-  public Button clone() {
-    return new Button(getDefinition());
-  }
-  
-  public boolean isButton() {
-    return true;
-  }
-  
-  public void onInput() {
-    return;
-  }
-  
+public interface Button {
+  public void onInput();
 }
 
 public class ImageLabel extends GuiBase {
@@ -435,7 +424,7 @@ public class ImageLabel extends GuiBase {
     
     JSONObject definition = getDefinition();
     String imagePath = definition.getString("image");
-    this.image = loadImage(dataPath("images/" + imagePath));
+    this.image = loadImage("images/" + imagePath);
     
     PVector defaultSize = getSize();
     int imageSizeX = readInt(definition, "imageSizeX", int(defaultSize.x));
@@ -495,14 +484,14 @@ public class Frame extends GuiBase {
   }
 }
 
-public class imageButton extends ImageLabel{
+public class ImageButton extends ImageLabel implements Button {
   
-  public imageButton(JSONObject defintion){
+  public ImageButton(JSONObject defintion){
     super(defintion);
   }
   
-  public imageButton clone() {
-    return new imageButton(getDefinition());
+  public ImageButton clone() {
+    return new ImageButton(getDefinition());
   }
   
   public boolean isButton(){ 
@@ -515,6 +504,25 @@ public class imageButton extends ImageLabel{
   
 }
 
+public class TextButton extends TextLabel implements Button {
+  
+  public TextButton(JSONObject defintion){
+    super(defintion);
+  }
+  
+  public TextButton clone() {
+    return new TextButton(getDefinition());
+  }
+  
+  public boolean isButton(){ 
+    return true;
+  }
+  
+  public void onInput() {
+    return;
+  }
+  
+}
 
 public class TextLabel extends GuiBase {
   private String text;

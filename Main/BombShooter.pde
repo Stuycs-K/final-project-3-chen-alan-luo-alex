@@ -30,6 +30,7 @@ public class BombShooter extends Tower{
     }
   }
   
+  /*
   public void upgrade(int path){
     upgradeLevel++;
     if(upgradeLevel == 1){
@@ -56,7 +57,7 @@ public class BombShooter extends Tower{
     }
 
   }
-
+  */
   
   public void draw(){
     fill(0,0,255);
