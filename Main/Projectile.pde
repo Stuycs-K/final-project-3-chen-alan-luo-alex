@@ -1,4 +1,4 @@
- public class Projectile{
+public class Projectile{
   public float x, y;
   public float targetX, targetY;
   public boolean finished;
@@ -42,6 +42,10 @@
       finished = true;
     }
     
+    if (hits >= projectileData.pierce) {
+      finished = true;
+    }
+    
     if(!finished){
     
       if (distance>0){
@@ -55,8 +59,13 @@
          float distance = dist(x,y,bloon.getPosition().x, bloon.getPosition().y);
          if(distance < 10){
            bloon.damage(projectileData.damage);
-           finished = true;
-           break;  
+           hits += 1;
+           
+           if (hits >= projectileData.pierce) {
+             finished = true;
+             break;  
+           }
+    
          }
        }
       }
@@ -64,9 +73,7 @@
         finished = true;
       }
     }
-  }
-  
-  
+  }  
   
   public void drawProjectile(){
     //spritesP.add((loadImage("images/projectiles/basicDart.png")));
@@ -79,7 +86,7 @@
     image(projectileData.sprite, 0, 0);
     popMatrix();
   }
- }
+}
  
 public class ProjectileData {
   public int damage;

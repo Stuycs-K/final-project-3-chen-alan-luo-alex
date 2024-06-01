@@ -17,7 +17,7 @@
                     "pierce": 2,
                     "speed": 15,
                     "sprite": "projectiles/basicDart.png",
-                    "maxDistance": 60
+                    "maxDistance": 200
                 }
             }
         },

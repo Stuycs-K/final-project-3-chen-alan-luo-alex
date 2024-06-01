@@ -27,10 +27,11 @@ void setup(){
   
   game = new Game();
   game.startGame();
-  
+  /*
   JSONObject spawnInformation = new JSONObject();
   spawnInformation.setString("layerName", "MOAB");
   bloonSpawner.spawn(spawnInformation);
+  */
   
 
   
