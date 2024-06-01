@@ -33,6 +33,14 @@ private class TowerPropertyTable {
   public int getBaseCost() {
     return baseProperties.getInt("cost");
   }
+  
+  public JSONObject getBaseProperties() {
+    return baseProperties;
+  }
+  
+  public TowerUpgradeInformation getUpgradeInformation() {
+    return upgrades;
+  }
 }
 
 private class TowerUpgradeInformation {
@@ -92,5 +100,13 @@ private class TowerUpgrade {
   
   public void applyUpgrade(Tower tower) {
     
+  }
+  
+  public PImage getUpgradeImage() {
+    return upgradeImage;
+  }
+  
+  public int getUpgradeCost() {
+    return upgradeData.getInt("cost");
   }
 }

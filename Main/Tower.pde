@@ -18,6 +18,8 @@ public class Tower{
   public int hitBoxY;
   public int cost;
   
+  private ArrayList<TowerAction> actions;
+  
   public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius, int cost){
     this.x = x;
     this.y = y;
@@ -33,6 +35,37 @@ public class Tower{
     this.angle = PI;
     this.cost = cost;
     
+    this.actions = new ArrayList<TowerAction>();
+  }
+  
+  public Tower(String towerName, int x, int y) {
+    this.x = x;
+    this.y = y;
+    
+    TowerPropertyTable properties = towerPropertyLookup.getTowerProperties(towerName);
+    
+  }
+  
+  private void setBaseProperties(TowerPropertyTable properties) {
+    
+  }
+  
+  public void step(ArrayList<Bloon> bloons) {
+    for (TowerAction action : actions) {
+      if (!action.checkCooldown()) {
+        continue;
+      }
+      
+      action.performAction(this, bloons);
+    }
+  }
+  
+  public void lookAt(PVector position) {
+    lookAt(position.x, position.y);
+  }
+  
+  public void lookAt(float targetX, float targetY) {
+    angle = atan2(targetY - y, targetX - x);
   }
   
   public void attack(ArrayList<Bloon> bloons){
@@ -95,11 +128,48 @@ public class Tower{
 }
 
 public class TowerAction {
-  private float cooldown;
-  private float currentCooldown;
+  private int cooldownTicks; // In ticks
+  private int currentCooldown;
+  private String actionType;
+  private String projectileName;
   
-  public TowerAction(JSONObject actionInfo) {
-    
+  public TowerAction(JSONObject actionData) {
+    setProperties(actionData);
+    this.currentCooldown = 0;
   }
   
+  public void setProperties(JSONObject actionData) {
+    float cooldownSeconds = actionData.getFloat("cooldown");
+    this.cooldownTicks = int(cooldownSeconds / frameRate);
+    
+    this.actionType = actionData.getString("type");
+    
+    this.projectileName = null;
+    if (this.actionType.equals("PROJECTILE")) {
+      this.projectileName = actionData.getString("projectile"); 
+    }
+  }
+  
+  // Called every tick
+  public boolean checkCooldown() {
+    if (currentCooldown >= cooldownTicks) {
+      currentCooldown = 0;
+      return true; 
+    }
+    
+    currentCooldown++;
+    return false;
+  }
+  
+  public String getActionType() {
+    return actionType;
+  }
+  
+  public String getAssociatedProjectileName() {
+    return projectileName;
+  }
+  
+  public void performAction(Tower tower, ArrayList<Bloon> bloons) {
+    
+  }
 }

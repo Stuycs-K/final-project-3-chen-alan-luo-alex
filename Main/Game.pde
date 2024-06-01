@@ -114,6 +114,7 @@ public class Game{
      
       
       for(Tower tower: towers){
+        tower.step(bloons);
         tower.attack(bloons);
         ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
         for(Projectile projectile : tower.projectiles){
