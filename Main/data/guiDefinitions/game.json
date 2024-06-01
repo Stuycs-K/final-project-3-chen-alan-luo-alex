@@ -141,14 +141,55 @@
         "textYAlignment" : "CENTER",
         "zIndex" : 2
     },
-    "woodenPadding": {
+    "horizontalWoodenPadding": {
         "className": "Frame",
         "x": 515,
         "y": 650,
         "sizeX": 800,
         "sizeY": 200,
-        "backgroundColor": "139 69 19",
-        "backgroundTransparency": 0.1,
+        "backgroundColor": "139 69 30",
+        "backgroundTransparency": 1,
         "zIndex": 0
+    },
+    "verticalWoodenPadding": {
+        "className" : "Frame",
+        "x":1050,
+        "y":0,
+        "sizeX":200,
+        "sizeY":800,
+        "backgroundColor": "139 69 30",
+        "backgroundTransparency":1,
+        "zIndex": 0
+    },
+    "towerLabel" : {
+        "className" : "TextLabel",
+        "x" : "1120",
+        "y" : "60",
+        "text" : "Towers",
+        "textSize" : 16,
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment" : "CENTER",
+        "zIndex" : 2
+    },
+    "towerButton" : {
+        "className": "imageButton",
+        "x": 1110,
+        "y": 80,
+        "sizeX": 30,
+        "sizeY": 30,
+        "zIndex": 1000,
+        "stroke": {
+            "type": "NONE"
+        },
+        "image": "images/tower/dartmonkey.png",
+        "imageX": 0,
+        "imageY": 0,
+        "imagePositionMode": "CENTER",
+        "imageSizeX": 30,
+        "imageSizeY": 30
     }
+    
+    
+
 }

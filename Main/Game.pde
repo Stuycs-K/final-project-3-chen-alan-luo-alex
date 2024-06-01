@@ -21,7 +21,10 @@ public class Game{
     private Button sellButton;
     private TextLabel upgradeLabel;
     private TextLabel sellLabel;
-    private Frame woodenPadding;
+    private TextLabel towerLabel;
+    private Frame horizontalWoodenPadding;
+    private Frame verticalWoodenPadding;
+    private imageButton towerButton;
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -137,8 +140,12 @@ public class Game{
       sellButton = (Button) guiManager.create("sellButton");
       upgradeLabel = (TextLabel) guiManager.create("upgradeLabel");
       sellLabel = (TextLabel) guiManager.create("sellLabel");
-      woodenPadding = (Frame) guiManager.create("woodenPadding");
-    }
+      towerLabel = (TextLabel) guiManager.create("towerLabel");
+      horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
+      verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
+      towerButton = (imageButton) guiManager.create("towerButton");
+      
+     }
     
     public void placeTower(String towerName, int x, int y){
 
@@ -147,8 +154,12 @@ public class Game{
         DartMonkey dartMonkey = new DartMonkey(x, y);
         towers.add(dartMonkey);
       }
-     }
-      //}else if (towerName.equals("BombShooter")){
+     
+       if (towerName.equals("BombShooter")){
+         BombShooter bombShooter = new BombShooter(x,y);
+         towers.add(bombShooter);
+       }
+    }
       //  newTower = new BombShooter(x,y);
       //}else if (towerName.equals("IceMonkey")){
       //  newTower = new IceMonkey(x,y);
