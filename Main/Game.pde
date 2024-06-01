@@ -143,7 +143,7 @@ public class Game{
       towerLabel = (TextLabel) guiManager.create("towerLabel");
       horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
       verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
-      towerButton = (imageButton) guiManager.create("towerButton");
+      //towerButton = (imageButton) guiManager.create("towerButton");
       
      }
     

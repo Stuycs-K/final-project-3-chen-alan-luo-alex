@@ -497,7 +497,7 @@ public class Frame extends GuiBase {
 
 public class imageButton extends ImageLabel{
   
-  public imageButton(JSONOBject defintion){
+  public imageButton(JSONObject defintion){
     super(defintion);
   }
   

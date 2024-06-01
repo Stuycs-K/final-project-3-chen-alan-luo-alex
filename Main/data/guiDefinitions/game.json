@@ -100,46 +100,46 @@
         "textYOffset": 15
     },
     "upgradeButton": {
-        "className" : "Button",
-        "x":"525",
-        "y":"700",
+        "className": "Button",
+        "x": "525",
+        "y": "700",
         "sizeX": 150,
         "sizeY": 50,
         "backgroundColor": "0 150 0",
         "backgroundTransparency": 0.8,
-        "zIndex":1
+        "zIndex": 1
     },
-    "sellButton":{
-        "className" : "Button",
-        "x":"525",
-        "y":"760",
+    "sellButton": {
+        "className": "Button",
+        "x": "525",
+        "y": "760",
         "sizeX": 150,
         "sizeY": 50,
         "backgroundColor": "150 0 0",
         "backgroundTransparency": 0.8,
-        "zIndex" :1
+        "zIndex": 1
     },
-    "upgradeLabel":{
-        "className" : "TextLabel",
-        "x" : "600",
-        "y" : "725",
-        "text" : "Upgrade",
-        "textSize" : 16,
+    "upgradeLabel": {
+        "className": "TextLabel",
+        "x": "600",
+        "y": "725",
+        "text": "Upgrade",
+        "textSize": 16,
         "textColor": "255 255 255",
         "textXAlignment": "CENTER",
-        "textYAlignment" : "CENTER",
-        "zIndex" : 2
+        "textYAlignment": "CENTER",
+        "zIndex": 2
     },
-    "sellLabel":{
-        "className" : "TextLabel",
-        "x" : "600",
-        "y" : "785",
-        "text" : "Sell",
-        "textSize" : 16,
+    "sellLabel": {
+        "className": "TextLabel",
+        "x": "600",
+        "y": "785",
+        "text": "Sell",
+        "textSize": 16,
         "textColor": "255 255 255",
         "textXAlignment": "CENTER",
-        "textYAlignment" : "CENTER",
-        "zIndex" : 2
+        "textYAlignment": "CENTER",
+        "zIndex": 2
     },
     "horizontalWoodenPadding": {
         "className": "Frame",
@@ -152,28 +152,28 @@
         "zIndex": 0
     },
     "verticalWoodenPadding": {
-        "className" : "Frame",
-        "x":1050,
-        "y":0,
-        "sizeX":200,
-        "sizeY":800,
+        "className": "Frame",
+        "x": 1050,
+        "y": 0,
+        "sizeX": 200,
+        "sizeY": 800,
         "backgroundColor": "139 69 30",
-        "backgroundTransparency":1,
+        "backgroundTransparency": 1,
         "zIndex": 0
     },
-    "towerLabel" : {
-        "className" : "TextLabel",
-        "x" : "1120",
-        "y" : "60",
-        "text" : "Towers",
-        "textSize" : 16,
+    "towerLabel": {
+        "className": "TextLabel",
+        "x": "1120",
+        "y": "60",
+        "text": "Towers",
+        "textSize": 16,
         "textColor": "0 0 0",
         "textXAlignment": "CENTER",
-        "textYAlignment" : "CENTER",
-        "zIndex" : 2
+        "textYAlignment": "CENTER",
+        "zIndex": 2
     },
-    "towerButton" : {
-        "className": "imageButton",
+    "towerButton": {
+        "className": "ImageLabel",
         "x": 1110,
         "y": 80,
         "sizeX": 30,
@@ -189,7 +189,4 @@
         "imageSizeX": 30,
         "imageSizeY": 30
     }
-    
-    
-
 }
