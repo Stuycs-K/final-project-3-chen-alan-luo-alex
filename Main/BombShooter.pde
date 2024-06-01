@@ -1,56 +1,80 @@
-//public class BombShooter extends Tower{
-//  public BombShooter(int x, int y){
-//    super(x,y,50,30,10,5,20);
-//    sprites.add(loadImage("images/Towers/moabTower.png"));
-//    //this.sprite = loadImage("images/Towers/moabTower.png");
-//  }
+public class BombShooter extends Tower{
+  private int bombRange;
+  private int bombDamage;
+  private float explosionRadius;
+  private boolean isClusterBombs;
+  private boolean isMissle;
+  private TowerTargetFilter targetFilterBomb;
   
-//  public void attack(ArrayList<Bloon> bloon){
-//    super.attack(bloon);
-//  }
+  public BombShooter(int x, int y){
+    super(x, y, 100, 50, 1, 20, 50, 100);
+    this.bombRange = 100;
+    this.bombDamage = 1;
+    this.explosionRadius = 50;
+    this.cost = 100;
+    this.isClusterBombs = false;
+    this.isMissle = false;
+    this.targetFilterBomb = new TowerTargetFilter();
+    //sprites.add(loadImage("images/Towers/moabTower.png"));
+    
+  }
   
-//  public void upgrade(int path){
-//    if(upgradeLevel == 1){
-//      if(path==1){
-//        range+=25;
-//      }else if(path ==2){
-//        radius+=25;
-//      }
-//    } else if (upgradeLevel == 2){
-//      if(path==1){
-//        // soon to be implemented frag bombs
-//      }else if(path == 2){
-//        range += 25;
-//        attackSpeed += 10;
-//      }
-//    } else if(upgradeLevel == 3){
-//      if(path ==1){
-//        //clusters implemented soon
-//      } else if (path == 2){
-//        damage = 3;
-//      }
-//    }
-//    upgradeLevel++;
-//  }
+  public void attack(ArrayList<Bloon> bloons){
+    for (Bloon targetBloon: bloons) {
+      if(targetFilterBomb.canAttack(targetBloon)){
+        if (dist(x,y,targetBloon.position.x,targetBloon.position.y) <= bombRange) {
+          projectiles.add(new BombProjectile(x,y,targetBloon.position.x,targetBloon.position.y,bombDamage,explosionRadius,isClusterBombs));
+          break;
+        }
+      }
+    }
+  }
+  
+  public void upgrade(int path){
+    upgradeLevel++;
+    if(upgradeLevel == 1){
+      if(path==1){
+        bombRange+=50;
+      }else if(path ==2){
+        explosionRadius+=25;
+      }
+    } else if (upgradeLevel == 2){
+      if(path==1){
+        // soon to be implemented frag bombs
+      }else if(path == 2){
+        bombRange += 25;
+        attackSpeed += 10; 
+        isMissle = true;
+      }
+    } else if(upgradeLevel == 3){
+      if(path ==1){
+        //clusters implemented soon
+        isClusterBombs = true;
+      } else if (path == 2){
+        bombDamage = 3;
+      }
+    }
+
+  }
 
   
-//  public void draw(){
-//    fill(0,0,255);
-//    ellipse(x,y,25,25);
+  public void draw(){
+    fill(0,0,255);
+    ellipse(x,y,25,25);
     
     
-//    //if (upgradeLevel == 3){
-//    //  if(//implemented soon so that player can  invoke this ifpath==2)){
-//    //    if (sprite != null) {
-//    //      imageMode(CENTER);
-//    //      image(sprite, x, y);
+    //if (upgradeLevel == 3){
+    //  if(//implemented soon so that player can  invoke this ifpath==2)){
+    //    if (sprite != null) {
+    //      imageMode(CENTER);
+    //      image(sprite, x, y);
     
-//    //}
-//  // }
-//  //}
-// }
+    //}
+  // }
+  //}
+ }
   
-//  public int getCost(){
-//    return 0;
-//  }
-//}
+  public int getCost(){
+    return 0;
+  }
+}

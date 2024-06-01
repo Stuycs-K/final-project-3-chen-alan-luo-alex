@@ -1,0 +1,135 @@
+{
+    "DartMonkey": {
+        "base": {
+            "cost": 200,
+            "sprite": "towers/dartmonkey.png",
+            "range": 150,
+            "actions": {
+                "dartAttack": {
+                    "cooldown": 0.9,
+                    "type": "PROJECTILE",
+                    "projectile": "dart"
+                }
+            },
+            "projectiles": {
+                "dart": {
+                    "damage": 1,
+                    "pierce": 2,
+                    "speed": 15,
+                    "sprite": "projectiles/basicDart.png",
+                    "maxDistance": 200
+                }
+            }
+        },
+        "upgrades": {
+            "1": [
+                {
+                    "name": "Long Range Darts",
+                    "upgradeImage": "towers/dartmonkey.png",
+                    "cost": 90,
+                    "changes": {
+                        "sprite": "towers/LongRangeDarts.png",
+                        "range": 175
+                    }
+                },
+                {
+                    "name": "Enhanced Eyesight",
+                    "upgradeImage": "towers/dartmonkey.png",
+                    "cost": 120,
+                    "changes": {
+                        "sprite": "towers/LongRangeDarts.png",
+                        "range": 200,
+                        "detectCamo": true
+                    }
+                },
+                {
+                    "name": "Spike-o-Pult",
+                    "upgradeImage": "towers/dartmonkey.png",
+                    "cost": 500,
+                    "changes": {
+                        "sprite": "towers/spikeOPult.png",
+                        "actions": {
+                            "dartAttack": {
+                                "cooldown": 1.54
+                            }
+                        },
+                        "projectiles": {
+                            "dart": {
+                                "damage": 1,
+                                "pierce": 18,
+                                "speed": 10,
+                                "sprite": "projectiles/basicDart.png"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Juggernaut",
+                    "upgradeImage": "towers/dartmonkey.png",
+                    "cost": 1500,
+                    "changes": {
+                        "sprite": "towers/juggernaut.png",
+                        "range": 225,
+                        "actions": {
+                            "dartAttack": {
+                                "cooldown": 1.4
+                            }
+                        },
+                        "projectiles": {
+                            "dart": {
+                                "damage": 1,
+                                "pierce": 100,
+                                "speed": 18,
+                                "sprite": "projectiles/basicDart.png",
+                                "specialDamageProperties": {
+                                    "popLead": true,
+                                    "popFrozen": true,
+                                    "extraDamageToCeramics": 4
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "2": [
+                {
+                    "name": "Sharp Shots",
+                    "upgradeImage": "towers/dartmonkey.png",
+                    "cost": 140,
+                    "changes": {
+                        "projectiles": {
+                            "dart": {
+                                "pierce": 3
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Razor Sharp Shots",
+                    "upgradeImage": "towers/dartmonkey.png",
+                    "cost": 170,
+                    "changes": {
+                        "projectiles": {
+                            "dart": {
+                                "pierce": 5
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Triple Darts",
+                    "upgradeImage": "towers/dartmonkey.png",
+                    "cost": 330,
+                    "changes": {
+                        "actions": {
+                            "dartAttack": {
+                                "projectileCount": 3,
+                                "angle": 0.43
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

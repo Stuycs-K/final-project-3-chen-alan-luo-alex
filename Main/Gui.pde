@@ -47,6 +47,34 @@ public class GuiManager {
     }
   }
   
+  
+  public void mouseMoved() {
+    for (GuiBase gui : guiList) {
+      if (gui.isMouseInBounds()) {
+        gui.onHover();
+      } else {
+        gui.onLeave(); 
+      }
+    }
+  }
+  
+  public boolean mousePressed() {
+    boolean pressedSomething = false;
+    
+    for (GuiBase gui : guiList) {
+      if (!gui.isButton()) {
+        continue;
+      }
+      
+      Button button = (Button) gui;
+      button.onInput();
+      
+      pressedSomething = true;
+    }
+    
+    return pressedSomething;
+  }
+  
   private void loadGui(String filePath) {
     JSONObject data = loadJSONObject(filePath);
     
@@ -66,6 +94,12 @@ public class GuiManager {
           break;
         case "Button":
           guiObject = new Button(guiData);
+          break;
+        case "Frame":
+          guiObject = new Frame(guiData);
+          break;
+        case "imageButton":
+          guiObject = new imageButton(guiData);
           break;
         default:
           guiObject = new GuiBase(guiData);
@@ -92,7 +126,7 @@ public class GuiManager {
       gui.render();
     }
   }
-  
+
   public void destroy(GuiBase object) {
     guiList.remove(object); 
   }
@@ -187,6 +221,14 @@ private static String readString(JSONObject object, String keyName, String defau
   return object.getString(keyName);
 }
 
+private static boolean readBoolean(JSONObject object, String keyName, boolean defaultValue) {
+  if (object.isNull(keyName)) {
+    return defaultValue;
+  }
+  
+  return object.getBoolean(keyName);
+}
+
 private static float readFloat(JSONObject object, String keyName, float defaultValue) {
   if (object.isNull(keyName)) {
     return defaultValue;
@@ -217,7 +259,6 @@ private class GuiBase {
   private PVector position;
   private PVector size;
   
-  private boolean isButton;
   private boolean isVisible;
   
   private JSONObject definition;
@@ -234,9 +275,14 @@ private class GuiBase {
   public JSONObject getDefinition() {
     return definition;
   }
+    
+  public boolean isMouseInBounds() {
+    return (mouseX > this.position.x - this.size.x && mouseX < this.position.x + this.size.x) 
+      && (mouseY > this.position.y - this.size.y && mouseY < this.position.y + this.size.y);
+  }
   
-  public void setButton(boolean state) {
-    isButton = state;
+  public boolean isButton() {
+    return false;
   }
   
   public PVector getPosition() {
@@ -284,7 +330,13 @@ private class GuiBase {
     return new GuiBase(definition);
   }
   
+  // Called when mouse enters bounds
   public void onHover() {
+    return;
+  }
+  
+  // Called when mouse leaves bounds
+  public void onLeave() {
     return;
   }
   
@@ -328,6 +380,14 @@ private class GuiBase {
     renderStroke();
     rect(position.x, position.y, size.x, size.y);
   }
+  
+  public color getBackgroundColor() {
+    return backgroundColor;
+  }
+  
+  public float getBackgroundTransparency() {
+    return backgroundTransparency;
+  }
 }
 
 public class Button extends GuiBase {
@@ -340,13 +400,14 @@ public class Button extends GuiBase {
     return new Button(getDefinition());
   }
   
-  public void onClick() {
-    
+  public boolean isButton() {
+    return true;
   }
   
-  public void onRelease() {
-    
+  public void onInput() {
+    return;
   }
+  
 }
 
 public class ImageLabel extends GuiBase {
@@ -410,6 +471,50 @@ public class ImageLabel extends GuiBase {
     image(this.image, position.x + this.imagePosition.x, position.y + this.imagePosition.y, this.imageSize.x, this.imageSize.y);
   }
 }
+
+public class Frame extends GuiBase {
+  
+  public Frame(JSONObject definition) {
+    super(definition);
+  }
+  
+  public void updateProperties(){
+    super.updateProperties();
+  }
+    
+  public Frame clone() {
+    return new Frame(getDefinition());
+  }
+  
+  public void render() {
+    fill(getBackgroundColor(), getBackgroundTransparency() * 255);
+    noStroke();
+    PVector position = getPosition();
+    PVector size = getSize();
+    rect(position.x, position.y, size.x, size.y);
+  }
+}
+
+public class imageButton extends ImageLabel{
+  
+  public imageButton(JSONOBject defintion){
+    super(defintion);
+  }
+  
+  public imageButton clone() {
+    return new imageButton(getDefinition());
+  }
+  
+  public boolean isButton(){ 
+    return true;
+  }
+  
+  public void onInput() {
+    return;
+  }
+  
+}
+
 
 public class TextLabel extends GuiBase {
   private String text;

@@ -21,10 +21,7 @@ public class Game{
     private Button sellButton;
     private TextLabel upgradeLabel;
     private TextLabel sellLabel;
-    private TextLabel towerLabel;
-    private Frame horizontalWoodenPadding;
-    private Frame verticalWoodenPadding;
-    private imageButton towerButton;
+    private Frame woodenPadding;
 
     public Game() {
         ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -117,8 +114,7 @@ public class Game{
      
       
       for(Tower tower: towers){
-        tower.step(bloons);
-        //tower.attack(bloons);
+        tower.attack(bloons);
         ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
         for(Projectile projectile : tower.projectiles){
           projectile.update(bloons);
@@ -140,12 +136,13 @@ public class Game{
       sellButton = (Button) guiManager.create("sellButton");
       upgradeLabel = (TextLabel) guiManager.create("upgradeLabel");
       sellLabel = (TextLabel) guiManager.create("sellLabel");
-      towerLabel = (TextLabel) guiManager.create("towerLabel");
-      horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
-      verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
-      towerButton = (imageButton) guiManager.create("towerButton");
-      
-     }
+      woodenPadding = (Frame) guiManager.create("woodenPadding");
+    }
+
+//    private void updateGuiPositions(Tower tower){
+//      float buttonX = tower.getTowerX() + 50;
+//      float buttonY = tower.getTowerY();
+//    }
     
     public void placeTower(String towerName, int x, int y){
 
@@ -154,12 +151,8 @@ public class Game{
         DartMonkey dartMonkey = new DartMonkey(x, y);
         towers.add(dartMonkey);
       }
-     
-       if (towerName.equals("BombShooter")){
-         BombShooter bombShooter = new BombShooter(x,y);
-         towers.add(bombShooter);
-       }
-    }
+      }
+      //}else if (towerName.equals("BombShooter")){
       //  newTower = new BombShooter(x,y);
       //}else if (towerName.equals("IceMonkey")){
       //  newTower = new IceMonkey(x,y);
@@ -176,52 +169,96 @@ public class Game{
       //}else{
       //  println("not enough money");
       //}
+      
+       
+    
+
+    
     public void selectTower(Tower tower){
       selectedTower = tower;
       showTowerOptions = true;
+      //updateGuiPositions(tower);
+      //return selectedTower;
+    //  buttonX = tower.getTowerX() + 50;
+    //  buttonY = tower.getTowerY();
+    }
+    public void sellTower(Tower towerName, int x, int y){
+
+    }
+    public void towerUpgrade(Tower tower){
+
     }
 
     public void render() {
+      
       map.drawPath();
       for (Tower tower: towers){
         //println("Drawing tower at: " + tower.x + ", " + tower.y);
         tower.draw();
-      }
-      guiManager.render();
     }
+      
+      guiManager.render();
+      //if(showTowerOptions && selectedTower != null){
+      //  fill(200);
+      //  rect(buttonX, buttonY, buttonWidth, buttonHeight);
+      //  fill(0);
+      //  textAlign(CENTER, CENTER);
+      //  text("Upgrade", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
+      //  fill(200);
+      //  rect(buttonX, buttonY + buttonHeight + 10, buttonWidth, buttonHeight);
+      //  fill(0);
+      //  textAlign(CENTER, CENTER);
+      //  text("Sell", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2 + buttonHeight + 10);
+      //}
+     
+    }
+    
+    //private boolean isMouseOverButton(Button button, int mx, int my){
+    //  PVector buttonPos = button.getPosition();
+    //  PVector buttonSize = button.getSize();
+      
+    //  return mx > buttonPos.x && mx < buttonPos.x + buttonSize.x &&  my > buttonPos.y && my < buttonPos.y + buttonSize.y;
+    //}
     
     public void mousePressed(int mx, int my) {
       // need to add hitbox so that 
 
-      //PVector mousePosition = new PVector(mx, my);
-      //MapSegment mapSegment = map.getMapSegmentFromPosition(mousePosition);
+      PVector mousePosition = new PVector(mx, my);
+      MapSegment mapSegment = map.getMapSegmentFromPosition(mousePosition);
       
-      //if(mapSegment == null){
-      //  return;
-      //}
+      if(mapSegment == null){
+        return;
+      }
       if (upgradeButton.isMouseInBounds()) {
-        if (selectedTower != null) {
-           selectedTower.upgrade(selectedTower.path);
-        }
-         return;
-        }
-       
-       
-      if (sellButton.isMouseInBounds()) {
-        if (selectedTower != null) {
-           selectedTower.sellTower(this);
-        }
+         selectedTower.upgrade(selectedTower.path);
          return;
        }
 
-       for (Tower tower : towers) {
-        if (dist(mx, my, tower.getTowerX(), tower.getTowerY()) < tower.radius) {
-          selectTower(tower);
-          return;
+ 
+      boolean towerInRange = false;
+
+       if (sellButton.isMouseInBounds()) {
+         selectedTower.sellTower(this);
+         return;
+       }
+       
+
+    for (Tower tower : towers) {
+        float distanceToTower = PVector.dist(mousePosition, new PVector(tower.x, tower.y));
+        if (distanceToTower < tower.radius) {
+          towerInRange = true;
+          break;
        }
      }
      
+     if(towerInRange){
+       return;
+     }
+
         placeTower("DartMonkey", mx, my);
     }
+      
+    
+    
 
 }

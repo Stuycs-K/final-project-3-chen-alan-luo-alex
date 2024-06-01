@@ -1,12 +1,15 @@
 public class DartMonkey extends Tower{
   
   public DartMonkey (int x, int y){
-    super(x,y,200,20,1,10,20);
+    super("DartMonkey", x, y);
+    /*
+    super(x,y,200,20,1,10,20,50);
     this.sprites = new ArrayList<PImage>();
     sprites.add(loadImage("images/towers/dartmonkey.png"));
     sprites.add(loadImage("images/towers/LongRangeDarts.png"));
     //sprites.add(loadImage("images/towers/
     this.path = 0;
+    */
   }
   
   public void attack(ArrayList<Bloon> bloon){
@@ -14,11 +17,12 @@ public class DartMonkey extends Tower{
     } 
 
   public void upgrade(int path){
+    upgradeLevel++;
     if(upgradeLevel == 1){
       if(path==1){
         range+=25;
       }else if(path ==2){
-        damage += 1; //not sure how to implement sharpshots yet
+        damage += 1;
       }
     } else if (upgradeLevel == 2){
       if(path==1){
@@ -36,11 +40,11 @@ public class DartMonkey extends Tower{
         damage = 3;
       }
     }
-    upgradeLevel++;
+    
   }
   
   
-  
+  /*
   public void draw(){
     pushMatrix();
     translate(x,y);
@@ -77,6 +81,14 @@ public class DartMonkey extends Tower{
       if(path == 2){
         //implementing projectile changes later
       }
+     if(upgradeLevel ==3){
+       if(path==1){
+       }
+       if(path == 2){
+         
+       }
+       
+     }
     }
   
         
@@ -85,7 +97,7 @@ public class DartMonkey extends Tower{
     for(Projectile projectile : projectiles){
       projectile.drawProjectile();
     }
-  }
+  }*/
   
   public int getSellPrice(){
     return (int) (getCost() * 0.75);
