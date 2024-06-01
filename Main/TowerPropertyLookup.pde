@@ -81,6 +81,10 @@ private class TowerUpgradeInformation {
     return getNextUpgrade(pathId, -1);
   }
   
+  public int getNumberOfUpgradePaths() {
+    return upgradePaths.size(); 
+  }
+  
   public int getNumberOfUpgradesForPath(int pathId) {
     return upgradePaths.get(pathId).size(); 
   }

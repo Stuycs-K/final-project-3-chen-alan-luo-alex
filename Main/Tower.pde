@@ -19,7 +19,7 @@ public class Tower{
   
   private int totalCurrencySpent;
   private PImage sprite;
-  private String towerName;
+  public String towerName;
   
   public HashMap<String, TowerAction> actionMap;
   public HashMap<String, ProjectileData> projectileMap;
@@ -156,6 +156,10 @@ public class Tower{
      game.towers.remove(this);
   }
   
+  public void increaseCurrencySpent(int amount) {
+     totalCurrencySpent += amount;
+  }
+  
   public float getSellPrice(){
     return totalCurrencySpent * 0.8;
   }
@@ -192,11 +196,56 @@ public class Tower{
   
 }
 
-private class TowerUpgradeManager {
+public class TowerUpgradeManager {
+  private static final int MAX_SECONDARY_UPGRADES = 1; // Maximum of 2 upgrades (0 is the first ugprade, 1 is the second)
+  private static final int MAX_PATHS_UPGRADED = 2; // Maximum of 2 upgrade paths upgraded
+  
   private Tower tower;
+  private ArrayList<Integer> pathUpgradeLevelList;
+  
+  private int mainUpgradePath; // The upgrade path we've put more than 2 upgrades in
+  private int pathsUpgraded;
   
   public TowerUpgradeManager(Tower tower) {
     this.tower = tower;
+    this.pathUpgradeLevelList = new ArrayList<Integer>();
+    
+    this.mainUpgradePath = -1;
+    this.pathsUpgraded = 0;
+    
+    TowerUpgradeInformation upgradeInformation = towerPropertyLookup.getTowerProperties(tower.towerName).getUpgradeInformation();
+    
+    // Set all upgrade levels to -1, which is the base upgrade
+    for (int i = 0; i < upgradeInformation.getNumberOfUpgradePaths(); i++) {
+      pathUpgradeLevelList.add(-1); 
+    }
+  }
+  
+  // Returns stuff like "2-0" or "3-2"
+  public String formatUpgradeLevels() {
+    String result = "";
+    
+    for (int upgradeLevel : pathUpgradeLevelList) {
+      result += upgradeLevel + "-";
+    }
+    
+    return result.substring(0, result.length() - 1);
+  }
+  
+  public boolean upgrade(int pathId) {
+    int currentUpgradeLevel = pathUpgradeLevelList.get(pathId);
+    
+    // Can't upgrade a third path, as we've already upgraded two
+    if (currentUpgradeLevel == -1 && pathsUpgraded == MAX_PATHS_UPGRADED) {
+      return false;
+    }
+    
+    // Can't upgrade the secondary upgrade path anymore, as we've already upgraded it twice
+    if (mainUpgradePath != -1 && mainUpgradePath != pathId && currentUpgradeLevel == MAX_SECONDARY_UPGRADES) {
+      return false;
+    }
+    
+    return true;
   }
 }
 
