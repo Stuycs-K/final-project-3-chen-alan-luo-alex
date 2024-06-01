@@ -47,10 +47,11 @@ public class Tower{
     
     this.targetFilter = new TowerTargetFilter();
     this.angle = PI;
-    
+   
     // Only set the base properties
     TowerPropertyTable properties = towerPropertyLookup.getTowerProperties(towerName);
     JSONObject baseProperties = properties.getBaseProperties();
+    this.range = baseProperties.getInt("range");
     
     // First, load the base tower sprite
     this.sprite = properties.getBaseSprite();
@@ -198,34 +199,31 @@ public class TowerAction {
   private int cooldownTicks; // In ticks
   private int currentCooldown;
   private String actionType;
-  private String projectileName;
   
   public TowerAction(JSONObject actionData) {
     setProperties(actionData);
-    this.currentCooldown = 0;
+    this.currentCooldown = this.cooldownTicks;
   }
   
   public void setProperties(JSONObject actionData) {
     float cooldownSeconds = actionData.getFloat("cooldown");
-    this.cooldownTicks = int(cooldownSeconds / frameRate);
+    this.cooldownTicks = int(cooldownSeconds * frameRate);
     
     this.actionType = actionData.getString("type");
-    
-    this.projectileName = null;
-    if (this.actionType.equals("PROJECTILE")) {
-      this.projectileName = actionData.getString("projectile"); 
-    }
   }
   
   // Called every tick
   public boolean checkCooldown() {
     if (currentCooldown >= cooldownTicks) {
-      currentCooldown = 0;
       return true; 
     }
     
     currentCooldown++;
     return false;
+  }
+  
+  public void resetCooldown() {
+    currentCooldown = 0;
   }
   
   public String getActionType() {
@@ -255,10 +253,19 @@ public class ProjectileSpawnAction extends TowerAction {
   }
   
   public void performAction(Tower tower, ArrayList<Bloon> bloons) {
+    resetCooldown();
+    
     ArrayList<PVector> targetPositions = tower.getTargetPositions(bloons);
+
     ProjectileData data = tower.projectileMap.get(getSpawnedProjectileName());
+    
     for (PVector position : targetPositions) {
       tower.projectiles.add(new Projectile(new PVector(tower.x, tower.y), new PVector(position.x, position.y), data));
     }
+    
+    if (targetPositions.size() > 0) {
+      tower.lookAt(targetPositions.get(targetPositions.size() - 1));
+    }
+
   }
 }

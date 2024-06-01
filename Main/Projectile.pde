@@ -45,8 +45,8 @@
     if(!finished){
     
       if (distance>0){
-        float stepX = (dx/distance) * speed;
-        float stepY = (dy/distance) * speed;
+        float stepX = (dx/distance) * projectileData.speed;
+        float stepY = (dy/distance) * projectileData.speed;
         x+= stepX;
         y += stepY;
         
@@ -69,18 +69,15 @@
   
   
   public void drawProjectile(){
-    spritesP.add((loadImage("images/projectiles/basicDart.png")));
-    PImage sprite1 = spritesP.get(0);
-    if(sprite1 != null){
-      pushMatrix();
-      translate(x,y);
-      float angle = atan2(targetY -y, targetX - x);
-      rotate(angle);
-      imageMode(CENTER);
-      image(projectileData.sprite,0,0);
-      popMatrix();
-    }
+    //spritesP.add((loadImage("images/projectiles/basicDart.png")));
    
+    pushMatrix();
+    translate(x, y);
+    float angle = atan2(targetY - y, targetX - x);
+    rotate(angle);
+    imageMode(CENTER);
+    image(projectileData.sprite, 0, 0);
+    popMatrix();
   }
  }
  
