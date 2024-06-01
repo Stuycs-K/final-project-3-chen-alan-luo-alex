@@ -58,7 +58,7 @@
                                 "damage": 2,
                                 "pierce": 18,
                                 "speed": 10,
-                                "maxDistance": 100,
+                                "maxDistance": 400,
                                 "sprite": "projectiles/basicDart.png"
                             }
                         }
@@ -81,7 +81,7 @@
                                 "damage": 4,
                                 "pierce": 100,
                                 "speed": 18,
-                                "maxDistance": 200,
+                                "maxDistance": 1000,
                                 "sprite": "projectiles/basicDart.png",
                                 "specialDamageProperties": {
                                     "popLead": true,

@@ -4,7 +4,7 @@ private int readIntDiff(JSONObject object, String keyName, int originalValue) {
   }
   
   int test = readInt(object, keyName, Integer.MIN_VALUE);
-  
+
   // This is a number we are SETTING a property to
   // Otherwise, it's a string and we're ADDING to the property
   if (test != Integer.MIN_VALUE) {
