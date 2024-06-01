@@ -147,6 +147,10 @@ public class Tower{
     return results;
   }
   
+  public boolean upgrade(int pathId) {
+    return upgrades.upgrade(pathId);
+  }
+  
   public void sellTower(){
      game.getCurrencyManager().rewardCurrency(getSellPrice());
      game.towers.remove(this);
@@ -219,6 +223,10 @@ public class TowerUpgradeManager {
     }
   }
   
+  public TowerUpgradeInformation getUpgradeInformation() {
+    return upgradeInformation;
+  }
+  
   // Returns stuff like "2-0" or "3-2"
   public String formatUpgradeLevels() {
     String result = "";
@@ -280,6 +288,20 @@ public class TowerUpgradeManager {
       projectile.updateProperties(projectileChanges.getJSONObject(projectileName));
     }
     return true;
+  }
+  
+  // NOTE: Some values in the ArrayList will be null!
+  // For GUI, mainly
+  public ArrayList<TowerUpgrade> getNextUpgrades() {
+    ArrayList<TowerUpgrade> upgradesList = new ArrayList<TowerUpgrade>();
+    
+    for (int pathId = 0; pathId < upgradeInformation.getNumberOfUpgradePaths(); pathId++) {
+      int currentUpgradeLevel = pathUpgradeLevelList.get(pathId);
+      
+      upgradesList.add(upgradeInformation.getNextUpgrade(pathId, currentUpgradeLevel));
+    }
+    
+    return upgradesList;
   }
 }
 

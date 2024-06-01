@@ -1,4 +1,4 @@
-static final String[] guiDefinitionFiles = new String[] {"game.json"};
+static final String[] GUI_DEFINITION_FILES = new String[] {"game.json", "towerUi.json"};
 
 private class ZIndexSorter implements Comparator<GuiBase> {
   public int compare(GuiBase a, GuiBase b) {
@@ -42,7 +42,7 @@ public class GuiManager {
     guiTemplateMap = new HashMap<String, GuiBase>();
     fontManager = new FontManager();
         
-    for (String path : guiDefinitionFiles) {
+    for (String path : GUI_DEFINITION_FILES) {
       loadGui("guiDefinitions/" + path);
     }
   }
@@ -63,6 +63,11 @@ public class GuiManager {
     
     for (GuiBase gui : guiList) {
       if (!gui.isButton()) {
+        continue;
+      }
+      
+      if (!gui.isMouseInBounds()) {
+        println("no");
         continue;
       }
       
