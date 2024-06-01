@@ -23,7 +23,7 @@ public class Tower{
   
   public HashMap<String, TowerAction> actionMap;
   public HashMap<String, ProjectileData> projectileMap;
-  private ArrayList<Integer> currentUpgrade;
+  public TowerUpgradeManager upgrades;
   
   public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius, int cost){
     this.x = x;
@@ -48,7 +48,6 @@ public class Tower{
     this.x = x;
     this.y = y;
     
-    this.currentUpgrade = new ArrayList<Integer>();
     this.targetFilter = new TowerTargetFilter();
     this.angle = PI;
     
@@ -97,6 +96,18 @@ public class Tower{
     }
     
     this.projectiles = new ArrayList<Projectile>();
+    
+    this.upgrades = new TowerUpgradeManager(this);
+  }
+  
+  // Sets range and sprite and that's it
+  public void setPropertiesFromUpgrade(TowerUpgrade upgrade) {
+    this.range = readInt(upgrade.getChanges(), "range", this.range);
+    
+    PImage newSprite = upgrade.getSprite();
+    if (newSprite != null) {
+      this.sprite = newSprite;
+    }
   }
   
   public void step(ArrayList<Bloon> bloons) {
@@ -134,21 +145,6 @@ public class Tower{
     }
     
     return results;
-  }
-  
-  public void upgrade(int pathId) {
-    TowerUpgradeInformation upgradeInformation = towerPropertyLookup.getTowerProperties(towerName).getUpgradeInformation();
-    
-    // Have we exceed
-    
-    // -1 is unupgraded, 0 is the first upgrade
-    int currentUpgradeForPath = currentUpgrade.get(pathId);
-    TowerUpgrade upgrade = upgradeInformation.getNextUpgrade(pathId, currentUpgradeForPath);
-    
-    // We've probably maxed out this path
-    if (upgrade == null) {
-      return; 
-    }
   }
   
   public void sellTower(){
@@ -206,6 +202,8 @@ public class TowerUpgradeManager {
   private int mainUpgradePath; // The upgrade path we've put more than 2 upgrades in
   private int pathsUpgraded;
   
+  private TowerUpgradeInformation upgradeInformation;
+  
   public TowerUpgradeManager(Tower tower) {
     this.tower = tower;
     this.pathUpgradeLevelList = new ArrayList<Integer>();
@@ -213,7 +211,7 @@ public class TowerUpgradeManager {
     this.mainUpgradePath = -1;
     this.pathsUpgraded = 0;
     
-    TowerUpgradeInformation upgradeInformation = towerPropertyLookup.getTowerProperties(tower.towerName).getUpgradeInformation();
+    this.upgradeInformation = towerPropertyLookup.getTowerProperties(tower.towerName).getUpgradeInformation();
     
     // Set all upgrade levels to -1, which is the base upgrade
     for (int i = 0; i < upgradeInformation.getNumberOfUpgradePaths(); i++) {
@@ -245,6 +243,42 @@ public class TowerUpgradeManager {
       return false;
     }
     
+    TowerUpgrade upgrade = upgradeInformation.getNextUpgrade(pathId, currentUpgradeLevel);
+    if (upgrade == null) {
+      return false;
+    }
+    
+    // First upgrade in this path, so increase paths upgraded
+    if (currentUpgradeLevel == -1) {
+      pathsUpgraded++; 
+    }
+    
+    // We're about to upgrade this path for the third time, so set it as our main path
+    if (currentUpgradeLevel == MAX_SECONDARY_UPGRADES) {
+      mainUpgradePath = pathId;
+    }
+    
+    // Increment this upgrade path level
+    pathUpgradeLevelList.set(pathId, currentUpgradeLevel + 1);
+    
+    // Set range and sprite
+    tower.setPropertiesFromUpgrade(upgrade);
+    
+    JSONObject upgradeChanges = upgrade.getChanges();
+    
+    // Now update actions
+    JSONObject actionChanges = upgradeChanges.getJSONObject("actions");
+    for (String actionName : (Set<String>) actionChanges.keys()) {
+      TowerAction action = tower.actionMap.get(actionName);
+      action.setProperties(actionChanges.getJSONObject(actionName));
+    }
+    
+    // And then projectiles
+    JSONObject projectileChanges = upgradeChanges.getJSONObject("projectiles");
+    for (String projectileName : (Set<String>) projectileChanges.keys()) {
+      ProjectileData projectile = tower.projectileMap.get(projectileName);
+      projectile.updateProperties(projectileChanges.getJSONObject(projectileName));
+    }
     return true;
   }
 }

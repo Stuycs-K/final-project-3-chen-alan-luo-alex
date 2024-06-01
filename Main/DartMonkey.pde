@@ -12,9 +12,10 @@ public class DartMonkey extends Tower{
     */
   }
   
+  /*
   public void attack(ArrayList<Bloon> bloon){
     super.attack(bloon);
-    } 
+    } */
 
   public void upgrade(int path){
     upgradeLevel++;

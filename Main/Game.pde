@@ -202,7 +202,9 @@ public class Game{
     //}
     if (upgradeButton.isMouseInBounds()) {
       if (selectedTower != null) {
-         selectedTower.upgrade(selectedTower.path);
+         //selectedTower.upgrade(selectedTower.path);
+         println("hele");
+         selectedTower.upgrades.upgrade(0);
       }
        return;
       }

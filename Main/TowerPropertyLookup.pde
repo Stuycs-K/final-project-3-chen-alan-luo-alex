@@ -105,22 +105,31 @@ private class TowerUpgradeInformation {
 private class TowerUpgrade {
   private JSONObject upgradeData;
   private PImage upgradeImage;
+  private PImage sprite;
   
   public TowerUpgrade(JSONObject upgradeData) {
     this.upgradeData = upgradeData;
     
     this.upgradeImage = loadImage("images/" + upgradeData.getString("upgradeImage"));
-  }
-  
-  public void applyUpgrade(Tower tower) {
     
+    if (!upgradeData.isNull("sprite")) {
+      this.sprite = loadImage("images/" + upgradeData.getString("sprite"));
+    }
   }
   
   public PImage getUpgradeImage() {
     return upgradeImage;
   }
   
+  public PImage getSprite() {
+    return sprite;
+  }
+  
   public int getUpgradeCost() {
     return upgradeData.getInt("cost");
+  }
+  
+  public JSONObject getChanges() {
+    return upgradeData.getJSONObject("changes");
   }
 }
