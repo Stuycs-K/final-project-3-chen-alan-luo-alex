@@ -177,24 +177,36 @@ public class Tower{
     this.upgrades = new TowerUpgradeManager(this);
   }
   
-  // Sets range and sprite and that's it
+  // Sets range and sprite
   public void setPropertiesFromUpgrade(TowerUpgrade upgrade) {
-    this.range = readIntDiff(upgrade.getChanges(), "range", this.range);
+    JSONObject changes = upgrade.getChanges();
+    
+    this.range = readIntDiff(changes, "range", this.range);
     
     PImage newSprite = upgrade.getSprite();
 
     if (newSprite != null) {
       this.sprite = newSprite;
     }
+    
+    boolean detectCamo = readBoolean(changes, "detectCamo", false);
+    targetFilter.setCamoDetection(detectCamo);
+    
   }
   
   public void step(ArrayList<Bloon> bloons) {
+    ArrayList<PVector> targetPositions = getTargetPositions(bloons);
+    
     for (TowerAction action : actionMap.values()) {
       if (!action.checkCooldown()) {
         continue;
       }
       
-      action.performAction(this, bloons);
+      if (!action.shouldPerformAction(targetPositions)) {
+        continue;
+      }
+         
+      action.performAction(this, targetPositions, bloons);
     }
   }
   
@@ -460,6 +472,10 @@ public class TowerAction {
     return false;
   }
   
+  public boolean shouldPerformAction(ArrayList<PVector> targets) {
+    return (targets.size() > 0);
+  }
+  
   public void reconcileWithOther(JSONObject properties) {
     properties.setFloat("cooldown", this.cooldownSeconds);
   }
@@ -472,7 +488,7 @@ public class TowerAction {
     return actionType;
   }
   
-  public void performAction(Tower tower, ArrayList<Bloon> bloons) {
+  public void performAction(Tower tower, ArrayList<PVector> targetPositions, ArrayList<Bloon> bloons) {
     return;
   }
 }
@@ -499,10 +515,8 @@ public class ProjectileSpawnAction extends TowerAction {
     properties.setString("projectile", this.projectileName);
   }
   
-  public void performAction(Tower tower, ArrayList<Bloon> bloons) {
+  public void performAction(Tower tower, ArrayList<PVector> targetPositions, ArrayList<Bloon> bloons) {
     resetCooldown();
-    
-    ArrayList<PVector> targetPositions = tower.getTargetPositions(bloons);
 
     ProjectileData data = tower.projectileMap.get(getSpawnedProjectileName());
     

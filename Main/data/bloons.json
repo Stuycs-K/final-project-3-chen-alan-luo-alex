@@ -6,7 +6,7 @@
         "speed": 100,
         "sprite": "images/bloons/red.png",
         "rbe": 1,
-        "size": 0.5,
+        "size": 0.45,
         "spriteVariants": {
             "camo": "images/camo/red.png",
             "regrow": "images/regrow/red.png",
@@ -20,7 +20,7 @@
         "speedMultiplier": 1.4,
         "sprite": "images/bloons/blue.png",
         "rbe": 2,
-        "size": 0.55,
+        "size": 0.47,
         "spriteVariants": {
             "camo": "images/camo/blue.png",
             "regrow": "images/regrow/blue.png",
@@ -40,7 +40,7 @@
         "speedMultiplier": 1.8,
         "sprite": "images/bloons/green.png",
         "rbe": 3,
-        "size": 0.6,
+        "size": 0.5,
         "spriteVariants": {
             "camo": "images/camo/green.png",
             "regrow": "images/regrow/green.png",
@@ -60,7 +60,7 @@
         "speedMultiplier": 3.2,
         "sprite": "images/bloons/yellow.png",
         "rbe": 4,
-        "size": 0.62,
+        "size": 0.53,
         "spriteVariants": {
             "camo": "images/camo/yellow.png",
             "regrow": "images/regrow/yellow.png",
@@ -80,7 +80,7 @@
         "speedMultiplier": 3.5,
         "sprite": "images/bloons/pink.png",
         "rbe": 5,
-        "size": 0.65,
+        "size": 0.55,
         "spriteVariants": {
             "camo": "images/camo/pink.png",
             "regrow": "images/regrow/pink.png",
@@ -100,7 +100,7 @@
         "speedMultiplier": 1.8,
         "sprite": "images/bloons/black.png",
         "rbe": 11,
-        "size": 0.4,
+        "size": 0.35,
         "spriteVariants": {
             "camo": "images/camo/black.png",
             "regrow": "images/regrow/black.png",
@@ -123,7 +123,7 @@
         "speedMultiplier": 2,
         "sprite": "images/bloons/white.png",
         "rbe": 11,
-        "size": 0.4,
+        "size": 0.35,
         "spriteVariants": {
             "camo": "images/camo/white.png",
             "regrow": "images/regrow/white.png",
@@ -146,7 +146,7 @@
         "speedMultiplier": 1.8,
         "rbe": 23,
         "sprite": "images/bloons/zebra.png",
-        "size": 0.65,
+        "size": 0.6,
         "spriteVariants": {
             "camo": "images/camo/zebra.png",
             "regrow": "images/regrow/zebra.png",
@@ -174,7 +174,7 @@
         "speedMultiplier": 1,
         "rbe": 23,
         "sprite": "images/bloons/lead.png",
-        "size": 0.6,
+        "size": 0.56,
         "spriteVariants": {
             "camo": "images/camo/lead.png",
             "regrow": "images/regrow/lead.png",
@@ -197,7 +197,7 @@
         "speedMultiplier": 2.2,
         "sprite": "images/bloons/rainbow.png",
         "rbe": 47,
-        "size": 0.8,
+        "size": 0.7,
         "spriteVariants": {
             "camo": "images/camo/rainbow.png",
             "regrow": "images/regrow/rainbow.png",
@@ -217,7 +217,7 @@
         "speedMultiplier": 2.5,
         "sprite": "images/bloons/ceramic.png",
         "rbe": 102,
-        "size": 0.66,
+        "size": 0.6,
         "spriteVariants": {
             "camo": "images/camo/ceramic.png",
             "regrow": "images/regrow/ceramic.png",

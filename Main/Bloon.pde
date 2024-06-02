@@ -1,4 +1,5 @@
 static final int BASE_BLOON_SPEED = 100;
+long CURRENT_BLOON_HANDLE = 0; // Cheap and dirty bloon IDs
 
 private static JSONObject toSpawnParams(String layerName) {
   JSONObject spawnParams = new JSONObject();
@@ -33,6 +34,7 @@ public class Bloon {
   private boolean isDead;
   private boolean reachedEnd;
   
+  private long handle;
   
   public Bloon(JSONObject spawnParams) {
     String layerName = spawnParams.getString("layerName");
@@ -61,6 +63,9 @@ public class Bloon {
     this.reachedEnd = false;
     this.isDead = false;
     
+    // Assign the unique handle
+    this.handle = CURRENT_BLOON_HANDLE;
+    CURRENT_BLOON_HANDLE++;
   }
   
   public Bloon(String layerName) {
@@ -70,6 +75,10 @@ public class Bloon {
   // Spawn a bloon at a particular position
   public Bloon(String layerName, PVector position) {
     this(toSpawnParams(layerName, position));
+  }
+  
+  public long getHandle() {
+    return handle;
   }
   
   public void applyProperties() {

@@ -6,7 +6,8 @@ public class Projectile{
   public float distance;
   
   private float distanceTraveled;
-  private int hits;
+  
+  private ArrayList<Long> hitBloons;
   
   public ProjectileData projectileData;
   
@@ -34,7 +35,8 @@ public class Projectile{
     this.distanceTraveled = 0;
     
     this.projectileData = data;
-    this.hits = 0; // For pierce
+    
+    this.hitBloons = new ArrayList<Long>(); // For pierce, contains bloon handles
   }
   
   public void update(ArrayList<Bloon> bloons){
@@ -42,7 +44,7 @@ public class Projectile{
       finished = true;
     }
     
-    if (hits >= projectileData.pierce) {
+    if (hitBloons.size() >= projectileData.pierce) {
       finished = true;
     }
     
@@ -65,10 +67,16 @@ public class Projectile{
          Bloon bloon = bloons.get(i);
 
          if(bloon.isInBounds(int(x), int(y))){
-           bloon.damage(projectileData.damage);
-           hits += 1;
+           // Don't hit the same bloon twice
+           if (hitBloons.indexOf(bloon.getHandle()) != -1) {
+             continue;
+           }
            
-           if (hits >= projectileData.pierce) {
+           bloon.damage(projectileData.damage);
+           
+           hitBloons.add(bloon.getHandle());
+           
+           if (hitBloons.size() >= projectileData.pierce) {
              finished = true;
              break;  
            }
