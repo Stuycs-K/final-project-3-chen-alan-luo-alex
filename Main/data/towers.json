@@ -29,7 +29,12 @@
                     "cost": 90,
                     "changes": {
                         "sprite": "towers/longRangeDarts.png",
-                        "range": "+ 25"
+                        "range": "+ 25",
+                        "projectiles": {
+                            "dart": {
+                                "maxDistance": "+ 50"
+                            }
+                        }
                     }
                 },
                 {
@@ -96,9 +101,10 @@
             "2": [
                 {
                     "name": "Sharp Shots",
-                    "upgradeImage": "towers/longRangeDarts.png",
+                    "upgradeImage": "towers/dartmonkey.png",
                     "cost": 140,
                     "changes": {
+                        "sprite": "towers/longRangeDarts.png",
                         "projectiles": {
                             "dart": {
                                 "pierce": "+ 1"
@@ -108,9 +114,10 @@
                 },
                 {
                     "name": "Razor Sharp Shots",
-                    "upgradeImage": "towers/enhancedEyesight.png",
+                    "upgradeImage": "towers/dartmonkey.png",
                     "cost": 170,
                     "changes": {
+                        "sprite": "towers/enhancedEyesight.png",
                         "projectiles": {
                             "dart": {
                                 "pierce": "+ 1"
@@ -120,9 +127,10 @@
                 },
                 {
                     "name": "Triple Darts",
-                    "upgradeImage": "towers/tripleDarts.png",
+                    "upgradeImage": "towers/dartmonkey.png",
                     "cost": 330,
                     "changes": {
+                        "sprite": "towers/tripleDarts.png",
                         "actions": {
                             "dartAttack": {
                                 "type": "MULTI_PROJECTILE",
