@@ -154,7 +154,7 @@ public class MultiProjectileSpawnAction extends ProjectileSpawnAction {
 
         PVector direction = goalPosition.sub(towerPosition).rotate(angle);
         
-        tower.projectiles.add(new Projectile(towerPosition, PVector.add(towerPosition, direction), data));
+        tower.projectiles.add(createProjectile(towerPosition, PVector.add(towerPosition, direction), data));
       }
       
     }

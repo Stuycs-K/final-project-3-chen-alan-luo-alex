@@ -1,3 +1,15 @@
+Projectile createProjectile(PVector origin, PVector goal, ProjectileData data) {
+  Projectile projectile;
+  switch (data.type) {
+    case "BASE":
+      projectile = new Projectile(origin, goal, data);
+    default:
+      projectile = new Projectile(origin, goal, data);
+  }
+  
+  return projectile;
+}
+
 public class Projectile{
   public float x, y;
   public float targetX, targetY;
@@ -6,10 +18,9 @@ public class Projectile{
   public float distance;
   
   private float distanceTraveled;
+  private PVector direction;
   
   private ArrayList<Long> hitBloons;
-  
-  public ProjectileData projectileData;
   
   public Projectile(float x, float y, float targetX, float targetY, int damage){
     this.x=x;
@@ -21,6 +32,8 @@ public class Projectile{
     this.dx= targetX -x;
     this.distance = dist(x,y,targetX,targetY);
   }
+  
+  public ProjectileData projectileData;
   
   public Projectile(PVector origin, PVector goal, ProjectileData data) {
     this.x = origin.x;
@@ -35,6 +48,8 @@ public class Projectile{
     this.distanceTraveled = 0;
     
     this.projectileData = data;
+    
+    this.direction = new PVector(dx, dy);
     
     this.hitBloons = new ArrayList<Long>(); // For pierce, contains bloon handles
   }
@@ -96,7 +111,7 @@ public class Projectile{
    
     pushMatrix();
     translate(x, y);
-    float angle = atan2(targetY - y, targetX - x);
+    float angle = atan2(direction.y, direction.x);
     rotate(angle);
     imageMode(CENTER);
     image(projectileData.sprite, 0, 0);
@@ -115,6 +130,8 @@ public class ProjectileData {
   public boolean popBlack;
   public int extraDamageToCeramics;
   public int extraDamageToMoabs;
+  
+  public String type;
   
   public float maxDistance;
   
@@ -155,6 +172,8 @@ public class ProjectileData {
     this.pierce = readIntDiff(data, "pierce", this.pierce);
     this.speed = readIntDiff(data, "speed", this.speed);
     this.maxDistance = readFloatDiff(data, "maxDistance", this.maxDistance);
+    
+    this.type = readString(data, "type", "BASE");
   }
 }
   

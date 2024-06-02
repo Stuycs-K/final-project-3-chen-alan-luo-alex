@@ -524,7 +524,7 @@ public class ProjectileSpawnAction extends TowerAction {
     ProjectileData data = tower.projectileMap.get(getSpawnedProjectileName());
     
     for (PVector position : targetPositions) {
-      tower.projectiles.add(new Projectile(new PVector(tower.x, tower.y), new PVector(position.x, position.y), data));
+      tower.projectiles.add(createProjectile(new PVector(tower.x, tower.y), new PVector(position.x, position.y), data));
     }
     
     if (targetPositions.size() > 0) {
