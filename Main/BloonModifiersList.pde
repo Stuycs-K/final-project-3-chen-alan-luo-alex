@@ -50,6 +50,36 @@ public class BloonModifiersList {
     bloon.setSprite(sprite);
   }
   
+  // Calculates final damage based on the damage properties
+  // A value of -1 indicates immunity to the damage (e.g. sharp projectile hitting lead bloon)
+  public float getDamage(float baseDamage, DamageProperties damageProperties) {
+    float finalDamage = baseDamage;
+    
+    // Sharp vs. lead
+    if (hasModifier("sharpImmunity") && !damageProperties.popLead) {
+      return -1;
+    }
+    
+    // Explosions vs. black
+    if (hasModifier("blastImmunity") && !damageProperties.popBlack) {
+      return -1;
+    }
+    
+    if (hasModifier("frozen") && !damageProperties.popFrozen) {
+      return -1;
+    }
+    
+    if (hasModifier("isCeramic")) {
+      finalDamage += damageProperties.extraDamageToCeramics;
+    }
+    
+    if (hasModifier("isMoab")) {
+      finalDamage += damageProperties.extraDamageToMoabs;
+    }
+    
+    return finalDamage;
+  }
+  
   public HashMap<String, BloonModifier> getModifiers() {
     return this.modifierMap;
   }

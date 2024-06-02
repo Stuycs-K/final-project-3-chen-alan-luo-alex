@@ -29,10 +29,10 @@ void setup(){
   game.startGame();
   
   JSONObject spawnInformation = new JSONObject();
-  spawnInformation.setString("layerName", "Ceramic");
+  spawnInformation.setString("layerName", "Lead");
   
   JSONObject modifiers = new JSONObject();
-  modifiers.setBoolean("camo", true);
+  //modifiers.setBoolean("camo", true);
   modifiers.setBoolean("regrow", true);
   spawnInformation.setJSONObject("modifiers", modifiers);
   
