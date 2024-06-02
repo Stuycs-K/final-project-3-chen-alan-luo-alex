@@ -36,6 +36,10 @@ public class BloonSpawner {
           break;
         }
         MapSegment currentSegment = game.getMap().getMapSegment(currentSegmentId);
+        if (currentSegment == null) {
+          finalSpawnPosition = startPosition;
+          break;
+        }
         
         // Direction to move from the original spawn position
         PVector direction = PVector.sub(currentSegment.getEnd(), currentSegment.getStart()).normalize();
