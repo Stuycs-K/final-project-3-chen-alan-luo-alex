@@ -105,3 +105,63 @@ public class DartMonkey extends Tower{
     return 200;
   }
 }
+
+// This is for the Triple Darts upgrade
+public class MultiProjectileSpawnAction extends ProjectileSpawnAction {
+  private int projectileCount;
+  private float angle;
+  
+  public MultiProjectileSpawnAction(JSONObject actionData) {
+    super(actionData);
+  }
+  
+  public void setProperties(JSONObject actionData) {
+    super.setProperties(actionData);
+    
+    JSONObject specialProperties = actionData.getJSONObject("properties");
+
+    this.projectileCount = readInt(specialProperties, "projectileCount", 1);
+    this.angle = readFloat(specialProperties, "angle", 0);
+  }
+  
+  public void reconcileWithOther(JSONObject properties) {
+    super.reconcileWithOther(properties);
+    properties.setInt("projectileCount", this.projectileCount);
+    properties.setFloat("angle", this.angle);
+  }
+  
+  public void performAction(Tower tower, ArrayList<PVector> targetPositions, ArrayList<Bloon> bloons) {
+    resetCooldown();
+
+    PVector towerPosition = new PVector(tower.x, tower.y);
+    ProjectileData data = tower.projectileMap.get(getSpawnedProjectileName());
+    
+    for (PVector position : targetPositions) {
+      
+      // Pattern: 0, -0, angle, -angle, angle * 2, -angle * 2
+      for (int i = 0; i < projectileCount; i++) {
+        float angle = 0;
+        
+        if (i != 0) {
+          angle = this.angle * (int) (Math.ceil((double) i / 2));
+        
+          if (i % 2 == 0) {
+            angle *= -1;
+          }
+        }
+        
+        PVector goalPosition = new PVector(position.x, position.y);
+
+        PVector direction = goalPosition.sub(towerPosition).rotate(angle);
+        
+        tower.projectiles.add(new Projectile(towerPosition, PVector.add(towerPosition, direction), data));
+      }
+      
+    }
+    
+    if (targetPositions.size() > 0) {
+      tower.lookAt(targetPositions.get(targetPositions.size() - 1));
+    }
+
+  }
+}

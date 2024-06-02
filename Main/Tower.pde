@@ -77,6 +77,9 @@ private TowerAction createAction(String actionClass, JSONObject actionDefinition
     case "PROJECTILE":
       action = new ProjectileSpawnAction(actionDefinition);
       break;
+    case "MULTI_PROJECTILE":
+      action = new MultiProjectileSpawnAction(actionDefinition);
+      break;
     default:
       action = new TowerAction(actionDefinition);
   }
@@ -396,7 +399,7 @@ public class TowerUpgradeManager {
           newProperties.setString("type", actionChangesType);
           
           // The properties specific to this action type are put in the "properties" table
-          newProperties.setJSONObject("properties", actionChanges);
+          newProperties.setJSONObject("properties", currentActionChanges);
           
           TowerAction newAction = createAction(actionChangesType, newProperties);
           tower.actionMap.put(actionName, newAction); // Replace the old action with the new
