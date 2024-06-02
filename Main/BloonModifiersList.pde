@@ -260,7 +260,7 @@ public class Regrow extends BloonModifier {
     
     super.setCustomProperties(properties);
     
-    this.regrowRate = 60;
+    this.regrowRate = int(2.5 * frameRate); // 2.5 seconds by default
     this.cooldown = 0;
   }
   
