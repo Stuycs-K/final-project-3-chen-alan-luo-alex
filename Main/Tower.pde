@@ -68,6 +68,22 @@ private float readFloatDiff(JSONObject object, String keyName, float originalVal
   }
 }
 
+private TowerAction createAction(String actionClass, JSONObject actionDefinition) {
+  TowerAction action ;
+ 
+  switch (actionClass) {
+    case "NULL":
+      return null;
+    case "PROJECTILE":
+      action = new ProjectileSpawnAction(actionDefinition);
+      break;
+    default:
+      action = new TowerAction(actionDefinition);
+  }
+  
+  return action;
+}
+
 public class Tower{
   public int x;
   public int y; 
@@ -139,16 +155,7 @@ public class Tower{
       JSONObject actionDefinition = actionData.getJSONObject(actionName);
       
       String actionClass = actionDefinition.getString("type");
-      TowerAction actionObject = null;
-      
-      // Create base actions
-      switch (actionClass) {
-        case "PROJECTILE":
-          actionObject = new ProjectileSpawnAction(actionDefinition);
-          break;
-        default:
-          actionObject = new TowerAction(actionDefinition);
-      }
+      TowerAction actionObject = createAction(actionClass, actionDefinition);
       
       this.actionMap.put(actionName, actionObject);
     }
@@ -350,7 +357,40 @@ public class TowerUpgradeManager {
     if (actionChanges != null) {
       for (String actionName : (Set<String>) actionChanges.keys()) {
         TowerAction action = tower.actionMap.get(actionName);
-        action.setProperties(actionChanges.getJSONObject(actionName));
+        
+        JSONObject currentActionChanges = actionChanges.getJSONObject(actionName);
+        String actionChangesType = readString(currentActionChanges, "type", action.getActionType());
+        
+        // Check if the action has changed its type with this upgrade
+        // If not, simply update the current action's properties
+        if (action.getActionType().equals(actionChangesType)) {
+          
+          action.setProperties(actionChanges.getJSONObject(actionName));
+          
+        } else { // Create an entirely new action of the type
+        
+          // Remove this action
+          if (actionChangesType.equals("NULL")) {
+            tower.actionMap.remove(actionName);
+            continue;
+          }
+          
+          JSONObject newProperties = new JSONObject();
+          
+          // Inherit any previous action properties (does NOT copy over "type")
+          action.reconcileWithOther(newProperties);
+          
+          // Now, copy over all the properties in changes, including "type"
+          newProperties.setString("type", actionChangesType);
+          
+          // The properties specific to this action type are put in the "properties" table
+          newProperties.setJSONObject("properties", actionChanges);
+          
+          TowerAction newAction = createAction(actionChangesType, newProperties);
+          tower.actionMap.put(actionName, newAction); // Replace the old action with the new
+          
+        }
+
       }
     }
 
@@ -420,6 +460,10 @@ public class TowerAction {
     return false;
   }
   
+  public void reconcileWithOther(JSONObject properties) {
+    properties.setFloat("cooldown", this.cooldownSeconds);
+  }
+  
   public void resetCooldown() {
     currentCooldown = 0;
   }
@@ -448,6 +492,11 @@ public class ProjectileSpawnAction extends TowerAction {
   
   public String getSpawnedProjectileName() {
     return projectileName;
+  }
+  
+  public void reconcileWithOther(JSONObject properties) {
+    super.reconcileWithOther(properties);
+    properties.setString("projectile", this.projectileName);
   }
   
   public void performAction(Tower tower, ArrayList<Bloon> bloons) {

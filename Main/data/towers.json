@@ -125,6 +125,7 @@
                     "changes": {
                         "actions": {
                             "dartAttack": {
+                                "type": "MULTI_PROJECTILE",
                                 "projectileCount": 3,
                                 "angle": 0.43
                             }
