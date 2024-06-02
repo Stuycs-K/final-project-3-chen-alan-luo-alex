@@ -13,17 +13,18 @@ public class Game{
   public WaveManager waveManager;
   private Tower selectedTower;
   private boolean showTowerOptions;
-  //private float buttonX, buttonY;
-  //private float buttonWidth, buttonHeight;
-
+  
   private TextButton upgradeButton;
   private TextButton sellButton;
+  
   private TextLabel upgradeLabel;
   private TextLabel sellLabel;
   private TextLabel towerLabel;
+  
   private Frame horizontalWoodenPadding;
   private Frame verticalWoodenPadding;
-  private ImageButton towerButton;
+  
+  private ImageButton towerButtonDartMonkey;
 
   public Game() {
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -134,6 +135,7 @@ public class Game{
     towerLabel = (TextLabel) guiManager.create("towerLabel");
     horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
     verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
+    towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonDartMonkey");
     //towerButton = (ImageButton) guiManager.create("towerButton");
     
    }
