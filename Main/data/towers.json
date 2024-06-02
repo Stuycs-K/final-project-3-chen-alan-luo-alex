@@ -37,7 +37,7 @@
                     "upgradeImage": "towers/dartmonkey.png",
                     "cost": 120,
                     "changes": {
-                        "sprite": "towers/longRangeDarts.png",
+                        "sprite": "towers/enhancedEyesight.png",
                         "range": "+ 25",
                         "detectCamo": true
                     }
@@ -96,7 +96,7 @@
             "2": [
                 {
                     "name": "Sharp Shots",
-                    "upgradeImage": "towers/dartmonkey.png",
+                    "upgradeImage": "towers/longRangeDarts.png",
                     "cost": 140,
                     "changes": {
                         "projectiles": {
@@ -108,7 +108,7 @@
                 },
                 {
                     "name": "Razor Sharp Shots",
-                    "upgradeImage": "towers/dartmonkey.png",
+                    "upgradeImage": "towers/enhancedEyesight.png",
                     "cost": 170,
                     "changes": {
                         "projectiles": {
@@ -120,7 +120,7 @@
                 },
                 {
                     "name": "Triple Darts",
-                    "upgradeImage": "towers/dartmonkey.png",
+                    "upgradeImage": "towers/tripleDarts.png",
                     "cost": 330,
                     "changes": {
                         "actions": {
