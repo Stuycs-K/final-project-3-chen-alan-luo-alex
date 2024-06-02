@@ -88,7 +88,7 @@ public class Tower{
   public int cost;
   
   private int totalCurrencySpent;
-  private PImage sprite;
+  public PImage sprite;
   public String towerName;
   
   public HashMap<String, TowerAction> actionMap;

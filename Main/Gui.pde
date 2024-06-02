@@ -256,6 +256,10 @@ private color readColor(JSONObject object, String keyName) {
   return (a == -1) ? color(r, g, b) : color(r, g, b, a);
 }
 
+public static boolean isInBoundsOfRectangle(int x, int y, int rectX, int rectY, int rectSizeX, int rectSizeY) {
+   return (x > rectX - rectSizeX && x < rectX + rectSizeX) && (y > rectY - rectSizeY && y < rectY + rectSizeY);
+}
+
 public class GuiBase {
   private color backgroundColor;
   private float backgroundTransparency; // 0 is fully transparent, 1 is fully solid
@@ -281,8 +285,7 @@ public class GuiBase {
   }
     
   public boolean isMouseInBounds() {
-    return (mouseX > this.position.x - this.size.x && mouseX < this.position.x + this.size.x) 
-      && (mouseY > this.position.y - this.size.y && mouseY < this.position.y + this.size.y);
+    return isInBoundsOfRectangle(mouseX, mouseY, int(this.position.x), int(this.position.y), int(this.size.x), int(this.size.y));
   }
   
   public boolean isButton() {

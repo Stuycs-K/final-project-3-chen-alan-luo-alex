@@ -55,10 +55,6 @@ public class Game{
     waveManager = new WaveManager();
     
     showTowerOptions = false;
-    //buttonX=0;
-    //buttonY=0;
-    //buttonWidth=80;
-    //buttonHeight = 30;
     setupGui();
   }
   
@@ -104,10 +100,6 @@ public class Game{
       }
       
       bloon.step();
-      
-      //if (frameCount % 150 == 0) {
-      //  bloon.damage(1); 
-      //}
     }
     // Remove bloons that need to be removed
     bloons.removeAll(scheduledForRemoval);
@@ -199,14 +191,13 @@ public class Game{
     //  return;
     //}
     
+    /*
     for (Tower tower : towers) {
       tower.upgrade(0); 
-    }
+    }*/
     
     if (upgradeButton.isMouseInBounds()) {
-      println(selectedTower);
       if (selectedTower != null) {
-         println("hele");
          selectedTower.upgrade(0);
       }
        return;
@@ -220,14 +211,14 @@ public class Game{
        return;
      }
 
-     for (Tower tower : towers) {
-      if (dist(mx, my, tower.getTowerX(), tower.getTowerY()) < tower.radius) {
+    for (Tower tower : towers) {
+      if (isInBoundsOfRectangle(mouseX, mouseY, tower.x, tower.y, tower.sprite.width, tower.sprite.height)) {
         selectTower(tower);
         return;
-     }
-   }
+      }
+    }
    
-      placeTower("DartMonkey", mx, my);
+    placeTower("DartMonkey", mx, my);
   }
 
 }

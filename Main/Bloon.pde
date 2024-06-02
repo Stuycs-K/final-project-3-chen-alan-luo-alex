@@ -101,6 +101,16 @@ public class Bloon {
     return direction;
   }
   
+  public boolean isInBounds(int x, int y) {
+    float sizeMultiplier = propertiesTable.getFloatProperty("size", 1);
+    
+    int spriteX = int(position.x - (sprite.width / 2) * sizeMultiplier);
+    int spriteY = int(position.y - (sprite.height / 2) * sizeMultiplier);
+    int spriteSizeX = int(sprite.width * sizeMultiplier);
+    int spriteSizeY = int(sprite.height * sizeMultiplier);
+    return isInBoundsOfRectangle(x, y, spriteX, spriteY, spriteSizeX, spriteSizeY);
+  }
+  
   public void setSprite(PImage sprite) {
     this.sprite = sprite;
   }

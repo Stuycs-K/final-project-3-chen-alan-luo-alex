@@ -46,6 +46,11 @@ public class Projectile{
       finished = true;
     }
     
+    // Out of bounds
+    if (x < 0 || x > width || y < 0 || y > height) {
+      finished = true;
+    }
+    
     if(!finished){
     
       if (distance>0){
@@ -58,8 +63,8 @@ public class Projectile{
         
        for(int i = 0; i < bloons.size(); i++){
          Bloon bloon = bloons.get(i);
-         float distance = dist(x,y,bloon.getPosition().x, bloon.getPosition().y);
-         if(distance < 10){
+
+         if(bloon.isInBounds(int(x), int(y))){
            bloon.damage(projectileData.damage);
            hits += 1;
            
