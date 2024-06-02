@@ -104,7 +104,12 @@ public class Projectile{
              continue;
            }
            
-           bloon.damage(projectileData.damage);
+           boolean didDamage = bloon.damage((DamageProperties) projectileData);
+           // No damage, so destroy the projectile (we hit a lead bloon with a dart, for example)
+           if (!didDamage) {
+             finished = true;
+             break;
+           }
            
            hitBloons.add(bloon.getHandle());
            
@@ -135,12 +140,9 @@ public class Projectile{
     popMatrix();
   }
 }
- 
-public class ProjectileData {
+
+public class DamageProperties {
   public int damage;
-  public int pierce;
-  public int speed;
-  public PImage sprite;
   
   public boolean popLead;
   public boolean popFrozen;
@@ -148,12 +150,8 @@ public class ProjectileData {
   public int extraDamageToCeramics;
   public int extraDamageToMoabs;
   
-  public String type;
-  
-  public float maxDistance;
-  
-  public ProjectileData(JSONObject projectileData) {
-    // By default, we assume the projectile is sharp (can't pop lead)
+  public DamageProperties(JSONObject data) {
+    // By default, we assume damage can't pop lead
     this.popLead = false;
     this.popFrozen = false;
     this.popBlack = true;
@@ -161,32 +159,52 @@ public class ProjectileData {
     this.extraDamageToMoabs = 0;
     
     this.damage = 1;
-    this.pierce = 1;
-    this.speed = 30;
-    
-    this.maxDistance = 30;
-    this.type = readString(projectileData, "type", "BASE");
-    
-    updateProperties(projectileData);
+
+    updateProperties(data);
   }
   
   public void updateProperties(JSONObject data) {
     JSONObject specialDamageProperties = data.getJSONObject("specialDamageProperties");
     
-    if (specialDamageProperties != null) {
-      this.popLead = readBoolean(specialDamageProperties, "popLead", this.popLead);
-      this.popFrozen = readBoolean(specialDamageProperties, "popFrozen", this.popFrozen);
-      this.popBlack = readBoolean(specialDamageProperties, "popBlack", this.popBlack);
-      this.extraDamageToCeramics = readInt(specialDamageProperties, "extraDamageToCeramics", this.extraDamageToCeramics);
-      this.extraDamageToMoabs = readInt(specialDamageProperties, "extraDamageToMoabs", this.extraDamageToMoabs);
+    JSONObject target = specialDamageProperties;
+    if (target == null) {
+      target = data;
     }
     
+    // These are either in a subtable ("specialDamageProperties") or direct children of data
+    this.popLead = readBoolean(target, "popLead", this.popLead);
+    this.popFrozen = readBoolean(target, "popFrozen", this.popFrozen);
+    this.popBlack = readBoolean(target, "popBlack", this.popBlack);
+    this.extraDamageToCeramics = readIntDiff(target, "extraDamageToCeramics", this.extraDamageToCeramics);
+    this.extraDamageToMoabs = readIntDiff(target, "extraDamageToMoabs", this.extraDamageToMoabs);
+    
+    this.damage = readIntDiff(data, "damage", this.damage);
+  }
+}
+ 
+public class ProjectileData extends DamageProperties {
+  public int pierce;
+  public int speed;
+  public PImage sprite;
+  
+  public String type;
+  
+  public float maxDistance;
+  
+  public ProjectileData(JSONObject projectileData) {
+    super(projectileData);
+
+    this.type = readString(projectileData, "type", "BASE");
+  }
+  
+  public void updateProperties(JSONObject data) {
+    super.updateProperties(data);
+
     if (!data.isNull("sprite")) {
       String spritePath = data.getString("sprite");
       this.sprite = loadImage("images/" + spritePath);
     }
     
-    this.damage = readIntDiff(data, "damage", this.damage);
     this.pierce = readIntDiff(data, "pierce", this.pierce);
     this.speed = readIntDiff(data, "speed", this.speed);
     this.maxDistance = readFloatDiff(data, "maxDistance", this.maxDistance);
