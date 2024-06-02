@@ -17,14 +17,20 @@ public class Game{
   private TextButton upgradeButton;
   private TextButton sellButton;
   
+  private ImageLabel towerImage;
+  
   private TextLabel upgradeLabel;
   private TextLabel sellLabel;
   private TextLabel towerLabel;
+  private TextLabel path1Label;
+  private TextLabel path2Label;
   
   private Frame horizontalWoodenPadding;
   private Frame verticalWoodenPadding;
   
   private ImageButton towerButtonDartMonkey;
+  private ImageButton path1Button;
+  private ImageButton path2Button;
 
   public Game() {
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -137,6 +143,12 @@ public class Game{
     verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
     towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonDartMonkey");
     //towerButton = (ImageButton) guiManager.create("towerButton");
+    towerImage = (ImageLabel) guiManager.create("towerImage");
+    path1Button = (ImageButton) guiManager.create("path1Button");
+    path1Label = (TextLabel) guiManager.create("path1Label");
+    path2Button = (ImageButton) guiManager.create("path2Button");
+    path2Label = (TextLabel) guiManager.create("path2Label");
+    
     
    }
   
