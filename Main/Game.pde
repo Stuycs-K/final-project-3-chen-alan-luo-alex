@@ -198,7 +198,7 @@ public class Game{
     
     if (upgradeButton.isMouseInBounds()) {
       if (selectedTower != null) {
-         selectedTower.upgrade(1);
+         selectedTower.upgrade(0);
       }
        return;
       }

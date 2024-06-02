@@ -83,7 +83,7 @@ public class Projectile{
 
          if(bloon.isInBounds(int(x), int(y))){
            // Don't hit the same bloon twice
-           if (hitBloons.indexOf(bloon.getHandle()) != -1) {
+           if (hitBloons.indexOf(bloon.getHandle()) != -1 || hitBloons.indexOf(bloon.getParentHandle()) != -1) {
              continue;
            }
            

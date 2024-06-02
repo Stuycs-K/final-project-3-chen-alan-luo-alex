@@ -35,6 +35,7 @@ public class Bloon {
   private boolean reachedEnd;
   
   private long handle;
+  private long parentHandle;
   
   public Bloon(JSONObject spawnParams) {
     String layerName = spawnParams.getString("layerName");
@@ -66,6 +67,8 @@ public class Bloon {
     // Assign the unique handle
     this.handle = CURRENT_BLOON_HANDLE;
     CURRENT_BLOON_HANDLE++;
+    
+    this.parentHandle = -1;
   }
   
   public Bloon(String layerName) {
@@ -79,6 +82,14 @@ public class Bloon {
   
   public long getHandle() {
     return handle;
+  }
+  
+  public long getParentHandle() {
+    return parentHandle;
+  }
+  
+  public void setParentHandle(long handle) {
+    this.parentHandle = handle;
   }
   
   public void applyProperties() {

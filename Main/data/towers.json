@@ -59,7 +59,7 @@
                                 "pierce": 18,
                                 "speed": 10,
                                 "maxDistance": 400,
-                                "sprite": "projectiles/basicDart.png"
+                                "sprite": "projectiles/spikeOPult.png"
                             }
                         }
                     }
@@ -82,7 +82,7 @@
                                 "pierce": 100,
                                 "speed": 18,
                                 "maxDistance": 1000,
-                                "sprite": "projectiles/basicDart.png",
+                                "sprite": "projectiles/juggernaut.png",
                                 "specialDamageProperties": {
                                     "popLead": true,
                                     "popFrozen": true,
