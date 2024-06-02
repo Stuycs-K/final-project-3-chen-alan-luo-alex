@@ -109,6 +109,7 @@ public class WaveManager {
   }
   
   public void startNextWave() {
+    game.getCurrencyManager().rewardCurrencyForWave(getCurrentWaveNumber());
     gui.setWave(getCurrentWaveNumber());
     currentWaveNumber++;
  

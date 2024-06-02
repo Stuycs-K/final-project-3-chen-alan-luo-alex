@@ -1,7 +1,7 @@
 {
     "upgradeButton": {
         "className": "TextButton",
-        "x": "525",
+        "x": "650",
         "y": "700",
         "sizeX": 150,
         "sizeY": 50,
@@ -11,7 +11,7 @@
     },
     "sellButton": {
         "className": "TextButton",
-        "x": "525",
+        "x": "650",
         "y": "760",
         "sizeX": 150,
         "sizeY": 50,
@@ -21,7 +21,7 @@
     },
     "upgradeLabel": {
         "className": "TextLabel",
-        "x": "600",
+        "x": "725",
         "y": "725",
         "text": "Upgrade",
         "textSize": 16,
@@ -32,7 +32,7 @@
     },
     "sellLabel": {
         "className": "TextLabel",
-        "x": "600",
+        "x": "725",
         "y": "785",
         "text": "Sell",
         "textSize": 16,
@@ -72,21 +72,68 @@
         "textYAlignment": "CENTER",
         "zIndex": 2
     },
-    "towerButton": {
-        "className": "ImageLabel",
-        "x": 1110,
-        "y": 80,
-        "sizeX": 30,
-        "sizeY": 30,
-        "zIndex": 1000,
-        "stroke": {
-            "type": "NONE"
-        },
-        "image": "towers/dartmonkey.png",
-        "imageX": 0,
-        "imageY": 0,
-        "imagePositionMode": "CENTER",
-        "imageSizeX": 30,
-        "imageSizeY": 30
+    "towerButtonDartMonkey": {
+        "className" : "ImageButton",
+        "x" : 1125,
+        "y" : 100,
+        "sizeX" : 50,
+        "sizeY" : 50,
+        "image" : "towers/dartmonkey.png",
+        "zIndex" : 2,
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER"
+    },
+    "towerImage" :{
+        "className":"ImageLabel",
+        "x" : 530,
+        "y" : 670,
+        "sizeX" : 100,
+        "sizeY" : 160,
+        "image" : "towers/dartmonkey.png",
+        "zIndex" : 1
+    },
+    "path1Button":{
+        "className": "ImageButton",
+        "x" : 820,
+        "y" : 700,
+        "sizeX" : 100,
+        "sizeY" : 100,
+        "image" : "towers/longRange.png",
+        "zIndex" : 1
+    },
+    "path1Label":{
+        "className": "TextLabel",
+        "x": 870,
+        "y": 780,
+        "text": "Path 1",
+        "textSize": 16,
+        "textColor": "255 255 255",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "zIndex": 2
+    },
+    "path2Button":{
+        "className": "ImageButton",
+        "x" : 940,
+        "y" : 700,
+        "sizeX" : 100,
+        "sizeY" : 100,
+        "image" : "towers/sharpshots.png",
+        "zIndex" : 1
+    },
+    "path2Label":{
+        "className": "TextLabel",
+        "x": 990,
+        "y": 780,
+        "text": "Path 2",
+        "textSize": 16,
+        "textColor": "255 255 255",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "zIndex": 2
     }
+    
+
+
 }

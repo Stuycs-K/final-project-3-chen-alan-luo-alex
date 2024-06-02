@@ -192,7 +192,7 @@ public class Tower{
       this.sprite = newSprite;
     }
     
-    boolean detectCamo = readBoolean(changes, "detectCamo", false);
+    boolean detectCamo = readBoolean(changes, "detectCamo", targetFilter.canDetectCamo());
     targetFilter.setCamoDetection(detectCamo);
     
   }

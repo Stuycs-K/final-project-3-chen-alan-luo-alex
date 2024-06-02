@@ -59,6 +59,8 @@ public class Bloon {
     
     // Modifiers
     this.modifiersList = new BloonModifiersList(this);
+    this.modifiersList.setSprite();
+    
     this.spriteRotation = 0;
     
     this.reachedEnd = false;

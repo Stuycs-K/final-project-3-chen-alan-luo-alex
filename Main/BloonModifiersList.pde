@@ -230,22 +230,6 @@ public class Camo extends BloonModifier {
   public Camo clone() {
     return new Camo(); 
   }
-  
-  /*
-  public void drawVisuals() {
-    Bloon bloon = getBloon();
-    BloonPropertyTable properties = bloon.getProperties();
-    
-    // Already a camo sprite
-    String currentSpriteName = properties.getSpriteVariantName(bloon.getSprite());
-    if (currentSpriteName.indexOf("camo") != -1) {
-      return; 
-    }
-    
-    PImage camo = properties.getSpriteVariant("camo");
-    
-    bloon.setSprite(camo);
-  }*/
 }
 
 public class Regrow extends BloonModifier {
@@ -260,7 +244,7 @@ public class Regrow extends BloonModifier {
     
     super.setCustomProperties(properties);
     
-    this.regrowRate = 60;
+    this.regrowRate = int(2.5 * frameRate); // 2.5 seconds by default
     this.cooldown = 0;
   }
   
@@ -274,16 +258,6 @@ public class Regrow extends BloonModifier {
     
     return newModifier;
   }
-  
-  /*
-  public void drawVisuals() {
-    Bloon bloon = getBloon();
-    
-    BloonPropertyTable properties = bloon.getProperties();
-    PImage regrowSprite = properties.getSpriteVariant("regrow");
-    
-    bloon.setSprite(regrowSprite);
-  }*/
   
   public int getRegrowRate() {
     return regrowRate; 
