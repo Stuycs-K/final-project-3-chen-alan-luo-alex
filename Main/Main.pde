@@ -56,7 +56,7 @@ void mousePressed(){
   
   // GUI sank input, so don't do anything else!
   if (pressedButton) {
-    return;
+    //return;
   }
   
   game.mousePressed(mouseX, mouseY);

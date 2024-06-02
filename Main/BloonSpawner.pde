@@ -78,9 +78,9 @@ public class BloonSpawner {
     ArrayList<BloonModifier> heritableModifiers = parent.getModifiersList().getHeritableModifiers();
     for (Bloon newBloon : createdBloons) {
       newBloon.getModifiersList().copyModifiers(heritableModifiers);
+      newBloon.setParentHandle(parent.getHandle());
     }
-    
-    
+
     return createdBloons;
   }
   

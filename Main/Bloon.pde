@@ -1,4 +1,5 @@
 static final int BASE_BLOON_SPEED = 100;
+long CURRENT_BLOON_HANDLE = 0; // Cheap and dirty bloon IDs
 
 private static JSONObject toSpawnParams(String layerName) {
   JSONObject spawnParams = new JSONObject();
@@ -33,6 +34,8 @@ public class Bloon {
   private boolean isDead;
   private boolean reachedEnd;
   
+  private long handle;
+  private long parentHandle;
   
   public Bloon(JSONObject spawnParams) {
     String layerName = spawnParams.getString("layerName");
@@ -61,6 +64,11 @@ public class Bloon {
     this.reachedEnd = false;
     this.isDead = false;
     
+    // Assign the unique handle
+    this.handle = CURRENT_BLOON_HANDLE;
+    CURRENT_BLOON_HANDLE++;
+    
+    this.parentHandle = -1;
   }
   
   public Bloon(String layerName) {
@@ -70,6 +78,18 @@ public class Bloon {
   // Spawn a bloon at a particular position
   public Bloon(String layerName, PVector position) {
     this(toSpawnParams(layerName, position));
+  }
+  
+  public long getHandle() {
+    return handle;
+  }
+  
+  public long getParentHandle() {
+    return parentHandle;
+  }
+  
+  public void setParentHandle(long handle) {
+    this.parentHandle = handle;
   }
   
   public void applyProperties() {
@@ -99,6 +119,16 @@ public class Bloon {
     MapSegment segment = game.getMap().getMapSegment(positionId);
     PVector direction = PVector.sub(segment.getEnd(), segment.getStart()).normalize();    
     return direction;
+  }
+  
+  public boolean isInBounds(int x, int y) {
+    float sizeMultiplier = propertiesTable.getFloatProperty("size", 1);
+    
+    int spriteX = int(position.x - (sprite.width / 2) * sizeMultiplier);
+    int spriteY = int(position.y - (sprite.height / 2) * sizeMultiplier);
+    int spriteSizeX = int(sprite.width * sizeMultiplier);
+    int spriteSizeY = int(sprite.height * sizeMultiplier);
+    return isInBoundsOfRectangle(x, y, spriteX, spriteY, spriteSizeX, spriteSizeY);
   }
   
   public void setSprite(PImage sprite) {

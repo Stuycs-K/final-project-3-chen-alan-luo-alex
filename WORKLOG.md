@@ -58,6 +58,11 @@
 - Cleanup some code in Projectile and Tower in general
 - Add pierce to projectiles
 
+## 6/1/2024
+- Write TowerUpgradeManager, which implements upgrade paths and reads upgrade information from towers.json and applies it accordingly to towers
+- Add Dart Monkey Triple Darts
+- Fix various issues with projectile rotation and pierce
+
 ## Alex Luo
 
 ### 5/22/2024

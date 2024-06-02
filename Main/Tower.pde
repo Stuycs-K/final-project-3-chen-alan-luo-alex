@@ -68,6 +68,25 @@ private float readFloatDiff(JSONObject object, String keyName, float originalVal
   }
 }
 
+private TowerAction createAction(String actionClass, JSONObject actionDefinition) {
+  TowerAction action ;
+ 
+  switch (actionClass) {
+    case "NULL":
+      return null;
+    case "PROJECTILE":
+      action = new ProjectileSpawnAction(actionDefinition);
+      break;
+    case "MULTI_PROJECTILE":
+      action = new MultiProjectileSpawnAction(actionDefinition);
+      break;
+    default:
+      action = new TowerAction(actionDefinition);
+  }
+  
+  return action;
+}
+
 public class Tower{
   public int x;
   public int y; 
@@ -88,7 +107,7 @@ public class Tower{
   public int cost;
   
   private int totalCurrencySpent;
-  private PImage sprite;
+  public PImage sprite;
   public String towerName;
   
   public HashMap<String, TowerAction> actionMap;
@@ -139,16 +158,7 @@ public class Tower{
       JSONObject actionDefinition = actionData.getJSONObject(actionName);
       
       String actionClass = actionDefinition.getString("type");
-      TowerAction actionObject = null;
-      
-      // Create base actions
-      switch (actionClass) {
-        case "PROJECTILE":
-          actionObject = new ProjectileSpawnAction(actionDefinition);
-          break;
-        default:
-          actionObject = new TowerAction(actionDefinition);
-      }
+      TowerAction actionObject = createAction(actionClass, actionDefinition);
       
       this.actionMap.put(actionName, actionObject);
     }
@@ -170,24 +180,36 @@ public class Tower{
     this.upgrades = new TowerUpgradeManager(this);
   }
   
-  // Sets range and sprite and that's it
+  // Sets range and sprite
   public void setPropertiesFromUpgrade(TowerUpgrade upgrade) {
-    this.range = readIntDiff(upgrade.getChanges(), "range", this.range);
+    JSONObject changes = upgrade.getChanges();
+    
+    this.range = readIntDiff(changes, "range", this.range);
     
     PImage newSprite = upgrade.getSprite();
 
     if (newSprite != null) {
       this.sprite = newSprite;
     }
+    
+    boolean detectCamo = readBoolean(changes, "detectCamo", false);
+    targetFilter.setCamoDetection(detectCamo);
+    
   }
   
   public void step(ArrayList<Bloon> bloons) {
+    ArrayList<PVector> targetPositions = getTargetPositions(bloons);
+    
     for (TowerAction action : actionMap.values()) {
       if (!action.checkCooldown()) {
         continue;
       }
       
-      action.performAction(this, bloons);
+      if (!action.shouldPerformAction(targetPositions)) {
+        continue;
+      }
+         
+      action.performAction(this, targetPositions, bloons);
     }
   }
   
@@ -350,7 +372,40 @@ public class TowerUpgradeManager {
     if (actionChanges != null) {
       for (String actionName : (Set<String>) actionChanges.keys()) {
         TowerAction action = tower.actionMap.get(actionName);
-        action.setProperties(actionChanges.getJSONObject(actionName));
+        
+        JSONObject currentActionChanges = actionChanges.getJSONObject(actionName);
+        String actionChangesType = readString(currentActionChanges, "type", action.getActionType());
+        
+        // Check if the action has changed its type with this upgrade
+        // If not, simply update the current action's properties
+        if (action.getActionType().equals(actionChangesType)) {
+          
+          action.setProperties(actionChanges.getJSONObject(actionName));
+          
+        } else { // Create an entirely new action of the type
+        
+          // Remove this action
+          if (actionChangesType.equals("NULL")) {
+            tower.actionMap.remove(actionName);
+            continue;
+          }
+          
+          JSONObject newProperties = new JSONObject();
+          
+          // Inherit any previous action properties (does NOT copy over "type")
+          action.reconcileWithOther(newProperties);
+          
+          // Now, copy over all the properties in changes, including "type"
+          newProperties.setString("type", actionChangesType);
+          
+          // The properties specific to this action type are put in the "properties" table
+          newProperties.setJSONObject("properties", currentActionChanges);
+          
+          TowerAction newAction = createAction(actionChangesType, newProperties);
+          tower.actionMap.put(actionName, newAction); // Replace the old action with the new
+          
+        }
+
       }
     }
 
@@ -420,6 +475,14 @@ public class TowerAction {
     return false;
   }
   
+  public boolean shouldPerformAction(ArrayList<PVector> targets) {
+    return (targets.size() > 0);
+  }
+  
+  public void reconcileWithOther(JSONObject properties) {
+    properties.setFloat("cooldown", this.cooldownSeconds);
+  }
+  
   public void resetCooldown() {
     currentCooldown = 0;
   }
@@ -428,7 +491,7 @@ public class TowerAction {
     return actionType;
   }
   
-  public void performAction(Tower tower, ArrayList<Bloon> bloons) {
+  public void performAction(Tower tower, ArrayList<PVector> targetPositions, ArrayList<Bloon> bloons) {
     return;
   }
 }
@@ -450,15 +513,18 @@ public class ProjectileSpawnAction extends TowerAction {
     return projectileName;
   }
   
-  public void performAction(Tower tower, ArrayList<Bloon> bloons) {
+  public void reconcileWithOther(JSONObject properties) {
+    super.reconcileWithOther(properties);
+    properties.setString("projectile", this.projectileName);
+  }
+  
+  public void performAction(Tower tower, ArrayList<PVector> targetPositions, ArrayList<Bloon> bloons) {
     resetCooldown();
-    
-    ArrayList<PVector> targetPositions = tower.getTargetPositions(bloons);
 
     ProjectileData data = tower.projectileMap.get(getSpawnedProjectileName());
     
     for (PVector position : targetPositions) {
-      tower.projectiles.add(new Projectile(new PVector(tower.x, tower.y), new PVector(position.x, position.y), data));
+      tower.projectiles.add(createProjectile(new PVector(tower.x, tower.y), new PVector(position.x, position.y), data));
     }
     
     if (targetPositions.size() > 0) {
