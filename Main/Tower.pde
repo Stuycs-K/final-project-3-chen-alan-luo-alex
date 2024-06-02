@@ -170,7 +170,7 @@ public class Tower{
     for (String projectileName : (Set<String>) projectileData.keys()) {
       JSONObject projectileDefinition = projectileData.getJSONObject(projectileName);
       
-      ProjectileData projectileDataObject = new ProjectileData(projectileDefinition);
+      ProjectileData projectileDataObject = createProjectileData(projectileDefinition);
       
       this.projectileMap.put(projectileName, projectileDataObject);
     }
@@ -371,9 +371,18 @@ public class TowerUpgradeManager {
     JSONObject actionChanges = upgradeChanges.getJSONObject("actions");
     if (actionChanges != null) {
       for (String actionName : (Set<String>) actionChanges.keys()) {
+        JSONObject currentActionChanges = actionChanges.getJSONObject(actionName);
         TowerAction action = tower.actionMap.get(actionName);
         
-        JSONObject currentActionChanges = actionChanges.getJSONObject(actionName);
+        // Create new action! It MUST have a "type" key...
+        if (action == null) {
+          tower.actionMap.put(actionName, createAction(currentActionChanges.getString("type"), currentActionChanges));
+          continue;
+        }  
+        
+        // Update an existing action instead
+        
+
         String actionChangesType = readString(currentActionChanges, "type", action.getActionType());
         
         // Check if the action has changed its type with this upgrade

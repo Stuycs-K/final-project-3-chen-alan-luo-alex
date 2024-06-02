@@ -67,7 +67,6 @@ private class TowerUpgradeInformation {
         upgradeArrayList.add(towerUpgrade);
       }
       
-      int index = Integer.parseInt(upgradePathKey);
       upgradePaths.add(upgradeArrayList);
     }
   }

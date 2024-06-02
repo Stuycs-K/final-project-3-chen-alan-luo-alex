@@ -3,11 +3,28 @@ Projectile createProjectile(PVector origin, PVector goal, ProjectileData data) {
   switch (data.type) {
     case "BASE":
       projectile = new Projectile(origin, goal, data);
+      break;
     default:
       projectile = new Projectile(origin, goal, data);
   }
   
   return projectile;
+}
+
+ProjectileData createProjectileData(JSONObject definition) {
+  ProjectileData projectileData;
+  
+  String type = readString(definition, "type", "BASE");
+  
+  switch (type) {
+    case "BASE":
+      projectileData = new ProjectileData(definition);
+      break;
+    default:
+      projectileData = new ProjectileData(definition);
+  }
+  
+  return projectileData;
 }
 
 public class Projectile{
@@ -148,6 +165,7 @@ public class ProjectileData {
     this.speed = 30;
     
     this.maxDistance = 30;
+    this.type = readString(projectileData, "type", "BASE");
     
     updateProperties(projectileData);
   }
@@ -172,8 +190,6 @@ public class ProjectileData {
     this.pierce = readIntDiff(data, "pierce", this.pierce);
     this.speed = readIntDiff(data, "speed", this.speed);
     this.maxDistance = readFloatDiff(data, "maxDistance", this.maxDistance);
-    
-    this.type = readString(data, "type", "BASE");
   }
 }
   
