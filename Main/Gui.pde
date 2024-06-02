@@ -238,7 +238,11 @@ private static float readFloat(JSONObject object, String keyName, float defaultV
     return defaultValue;
   }
   
-  return object.getFloat(keyName);
+  try {
+    return object.getFloat(keyName);
+  } catch (Exception exception) {
+    return defaultValue;
+  }
 }
 
 private color readColor(JSONObject object, String keyName) {
