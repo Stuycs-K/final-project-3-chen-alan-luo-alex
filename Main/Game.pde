@@ -191,25 +191,20 @@ public class Game{
     for (Tower tower: towers){
       //println("Drawing tower at: " + tower.x + ", " + tower.y);
       tower.draw();
+      if(tower==selectedTower){
+        drawHighlightCircle(tower.x, tower.y);
+      }
     }
     guiManager.render();
   }
   
+  private void drawHighlightCircle(int x, int y){
+    stroke(255,204,0);
+    noFill();
+    ellipse(x,y,100,100);
+  }
+  
   public void mousePressed(int mx, int my) {
-    // need to add hitbox so that 
-
-    //PVector mousePosition = new PVector(mx, my);
-    //MapSegment mapSegment = map.getMapSegmentFromPosition(mousePosition);
-    
-    //if(mapSegment == null){
-    //  return;
-    //}
-    
-    /*
-    for (Tower tower : towers) {
-      tower.upgrade(0); 
-    }*/
-    
     if (upgradeButton.isMouseInBounds()) {
       if (selectedTower != null) {
          selectedTower.upgrade(0);
