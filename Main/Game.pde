@@ -2,10 +2,8 @@ public class Game{
   private Map map;
   public ArrayList<Tower> towers;
   public ArrayList<Bloon> bloons;
-  private int currency;
   private HealthManager healthManager;
   private CurrencyManager currencyManager;
-  private int health;
   private boolean gameActive;
   
   private float currencyPerPopMultiplier;
@@ -50,8 +48,6 @@ public class Game{
     map = new Map(waypoints, 7);
     towers = new ArrayList<>();
     bloons = new ArrayList<>();
-    currency = 100;
-    health = 100;
     gameActive = true;
     
     currencyPerPopMultiplier = 1;
@@ -80,7 +76,7 @@ public class Game{
   public void startGame(){
     waveManager.setWave(1);
     waveManager.startNextWave();
-    currencyManager.setCurrency(600);
+    currencyManager.setCurrency(650);
   }
   
    public void update(){

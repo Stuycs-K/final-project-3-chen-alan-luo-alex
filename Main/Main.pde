@@ -29,7 +29,7 @@ void setup(){
   game.startGame();
   
   JSONObject spawnInformation = new JSONObject();
-  spawnInformation.setString("layerName", "Black");
+  spawnInformation.setString("layerName", "Ceramic");
   
   JSONObject modifiers = new JSONObject();
   modifiers.setBoolean("camo", true);
