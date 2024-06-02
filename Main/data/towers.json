@@ -2,7 +2,7 @@
     "DartMonkey": {
         "base": {
             "cost": 200,
-            "sprite": "towers/dartmonkey.png",
+            "sprite": "towers/dart.png",
             "range": 150,
             "actions": {
                 "dartAttack": {
@@ -16,7 +16,7 @@
                     "damage": 1,
                     "pierce": 2,
                     "speed": 15,
-                    "sprite": "projectiles/basicDart.png",
+                    "sprite": "projectiles/dart.png",
                     "maxDistance": 200
                 }
             }
@@ -28,7 +28,7 @@
                     "upgradeImage": "towers/dartmonkey.png",
                     "cost": 90,
                     "changes": {
-                        "sprite": "towers/LongRangeDarts.png",
+                        "sprite": "towers/longRangeDarts.png",
                         "range": "+ 25"
                     }
                 },
@@ -37,7 +37,7 @@
                     "upgradeImage": "towers/dartmonkey.png",
                     "cost": 120,
                     "changes": {
-                        "sprite": "towers/LongRangeDarts.png",
+                        "sprite": "towers/longRangeDarts.png",
                         "range": "+ 25",
                         "detectCamo": true
                     }

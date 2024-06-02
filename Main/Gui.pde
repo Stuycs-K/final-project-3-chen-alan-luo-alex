@@ -349,6 +349,10 @@ public class GuiBase {
   
   private void renderStroke() {
     if (definition.isNull("stroke")) {
+      // Reset stroke drawing things to default
+      strokeJoin(MITER);
+      strokeWeight(1);
+      stroke(0);
       return;
     }
     JSONObject strokeData = definition.getJSONObject("stroke");
@@ -375,7 +379,7 @@ public class GuiBase {
     }
     strokeJoin(joinMode);
     
-    float weight = readFloat(strokeData, "weight", 1);
+    float weight = readFloat(strokeData, "weight", 4);
     strokeWeight(weight);
     
     color strokeColor = readColor(strokeData, "color");
