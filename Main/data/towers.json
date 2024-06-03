@@ -186,10 +186,16 @@
                         "sprite": "towers/bombFragBombs.png",
                         "projectiles": {
                             "bomb": {
-                                "type": "MULTI_PROJECTILE",
+                                "type": "CLUSTER_BOMB",
                                 "projectileCount": 8,
-                                "angle": 360
-                            }
+                                "clusterProjectileData": {
+                                    "sprite": "projectiles/bombFrag.png",
+                                    "damage": 2,
+                                    "pierce": 1,
+                                    "maxDistance": 20,
+                                    "speed": 50
+                                }
+                            },
                         }
                     }
                 },
@@ -201,9 +207,16 @@
                         "sprite": "towers/bombClusterBombs.png",
                         "projectiles": {
                             "bomb": {
-                                "type": "MULTI_PROJECTILE",
-                                "projectileCount": 3,
-                                "angle": 30
+                                "projectileCount": 6,
+                                "clusterProjectileData": {
+                                    "sprite": "projectiles/bomb.png",
+                                    "type": "BOMB",
+                                    "damage": 1,
+                                    "pierce": 1,
+                                    "maxDistance": 30,
+                                    "speed": 50,
+                                    "explosionRadius": 100
+                                }
                             }
                         }
                     }

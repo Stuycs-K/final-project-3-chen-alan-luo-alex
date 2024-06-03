@@ -2,6 +2,7 @@ public class Game{
   private Map map;
   public ArrayList<Tower> towers;
   public ArrayList<Bloon> bloons;
+  public ArrayList<Projectile> projectiles;
   private HealthManager healthManager;
   private CurrencyManager currencyManager;
   private boolean gameActive;
@@ -52,6 +53,7 @@ public class Game{
     map = new Map(waypoints, 7);
     towers = new ArrayList<>();
     bloons = new ArrayList<>();
+    projectiles = new ArrayList<Projectile>();
     gameActive = true;
     
     currencyPerPopMultiplier = 1;
@@ -144,6 +146,16 @@ public class Game{
       }
       tower.projectiles.removeAll(projectilesToRemove);
     }
+    
+    // Any random untracked projectile
+    ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
+    for (Projectile projectile : projectiles) {
+      projectile.update(bloons);
+      if(projectile.finished) {
+        projectilesToRemove.add(projectile);
+      }
+    }
+    projectiles.removeAll(projectilesToRemove);
     
     // Insert all bloons that have been created
     bloonSpawner.emptyQueue();

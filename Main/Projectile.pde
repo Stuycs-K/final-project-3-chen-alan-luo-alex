@@ -5,7 +5,10 @@ Projectile createProjectile(PVector origin, PVector goal, ProjectileData data) {
       projectile = new Projectile(origin, goal, data);
       break;
     case "BOMB":
-      projectile = new BombProjectile(origin, goal, (BombData)data);
+      projectile = new Bomb(origin, goal, (BombData) data);
+      break;
+    case "CLUSTER_BOMB":
+      projectile = new ClusterBomb(origin, goal, (ClusterBombData) data);
       break;
     default:
       projectile = new Projectile(origin, goal, data);
@@ -26,6 +29,9 @@ ProjectileData createProjectileData(JSONObject definition) {
     case "BOMB":
       projectileData = new BombData(definition);
       break;
+    case "CLUSTER_BOMB":
+      projectileData = new ClusterBombData(definition);
+      break;
     default:
       projectileData = new ProjectileData(definition);
   }
@@ -41,7 +47,7 @@ public class Projectile{
   public float distance;
   
   private float distanceTraveled;
-  private PVector direction;
+  public PVector direction;
   
   private ArrayList<Long> hitBloons;
   
@@ -220,20 +226,6 @@ public class ProjectileData extends DamageProperties {
   
 }
 
-public class BombData extends ProjectileData {
-  public float explosionRadius;
-  public boolean isClusterBombs;
-
-  public BombData(JSONObject projectileData) {
-    super(projectileData);
-    this.explosionRadius = projectileData.getFloat("explosionRadius", 150.0f);
-  }
-           
-  public void updateProperties(JSONObject data) {
-    super.updateProperties(data);
-    this.explosionRadius = readFloatDiff(data, "explosionRadius", this.explosionRadius);
-  }
-}
 
 
 
