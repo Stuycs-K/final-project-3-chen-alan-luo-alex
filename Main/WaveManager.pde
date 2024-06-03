@@ -83,6 +83,7 @@ private class WaveSpawn extends Thread {
 public class WaveManager {
   private JSONArray waveStructure;
   private int currentWaveNumber;
+  private int maxWaves; 
   
   private JSONObject currentWave;
   
@@ -92,6 +93,7 @@ public class WaveManager {
   
   public WaveManager() {
     this.waveStructure = loadJSONArray("waves.json");
+    this.maxWaves = waveStructure.size();
     this.currentWaveNumber = -1;
     this.currentWave = null;
     this.currentWaveSpawns = new HashMap<String, WaveSpawn>();
@@ -108,11 +110,15 @@ public class WaveManager {
     return true;
   }
   
+  public boolean isLastWave() {
+    return getCurrentWaveNumber() >= maxWaves;
+  }
+  
   public void startNextWave() {
     game.getCurrencyManager().rewardCurrencyForWave(getCurrentWaveNumber());
-    gui.setWave(getCurrentWaveNumber());
+    
     currentWaveNumber++;
- 
+    gui.setWave(getCurrentWaveNumber());
     currentWaveSpawns.clear();
     
     if (currentWaveNumber >= waveStructure.size()) {
@@ -132,6 +138,11 @@ public class WaveManager {
     for (WaveSpawn waveSpawn : currentWaveSpawns.values()) {
       waveSpawn.interrupt();
     }
+  }
+  
+  public void removeWaves() {
+    stopAllWaves();
+    currentWaveSpawns.clear();
   }
   
   private void spawnWave() {

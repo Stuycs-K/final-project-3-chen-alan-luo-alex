@@ -89,19 +89,24 @@ public class Game{
   }
 
   public void startGame(){
-    waveManager.setWave(1);
+    waveManager.setWave(0);
     waveManager.startNextWave();
     currencyManager.setCurrency(650);
   }
   
    public void update(){
     if (healthManager.didLose()) {
-      waveManager.stopAllWaves();
+      waveManager.removeWaves();
       println("YOU LOSE");
       return;
     }
     // TODO
     if (waveManager.waveFinishedSpawning()) {
+      
+      if (waveManager.isLastWave()) {
+        return;
+      }
+      
       waveManager.startNextWave();
     }
     
