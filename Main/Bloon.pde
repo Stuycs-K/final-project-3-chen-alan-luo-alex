@@ -59,6 +59,8 @@ public class Bloon {
     
     // Modifiers
     this.modifiersList = new BloonModifiersList(this);
+    this.modifiersList.setSprite();
+    
     this.spriteRotation = 0;
     
     this.reachedEnd = false;
@@ -185,6 +187,21 @@ public class Bloon {
     this.propertiesTable = properties;
     
     applyProperties();
+  }
+  
+  public boolean damage(DamageProperties damageProperties) {
+    return damage(damageProperties.damage, damageProperties);
+  }
+  
+  public boolean damage(float count, DamageProperties damageProperties) {
+    float finalDamage = modifiersList.getDamage(count, damageProperties);
+    
+    if (finalDamage == -1) {
+      return false;
+    }
+    
+    damage(finalDamage);
+    return true;
   }
   
   public void damage(float count) {

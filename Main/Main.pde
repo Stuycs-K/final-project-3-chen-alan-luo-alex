@@ -27,13 +27,17 @@ void setup(){
   
   game = new Game();
   game.startGame();
-  /*
-  JSONObject spawnInformation = new JSONObject();
-  spawnInformation.setString("layerName", "MOAB");
-  bloonSpawner.spawn(spawnInformation);
-  */
   
-
+  //JSONObject spawnInformation = new JSONObject();
+  //spawnInformation.setString("layerName", "MOAB");
+  
+  /*
+  JSONObject modifiers = new JSONObject();
+  //modifiers.setBoolean("camo", true);
+  modifiers.setBoolean("regrow", true);
+  spawnInformation.setJSONObject("modifiers", modifiers);*/
+  
+  //bloonSpawner.spawn(spawnInformation);
   
 }
 

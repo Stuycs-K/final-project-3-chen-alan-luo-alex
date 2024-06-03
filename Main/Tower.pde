@@ -180,21 +180,40 @@ public class Tower{
     this.upgrades = new TowerUpgradeManager(this);
   }
   
-  // Sets range and sprite
+  public TowerUpgrade getCurrentUpgrade(int pathId){
+    int currentLevel = upgrades.getCurrentLevel(pathId)-1;
+    return upgrades.getUpgradeInformation().getNextUpgrade(pathId,currentLevel);
+  
+  }
+  
+  public PImage getPathUpgradeImage(int pathId){
+    TowerUpgrade currentUpgrade = getCurrentUpgrade(pathId);
+    if(currentUpgrade!=null){
+      return currentUpgrade.getSprite();
+    }
+    return this.sprite;
+  }
+  
+  public PImage getSprite(){
+    return sprite;
+  }
+  
+  // Sets range and camo detection
   public void setPropertiesFromUpgrade(TowerUpgrade upgrade) {
     JSONObject changes = upgrade.getChanges();
     
     this.range = readIntDiff(changes, "range", this.range);
     
+    boolean detectCamo = readBoolean(changes, "detectCamo", targetFilter.canDetectCamo());
+    targetFilter.setCamoDetection(detectCamo);
+  }
+  
+  public void setSpriteFromUpgrade(TowerUpgrade upgrade) {
     PImage newSprite = upgrade.getSprite();
 
     if (newSprite != null) {
       this.sprite = newSprite;
     }
-    
-    boolean detectCamo = readBoolean(changes, "detectCamo", false);
-    targetFilter.setCamoDetection(detectCamo);
-    
   }
   
   public void step(ArrayList<Bloon> bloons) {
@@ -298,6 +317,7 @@ public class TowerUpgradeManager {
   
   private int mainUpgradePath; // The upgrade path we've put more than 2 upgrades in
   private int pathsUpgraded;
+  private int highestUpgradeLevel;
   
   private TowerUpgradeInformation upgradeInformation;
   
@@ -307,6 +327,7 @@ public class TowerUpgradeManager {
     
     this.mainUpgradePath = -1;
     this.pathsUpgraded = 0;
+    this.highestUpgradeLevel = -1;
     
     this.upgradeInformation = towerPropertyLookup.getTowerProperties(tower.towerName).getUpgradeInformation();
     
@@ -314,6 +335,10 @@ public class TowerUpgradeManager {
     for (int i = 0; i < upgradeInformation.getNumberOfUpgradePaths(); i++) {
       pathUpgradeLevelList.add(-1); 
     }
+  }
+  
+  public int getCurrentLevel(int pathId){
+    return pathUpgradeLevelList.get(pathId)+1;
   }
   
   public TowerUpgradeInformation getUpgradeInformation() {
@@ -362,8 +387,16 @@ public class TowerUpgradeManager {
     // Increment this upgrade path level
     pathUpgradeLevelList.set(pathId, currentUpgradeLevel + 1);
     
-    // Set range and sprite
+    // Set range and other basic stuff
     tower.setPropertiesFromUpgrade(upgrade);
+    
+    // When we buy 2 upgrades on path 1 we want the sprite to stay as the sprite of the 2nd upgrade on path 1
+    // So when we buy 1 upgrade on path 2 it doesn't override the sprite
+    if (currentUpgradeLevel + 1 > highestUpgradeLevel) {
+      tower.setSpriteFromUpgrade(upgrade);
+      highestUpgradeLevel = currentUpgradeLevel + 1;
+    }
+
     
     JSONObject upgradeChanges = upgrade.getChanges();
     
@@ -425,7 +458,17 @@ public class TowerUpgradeManager {
     if (projectileChanges != null) {
       for (String projectileName : (Set<String>) projectileChanges.keys()) {
         ProjectileData projectile = tower.projectileMap.get(projectileName);
-        projectile.updateProperties(projectileChanges.getJSONObject(projectileName));
+        
+        JSONObject currentChanges = projectileChanges.getJSONObject(projectileName);
+        
+        String changedType = readString(currentChanges, "type", projectile.type);
+        
+        if (projectile.type.equals(changedType)) {
+          projectile.updateProperties(currentChanges);
+        } else { // TODO
+          ProjectileData newProjectileData = createProjectileData(currentChanges);
+        }
+        
       }
     }
     

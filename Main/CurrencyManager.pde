@@ -17,6 +17,10 @@ public class CurrencyManager {
     gui.setCurrencyText(this.currency);
   }
   
+  public void rewardCurrencyForWave(int waveNumber) {
+    setCurrency(currency + 100 + waveNumber);
+  }
+  
   public float getCurrency() {
     return currency;
   }

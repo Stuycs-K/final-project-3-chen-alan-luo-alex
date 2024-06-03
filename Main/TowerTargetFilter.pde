@@ -9,9 +9,13 @@ public class TowerTargetFilter{
     this.canDetectCamo = canDetectCamo;
   }
   
+  public boolean canDetectCamo() {
+    return this.canDetectCamo;
+  }
+  
   public boolean canAttack(Bloon bloon){
     BloonModifiersList modifiersList = bloon.getModifiersList();
-    if(modifiersList.hasModifier("camo")){
+    if(modifiersList.hasModifier("camo") && !this.canDetectCamo){
       return false;
     }
     

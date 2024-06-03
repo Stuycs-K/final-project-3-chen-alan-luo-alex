@@ -98,5 +98,23 @@
         "textYAlignment": "CENTER",
         "textXOffset": 65,
         "textYOffset": 15
+    },
+    "placementLabel": {
+        "className": "TextLabel",
+        "x": 600,
+        "y": 25,
+        "sizeX": 300,
+        "sizeY": 50,
+        "text": "Select a tower to place",
+        "textSize": 16,
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "backgroundColor": "255 255 255",
+        "stroke": {
+            "type": "NONE"
+        },
+        "backgroundTransparency": 0.5,
+        "zIndex": 3
     }
 }

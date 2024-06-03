@@ -36,6 +36,7 @@ public class GuiManager {
   private ArrayList<GuiBase> guiList;
   private HashMap<String, GuiBase> guiTemplateMap;
   private FontManager fontManager;
+  private TextLabel messageLabel;
   
   public GuiManager() {
     guiList = new ArrayList<GuiBase>();
@@ -44,6 +45,19 @@ public class GuiManager {
         
     for (String path : GUI_DEFINITION_FILES) {
       loadGui("guiDefinitions/" + path);
+    }
+  }
+  
+  public void showText(String text){
+    if(messageLabel != null){
+      messageLabel.setText(text);
+      messageLabel.setVisible(true);
+    }
+  }
+  
+  public void hideText(){
+    if(messageLabel!=null){
+      messageLabel.setVisible(false);
     }
   }
   
@@ -238,7 +252,11 @@ private static float readFloat(JSONObject object, String keyName, float defaultV
     return defaultValue;
   }
   
-  return object.getFloat(keyName);
+  try {
+    return object.getFloat(keyName);
+  } catch (Exception exception) {
+    return defaultValue;
+  }
 }
 
 private color readColor(JSONObject object, String keyName) {
@@ -349,6 +367,10 @@ public class GuiBase {
   
   private void renderStroke() {
     if (definition.isNull("stroke")) {
+      // Reset stroke drawing things to default
+      strokeJoin(MITER);
+      strokeWeight(1);
+      stroke(0);
       return;
     }
     JSONObject strokeData = definition.getJSONObject("stroke");
@@ -375,7 +397,7 @@ public class GuiBase {
     }
     strokeJoin(joinMode);
     
-    float weight = readFloat(strokeData, "weight", 1);
+    float weight = readFloat(strokeData, "weight", 4);
     strokeWeight(weight);
     
     color strokeColor = readColor(strokeData, "color");
@@ -487,20 +509,36 @@ public class Frame extends GuiBase {
 }
 
 public class ImageButton extends ImageLabel implements Button {
+  private String towerType;
   
   public ImageButton(JSONObject defintion){
     super(defintion);
+    this.towerType = readString(defintion, "towerType", "");
   }
   
   public ImageButton clone() {
-    return new ImageButton(getDefinition());
+    ImageButton clone = new ImageButton (getDefinition());
+    clone.setTowerType(this.towerType);
+    return clone;
   }
   
   public boolean isButton(){ 
     return true;
   }
   
+  public void setTowerType(String towerType){
+    this.towerType = towerType;
+  }
+  
+  public String getTowerType(){
+    return towerType;
+  }
+  
   public void onInput() {
+    if(!towerType.isEmpty()){
+      game.setCurrentTower(towerType);
+      guiManager.showText("Now placing: " + towerType);
+    }
     return;
   }
   

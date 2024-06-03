@@ -2,10 +2,9 @@ public class Game{
   private Map map;
   public ArrayList<Tower> towers;
   public ArrayList<Bloon> bloons;
-  private int currency;
+  public ArrayList<Projectile> projectiles;
   private HealthManager healthManager;
   private CurrencyManager currencyManager;
-  private int health;
   private boolean gameActive;
   
   private float currencyPerPopMultiplier;
@@ -29,9 +28,15 @@ public class Game{
   private Frame verticalWoodenPadding;
   
   private ImageButton towerButtonDartMonkey;
+  private ImageButton towerButtonBombShooter;
   private ImageButton path1Button;
   private ImageButton path2Button;
+  
+  private String currentTowerType = null;
+  private TextLabel placementLabel;
 
+  private PImage invalidUpgradeImage;
+  
   public Game() {
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
     waypoints.add(new PVector(0, 100));
@@ -50,8 +55,7 @@ public class Game{
     map = new Map(waypoints, 7);
     towers = new ArrayList<>();
     bloons = new ArrayList<>();
-    currency = 100;
-    health = 100;
+    projectiles = new ArrayList<Projectile>();
     gameActive = true;
     
     currencyPerPopMultiplier = 1;
@@ -61,12 +65,25 @@ public class Game{
     
     waveManager = new WaveManager();
     
+    invalidUpgradeImage = loadImage("images/upgradeIcons/invalidUpgrade.png");
     showTowerOptions = false;
     setupGui();
   }
   
   public Map getMap() {
     return map;
+  }
+  
+  public void setCurrentTower(String towerType){
+    this.currentTowerType = towerType;
+    updatePlacingLabel("Now placing: " + towerType);
+  }
+  
+  private void updatePlacingLabel(String text){
+    if(placementLabel != null){
+      placementLabel.setText(text);
+      placementLabel.setVisible(true);
+    }
   }
   
   public CurrencyManager getCurrencyManager() {
@@ -78,19 +95,24 @@ public class Game{
   }
 
   public void startGame(){
-    waveManager.setWave(1);
+    waveManager.setWave(0);
     waveManager.startNextWave();
-    currencyManager.setCurrency(600);
+    currencyManager.setCurrency(650);
   }
   
    public void update(){
     if (healthManager.didLose()) {
-      waveManager.stopAllWaves();
+      waveManager.removeWaves();
       println("YOU LOSE");
       return;
     }
     // TODO
-    if (waveManager.waveFinishedSpawning()) {
+    if (waveManager.waveFinishedSpawning() && bloons.isEmpty()) {
+      
+      if (waveManager.isLastWave()) {
+        return;
+      }
+      
       waveManager.startNextWave();
     }
     
@@ -111,7 +133,15 @@ public class Game{
     // Remove bloons that need to be removed
     bloons.removeAll(scheduledForRemoval);
     
-    
+    // Any random untracked projectile
+    ArrayList<Projectile> projectileScheduled = new ArrayList<>();
+    for (Projectile projectile : projectiles) {
+      projectile.update(bloons);
+      if(projectile.finished) {
+        projectileScheduled.add(projectile);
+      }
+    }
+    projectiles.removeAll(projectileScheduled);
    
     
     for(Tower tower: towers){
@@ -130,8 +160,7 @@ public class Game{
     // Insert all bloons that have been created
     bloonSpawner.emptyQueue();
     
-    
-  }
+   }
   
   private void setupGui(){
     upgradeButton = (TextButton) guiManager.create("upgradeButton");
@@ -148,23 +177,34 @@ public class Game{
     path1Label = (TextLabel) guiManager.create("path1Label");
     path2Button = (ImageButton) guiManager.create("path2Button");
     path2Label = (TextLabel) guiManager.create("path2Label");
+    placementLabel = (TextLabel) guiManager.create("placementLabel");
+    towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonBombShooter");
     
     
    }
   
   public void placeTower(String towerName, int x, int y){
-    int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
+    if(!map.isOnPath(new PVector(x,y)) && currentTowerType != null){
+      
+      int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
     
-     if(towerName.equals("DartMonkey")){
-      DartMonkey dartMonkey = new DartMonkey(x, y);
-      towers.add(dartMonkey);
-    }
+      Tower newTower = null;
+      if(towerName.equals("DartMonkey")){
+        newTower = new DartMonkey(x,y);
+      }else if(towerName.equals("BombShooter")){
+        newTower = new BombShooter(x,y);
    
-     if (towerName.equals("BombShooter")){
-       BombShooter bombShooter = new BombShooter(x,y);
-       towers.add(bombShooter);
+    }
+     if(newTower != null){
+       towers.add(newTower);
+       selectedTower = null;
+       currentTowerType = null;
+       placementLabel.setVisible(false);
      }
+      
   }
+  }
+  
     //  newTower = new BombShooter(x,y);
     //}else if (towerName.equals("IceMonkey")){
     //  newTower = new IceMonkey(x,y);
@@ -184,46 +224,100 @@ public class Game{
   public void selectTower(Tower tower){
     selectedTower = tower;
     showTowerOptions = true;
+    displayTowerDetails(selectedTower);
   }
+  
+  private void displayTowerDetails(Tower tower){
+    
+    if(tower!=null){
+      String towerName = tower.towerName;
+
+      ArrayList<TowerUpgrade> nextUpgrades = tower.upgrades.getNextUpgrades();
+      
+      towerImage.setImage(tower.getSprite());
+      
+      TowerUpgrade nextPath1Upgrade = nextUpgrades.get(0);
+      TowerUpgrade nextPath2Upgrade = nextUpgrades.get(1);
+      
+      if(nextPath1Upgrade!=null){
+        path1Button.setImage(nextPath1Upgrade.getUpgradeImage());
+        path1Label.setText("Path 1" + nextPath1Upgrade.getUpgradeName());
+        
+      }else{
+        path1Button.setImage(invalidUpgradeImage);
+        path1Label.setText("Path 1: No Upgrade");
+      }
+      
+      if(nextPath2Upgrade != null){
+        path2Button.setImage(nextPath2Upgrade.getUpgradeImage());
+        path2Label.setText("Path 2" + nextPath2Upgrade.getUpgradeName());
+      }else{
+        path2Button.setImage(invalidUpgradeImage);
+        path2Label.setText("Path 2: No upgrade");
+      }
+      upgradeButton.setVisible(true);
+      sellButton.setVisible(true);
+      upgradeLabel.setVisible(true);
+      sellLabel.setVisible(true);
+    }else{
+      upgradeButton.setVisible(false);
+      sellButton.setVisible(false);
+      upgradeLabel.setVisible(false);
+      sellLabel.setVisible(false);
+    }
+
+  }
+  
+
 
   public void render() {
     map.drawPath();
     for (Tower tower: towers){
       //println("Drawing tower at: " + tower.x + ", " + tower.y);
       tower.draw();
+      if(tower==selectedTower && currentTowerType == null){
+        drawHighlightCircle(tower.x, tower.y);
+      }
     }
-    guiManager.render();
+    
+    for (Projectile projectile : projectiles) {
+      projectile.drawProjectile();
+    }
+  }
+  
+  private void drawHighlightCircle(int x, int y){
+    stroke(255,204,0);
+    noFill();
+    ellipse(x,y,100,100);
   }
   
   public void mousePressed(int mx, int my) {
-    // need to add hitbox so that 
+   if (currentTowerType != null && !guiManager.mousePressed()) {
+      placeTower(currentTowerType, mx, my);
+      return;
+        }
+    if (isInBoundsOfRectangle(mx, my, 650, 700, 150, 50)) {
+      if (selectedTower != null) {
+         selectedTower.upgrade(0);  
+         displayTowerDetails(selectedTower);  
+       }
+    } else if (isInBoundsOfRectangle(mx, my, 650,760, 150, 50)) {
+          if (selectedTower != null) {
+            selectedTower.sellTower();
+            selectedTower = null;
+            displayTowerDetails(null);  
+            }
+        }
 
-    //PVector mousePosition = new PVector(mx, my);
-    //MapSegment mapSegment = map.getMapSegmentFromPosition(mousePosition);
+     if (isInBoundsOfRectangle(mx, my, 820, 700, 100, 100) && selectedTower !=  null) {
+        selectedTower.upgrade(0);  
+        displayTowerDetails(selectedTower);  
+      } else if (isInBoundsOfRectangle(mx, my, 940, 700, 100, 100) && selectedTower != null) {
+          selectedTower.upgrade(1);  
+            displayTowerDetails(selectedTower); 
+        }
     
-    //if(mapSegment == null){
-    //  return;
-    //}
     
-    /*
-    for (Tower tower : towers) {
-      tower.upgrade(0); 
-    }*/
-    
-    if (upgradeButton.isMouseInBounds()) {
-      if (selectedTower != null) {
-         selectedTower.upgrade(0);
-      }
-       return;
-      }
-     
-     
-    if (sellButton.isMouseInBounds()) {
-      if (selectedTower != null) {
-         selectedTower.sellTower();
-      }
-       return;
-     }
 
     for (Tower tower : towers) {
       if (isInBoundsOfRectangle(mouseX, mouseY, tower.x, tower.y, tower.sprite.width, tower.sprite.height)) {
@@ -231,11 +325,16 @@ public class Game{
         return;
       }
     }
-   
-    placeTower("DartMonkey", mx, my);
-  }
+    
+
+    
+  
 
 }
+
+
+    }
+    
 
 public class UpgradeButton {
   

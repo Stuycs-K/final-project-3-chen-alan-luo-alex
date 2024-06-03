@@ -2,7 +2,7 @@
     "DartMonkey": {
         "base": {
             "cost": 200,
-            "sprite": "towers/dartmonkey.png",
+            "sprite": "towers/dart.png",
             "range": 150,
             "actions": {
                 "dartAttack": {
@@ -16,7 +16,7 @@
                     "damage": 1,
                     "pierce": 2,
                     "speed": 15,
-                    "sprite": "projectiles/basicDart.png",
+                    "sprite": "projectiles/dart.png",
                     "maxDistance": 200
                 }
             }
@@ -25,26 +25,31 @@
             "1": [
                 {
                     "name": "Long Range Darts",
-                    "upgradeImage": "towers/dartmonkey.png",
+                    "upgradeImage": "upgradeIcons/dartLongRangeDarts.png",
                     "cost": 90,
                     "changes": {
-                        "sprite": "towers/LongRangeDarts.png",
-                        "range": "+ 25"
+                        "sprite": "towers/longRangeDarts.png",
+                        "range": "+ 25",
+                        "projectiles": {
+                            "dart": {
+                                "maxDistance": "+ 50"
+                            }
+                        }
                     }
                 },
                 {
                     "name": "Enhanced Eyesight",
-                    "upgradeImage": "towers/dartmonkey.png",
+                    "upgradeImage": "upgradeIcons/dartEnhancedEyesight.png",
                     "cost": 120,
                     "changes": {
-                        "sprite": "towers/LongRangeDarts.png",
+                        "sprite": "towers/enhancedEyesight.png",
                         "range": "+ 25",
                         "detectCamo": true
                     }
                 },
                 {
                     "name": "Spike-o-Pult",
-                    "upgradeImage": "towers/dartmonkey.png",
+                    "upgradeImage": "upgradeIcons/dartSpikeOPult.png",
                     "cost": 500,
                     "changes": {
                         "sprite": "towers/spikeOPult.png",
@@ -66,7 +71,7 @@
                 },
                 {
                     "name": "Juggernaut",
-                    "upgradeImage": "towers/dartmonkey.png",
+                    "upgradeImage": "upgradeIcons/dartJuggernaut.png",
                     "cost": 1500,
                     "changes": {
                         "sprite": "towers/juggernaut.png",
@@ -96,9 +101,10 @@
             "2": [
                 {
                     "name": "Sharp Shots",
-                    "upgradeImage": "towers/dartmonkey.png",
+                    "upgradeImage": "upgradeIcons/dartSharpShots.png",
                     "cost": 140,
                     "changes": {
+                        "sprite": "towers/longRangeDarts.png",
                         "projectiles": {
                             "dart": {
                                 "pierce": "+ 1"
@@ -108,9 +114,10 @@
                 },
                 {
                     "name": "Razor Sharp Shots",
-                    "upgradeImage": "towers/dartmonkey.png",
+                    "upgradeImage": "upgradeIcons/dartRazorSharpShots.png",
                     "cost": 170,
                     "changes": {
+                        "sprite": "towers/enhancedEyesight.png",
                         "projectiles": {
                             "dart": {
                                 "pierce": "+ 1"
@@ -120,14 +127,142 @@
                 },
                 {
                     "name": "Triple Darts",
-                    "upgradeImage": "towers/dartmonkey.png",
+                    "upgradeImage": "upgradeIcons/dartTripleDarts.png",
                     "cost": 330,
                     "changes": {
+                        "sprite": "towers/tripleDarts.png",
                         "actions": {
                             "dartAttack": {
                                 "type": "MULTI_PROJECTILE",
                                 "projectileCount": 3,
                                 "angle": 0.43
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "BombShooter": {
+        "base": {
+            "cost": 650,
+            "sprite": "towers/bombshooter.png",
+            "range": 250,
+            "actions": {
+                "bombAttack": {
+                    "cooldown": 0.63,
+                    "type": "PROJECTILE",
+                    "projectile": "bomb"
+                }
+            },
+            "projectiles": {
+                "bomb": {
+                    "type": "BOMB",
+                    "damage": 1,
+                    "pierce": 1,
+                    "speed": 12,
+                    "sprite": "projectiles/bomb.png",
+                    "maxDistance": 300,
+                    "explosionRadius": 50
+                },
+                "clusterBomb": {
+                    "type": "CLUSTER_BOMB",
+                    "damage": 1,
+                    "pierce": 1,
+                    "speed": 12,
+                    "sprite": "projectiles/bomb.png",
+                    "maxDistance": 300,
+                    "explosionRadius": 50,
+                    "projectileCount": 8,
+                    "clusterProjectileData": {
+                        "sprite": "projectiles/bombFrag.png",
+                        "damage": 2,
+                        "pierce": 1,
+                        "maxDistance": 75,
+                        "speed": 25
+                    }
+                }
+            }
+        },
+        "upgrades": {
+            "1": [
+                {
+                    "name": "Extra Range",
+                    "upgradeImage": "upgradeIcons/bombExtraRange.png",
+                    "cost": 200,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "range": "+ 50"
+                    }
+                },
+                {
+                    "name": "Frag Bombs",
+                    "upgradeImage": "upgradeIcons/bombFragBombs.png",
+                    "cost": 300,
+                    "changes": {
+                        "sprite": "towers/bombFragBombs.png",
+                        "actions": {
+                            "bombAttack": {
+                                "projectile": "clusterBomb"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Cluster Bombs",
+                    "upgradeImage": "upgradeIcons/bombClusterBombs.png",
+                    "cost": 500,
+                    "changes": {
+                        "sprite": "towers/bombClusterBombs.png",
+                        "projectiles": {
+                            "clusterBomb": {
+                                "projectileCount": 6,
+                                "clusterProjectileData": {
+                                    "sprite": "projectiles/bomb.png",
+                                    "type": "BOMB",
+                                    "damage": 1,
+                                    "pierce": 1,
+                                    "maxDistance": 100,
+                                    "speed": 20,
+                                    "explosionRadius": 100
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "2": [
+                {
+                    "name": "Missile Launcher",
+                    "upgradeImage": "upgradeIcons/bombMissileLauncher.png",
+                    "cost": 400,
+                    "changes": {
+                        "sprite": "towers/bombMissileLauncher.png",
+                        "actions": {
+                            "bombAttack": {
+                                "cooldown": "* 0.8"
+                            }
+                        },
+                        "range": "+ 50",
+                        "projectiles": {
+                            "bomb": {
+                                "speed": "+ 5",
+                                "damage": "+ 1"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "MOAB Mauler",
+                    "upgradeImage": "upgradeIcons/bombMoabMauler.png",
+                    "cost": 900,
+                    "changes": {
+                        "sprite": "towers/bombMoabMauler.png",
+                        "projectiles": {
+                            "bomb": {
+                                "specialDamageProperties": {
+                                    "extraDamageToMoabs": "+ 10"
+                                }
                             }
                         }
                     }

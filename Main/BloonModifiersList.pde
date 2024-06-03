@@ -50,6 +50,36 @@ public class BloonModifiersList {
     bloon.setSprite(sprite);
   }
   
+  // Calculates final damage based on the damage properties
+  // A value of -1 indicates immunity to the damage (e.g. sharp projectile hitting lead bloon)
+  public float getDamage(float baseDamage, DamageProperties damageProperties) {
+    float finalDamage = baseDamage;
+    
+    // Sharp vs. lead
+    if (hasModifier("sharpImmunity") && !damageProperties.popLead) {
+      return -1;
+    }
+    
+    // Explosions vs. black
+    if (hasModifier("blastImmunity") && !damageProperties.popBlack) {
+      return -1;
+    }
+    
+    if (hasModifier("frozen") && !damageProperties.popFrozen) {
+      return -1;
+    }
+    
+    if (hasModifier("isCeramic")) {
+      finalDamage += damageProperties.extraDamageToCeramics;
+    }
+    
+    if (hasModifier("isMoab")) {
+      finalDamage += damageProperties.extraDamageToMoabs;
+    }
+    
+    return finalDamage;
+  }
+  
   public HashMap<String, BloonModifier> getModifiers() {
     return this.modifierMap;
   }
@@ -230,22 +260,6 @@ public class Camo extends BloonModifier {
   public Camo clone() {
     return new Camo(); 
   }
-  
-  /*
-  public void drawVisuals() {
-    Bloon bloon = getBloon();
-    BloonPropertyTable properties = bloon.getProperties();
-    
-    // Already a camo sprite
-    String currentSpriteName = properties.getSpriteVariantName(bloon.getSprite());
-    if (currentSpriteName.indexOf("camo") != -1) {
-      return; 
-    }
-    
-    PImage camo = properties.getSpriteVariant("camo");
-    
-    bloon.setSprite(camo);
-  }*/
 }
 
 public class Regrow extends BloonModifier {
@@ -260,7 +274,7 @@ public class Regrow extends BloonModifier {
     
     super.setCustomProperties(properties);
     
-    this.regrowRate = 60;
+    this.regrowRate = int(2.5 * frameRate); // 2.5 seconds by default
     this.cooldown = 0;
   }
   
@@ -274,16 +288,6 @@ public class Regrow extends BloonModifier {
     
     return newModifier;
   }
-  
-  /*
-  public void drawVisuals() {
-    Bloon bloon = getBloon();
-    
-    BloonPropertyTable properties = bloon.getProperties();
-    PImage regrowSprite = properties.getSpriteVariant("regrow");
-    
-    bloon.setSprite(regrowSprite);
-  }*/
   
   public int getRegrowRate() {
     return regrowRate; 
