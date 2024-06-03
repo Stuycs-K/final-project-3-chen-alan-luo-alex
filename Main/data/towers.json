@@ -142,5 +142,31 @@
                 }
             ]
         }
+    },
+    "BombShooter": {
+        "base": {
+            "cost": 650,
+            "sprite": "towers/bombshooter.png",
+            "range": 250,
+            "actions": {
+                "bombAttack": {
+                    "cooldown": 0.63,
+                    "type": "PROJECTILE",
+                    "projectile": "bomb"
+                }
+            },
+            "projectiles": {
+                "bomb": {
+                    "damage": 1,
+                    "pierce": 40,
+                    "speed": 12,
+                    "sprite": "projectiles/bomb.png",
+                    "maxDistance": 300,
+                    "explosionRadius" : 50
+                }
+            }
+        },
+        "upgrades": {}
     }
+    
 }

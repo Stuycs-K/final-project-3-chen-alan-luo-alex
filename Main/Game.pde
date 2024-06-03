@@ -27,8 +27,12 @@ public class Game{
   private Frame verticalWoodenPadding;
   
   private ImageButton towerButtonDartMonkey;
+  private ImageButton towerButtonBombShooter;
   private ImageButton path1Button;
   private ImageButton path2Button;
+  
+  private String currentTowerType = null;
+  private TextLabel placementLabel;
 
   public Game() {
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -65,6 +69,18 @@ public class Game{
     return map;
   }
   
+  public void setCurrentTower(String towerType){
+    this.currentTowerType = towerType;
+    updatePlacingLabel("Now placing: " + towerType);
+  }
+  
+  private void updatePlacingLabel(String text){
+    if(placementLabel != null){
+      placementLabel.setText(text);
+      placementLabel.setVisible(true);
+    }
+  }
+  
   public CurrencyManager getCurrencyManager() {
     return currencyManager;
   }
@@ -86,12 +102,13 @@ public class Game{
       return;
     }
     // TODO
-    if (waveManager.waveFinishedSpawning()) {
+    if (waveManager.waveFinishedSpawning() && bloons.isEmpty()) {
       
       if (waveManager.isLastWave()) {
+        println("w");
         return;
       }
-      
+      println("done");
       waveManager.startNextWave();
     }
     
@@ -131,8 +148,7 @@ public class Game{
     // Insert all bloons that have been created
     bloonSpawner.emptyQueue();
     
-    
-  }
+   }
   
   private void setupGui(){
     upgradeButton = (TextButton) guiManager.create("upgradeButton");
@@ -149,23 +165,33 @@ public class Game{
     path1Label = (TextLabel) guiManager.create("path1Label");
     path2Button = (ImageButton) guiManager.create("path2Button");
     path2Label = (TextLabel) guiManager.create("path2Label");
+    placementLabel = (TextLabel) guiManager.create("placementLabel");
+    towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonBombShooter");
     
     
    }
   
   public void placeTower(String towerName, int x, int y){
-    int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
+    if(!map.isOnPath(new PVector(x,y)) && currentTowerType != null){
+      
+      int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
     
-     if(towerName.equals("DartMonkey")){
-      DartMonkey dartMonkey = new DartMonkey(x, y);
-      towers.add(dartMonkey);
-    }
+      Tower newTower = null;
+      if(towerName.equals("DartMonkey")){
+        newTower = new DartMonkey(x,y);
+      }else if(towerName.equals("BombShooter")){
+        newTower = new BombShooter(x,y);
    
-     if (towerName.equals("BombShooter")){
-       BombShooter bombShooter = new BombShooter(x,y);
-       towers.add(bombShooter);
+    }
+     if(newTower != null){
+       towers.add(newTower);
+       currentTowerType = null;
+       placementLabel.setVisible(false);
      }
+      
   }
+  }
+  
     //  newTower = new BombShooter(x,y);
     //}else if (towerName.equals("IceMonkey")){
     //  newTower = new IceMonkey(x,y);
@@ -192,39 +218,36 @@ public class Game{
     for (Tower tower: towers){
       //println("Drawing tower at: " + tower.x + ", " + tower.y);
       tower.draw();
+      if(tower==selectedTower){
+        drawHighlightCircle(tower.x, tower.y);
+      }
     }
     guiManager.render();
   }
   
+  private void drawHighlightCircle(int x, int y){
+    stroke(255,204,0);
+    noFill();
+    ellipse(x,y,100,100);
+  }
+  
   public void mousePressed(int mx, int my) {
-    // need to add hitbox so that 
-
-    //PVector mousePosition = new PVector(mx, my);
-    //MapSegment mapSegment = map.getMapSegmentFromPosition(mousePosition);
+     if (currentTowerType != null && !guiManager.mousePressed()) {
+        placeTower(currentTowerType, mx, my);
+         return;
+        }
     
-    //if(mapSegment == null){
-    //  return;
-    //}
+       
     
-    /*
-    for (Tower tower : towers) {
-      tower.upgrade(0); 
-    }*/
-    
-    if (upgradeButton.isMouseInBounds()) {
-      if (selectedTower != null) {
+    if (upgradeButton.isMouseInBounds() && selectedTower != null) {
          selectedTower.upgrade(0);
-      }
-       return;
-      }
+    }
      
-     
-    if (sellButton.isMouseInBounds()) {
-      if (selectedTower != null) {
+    else if (sellButton.isMouseInBounds() && selectedTower != null) {
          selectedTower.sellTower();
       }
-       return;
-     }
+
+    
 
     for (Tower tower : towers) {
       if (isInBoundsOfRectangle(mouseX, mouseY, tower.x, tower.y, tower.sprite.width, tower.sprite.height)) {
@@ -233,10 +256,11 @@ public class Game{
       }
     }
    
-    placeTower("DartMonkey", mx, my);
-  }
+  
 
 }
+    }
+    
 
 public class UpgradeButton {
   

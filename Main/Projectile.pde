@@ -4,6 +4,9 @@ Projectile createProjectile(PVector origin, PVector goal, ProjectileData data) {
     case "BASE":
       projectile = new Projectile(origin, goal, data);
       break;
+    case "BOMB":
+      projectile = new BombProjectile(origin, goal, (BombData)data);
+      break;
     default:
       projectile = new Projectile(origin, goal, data);
   }
@@ -19,6 +22,9 @@ ProjectileData createProjectileData(JSONObject definition) {
   switch (type) {
     case "BASE":
       projectileData = new ProjectileData(definition);
+      break;
+    case "BOMB":
+      projectileData = new BombData(definition);
       break;
     default:
       projectileData = new ProjectileData(definition);
@@ -152,6 +158,8 @@ public class DamageProperties {
   
   public DamageProperties(JSONObject data) {
     // By default, we assume damage can't pop lead
+    // By default, we assume the projectile is sharp (can't pop lead)
+
     this.popLead = false;
     this.popFrozen = false;
     this.popBlack = true;
@@ -190,11 +198,11 @@ public class ProjectileData extends DamageProperties {
   public String type;
   
   public float maxDistance;
+
   
   public ProjectileData(JSONObject projectileData) {
-    super(projectileData);
-
-    this.type = readString(projectileData, "type", "BASE");
+     super(projectileData);
+     this.type = readString(projectileData, "type", "BASE");
   }
   
   public void updateProperties(JSONObject data) {
@@ -209,7 +217,25 @@ public class ProjectileData extends DamageProperties {
     this.speed = readIntDiff(data, "speed", this.speed);
     this.maxDistance = readFloatDiff(data, "maxDistance", this.maxDistance);
   }
+  
 }
+
+public class BombData extends ProjectileData {
+  public float explosionRadius;
+
+  public BombData(JSONObject projectileData) {
+    super(projectileData);
+    this.explosionRadius = projectileData.getFloat("explosionRadius", 100.0f);
+  }
+           
+  public void updateProperties(JSONObject data) {
+    super.updateProperties(data);
+    this.explosionRadius = readFloatDiff(data, "explosionRadius", this.explosionRadius);
+  }
+}
+
+
+
   
 //public class ProjectileImages{
 //  private ArrayList<PImage> images;
