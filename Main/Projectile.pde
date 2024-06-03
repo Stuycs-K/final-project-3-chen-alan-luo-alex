@@ -4,6 +4,9 @@ Projectile createProjectile(PVector origin, PVector goal, ProjectileData data) {
     case "BASE":
       projectile = new Projectile(origin, goal, data);
       break;
+    case "BOMB":
+      projectile = new BombProjectile(origin, goal, data);
+      break;
     default:
       projectile = new Projectile(origin, goal, data);
   }
@@ -151,6 +154,7 @@ public class ProjectileData {
   public String type;
   
   public float maxDistance;
+  public float explosionRadius;
   
   public ProjectileData(JSONObject projectileData) {
     // By default, we assume the projectile is sharp (can't pop lead)
@@ -184,6 +188,10 @@ public class ProjectileData {
     if (!data.isNull("sprite")) {
       String spritePath = data.getString("sprite");
       this.sprite = loadImage("images/" + spritePath);
+    }
+    
+    if(type.equals("BOMB")){
+      explosionRadius = readFloat(data, "explosionRadius", explosionRadius);
     }
     
     this.damage = readIntDiff(data, "damage", this.damage);
