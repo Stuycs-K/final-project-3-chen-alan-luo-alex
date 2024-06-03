@@ -180,6 +180,24 @@ public class Tower{
     this.upgrades = new TowerUpgradeManager(this);
   }
   
+  public TowerUpgrade getCurrentUpgrade(int pathId){
+    int currentLevel = upgrades.getCurrentLevel(pathId)-1;
+    return upgrades.getUpgradeInformation().getNextUpgrade(pathId,currentLevel);
+  
+  }
+  
+  public PImage getPathUpgradeImage(int pathId){
+    TowerUpgrade currentUpgrade = getCurrentUpgrade(pathId);
+    if(currentUpgrade!=null){
+      return currentUpgrade.getSprite();
+    }
+    return this.sprite;
+  }
+  
+  public PImage getSprite(){
+    return sprite;
+  }
+  
   // Sets range and camo detection
   public void setPropertiesFromUpgrade(TowerUpgrade upgrade) {
     JSONObject changes = upgrade.getChanges();
@@ -319,6 +337,10 @@ public class TowerUpgradeManager {
     }
   }
   
+  public int getCurrentLevel(int pathId){
+    return pathUpgradeLevelList.get(pathId)+1;
+  }
+  
   public TowerUpgradeInformation getUpgradeInformation() {
     return upgradeInformation;
   }
@@ -436,7 +458,17 @@ public class TowerUpgradeManager {
     if (projectileChanges != null) {
       for (String projectileName : (Set<String>) projectileChanges.keys()) {
         ProjectileData projectile = tower.projectileMap.get(projectileName);
-        projectile.updateProperties(projectileChanges.getJSONObject(projectileName));
+        
+        JSONObject currentChanges = projectileChanges.getJSONObject(projectileName);
+        
+        String changedType = readString(currentChanges, "type", projectile.type);
+        
+        if (projectile.type.equals(changedType)) {
+          projectile.updateProperties(currentChanges);
+        } else { // TODO
+          ProjectileData newProjectileData = createProjectileData(currentChanges);
+        }
+        
       }
     }
     
