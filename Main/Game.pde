@@ -244,6 +244,7 @@ public class Game{
       if(nextPath1Upgrade!=null){
         path1Button.setImage(nextPath1Upgrade.getUpgradeImage());
         path1Label.setText("Path 1" + nextPath1Upgrade.getUpgradeName());
+        int upgradeCost = nextPath1Upgrade.getUpgradeCost();
         
       }else{
         path1Button.setImage(invalidUpgradeImage);
@@ -253,6 +254,7 @@ public class Game{
       if(nextPath2Upgrade != null){
         path2Button.setImage(nextPath2Upgrade.getUpgradeImage());
         path2Label.setText("Path 2" + nextPath2Upgrade.getUpgradeName());
+        int upgradeCost = nextPath2Upgrade.getUpgradeCost();
       }else{
         path2Button.setImage(invalidUpgradeImage);
         path2Label.setText("Path 2: No upgrade");
@@ -305,7 +307,7 @@ public class Game{
      if (isInBoundsOfRectangle(mx, my, 820, 700, 100, 100) && selectedTower !=  null) {
         selectedTower.upgrade(0);  
         displayTowerDetails(selectedTower);
-       // currencyManager.rewardCurrency
+        currencyManager.removeCurrency(
         
       } else if (isInBoundsOfRectangle(mx, my, 940, 700, 100, 100) && selectedTower != null) {
           selectedTower.upgrade(1);  
