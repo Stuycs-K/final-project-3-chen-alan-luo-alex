@@ -225,7 +225,7 @@ public class BombData extends ProjectileData {
 
   public BombData(JSONObject projectileData) {
     super(projectileData);
-    this.explosionRadius = projectileData.getFloat("explosionRadius", 100.0f);
+    this.explosionRadius = projectileData.getFloat("explosionRadius", 150.0f);
   }
            
   public void updateProperties(JSONObject data) {
