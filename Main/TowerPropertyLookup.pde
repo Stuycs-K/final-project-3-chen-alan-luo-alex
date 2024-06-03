@@ -129,6 +129,10 @@ private class TowerUpgrade {
     return upgradeData.getInt("cost");
   }
   
+  public String getUpgradeName() {
+    return upgradeData.getString("name");
+  }
+  
   public JSONObject getChanges() {
     return upgradeData.getJSONObject("changes");
   }

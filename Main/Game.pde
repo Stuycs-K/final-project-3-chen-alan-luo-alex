@@ -35,6 +35,8 @@ public class Game{
   private String currentTowerType = null;
   private TextLabel placementLabel;
 
+  private PImage invalidUpgradeImage;
+  
   public Game() {
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
     waypoints.add(new PVector(0, 100));
@@ -63,6 +65,7 @@ public class Game{
     
     waveManager = new WaveManager();
     
+    invalidUpgradeImage = loadImage("images/upgradeIcons/invalidUpgrade.png");
     showTowerOptions = false;
     setupGui();
   }
@@ -225,26 +228,31 @@ public class Game{
   }
   
   private void displayTowerDetails(Tower tower){
+    
     if(tower!=null){
+      String towerName = tower.towerName;
+
+      ArrayList<TowerUpgrade> nextUpgrades = tower.upgrades.getNextUpgrades();
+      
       towerImage.setImage(tower.getSprite());
       
-      TowerUpgrade currentPath1Upgrade = tower.getCurrentUpgrade(0);
-      TowerUpgrade currentPath2Upgrade = tower.getCurrentUpgrade(1);
+      TowerUpgrade nextPath1Upgrade = nextUpgrades.get(0);
+      TowerUpgrade nextPath2Upgrade = nextUpgrades.get(1);
       
-      if(currentPath1Upgrade!=null){
-        path1Button.setImage(currentPath1Upgrade.getSprite());
-        path1Label.setText("Path 1" + currentPath1Upgrade);
+      if(nextPath1Upgrade!=null){
+        path1Button.setImage(nextPath1Upgrade.getUpgradeImage());
+        path1Label.setText("Path 1" + nextPath1Upgrade.getUpgradeName());
         
       }else{
-        path1Button.setImage(null);
+        path1Button.setImage(invalidUpgradeImage);
         path1Label.setText("Path 1: No Upgrade");
       }
       
-      if(currentPath2Upgrade != null){
-        path2Button.setImage(currentPath2Upgrade.getSprite());
-        path2Label.setText("Path 2" + currentPath2Upgrade);
+      if(nextPath2Upgrade != null){
+        path2Button.setImage(nextPath2Upgrade.getUpgradeImage());
+        path2Label.setText("Path 2" + nextPath2Upgrade.getUpgradeName());
       }else{
-        path2Button.setImage(null);
+        path2Button.setImage(invalidUpgradeImage);
         path2Label.setText("Path 2: No upgrade");
       }
       upgradeButton.setVisible(true);
@@ -275,8 +283,6 @@ public class Game{
     for (Projectile projectile : projectiles) {
       projectile.drawProjectile();
     }
-    
-    guiManager.render();
   }
   
   private void drawHighlightCircle(int x, int y){
