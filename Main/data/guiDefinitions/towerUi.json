@@ -80,9 +80,7 @@
         "sizeY" : 50,
         "image" : "towers/dartmonkey.png",
         "zIndex" : 2,
-        "textColor": "0 0 0",
-        "textXAlignment": "CENTER",
-        "textYAlignment": "CENTER"
+        "towerType": "DartMonkey"
     },
     "towerImage" :{
         "className":"ImageLabel",

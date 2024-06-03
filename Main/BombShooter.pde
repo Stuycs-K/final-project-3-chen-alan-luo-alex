@@ -1,34 +1,35 @@
 public class BombShooter extends Tower{
-  private int bombRange;
-  private int bombDamage;
-  private float explosionRadius;
-  private boolean isClusterBombs;
-  private boolean isMissle;
-  private TowerTargetFilter targetFilterBomb;
+  //private int bombRange;
+  //private int bombDamage;
+  //private float explosionRadius;
+  //private boolean isClusterBombs;
+  //private boolean isMissle;
+  //private TowerTargetFilter targetFilterBomb;
   
-  public BombShooter(int x, int y){
-    super(x, y, 100, 50, 1, 20, 50, 100);
-    this.bombRange = 100;
-    this.bombDamage = 1;
-    this.explosionRadius = 50;
-    this.cost = 100;
-    this.isClusterBombs = false;
-    this.isMissle = false;
-    this.targetFilterBomb = new TowerTargetFilter();
-    //sprites.add(loadImage("images/Towers/moabTower.png"));
+ public BombShooter(int x, int y){
+   super("BombShooter",x,y);
+ }
+  //  this.bombRange = 100;
+  //  this.bombDamage = 1;
+  //  this.explosionRadius = 50;
+  //  this.cost = 100;
+  //  this.isClusterBombs = false;
+  //  this.isMissle = false;
+  //  this.targetFilterBomb = new TowerTargetFilter();
+  //  //sprites.add(loadImage("images/Towers/moabTower.png"));
     
-  }
+  //}
   
-  public void attack(ArrayList<Bloon> bloons){
-    for (Bloon targetBloon: bloons) {
-      if(targetFilterBomb.canAttack(targetBloon)){
-        if (dist(x,y,targetBloon.position.x,targetBloon.position.y) <= bombRange) {
-          projectiles.add(new BombProjectile(x,y,targetBloon.position.x,targetBloon.position.y,bombDamage,explosionRadius,isClusterBombs));
-          break;
-        }
-      }
-    }
-  }
+  //public void attack(ArrayList<Bloon> bloons){
+  //  for (Bloon targetBloon: bloons) {
+  //    if(targetFilterBomb.canAttack(targetBloon)){
+  //      if (dist(x,y,targetBloon.position.x,targetBloon.position.y) <= bombRange) {
+  //        projectiles.add(new BombProjectile(x,y,targetBloon.position.x,targetBloon.position.y,bombDamage,explosionRadius,isClusterBombs));
+  //        break;
+  //      }
+  //    }
+  //  }
+  //}
   
   /*
   public void upgrade(int path){
@@ -59,9 +60,6 @@ public class BombShooter extends Tower{
   }
   */
   
-  public void draw(){
-    fill(0,0,255);
-    ellipse(x,y,25,25);
     
     
     //if (upgradeLevel == 3){
@@ -73,9 +71,9 @@ public class BombShooter extends Tower{
     //}
   // }
   //}
- }
+ 
   
   public int getCost(){
-    return 0;
+    return 650;
   }
 }
