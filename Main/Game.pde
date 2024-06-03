@@ -185,6 +185,7 @@ public class Game{
     }
      if(newTower != null){
        towers.add(newTower);
+       selectedTower = null;
        currentTowerType = null;
        placementLabel.setVisible(false);
      }
