@@ -158,7 +158,7 @@
             "projectiles": {
                 "bomb": {
                     "damage": 1,
-                    "pierce": 40,
+                    "pierce": 1,
                     "speed": 12,
                     "sprite": "projectiles/bomb.png",
                     "maxDistance": 300,
@@ -166,7 +166,83 @@
                 }
             }
         },
-        "upgrades": {}
+        "upgrades": {
+        "1": [
+            {
+                "name": "Extra Range",
+                "upgradeImage": "towers/bombExtraRange.png",
+                "cost": 200,
+                "changes": {
+                    "range": "+ 50"
+                }
+            },
+            {
+                "name": "Frag Bombs",
+                "upgradeImage": "towers/bombFragBombs.png",
+                "cost": 300,
+                "changes": {
+                    "projectiles": {
+                        "bomb": {
+                            "type": "MULTI_PROJECTILE",
+                            "projectileCount": 8,
+                            "angle": 360
+                        }
+                    }
+                }
+            },
+            {
+                "name": "Cluster Bombs",
+                "upgradeImage": "towers/bombClusterBombs.png",
+                "cost": 500,
+                "changes": {
+                    "projectiles": {
+                        "bomb": {
+                            "type": "MULTI_PROJECTILE",
+                            "projectileCount": 3,
+                            "angle": 30
+                        }
+                    }
+                }
+            }
+        ],
+        "2": [
+            {
+                "name": "Missile Launcher",
+                "upgradeImage": "towers/bombMissileLauncher.png",
+                "cost": 400,
+                "changes": {
+                    "actions" :{
+                        "bombAttack":{
+                            "cooldown" : "* 0.8"
+                        }
+                    },
+                    "range": "+ 50",
+                    "projectiles": {
+                        "bomb": {
+                            "speed": "+ 5",
+                            "damage": "+ 1"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "MOAB Mauler",
+                "upgradeImage": "towers/bombMoabMauler.png",
+                "cost": 900,
+                 "changes": {
+                    "projectiles": {
+                        "bomb": {
+                            "specialDamageProperties":{
+                                "extraDamageToMoabs": "+ 10"
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+        }
     }
+
+
     
 }
