@@ -211,7 +211,46 @@ public class Game{
   public void selectTower(Tower tower){
     selectedTower = tower;
     showTowerOptions = true;
+    displayTowerDetails(selectedTower);
   }
+  
+  private void displayTowerDetails(Tower tower){
+    if(tower!=null){
+      towerImage.setImage(tower.getSprite());
+      
+      TowerUpgrade currentPath1Upgrade = tower.getCurrentUpgrade(0);
+      TowerUpgrade currentPath2Upgrade = tower.getCurrentUpgrade(1);
+      
+      if(currentPath1Upgrade!=null){
+        path1Button.setImage(currentPath1Upgrade.getSprite());
+        path1Label.setText("Path 1" + currentPath1Upgrade);
+        
+      }else{
+        path1Button.setImage(null);
+        path1Label.setText("Path 1: No Upgrade");
+      }
+      
+      if(currentPath2Upgrade != null){
+        path2Button.setImage(currentPath2Upgrade.getSprite());
+        path2Label.setText("Path 2" + currentPath2Upgrade);
+      }else{
+        path2Button.setImage(null);
+        path2Label.setText("Path 2: No upgrade");
+      }
+      upgradeButton.setVisible(true);
+      sellButton.setVisible(true);
+      upgradeLabel.setVisible(true);
+      sellLabel.setVisible(true);
+    }else{
+      upgradeButton.setVisible(false);
+      sellButton.setVisible(false);
+      upgradeLabel.setVisible(false);
+      sellLabel.setVisible(false);
+    }
+
+  }
+  
+
 
   public void render() {
     map.drawPath();
@@ -232,21 +271,31 @@ public class Game{
   }
   
   public void mousePressed(int mx, int my) {
-     if (currentTowerType != null && !guiManager.mousePressed()) {
-        placeTower(currentTowerType, mx, my);
-         return;
+   if (currentTowerType != null && !guiManager.mousePressed()) {
+      placeTower(currentTowerType, mx, my);
+      return;
+        }
+    if (isInBoundsOfRectangle(mx, my, 650, 700, 150, 50)) {
+      if (selectedTower != null) {
+         selectedTower.upgrade(0);  
+         displayTowerDetails(selectedTower);  
+       }
+    } else if (isInBoundsOfRectangle(mx, my, 650,760, 150, 50)) {
+          if (selectedTower != null) {
+            selectedTower.sellTower();
+            selectedTower = null;
+            displayTowerDetails(null);  
+            }
+        }
+
+     if (isInBoundsOfRectangle(mx, my, 820, 700, 100, 100) && selectedTower !=  null) {
+        selectedTower.upgrade(0);  
+        displayTowerDetails(selectedTower);  
+      } else if (isInBoundsOfRectangle(mx, my, 940, 700, 100, 100) && selectedTower != null) {
+          selectedTower.upgrade(1);  
+            displayTowerDetails(selectedTower); 
         }
     
-       
-    
-    if (upgradeButton.isMouseInBounds() && selectedTower != null) {
-         selectedTower.upgrade(0);
-    }
-     
-    else if (sellButton.isMouseInBounds() && selectedTower != null) {
-         selectedTower.sellTower();
-      }
-
     
 
     for (Tower tower : towers) {
@@ -255,10 +304,14 @@ public class Game{
         return;
       }
     }
-   
+    
+
+    
   
 
 }
+
+
     }
     
 
