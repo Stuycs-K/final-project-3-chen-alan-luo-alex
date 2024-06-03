@@ -191,8 +191,14 @@ public class Game{
       Tower newTower = null;
       if(towerName.equals("DartMonkey")){
         newTower = new DartMonkey(x,y);
+        if(currencyManager.getCurrency() > startingCost){
+          currencyManager.removeCurrency(startingCost);
+        }
       }else if(towerName.equals("BombShooter")){
         newTower = new BombShooter(x,y);
+        if(currencyManager.getCurrency() > startingCost){
+          currencyManager.removeCurrency(startingCost);
+        }
    
     }
      if(newTower != null){
