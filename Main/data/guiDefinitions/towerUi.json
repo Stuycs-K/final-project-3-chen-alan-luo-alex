@@ -82,6 +82,17 @@
         "zIndex" : 2,
         "towerType": "DartMonkey"
     },
+    "towerButtonBombShooter":{
+        "className" : "ImageButton",
+        "x" : 1060,
+        "y" : 100,
+        "sizeX" : 50,
+        "sizeY" : 50,
+        "image" : "towers/bombshooter.png",
+        "zIndex" : 2,
+        "towerType" : "BombShooter"
+
+    },
     "towerImage" :{
         "className":"ImageLabel",
         "x" : 530,
@@ -91,6 +102,7 @@
         "image" : "towers/dartmonkey.png",
         "zIndex" : 1
     },
+    
     "path1Button":{
         "className": "ImageButton",
         "x" : 820,

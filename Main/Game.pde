@@ -27,6 +27,7 @@ public class Game{
   private Frame verticalWoodenPadding;
   
   private ImageButton towerButtonDartMonkey;
+  private ImageButton towerButtonBombShooter;
   private ImageButton path1Button;
   private ImageButton path2Button;
   
@@ -101,12 +102,13 @@ public class Game{
       return;
     }
     // TODO
-    if (waveManager.waveFinishedSpawning()) {
+    if (waveManager.waveFinishedSpawning() && bloons.isEmpty()) {
       
       if (waveManager.isLastWave()) {
+        println("w");
         return;
       }
-      
+      println("done");
       waveManager.startNextWave();
     }
     
@@ -146,8 +148,7 @@ public class Game{
     // Insert all bloons that have been created
     bloonSpawner.emptyQueue();
     
-    
-  }
+   }
   
   private void setupGui(){
     upgradeButton = (TextButton) guiManager.create("upgradeButton");
@@ -165,6 +166,7 @@ public class Game{
     path2Button = (ImageButton) guiManager.create("path2Button");
     path2Label = (TextLabel) guiManager.create("path2Label");
     placementLabel = (TextLabel) guiManager.create("placementLabel");
+    towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonBombShooter");
     
     
    }
@@ -174,16 +176,20 @@ public class Game{
       
       int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
     
-      Tower newTower = new DartMonkey(x,y);
-      towers.add(newTower);
-      currentTowerType = null;
-      placementLabel.setVisible(false);
-    }
+      Tower newTower = null;
+      if(towerName.equals("DartMonkey")){
+        newTower = new DartMonkey(x,y);
+      }else if(towerName.equals("BombShooter")){
+        newTower = new BombShooter(x,y);
    
-     if (towerName.equals("BombShooter")){
-       BombShooter bombShooter = new BombShooter(x,y);
-       towers.add(bombShooter);
+    }
+     if(newTower != null){
+       towers.add(newTower);
+       currentTowerType = null;
+       placementLabel.setVisible(false);
      }
+      
+  }
   }
   
     //  newTower = new BombShooter(x,y);
