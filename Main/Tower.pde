@@ -436,7 +436,17 @@ public class TowerUpgradeManager {
     if (projectileChanges != null) {
       for (String projectileName : (Set<String>) projectileChanges.keys()) {
         ProjectileData projectile = tower.projectileMap.get(projectileName);
-        projectile.updateProperties(projectileChanges.getJSONObject(projectileName));
+        
+        JSONObject currentChanges = projectileChanges.getJSONObject(projectileName);
+        
+        String changedType = readString(currentChanges, "type", projectile.type);
+        
+        if (projectile.type.equals(changedType)) {
+          projectile.updateProperties(currentChanges);
+        } else { // TODO
+          ProjectileData newProjectileData = createProjectileData(currentChanges);
+        }
+        
       }
     }
     

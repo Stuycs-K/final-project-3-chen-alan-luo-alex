@@ -164,6 +164,17 @@
                     "sprite": "projectiles/bomb.png",
                     "maxDistance": 300,
                     "explosionRadius": 50
+                },
+                "clusterBomb": {
+                    "type": "CLUSTER_BOMB",
+                    "projectileCount": 8,
+                    "clusterProjectileData": {
+                        "sprite": "projectiles/bombFrag.png",
+                        "damage": 2,
+                        "pierce": 1,
+                        "maxDistance": 20,
+                        "speed": 50
+                    }
                 }
             }
         },
