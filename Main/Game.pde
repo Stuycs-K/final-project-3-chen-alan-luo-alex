@@ -257,7 +257,7 @@ public class Game{
     for (Tower tower: towers){
       //println("Drawing tower at: " + tower.x + ", " + tower.y);
       tower.draw();
-      if(tower==selectedTower){
+      if(tower==selectedTower && currentTowerType == null){
         drawHighlightCircle(tower.x, tower.y);
       }
     }
