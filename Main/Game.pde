@@ -12,13 +12,11 @@ public class Game{
   public WaveManager waveManager;
   private Tower selectedTower;
   private boolean showTowerOptions;
-  
-  private TextButton upgradeButton;
+
   private TextButton sellButton;
   
   private ImageLabel towerImage;
   
-  private TextLabel upgradeLabel;
   private TextLabel sellLabel;
   private TextLabel towerLabel;
   private TextLabel path1Label;
@@ -163,9 +161,7 @@ public class Game{
    }
   
   private void setupGui(){
-    upgradeButton = (TextButton) guiManager.create("upgradeButton");
     sellButton = (TextButton) guiManager.create("sellButton");
-    upgradeLabel = (TextLabel) guiManager.create("upgradeLabel");
     sellLabel = (TextLabel) guiManager.create("sellLabel");
     towerLabel = (TextLabel) guiManager.create("towerLabel");
     horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
@@ -261,14 +257,10 @@ public class Game{
         path2Button.setImage(invalidUpgradeImage);
         path2Label.setText("Path 2: No upgrade");
       }
-      upgradeButton.setVisible(true);
       sellButton.setVisible(true);
-      upgradeLabel.setVisible(true);
       sellLabel.setVisible(true);
     }else{
-      upgradeButton.setVisible(false);
       sellButton.setVisible(false);
-      upgradeLabel.setVisible(false);
       sellLabel.setVisible(false);
     }
 
@@ -302,22 +294,19 @@ public class Game{
       placeTower(currentTowerType, mx, my);
       return;
         }
-    if (isInBoundsOfRectangle(mx, my, 650, 700, 150, 50)) {
-      if (selectedTower != null) {
-         selectedTower.upgrade(0);  
-         displayTowerDetails(selectedTower);  
-       }
-    } else if (isInBoundsOfRectangle(mx, my, 650,760, 150, 50)) {
+     else if (isInBoundsOfRectangle(mx, my, 650,675, 150, 50)) {
           if (selectedTower != null) {
             selectedTower.sellTower();
             selectedTower = null;
-            displayTowerDetails(null);  
+            displayTowerDetails(null);
             }
         }
 
      if (isInBoundsOfRectangle(mx, my, 820, 700, 100, 100) && selectedTower !=  null) {
         selectedTower.upgrade(0);  
-        displayTowerDetails(selectedTower);  
+        displayTowerDetails(selectedTower);
+       // currencyManager.rewardCurrency
+        
       } else if (isInBoundsOfRectangle(mx, my, 940, 700, 100, 100) && selectedTower != null) {
           selectedTower.upgrade(1);  
             displayTowerDetails(selectedTower); 
