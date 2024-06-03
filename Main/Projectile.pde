@@ -222,6 +222,7 @@ public class ProjectileData extends DamageProperties {
 
 public class BombData extends ProjectileData {
   public float explosionRadius;
+  public boolean isClusterBombs;
 
   public BombData(JSONObject projectileData) {
     super(projectileData);

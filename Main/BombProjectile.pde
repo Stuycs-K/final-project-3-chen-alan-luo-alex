@@ -1,8 +1,7 @@
 public class BombProjectile extends Projectile{
-  
   public BombProjectile(PVector origin, PVector goal, ProjectileData data) {
     super(origin, goal, data);
-    }
+  }
   
   public void update(ArrayList<Bloon> bloons){
     super.update(bloons);
@@ -12,9 +11,11 @@ public class BombProjectile extends Projectile{
   }
   
   private void explode(ArrayList<Bloon> bloons){
+    BombData bombData = (BombData) projectileData;
+    
     for(Bloon bloon : bloons){
       float distance = PVector.dist(new PVector(x, y), new PVector(bloon.getPosition().x, bloon.getPosition().y));
-      if(distance <= ((BombData)projectileData).explosionRadius){
+      if(distance <= bombData.explosionRadius) {
         bloon.damage(projectileData.damage);
       }
     }
