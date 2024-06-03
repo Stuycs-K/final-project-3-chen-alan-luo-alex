@@ -111,6 +111,9 @@
         "textXAlignment": "CENTER",
         "textYAlignment": "CENTER",
         "backgroundColor": "255 255 255",
+        "stroke": {
+            "type": "NONE"
+        },
         "backgroundTransparency": 0.5,
         "zIndex": 3
     }

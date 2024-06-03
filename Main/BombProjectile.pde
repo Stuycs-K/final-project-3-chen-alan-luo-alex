@@ -13,7 +13,7 @@ public class BombProjectile extends Projectile{
   
   private void explode(ArrayList<Bloon> bloons){
     for(Bloon bloon : bloons){
-      float distance = PVector.dist(new PVector(x, y), new PVector(bloon.x, bloon.y));
+      float distance = PVector.dist(new PVector(x, y), new PVector(bloon.getPosition().x, bloon.getPosition().y));
       if(distance <= ((BombData)projectileData).explosionRadius){
         bloon.damage(projectileData.damage);
       }
