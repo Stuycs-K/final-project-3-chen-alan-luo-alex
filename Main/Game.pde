@@ -107,10 +107,9 @@ public class Game{
     if (waveManager.waveFinishedSpawning() && bloons.isEmpty()) {
       
       if (waveManager.isLastWave()) {
-        println("w");
         return;
       }
-      println("done");
+      
       waveManager.startNextWave();
     }
     
@@ -131,7 +130,15 @@ public class Game{
     // Remove bloons that need to be removed
     bloons.removeAll(scheduledForRemoval);
     
-    
+    // Any random untracked projectile
+    ArrayList<Projectile> projectileScheduled = new ArrayList<>();
+    for (Projectile projectile : projectiles) {
+      projectile.update(bloons);
+      if(projectile.finished) {
+        projectileScheduled.add(projectile);
+      }
+    }
+    projectiles.removeAll(projectileScheduled);
    
     
     for(Tower tower: towers){
@@ -146,16 +153,6 @@ public class Game{
       }
       tower.projectiles.removeAll(projectilesToRemove);
     }
-    
-    // Any random untracked projectile
-    ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
-    for (Projectile projectile : projectiles) {
-      projectile.update(bloons);
-      if(projectile.finished) {
-        projectilesToRemove.add(projectile);
-      }
-    }
-    projectiles.removeAll(projectilesToRemove);
     
     // Insert all bloons that have been created
     bloonSpawner.emptyQueue();
@@ -234,6 +231,11 @@ public class Game{
         drawHighlightCircle(tower.x, tower.y);
       }
     }
+    
+    for (Projectile projectile : projectiles) {
+      projectile.drawProjectile();
+    }
+    
     guiManager.render();
   }
   

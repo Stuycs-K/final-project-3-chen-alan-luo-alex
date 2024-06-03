@@ -87,7 +87,6 @@ public class ClusterBomb extends Bomb {
     PVector origin = new PVector(x, y);
     float anglePerProjectile = TAU / clusterBombData.projectileCount;
     for (int i = 0; i < clusterBombData.projectileCount; i++) {
-      
       PVector projectileDirection = this.direction.copy();
       PVector direction = projectileDirection.rotate(anglePerProjectile * i).normalize();
       

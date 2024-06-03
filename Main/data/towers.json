@@ -167,13 +167,19 @@
                 },
                 "clusterBomb": {
                     "type": "CLUSTER_BOMB",
+                    "damage": 1,
+                    "pierce": 1,
+                    "speed": 12,
+                    "sprite": "projectiles/bomb.png",
+                    "maxDistance": 300,
+                    "explosionRadius": 50,
                     "projectileCount": 8,
                     "clusterProjectileData": {
                         "sprite": "projectiles/bombFrag.png",
                         "damage": 2,
                         "pierce": 1,
-                        "maxDistance": 20,
-                        "speed": 50
+                        "maxDistance": 75,
+                        "speed": 25
                     }
                 }
             }
@@ -195,18 +201,10 @@
                     "cost": 300,
                     "changes": {
                         "sprite": "towers/bombFragBombs.png",
-                        "projectiles": {
-                            "bomb": {
-                                "type": "CLUSTER_BOMB",
-                                "projectileCount": 8,
-                                "clusterProjectileData": {
-                                    "sprite": "projectiles/bombFrag.png",
-                                    "damage": 2,
-                                    "pierce": 1,
-                                    "maxDistance": 20,
-                                    "speed": 50
-                                }
-                            },
+                        "actions": {
+                            "bombAttack": {
+                                "projectile": "clusterBomb"
+                            }
                         }
                     }
                 },
@@ -217,15 +215,15 @@
                     "changes": {
                         "sprite": "towers/bombClusterBombs.png",
                         "projectiles": {
-                            "bomb": {
+                            "clusterBomb": {
                                 "projectileCount": 6,
                                 "clusterProjectileData": {
                                     "sprite": "projectiles/bomb.png",
                                     "type": "BOMB",
                                     "damage": 1,
                                     "pierce": 1,
-                                    "maxDistance": 30,
-                                    "speed": 50,
+                                    "maxDistance": 100,
+                                    "speed": 20,
                                     "explosionRadius": 100
                                 }
                             }
