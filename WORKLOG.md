@@ -63,6 +63,11 @@
 - Add Dart Monkey Triple Darts
 - Fix various issues with projectile rotation and pierce
 
+## 6/2/2024
+- Add Bomb Shooter Cluster Bombs
+- Add a ton of images for the tower sprites and upgrade icons
+- Fix small bugs with camo detection and add cash per wave
+
 ## Alex Luo
 
 ### 5/22/2024

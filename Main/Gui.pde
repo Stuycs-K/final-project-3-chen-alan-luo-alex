@@ -35,12 +35,14 @@ private class FontManager {
 public class GuiManager {
   private ArrayList<GuiBase> guiList;
   private HashMap<String, GuiBase> guiTemplateMap;
+  private HashMap<String, JSONObject> guiDefinitionMap;
   private FontManager fontManager;
   private TextLabel messageLabel;
   
   public GuiManager() {
     guiList = new ArrayList<GuiBase>();
     guiTemplateMap = new HashMap<String, GuiBase>();
+    guiDefinitionMap = new HashMap<String, JSONObject>();
     fontManager = new FontManager();
         
     for (String path : GUI_DEFINITION_FILES) {
@@ -99,6 +101,7 @@ public class GuiManager {
     Set<String> guiComponentNames = data.keys();
     for (String name : guiComponentNames) {
       JSONObject guiData = data.getJSONObject(name);
+      guiDefinitionMap.put(name, guiData);
       
       String className = guiData.getString("className");
       
@@ -132,6 +135,14 @@ public class GuiManager {
     GuiBase copy = getTemplate(name).clone();
     insertGui(copy);
     return copy;
+  }
+  
+  public JSONObject getGuiDefinition(String name) {
+    return guiDefinitionMap.get(name);
+  }
+  
+  public void createCustom(GuiBase object) {
+    insertGui(object);
   }
   
   public void render() {
@@ -275,17 +286,21 @@ private color readColor(JSONObject object, String keyName) {
 }
 
 public static boolean isInBoundsOfRectangle(int x, int y, int rectX, int rectY, int rectSizeX, int rectSizeY) {
-   return (x > rectX - rectSizeX && x < rectX + rectSizeX) && (y > rectY - rectSizeY && y < rectY + rectSizeY);
+   return (x > rectX && x < rectX + rectSizeX) && (y > rectY && y < rectY + rectSizeY);
+}
+
+public static boolean isInBoundsOfRectangleCentered(int x, int y, int rectX, int rectY, int rectSizeX, int rectSizeY) {
+  return (x > rectX - rectSizeX && x < rectX + rectSizeX) && (y > rectY - rectSizeY && y < rectY + rectSizeY);
 }
 
 public class GuiBase {
   private color backgroundColor;
   private float backgroundTransparency; // 0 is fully transparent, 1 is fully solid
   
-  private PVector position;
-  private PVector size;
+  public PVector position;
+  public PVector size;
   
-  private boolean isVisible;
+  public boolean isVisible;
   
   private JSONObject definition;
   
@@ -316,6 +331,14 @@ public class GuiBase {
   
   public PVector getSize() {
     return size;
+  }
+  
+  public void translatePosition(PVector position) {
+    this.position = PVector.add(this.position, position);
+  }
+  
+  public void translatePosition(int deltaX, int deltaY) {
+    translatePosition(new PVector(deltaX, deltaY));
   }
   
   public int getZIndex() {
@@ -443,13 +466,20 @@ public class ImageLabel extends GuiBase {
     this.image = image;
   }
   
+  public void clearImage() {
+    this.image = null; 
+  }
+  
   public void updateProperties() {
     super.updateProperties();
     
     JSONObject definition = getDefinition();
     String imagePath = definition.getString("image");
-    this.image = loadImage("images/" + imagePath);
-    
+
+    if (imagePath != null) {
+      this.image = loadImage("images/" + imagePath);
+    }
+
     PVector defaultSize = getSize();
     int imageSizeX = readInt(definition, "imageSizeX", int(defaultSize.x));
     int imageSizeY = readInt(definition, "imageSizeY", int(defaultSize.y));
@@ -477,6 +507,10 @@ public class ImageLabel extends GuiBase {
   
   public void render() {
     super.render();
+    
+    if (this.image == null) {
+      return;
+    }
     
     PVector position = getPosition();
     

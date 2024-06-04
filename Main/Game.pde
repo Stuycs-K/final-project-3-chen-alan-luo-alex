@@ -12,13 +12,11 @@ public class Game{
   public WaveManager waveManager;
   private Tower selectedTower;
   private boolean showTowerOptions;
-  
-  private TextButton upgradeButton;
+
   private TextButton sellButton;
   
   private ImageLabel towerImage;
   
-  private TextLabel upgradeLabel;
   private TextLabel sellLabel;
   private TextLabel towerLabel;
   private TextLabel path1Label;
@@ -36,6 +34,8 @@ public class Game{
   private TextLabel placementLabel;
 
   private PImage invalidUpgradeImage;
+  
+  public UpgradePanel upgradePanel;
   
   public Game() {
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -163,20 +163,14 @@ public class Game{
    }
   
   private void setupGui(){
-    upgradeButton = (TextButton) guiManager.create("upgradeButton");
-    sellButton = (TextButton) guiManager.create("sellButton");
-    upgradeLabel = (TextLabel) guiManager.create("upgradeLabel");
-    sellLabel = (TextLabel) guiManager.create("sellLabel");
+    upgradePanel = new UpgradePanel();
+    upgradePanel.setVisible(false);
+    
     towerLabel = (TextLabel) guiManager.create("towerLabel");
-    horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
+
     verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
     towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonDartMonkey");
-    //towerButton = (ImageButton) guiManager.create("towerButton");
-    towerImage = (ImageLabel) guiManager.create("towerImage");
-    path1Button = (ImageButton) guiManager.create("path1Button");
-    path1Label = (TextLabel) guiManager.create("path1Label");
-    path2Button = (ImageButton) guiManager.create("path2Button");
-    path2Label = (TextLabel) guiManager.create("path2Label");
+
     placementLabel = (TextLabel) guiManager.create("placementLabel");
     towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonBombShooter");
     
@@ -191,8 +185,14 @@ public class Game{
       Tower newTower = null;
       if(towerName.equals("DartMonkey")){
         newTower = new DartMonkey(x,y);
+        if(currencyManager.getCurrency() > startingCost){
+          currencyManager.removeCurrency(startingCost);
+        }
       }else if(towerName.equals("BombShooter")){
         newTower = new BombShooter(x,y);
+        if(currencyManager.getCurrency() > startingCost){
+          currencyManager.removeCurrency(startingCost);
+        }
    
     }
      if(newTower != null){
@@ -224,51 +224,8 @@ public class Game{
   public void selectTower(Tower tower){
     selectedTower = tower;
     showTowerOptions = true;
-    displayTowerDetails(selectedTower);
+    upgradePanel.onTowerSelect(selectedTower);
   }
-  
-  private void displayTowerDetails(Tower tower){
-    
-    if(tower!=null){
-      String towerName = tower.towerName;
-
-      ArrayList<TowerUpgrade> nextUpgrades = tower.upgrades.getNextUpgrades();
-      
-      towerImage.setImage(tower.getSprite());
-      
-      TowerUpgrade nextPath1Upgrade = nextUpgrades.get(0);
-      TowerUpgrade nextPath2Upgrade = nextUpgrades.get(1);
-      
-      if(nextPath1Upgrade!=null){
-        path1Button.setImage(nextPath1Upgrade.getUpgradeImage());
-        path1Label.setText("Path 1" + nextPath1Upgrade.getUpgradeName());
-        
-      }else{
-        path1Button.setImage(invalidUpgradeImage);
-        path1Label.setText("Path 1: No Upgrade");
-      }
-      
-      if(nextPath2Upgrade != null){
-        path2Button.setImage(nextPath2Upgrade.getUpgradeImage());
-        path2Label.setText("Path 2" + nextPath2Upgrade.getUpgradeName());
-      }else{
-        path2Button.setImage(invalidUpgradeImage);
-        path2Label.setText("Path 2: No upgrade");
-      }
-      upgradeButton.setVisible(true);
-      sellButton.setVisible(true);
-      upgradeLabel.setVisible(true);
-      sellLabel.setVisible(true);
-    }else{
-      upgradeButton.setVisible(false);
-      sellButton.setVisible(false);
-      upgradeLabel.setVisible(false);
-      sellLabel.setVisible(false);
-    }
-
-  }
-  
-
 
   public void render() {
     map.drawPath();
@@ -296,46 +253,225 @@ public class Game{
       placeTower(currentTowerType, mx, my);
       return;
         }
-    if (isInBoundsOfRectangle(mx, my, 650, 700, 150, 50)) {
-      if (selectedTower != null) {
-         selectedTower.upgrade(0);  
-         displayTowerDetails(selectedTower);  
-       }
-    } else if (isInBoundsOfRectangle(mx, my, 650,760, 150, 50)) {
-          if (selectedTower != null) {
-            selectedTower.sellTower();
-            selectedTower = null;
-            displayTowerDetails(null);  
-            }
-        }
-
-     if (isInBoundsOfRectangle(mx, my, 820, 700, 100, 100) && selectedTower !=  null) {
-        selectedTower.upgrade(0);  
-        displayTowerDetails(selectedTower);  
-      } else if (isInBoundsOfRectangle(mx, my, 940, 700, 100, 100) && selectedTower != null) {
-          selectedTower.upgrade(1);  
-            displayTowerDetails(selectedTower); 
-        }
     
-    
-
     for (Tower tower : towers) {
-      if (isInBoundsOfRectangle(mouseX, mouseY, tower.x, tower.y, tower.sprite.width, tower.sprite.height)) {
+      if (isInBoundsOfRectangleCentered(mouseX, mouseY, tower.x, tower.y, tower.sprite.width, tower.sprite.height)) {
         selectTower(tower);
         return;
       }
     }
     
 
-    
-  
-
+    selectedTower = null;
+    upgradePanel.onTowerDeselect();
+  }
 }
+    
+// UPGRADE PANEL
 
-
+/*
+Upgrade panel contains one image label that displays the tower's current sprite, two upgrade buttons, and a sell button
+*/
+public class UpgradePanel {
+  private class SellButton extends TextButton {
+    private Tower currentTower;
+    
+    public SellButton(JSONObject definition) {
+      super(definition);
+    }
+ 
+    public void setCurrentTower(Tower tower) {
+      this.currentTower = tower;
     }
     
-
-public class UpgradeButton {
+    public void onInput() {
+      if (currentTower == null) {
+        println("no tower");
+        return;
+      }
+      
+      currentTower.sellTower();
+      game.upgradePanel.onTowerDeselect();
+      
+      currentTower = null;
+      // Remove money
+    }
+    
+  }
   
+  private static final int UPGRADE_BUTTON_PADDING = 45;
+  
+  private Frame backgroundFrame;
+  private TextLabel towerNameLabel;
+  private ImageLabel towerSprite;
+  private ArrayList<UpgradeButton> upgradeButtons;
+  private SellButton sellButton;
+  
+  public UpgradePanel() {
+    this.backgroundFrame = (Frame) guiManager.create("horizontalWoodenPadding");
+    this.towerNameLabel = (TextLabel) guiManager.create("towerNameLabel");
+    this.towerSprite = (ImageLabel) guiManager.create("towerImage");
+    
+    this.sellButton = new SellButton(guiManager.getGuiDefinition("sellButton"));
+    guiManager.createCustom((GuiBase) this.sellButton);
+    
+    this.upgradeButtons = new ArrayList<UpgradeButton>();
+    
+    for (int i = 0; i < 2; i++) {
+      // Stupid way of getting the buttons to lay out in a list
+      // No way I'm writing some list class for this
+      
+      UpgradeButton newUpgradeButton = new UpgradeButton(i);
+      
+      // Starting X position
+      int positionX = int(newUpgradeButton.imageButton.position.x);
+      positionX += (newUpgradeButton.imageButton.size.x + UPGRADE_BUTTON_PADDING) * i;
+      
+      newUpgradeButton.setPosition(new PVector(positionX, newUpgradeButton.imageButton.position.y));
+      
+      this.upgradeButtons.add(newUpgradeButton);
+    }
+  }
+  
+  public void setVisible(boolean state) {
+    backgroundFrame.setVisible(state);
+    towerSprite.setVisible(state);
+    sellButton.setVisible(state);
+    
+    for (UpgradeButton button : upgradeButtons) {
+      button.setVisible(state);
+    }
+  }
+  
+  public void onTowerSelect(Tower tower) {
+    setVisible(true);
+    displayTowerInformation(tower);
+  }
+  
+  public void onTowerUpgrade(Tower tower) {
+    onTowerSelect(tower);
+  }
+  
+  public void onTowerDeselect() {
+    displayTowerInformation(null);
+  }
+  
+  public void displayTowerInformation(Tower tower) {
+    sellButton.setCurrentTower(tower);
+    for (UpgradeButton button : upgradeButtons) {
+      button.setTower(tower);
+    }
+    
+    if (tower == null) {
+      setVisible(false);
+      return;
+    }
+    
+    towerNameLabel.setText(tower.towerName);
+    towerSprite.setImage(tower.getSprite());
+  }
+}
+  
+public class UpgradeButton {
+  private class UpgradeImageButton extends ImageButton {
+    private Tower currentTower;
+    private int pathId;
+    
+    public UpgradeImageButton(JSONObject definition) {
+      super(definition);
+      this.currentTower = null;
+    }
+    
+    public void setPathId(int pathId) {
+      this.pathId = pathId;
+    }
+    
+    public void setCurrentTower(Tower tower) {
+      this.currentTower = tower;
+      
+      if (tower == null) {
+        this.clearImage();
+      }
+    }
+    
+    public void onInput() {
+      if (currentTower == null) {
+        return;
+      }
+      
+      currentTower.upgrade(pathId);
+      game.upgradePanel.onTowerUpgrade(currentTower);
+      // Remove money
+    }
+  }
+
+  private TextLabel upgradeNameLabel;
+  private TextLabel costLabel;
+  public UpgradeImageButton imageButton;
+  
+  private Tower currentTower;
+  private int pathId;
+  
+  public UpgradeButton(int pathId) {
+    this.upgradeNameLabel = (TextLabel) guiManager.create("upgradeLabel");
+    this.costLabel = (TextLabel) guiManager.create("upgradeLabel");
+    
+    this.imageButton = new UpgradeImageButton(guiManager.getGuiDefinition("pathImageButton"));
+    guiManager.createCustom((GuiBase) this.imageButton);
+    
+    PVector upgradeNamePosition = new PVector(this.imageButton.position.x, this.imageButton.position.y - 5);
+    this.upgradeNameLabel.setPosition(upgradeNamePosition);
+    
+    PVector costLabelPosition = new PVector(this.imageButton.position.x, this.imageButton.position.y + this.imageButton.size.y);
+    this.costLabel.setPosition(costLabelPosition);
+    
+    this.pathId = pathId;
+    this.imageButton.setPathId(pathId);
+  }
+  
+  public void setVisible(boolean state) {
+    upgradeNameLabel.setVisible(state);
+    costLabel.setVisible(state);
+    imageButton.setVisible(state);
+  }
+  
+  public void setPosition(PVector position) {
+    int deltaX = int(position.x - imageButton.position.x);
+    int deltaY = int(position.y - imageButton.position.y);
+    
+    imageButton.setPosition(position);
+    upgradeNameLabel.translatePosition(deltaX, deltaY);
+    costLabel.translatePosition(deltaX, deltaY);
+  }
+  
+  public void setTower(Tower tower) {
+    if (tower == null) {
+      currentTower = null;
+      imageButton.setCurrentTower(null);
+      upgradeNameLabel.setText("");
+      costLabel.setText("");
+      
+      setVisible(false);
+      
+      return;
+    }
+    currentTower = tower;
+    imageButton.setCurrentTower(currentTower);
+    
+    TowerUpgradeManager upgrades = tower.upgrades;
+    TowerUpgrade nextUpgrade = upgrades.getNextUpgrades().get(pathId);
+    
+    // Upgrade doesn't exist
+    if (nextUpgrade == null) {
+      imageButton.setImage(INVALID_UPGRADE_IMAGE);
+      upgradeNameLabel.setText("Path locked");
+      costLabel.setText("");
+      
+      return;
+    }
+    
+    imageButton.setImage(nextUpgrade.getUpgradeImage());
+    upgradeNameLabel.setText(nextUpgrade.getUpgradeName());
+    costLabel.setText("$" + nextUpgrade.getUpgradeCost());
+  }
 }

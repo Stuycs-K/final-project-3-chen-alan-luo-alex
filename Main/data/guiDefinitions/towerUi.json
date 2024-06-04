@@ -11,42 +11,27 @@
     },
     "sellButton": {
         "className": "TextButton",
-        "x": "650",
-        "y": "760",
-        "sizeX": 150,
+        "x": "r 550",
+        "y": "r 75",
+        "sizeX": 100,
         "sizeY": 50,
         "backgroundColor": "150 0 0",
         "backgroundTransparency": 0.8,
-        "zIndex": 1
-    },
-    "upgradeLabel": {
-        "className": "TextLabel",
-        "x": "725",
-        "y": "725",
-        "text": "Upgrade",
-        "textSize": 16,
-        "textColor": "255 255 255",
-        "textXAlignment": "CENTER",
-        "textYAlignment": "CENTER",
-        "zIndex": 2
-    },
-    "sellLabel": {
-        "className": "TextLabel",
-        "x": "725",
-        "y": "785",
+        "zIndex": 3,
         "text": "Sell",
         "textSize": 16,
         "textColor": "255 255 255",
         "textXAlignment": "CENTER",
         "textYAlignment": "CENTER",
-        "zIndex": 2
+        "textXOffset": 50,
+        "textYOffset": 25
     },
     "horizontalWoodenPadding": {
         "className": "Frame",
-        "x": 515,
-        "y": 650,
-        "sizeX": 800,
-        "sizeY": 200,
+        "x": "r 700",
+        "y": "r 150",
+        "sizeX": 700,
+        "sizeY": 150,
         "backgroundColor": "139 69 30",
         "backgroundTransparency": 1,
         "zIndex": 0
@@ -73,77 +58,68 @@
         "zIndex": 2
     },
     "towerButtonDartMonkey": {
-        "className" : "ImageButton",
-        "x" : 1125,
-        "y" : 100,
-        "sizeX" : 50,
-        "sizeY" : 50,
-        "image" : "towers/dartmonkey.png",
-        "zIndex" : 2,
+        "className": "ImageButton",
+        "x": 1125,
+        "y": 100,
+        "sizeX": 50,
+        "sizeY": 50,
+        "image": "towers/dartmonkey.png",
+        "zIndex": 2,
         "towerType": "DartMonkey"
     },
-    "towerButtonBombShooter":{
-        "className" : "ImageButton",
-        "x" : 1060,
-        "y" : 100,
-        "sizeX" : 50,
-        "sizeY" : 50,
-        "image" : "towers/bombshooter.png",
-        "zIndex" : 2,
-        "towerType" : "BombShooter"
-
-    },
-    "towerImage" :{
-        "className":"ImageLabel",
-        "x" : 530,
-        "y" : 670,
-        "sizeX" : 100,
-        "sizeY" : 160,
-        "image" : "towers/dartmonkey.png",
-        "zIndex" : 1
-    },
-    
-    "path1Button":{
+    "towerButtonBombShooter": {
         "className": "ImageButton",
-        "x" : 820,
-        "y" : 700,
-        "sizeX" : 100,
-        "sizeY" : 100,
-        "image" : "towers/longRange.png",
-        "zIndex" : 1
+        "x": 1060,
+        "y": 100,
+        "sizeX": 50,
+        "sizeY": 50,
+        "image": "towers/bombshooter.png",
+        "zIndex": 2,
+        "towerType": "BombShooter"
     },
-    "path1Label":{
+    "towerImage": {
+        "className": "ImageLabel",
+        "x": "r 675",
+        "y": "r 105",
+        "sizeX": 100,
+        "sizeY": 100,
+        "zIndex": 1
+    },
+    "towerNameLabel": {
         "className": "TextLabel",
-        "x": 870,
-        "y": 780,
-        "text": "Path 1",
-        "textSize": 16,
+        "x": "r 675",
+        "y": "r 130",
+        "sizeX": 100,
+        "sizeY": 25,
+        "stroke": {
+            "type": "NONE"
+        },
         "textColor": "255 255 255",
-        "textXAlignment": "CENTER",
+        "textXAlignment": "LEFT",
         "textYAlignment": "CENTER",
         "zIndex": 2
     },
-    "path2Button":{
+    "pathImageButton": {
         "className": "ImageButton",
-        "x" : 940,
-        "y" : 700,
-        "sizeX" : 100,
-        "sizeY" : 100,
-        "image" : "towers/sharpshots.png",
-        "zIndex" : 1
+        "x": "r 400",
+        "y": "r 125",
+        "sizeX": 100,
+        "sizeY": 100,
+        "zIndex": 1
     },
-    "path2Label":{
+    "upgradeLabel": {
         "className": "TextLabel",
-        "x": 990,
-        "y": 780,
-        "text": "Path 2",
-        "textSize": 16,
+        "x": "r 400",
+        "y": "r 25",
+        "sizeX": 100,
+        "sizeY": 25,
+        "stroke": {
+            "type": "NONE"
+        },
+        "textFont": "regularSmall",
         "textColor": "255 255 255",
-        "textXAlignment": "CENTER",
+        "textXAlignment": "LEFT",
         "textYAlignment": "CENTER",
         "zIndex": 2
     }
-    
-
-
 }

@@ -1,5 +1,7 @@
 import java.util.*;
 
+PImage INVALID_UPGRADE_IMAGE;
+
 Game game;
 BloonPropertyLookup bloonPropertyLookup;
 BloonSpawner bloonSpawner;
@@ -16,6 +18,8 @@ ArrayList<Tower>towers;
 
 void setup(){
   size(1200, 800);
+  
+  INVALID_UPGRADE_IMAGE = loadImage("images/upgradeIcons/invalidUpgrade.png");
   
   bloonPropertyLookup = new BloonPropertyLookup();
   bloonSpawner = new BloonSpawner();
@@ -60,7 +64,7 @@ void mousePressed(){
   
   // GUI sank input, so don't do anything else!
   if (pressedButton) {
-    //return;
+    return;
   }
   
   game.mousePressed(mouseX, mouseY);
