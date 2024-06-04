@@ -431,8 +431,8 @@ public class UpgradeButton {
     this.upgradeNameLabel = (TextLabel) guiManager.create("path1Label");
     this.costLabel = (TextLabel) guiManager.create("path1Label");
     
-    ImageLabel imageButtonBase = (ImageLabel) guiManager.create("path1Button");
-    this.imageButton = (UpgradeImageButton) guiManager.create("path1Button");
+    this.imageButton = new UpgradeImageButton(guiManager.getGuiDefinition("path1Button"));
+    guiManager.createCustom((GuiBase) this.imageButton);
     
     PVector upgradeNamePosition = new PVector(this.imageButton.position.x, this.imageButton.position.y - this.imageButton.size.y);
     this.upgradeNameLabel.setPosition(upgradeNamePosition);

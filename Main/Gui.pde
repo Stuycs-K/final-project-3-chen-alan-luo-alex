@@ -35,12 +35,14 @@ private class FontManager {
 public class GuiManager {
   private ArrayList<GuiBase> guiList;
   private HashMap<String, GuiBase> guiTemplateMap;
+  private HashMap<String, JSONObject> guiDefinitionMap;
   private FontManager fontManager;
   private TextLabel messageLabel;
   
   public GuiManager() {
     guiList = new ArrayList<GuiBase>();
     guiTemplateMap = new HashMap<String, GuiBase>();
+    guiDefinitionMap = new HashMap<String, JSONObject>();
     fontManager = new FontManager();
         
     for (String path : GUI_DEFINITION_FILES) {
@@ -99,6 +101,7 @@ public class GuiManager {
     Set<String> guiComponentNames = data.keys();
     for (String name : guiComponentNames) {
       JSONObject guiData = data.getJSONObject(name);
+      guiDefinitionMap.put(name, guiData);
       
       String className = guiData.getString("className");
       
@@ -132,6 +135,14 @@ public class GuiManager {
     GuiBase copy = getTemplate(name).clone();
     insertGui(copy);
     return copy;
+  }
+  
+  public JSONObject getGuiDefinition(String name) {
+    return guiDefinitionMap.get(name);
+  }
+  
+  public void createCustom(GuiBase object) {
+    insertGui(object);
   }
   
   public void render() {
