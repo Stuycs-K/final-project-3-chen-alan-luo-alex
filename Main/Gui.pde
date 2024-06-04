@@ -471,6 +471,7 @@ public class ImageLabel extends GuiBase {
     
     JSONObject definition = getDefinition();
     String imagePath = definition.getString("image");
+
     if (imagePath != null) {
       this.image = loadImage("images/" + imagePath);
     }

@@ -166,7 +166,7 @@ public class Game{
     upgradePanel = new UpgradePanel();
     
     sellButton = (TextButton) guiManager.create("sellButton");
-    sellLabel = (TextLabel) guiManager.create("sellLabel");
+    //sellLabel = (TextLabel) guiManager.create("sellLabel");
     towerLabel = (TextLabel) guiManager.create("towerLabel");
     //horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
     verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
@@ -456,7 +456,7 @@ public class UpgradeButton {
     this.upgradeNameLabel = (TextLabel) guiManager.create("path1Label");
     this.costLabel = (TextLabel) guiManager.create("path1Label");
     
-    this.imageButton = new UpgradeImageButton(guiManager.getGuiDefinition("path1Button"));
+    this.imageButton = new UpgradeImageButton(guiManager.getGuiDefinition("pathImageButton"));
     guiManager.createCustom((GuiBase) this.imageButton);
     
     PVector upgradeNamePosition = new PVector(this.imageButton.position.x, this.imageButton.position.y - this.imageButton.size.y);
