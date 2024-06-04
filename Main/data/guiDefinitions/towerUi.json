@@ -79,12 +79,26 @@
     },
     "towerImage": {
         "className": "ImageLabel",
-        "x": 530,
-        "y": 670,
+        "x": "r 675",
+        "y": "r 105",
         "sizeX": 100,
         "sizeY": 100,
         "image": "towers/dartmonkey.png",
         "zIndex": 1
+    },
+    "towerNameLabel": {
+        "className": "TextLabel",
+        "x": "r 675",
+        "y": "r 130",
+        "sizeX": 100,
+        "sizeY": 25,
+        "stroke": {
+            "type": "NONE"
+        },
+        "textColor": "255 255 255",
+        "textXAlignment": "LEFT",
+        "textYAlignment": "CENTER",
+        "zIndex": 2
     },
     "pathImageButton": {
         "className": "ImageButton",

@@ -348,12 +348,14 @@ public class UpgradePanel {
   private static final int UPGRADE_BUTTON_PADDING = 45;
   
   private Frame backgroundFrame;
+  private TextLabel towerNameLabel;
   private ImageLabel towerSprite;
   private ArrayList<UpgradeButton> upgradeButtons;
   private TextButton sellButton;
   
   public UpgradePanel() {
     this.backgroundFrame = (Frame) guiManager.create("horizontalWoodenPadding");
+    this.towerNameLabel = (TextLabel) guiManager.create("towerNameLabel");
     this.towerSprite = (ImageLabel) guiManager.create("towerImage");
     this.sellButton = (TextButton) guiManager.create("sellButton");
     
@@ -408,6 +410,7 @@ public class UpgradePanel {
       return;
     }
     
+    towerNameLabel.setText(tower.towerName);
     towerSprite.setImage(tower.getSprite());
   }
 }
@@ -453,17 +456,19 @@ public class UpgradeButton {
   private int pathId;
   
   public UpgradeButton(int pathId) {
-    this.upgradeNameLabel = (TextLabel) guiManager.create("path1Label");
-    this.costLabel = (TextLabel) guiManager.create("path1Label");
+    this.upgradeNameLabel = (TextLabel) guiManager.create("upgradeLabel");
+    this.costLabel = (TextLabel) guiManager.create("upgradeLabel");
     
     this.imageButton = new UpgradeImageButton(guiManager.getGuiDefinition("pathImageButton"));
     guiManager.createCustom((GuiBase) this.imageButton);
     
-    PVector upgradeNamePosition = new PVector(this.imageButton.position.x, this.imageButton.position.y - this.imageButton.size.y);
+    PVector upgradeNamePosition = new PVector(this.imageButton.position.x, this.imageButton.position.y - 5);
     this.upgradeNameLabel.setPosition(upgradeNamePosition);
+    println(upgradeNameLabel.position);
     
     PVector costLabelPosition = new PVector(this.imageButton.position.x, this.imageButton.position.y + this.imageButton.size.y);
     this.costLabel.setPosition(costLabelPosition);
+    println(costLabel.position);
     
     this.pathId = pathId;
     this.imageButton.setPathId(pathId);
