@@ -83,7 +83,6 @@
         "y": "r 105",
         "sizeX": 100,
         "sizeY": 100,
-        "image": "towers/dartmonkey.png",
         "zIndex": 1
     },
     "towerNameLabel": {

@@ -164,8 +164,9 @@ public class Game{
   
   private void setupGui(){
     upgradePanel = new UpgradePanel();
+    upgradePanel.setVisible(false);
     
-    sellButton = (TextButton) guiManager.create("sellButton");
+    //sellButton = (TextButton) guiManager.create("sellButton");
     //sellLabel = (TextLabel) guiManager.create("sellLabel");
     towerLabel = (TextLabel) guiManager.create("towerLabel");
     //horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
@@ -345,19 +346,46 @@ public class Game{
 Upgrade panel contains one image label that displays the tower's current sprite, two upgrade buttons, and a sell button
 */
 public class UpgradePanel {
+  private class SellButton extends TextLabel {
+    private Tower currentTower;
+    
+    public SellButton(JSONObject definition) {
+      super(definition);
+    }
+ 
+    public void setCurrentTower(Tower tower) {
+      this.currentTower = tower;
+    }
+    
+    public void onInput() {
+      if (currentTower == null) {
+        return;
+      }
+      
+      currentTower.sellTower();
+      game.upgradePanel.onTowerDeselect();
+      
+      currentTower = null;
+      // Remove money
+    }
+    
+  }
+  
   private static final int UPGRADE_BUTTON_PADDING = 45;
   
   private Frame backgroundFrame;
   private TextLabel towerNameLabel;
   private ImageLabel towerSprite;
   private ArrayList<UpgradeButton> upgradeButtons;
-  private TextButton sellButton;
+  private SellButton sellButton;
   
   public UpgradePanel() {
     this.backgroundFrame = (Frame) guiManager.create("horizontalWoodenPadding");
     this.towerNameLabel = (TextLabel) guiManager.create("towerNameLabel");
     this.towerSprite = (ImageLabel) guiManager.create("towerImage");
-    this.sellButton = (TextButton) guiManager.create("sellButton");
+    
+    this.sellButton = new SellButton(guiManager.getGuiDefinition("sellButton"));
+    guiManager.createCustom((GuiBase) this.sellButton);
     
     this.upgradeButtons = new ArrayList<UpgradeButton>();
     
@@ -464,11 +492,9 @@ public class UpgradeButton {
     
     PVector upgradeNamePosition = new PVector(this.imageButton.position.x, this.imageButton.position.y - 5);
     this.upgradeNameLabel.setPosition(upgradeNamePosition);
-    println(upgradeNameLabel.position);
     
     PVector costLabelPosition = new PVector(this.imageButton.position.x, this.imageButton.position.y + this.imageButton.size.y);
     this.costLabel.setPosition(costLabelPosition);
-    println(costLabel.position);
     
     this.pathId = pathId;
     this.imageButton.setPathId(pathId);
