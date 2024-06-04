@@ -168,15 +168,15 @@ public class Game{
     sellButton = (TextButton) guiManager.create("sellButton");
     sellLabel = (TextLabel) guiManager.create("sellLabel");
     towerLabel = (TextLabel) guiManager.create("towerLabel");
-    horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
+    //horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
     verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
     towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonDartMonkey");
     //towerButton = (ImageButton) guiManager.create("towerButton");
-    towerImage = (ImageLabel) guiManager.create("towerImage");
-    path1Button = (ImageButton) guiManager.create("path1Button");
-    path1Label = (TextLabel) guiManager.create("path1Label");
-    path2Button = (ImageButton) guiManager.create("path2Button");
-    path2Label = (TextLabel) guiManager.create("path2Label");
+    //towerImage = (ImageLabel) guiManager.create("towerImage");
+    //path1Button = (ImageButton) guiManager.create("path1Button");
+    //path1Label = (TextLabel) guiManager.create("path1Label");
+    //path2Button = (ImageButton) guiManager.create("path2Button");
+    //path2Label = (TextLabel) guiManager.create("path2Label");
     placementLabel = (TextLabel) guiManager.create("placementLabel");
     towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonBombShooter");
     
@@ -230,7 +230,8 @@ public class Game{
   public void selectTower(Tower tower){
     selectedTower = tower;
     showTowerOptions = true;
-    displayTowerDetails(selectedTower);
+    upgradePanel.onTowerSelect(selectedTower);
+    //displayTowerDetails(selectedTower);
   }
   
   private void displayTowerDetails(Tower tower){
@@ -304,18 +305,20 @@ public class Game{
           if (selectedTower != null) {
             selectedTower.sellTower();
             selectedTower = null;
-            displayTowerDetails(null);
+            
+            upgradePanel.onTowerDeselect();
+            //displayTowerDetails(null);
             }
         }
 
      if (isInBoundsOfRectangle(mx, my, 820, 700, 100, 100) && selectedTower !=  null) {
         selectedTower.upgrade(0);  
-        displayTowerDetails(selectedTower);
+       // displayTowerDetails(selectedTower);
         //currencyManager.removeCurrency();
         
       } else if (isInBoundsOfRectangle(mx, my, 940, 700, 100, 100) && selectedTower != null) {
           selectedTower.upgrade(1);  
-            displayTowerDetails(selectedTower); 
+            //displayTowerDetails(selectedTower); 
         }
     
     
@@ -382,13 +385,23 @@ public class UpgradePanel {
     }
   }
   
+  public void onTowerSelect(Tower tower) {
+    setVisible(true);
+    displayTowerInformation(tower);
+  }
+  
+  public void onTowerDeselect() {
+    displayTowerInformation(null);
+  }
+  
   public void displayTowerInformation(Tower tower) {
-    if (tower == null) {
-      setVisible(false);
-      return;
+    for (UpgradeButton button : upgradeButtons) {
+      button.setTower(tower);
     }
     
-    
+    if (tower == null) {
+      setVisible(false);
+    }
   }
 }
   
@@ -408,6 +421,10 @@ public class UpgradeButton {
     
     public void setCurrentTower(Tower tower) {
       this.currentTower = tower;
+      
+      if (tower == null) {
+        this.clearImage();
+      }
     }
     
     public void onInput() {
@@ -463,6 +480,8 @@ public class UpgradeButton {
     if (tower == null) {
       currentTower = null;
       imageButton.setCurrentTower(null);
+      upgradeNameLabel.setText("");
+      costLabel.setText("");
       
       setVisible(false);
       
