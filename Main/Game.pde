@@ -35,7 +35,7 @@ public class Game{
 
   private PImage invalidUpgradeImage;
   
-  private UpgradePanel upgradePanel;
+  public UpgradePanel upgradePanel;
   
   public Game() {
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -312,12 +312,12 @@ public class Game{
         }
 
      if (isInBoundsOfRectangle(mx, my, 820, 700, 100, 100) && selectedTower !=  null) {
-        selectedTower.upgrade(0);  
+        //selectedTower.upgrade(0);  
        // displayTowerDetails(selectedTower);
         //currencyManager.removeCurrency();
         
       } else if (isInBoundsOfRectangle(mx, my, 940, 700, 100, 100) && selectedTower != null) {
-          selectedTower.upgrade(1);  
+          //selectedTower.upgrade(1);  
             //displayTowerDetails(selectedTower); 
         }
     
@@ -390,6 +390,10 @@ public class UpgradePanel {
     displayTowerInformation(tower);
   }
   
+  public void onTowerUpgrade(Tower tower) {
+    onTowerSelect(tower);
+  }
+  
   public void onTowerDeselect() {
     displayTowerInformation(null);
   }
@@ -401,7 +405,10 @@ public class UpgradePanel {
     
     if (tower == null) {
       setVisible(false);
+      return;
     }
+    
+    towerSprite.setImage(tower.getSprite());
   }
 }
   
@@ -433,6 +440,7 @@ public class UpgradeButton {
       }
       
       currentTower.upgrade(pathId);
+      game.upgradePanel.onTowerUpgrade(currentTower);
       // Remove money
     }
   }
