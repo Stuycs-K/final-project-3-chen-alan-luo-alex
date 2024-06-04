@@ -286,7 +286,11 @@ private color readColor(JSONObject object, String keyName) {
 }
 
 public static boolean isInBoundsOfRectangle(int x, int y, int rectX, int rectY, int rectSizeX, int rectSizeY) {
-   return (x > rectX - rectSizeX && x < rectX + rectSizeX) && (y > rectY - rectSizeY && y < rectY + rectSizeY);
+   return (x > rectX && x < rectX + rectSizeX) && (y > rectY && y < rectY + rectSizeY);
+}
+
+public static boolean isInBoundsOfRectangleWithCenter(int x, int y, int rectX, int rectY, int rectSizeX, int rectSizeY) {
+  return (x > rectX - rectSizeX && x < rectX + rectSizeX) && (y > rectY - rectSizeY && y < rectY + rectSizeY);
 }
 
 public class GuiBase {
@@ -330,11 +334,11 @@ public class GuiBase {
   }
   
   public void translatePosition(PVector position) {
-    this.position.add(position);
+    this.position = PVector.add(this.position, position);
   }
   
   public void translatePosition(int deltaX, int deltaY) {
-    this.position.add(new PVector(deltaX, deltaY));
+    translatePosition(new PVector(deltaX, deltaY));
   }
   
   public int getZIndex() {

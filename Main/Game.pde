@@ -302,6 +302,7 @@ public class Game{
       placeTower(currentTowerType, mx, my);
       return;
         }
+     /*
      else if (isInBoundsOfRectangle(mx, my, 650,675, 150, 50)) {
           if (selectedTower != null) {
             selectedTower.sellTower();
@@ -310,7 +311,7 @@ public class Game{
             upgradePanel.onTowerDeselect();
             //displayTowerDetails(null);
             }
-        }
+        }*/
 
      if (isInBoundsOfRectangle(mx, my, 820, 700, 100, 100) && selectedTower !=  null) {
         //selectedTower.upgrade(0);  
@@ -362,6 +363,7 @@ public class UpgradePanel {
         return;
       }
       
+      println("bye");
       currentTower.sellTower();
       game.upgradePanel.onTowerDeselect();
       
@@ -429,6 +431,7 @@ public class UpgradePanel {
   }
   
   public void displayTowerInformation(Tower tower) {
+    sellButton.setCurrentTower(tower);
     for (UpgradeButton button : upgradeButtons) {
       button.setTower(tower);
     }
@@ -466,6 +469,7 @@ public class UpgradeButton {
     }
     
     public void onInput() {
+      rect(this.position.x, this.position.y, this.size.x, this.size.y);
       if (currentTower == null) {
         return;
       }
