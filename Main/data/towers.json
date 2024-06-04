@@ -150,7 +150,7 @@
             "range": 250,
             "actions": {
                 "bombAttack": {
-                    "cooldown": 0.63,
+                    "cooldown": 1.5,
                     "type": "PROJECTILE",
                     "projectile": "bomb"
                 }
@@ -221,7 +221,7 @@
                                     "sprite": "projectiles/bomb.png",
                                     "type": "BOMB",
                                     "damage": 2,
-                                    "pierce": 1,
+                                    "pierce": 10,
                                     "maxDistance": 100,
                                     "speed": 20,
                                     "explosionRadius": 100
@@ -238,7 +238,6 @@
                     "cost": 400,
                     "changes": {
                         "sprite": "towers/bombExtraRange.png",
-
                         "projectiles": {
                             "bomb": {
                                 "explosionRadius": "+ 50",
@@ -255,7 +254,7 @@
                         "sprite": "towers/bombMissileLauncher.png",
                         "actions": {
                             "bombAttack": {
-                                "cooldown": "* 0.8"
+                                "cooldown": "- 0.5"
                             }
                         },
                         "range": "+ 50",

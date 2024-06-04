@@ -166,18 +166,11 @@ public class Game{
     upgradePanel = new UpgradePanel();
     upgradePanel.setVisible(false);
     
-    //sellButton = (TextButton) guiManager.create("sellButton");
-    //sellLabel = (TextLabel) guiManager.create("sellLabel");
     towerLabel = (TextLabel) guiManager.create("towerLabel");
-    //horizontalWoodenPadding = (Frame) guiManager.create("horizontalWoodenPadding");
+
     verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
     towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonDartMonkey");
-    //towerButton = (ImageButton) guiManager.create("towerButton");
-    //towerImage = (ImageLabel) guiManager.create("towerImage");
-    //path1Button = (ImageButton) guiManager.create("path1Button");
-    //path1Label = (TextLabel) guiManager.create("path1Label");
-    //path2Button = (ImageButton) guiManager.create("path2Button");
-    //path2Label = (TextLabel) guiManager.create("path2Label");
+
     placementLabel = (TextLabel) guiManager.create("placementLabel");
     towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonBombShooter");
     
@@ -232,49 +225,7 @@ public class Game{
     selectedTower = tower;
     showTowerOptions = true;
     upgradePanel.onTowerSelect(selectedTower);
-    //displayTowerDetails(selectedTower);
   }
-  
-  private void displayTowerDetails(Tower tower){
-    
-    if(tower!=null){
-      String towerName = tower.towerName;
-
-      ArrayList<TowerUpgrade> nextUpgrades = tower.upgrades.getNextUpgrades();
-      
-      towerImage.setImage(tower.getSprite());
-      
-      TowerUpgrade nextPath1Upgrade = nextUpgrades.get(0);
-      TowerUpgrade nextPath2Upgrade = nextUpgrades.get(1);
-      
-      if(nextPath1Upgrade!=null){
-        path1Button.setImage(nextPath1Upgrade.getUpgradeImage());
-        path1Label.setText("Path 1" + nextPath1Upgrade.getUpgradeName());
-        int upgradeCost = nextPath1Upgrade.getUpgradeCost();
-        
-      }else{
-        path1Button.setImage(invalidUpgradeImage);
-        path1Label.setText("Path 1: No Upgrade");
-      }
-      
-      if(nextPath2Upgrade != null){
-        path2Button.setImage(nextPath2Upgrade.getUpgradeImage());
-        path2Label.setText("Path 2" + nextPath2Upgrade.getUpgradeName());
-        int upgradeCost = nextPath2Upgrade.getUpgradeCost();
-      }else{
-        path2Button.setImage(invalidUpgradeImage);
-        path2Label.setText("Path 2: No upgrade");
-      }
-      sellButton.setVisible(true);
-      sellLabel.setVisible(true);
-    }else{
-      sellButton.setVisible(false);
-      sellLabel.setVisible(false);
-    }
-
-  }
-  
-
 
   public void render() {
     map.drawPath();
@@ -302,44 +253,19 @@ public class Game{
       placeTower(currentTowerType, mx, my);
       return;
         }
-     /*
-     else if (isInBoundsOfRectangle(mx, my, 650,675, 150, 50)) {
-          if (selectedTower != null) {
-            selectedTower.sellTower();
-            selectedTower = null;
-            
-            upgradePanel.onTowerDeselect();
-            //displayTowerDetails(null);
-            }
-        }*/
-
-     if (isInBoundsOfRectangle(mx, my, 820, 700, 100, 100) && selectedTower !=  null) {
-        //selectedTower.upgrade(0);  
-       // displayTowerDetails(selectedTower);
-        //currencyManager.removeCurrency();
-        
-      } else if (isInBoundsOfRectangle(mx, my, 940, 700, 100, 100) && selectedTower != null) {
-          //selectedTower.upgrade(1);  
-            //displayTowerDetails(selectedTower); 
-        }
     
-    
-
     for (Tower tower : towers) {
-      if (isInBoundsOfRectangle(mouseX, mouseY, tower.x, tower.y, tower.sprite.width, tower.sprite.height)) {
+      if (isInBoundsOfRectangleCentered(mouseX, mouseY, tower.x, tower.y, tower.sprite.width, tower.sprite.height)) {
         selectTower(tower);
         return;
       }
     }
     
 
-    
-  
-
+    selectedTower = null;
+    upgradePanel.onTowerDeselect();
+  }
 }
-
-
-    }
     
 // UPGRADE PANEL
 
@@ -347,7 +273,7 @@ public class Game{
 Upgrade panel contains one image label that displays the tower's current sprite, two upgrade buttons, and a sell button
 */
 public class UpgradePanel {
-  private class SellButton extends TextLabel {
+  private class SellButton extends TextButton {
     private Tower currentTower;
     
     public SellButton(JSONObject definition) {
@@ -360,10 +286,10 @@ public class UpgradePanel {
     
     public void onInput() {
       if (currentTower == null) {
+        println("no tower");
         return;
       }
       
-      println("bye");
       currentTower.sellTower();
       game.upgradePanel.onTowerDeselect();
       
@@ -469,7 +395,6 @@ public class UpgradeButton {
     }
     
     public void onInput() {
-      rect(this.position.x, this.position.y, this.size.x, this.size.y);
       if (currentTower == null) {
         return;
       }

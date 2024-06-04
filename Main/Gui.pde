@@ -289,7 +289,7 @@ public static boolean isInBoundsOfRectangle(int x, int y, int rectX, int rectY, 
    return (x > rectX && x < rectX + rectSizeX) && (y > rectY && y < rectY + rectSizeY);
 }
 
-public static boolean isInBoundsOfRectangleWithCenter(int x, int y, int rectX, int rectY, int rectSizeX, int rectSizeY) {
+public static boolean isInBoundsOfRectangleCentered(int x, int y, int rectX, int rectY, int rectSizeX, int rectSizeY) {
   return (x > rectX - rectSizeX && x < rectX + rectSizeX) && (y > rectY - rectSizeY && y < rectY + rectSizeY);
 }
 
