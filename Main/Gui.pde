@@ -318,6 +318,14 @@ public class GuiBase {
     return size;
   }
   
+  public void translatePosition(PVector position) {
+    this.position.add(position);
+  }
+  
+  public void translatePosition(int deltaX, int deltaY) {
+    this.position.add(new PVector(deltaX, deltaY));
+  }
+  
   public int getZIndex() {
     return zIndex;
   }
@@ -443,13 +451,19 @@ public class ImageLabel extends GuiBase {
     this.image = image;
   }
   
+  public void clearImage() {
+    this.image = null; 
+  }
+  
   public void updateProperties() {
     super.updateProperties();
     
     JSONObject definition = getDefinition();
     String imagePath = definition.getString("image");
-    this.image = loadImage("images/" + imagePath);
-    
+    if (imagePath != null) {
+      this.image = loadImage("images/" + imagePath);
+    }
+
     PVector defaultSize = getSize();
     int imageSizeX = readInt(definition, "imageSizeX", int(defaultSize.x));
     int imageSizeY = readInt(definition, "imageSizeY", int(defaultSize.y));
@@ -477,6 +491,10 @@ public class ImageLabel extends GuiBase {
   
   public void render() {
     super.render();
+    
+    if (this.image == null) {
+      return;
+    }
     
     PVector position = getPosition();
     

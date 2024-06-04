@@ -35,6 +35,8 @@ public class Game{
 
   private PImage invalidUpgradeImage;
   
+  private UpgradePanel upgradePanel;
+  
   public Game() {
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
     waypoints.add(new PVector(0, 100));
@@ -161,6 +163,8 @@ public class Game{
    }
   
   private void setupGui(){
+    upgradePanel = new UpgradePanel();
+    
     sellButton = (TextButton) guiManager.create("sellButton");
     sellLabel = (TextLabel) guiManager.create("sellLabel");
     towerLabel = (TextLabel) guiManager.create("towerLabel");
@@ -334,20 +338,91 @@ public class Game{
     
 // UPGRADE PANEL
 
-public class UpgradeButton {
-  private class UpgradeImageButton extends ImageButton {
-    public UpgradeImageButton(JSONObject definition) {
-      super(definition);
-    }
+/*
+Upgrade panel contains one image label that displays the tower's current sprite, two upgrade buttons, and a sell button
+*/
+public class UpgradePanel {
+  private static final int UPGRADE_BUTTON_PADDING = 45;
+  
+  private Frame backgroundFrame;
+  private ImageLabel towerSprite;
+  private ArrayList<UpgradeButton> upgradeButtons;
+  private TextButton sellButton;
+  
+  public UpgradePanel() {
+    this.backgroundFrame = (Frame) guiManager.create("horizontalWoodenPadding");
+    this.towerSprite = (ImageLabel) guiManager.create("towerImage");
+    this.sellButton = (TextButton) guiManager.create("sellButton");
     
-    public void onInput() {
+    this.upgradeButtons = new ArrayList<UpgradeButton>();
+    
+    for (int i = 0; i < 2; i++) {
+      // Stupid way of getting the buttons to lay out in a list
+      // No way I'm writing some list class for this
       
+      UpgradeButton newUpgradeButton = new UpgradeButton(i);
+      
+      // Starting X position
+      int positionX = int(newUpgradeButton.imageButton.position.x);
+      positionX += (newUpgradeButton.imageButton.size.x + UPGRADE_BUTTON_PADDING) * i;
+      
+      newUpgradeButton.setPosition(new PVector(positionX, newUpgradeButton.imageButton.position.y));
+      
+      this.upgradeButtons.add(newUpgradeButton);
     }
   }
   
+  public void setVisible(boolean state) {
+    backgroundFrame.setVisible(state);
+    towerSprite.setVisible(state);
+    sellButton.setVisible(state);
+    
+    for (UpgradeButton button : upgradeButtons) {
+      button.setVisible(state);
+    }
+  }
+  
+  public void displayTowerInformation(Tower tower) {
+    if (tower == null) {
+      setVisible(false);
+      return;
+    }
+    
+    
+  }
+}
+  
+public class UpgradeButton {
+  private class UpgradeImageButton extends ImageButton {
+    private Tower currentTower;
+    private int pathId;
+    
+    public UpgradeImageButton(JSONObject definition) {
+      super(definition);
+      this.currentTower = null;
+    }
+    
+    public void setPathId(int pathId) {
+      this.pathId = pathId;
+    }
+    
+    public void setCurrentTower(Tower tower) {
+      this.currentTower = tower;
+    }
+    
+    public void onInput() {
+      if (currentTower == null) {
+        return;
+      }
+      
+      currentTower.upgrade(pathId);
+      // Remove money
+    }
+  }
+
   private TextLabel upgradeNameLabel;
   private TextLabel costLabel;
-  private UpgradeImageButton imageButton;
+  public UpgradeImageButton imageButton;
   
   private Tower currentTower;
   private int pathId;
@@ -355,6 +430,8 @@ public class UpgradeButton {
   public UpgradeButton(int pathId) {
     this.upgradeNameLabel = (TextLabel) guiManager.create("path1Label");
     this.costLabel = (TextLabel) guiManager.create("path1Label");
+    
+    ImageLabel imageButtonBase = (ImageLabel) guiManager.create("path1Button");
     this.imageButton = (UpgradeImageButton) guiManager.create("path1Button");
     
     PVector upgradeNamePosition = new PVector(this.imageButton.position.x, this.imageButton.position.y - this.imageButton.size.y);
@@ -364,6 +441,7 @@ public class UpgradeButton {
     this.costLabel.setPosition(costLabelPosition);
     
     this.pathId = pathId;
+    this.imageButton.setPathId(pathId);
   }
   
   public void setVisible(boolean state) {
@@ -372,27 +450,41 @@ public class UpgradeButton {
     imageButton.setVisible(state);
   }
   
+  public void setPosition(PVector position) {
+    int deltaX = int(position.x - imageButton.position.x);
+    int deltaY = int(position.y - imageButton.position.y);
+    
+    imageButton.setPosition(position);
+    upgradeNameLabel.translatePosition(deltaX, deltaY);
+    costLabel.translatePosition(deltaX, deltaY);
+  }
+  
   public void setTower(Tower tower) {
     if (tower == null) {
       currentTower = null;
+      imageButton.setCurrentTower(null);
+      
       setVisible(false);
       
       return;
     }
+    currentTower = tower;
+    imageButton.setCurrentTower(currentTower);
     
     TowerUpgradeManager upgrades = tower.upgrades;
     TowerUpgrade nextUpgrade = upgrades.getNextUpgrades().get(pathId);
     
+    // Upgrade doesn't exist
     if (nextUpgrade == null) {
+      imageButton.setImage(INVALID_UPGRADE_IMAGE);
+      upgradeNameLabel.setText("Path locked");
+      costLabel.setText("");
       
+      return;
     }
+    
+    imageButton.setImage(nextUpgrade.getUpgradeImage());
+    upgradeNameLabel.setText(nextUpgrade.getUpgradeName());
+    costLabel.setText("$" + nextUpgrade.getUpgradeCost());
   }
 }
-
-/*
-Hierarchy:
-
-TowerPanel
-    |
-PlaceTowerButton
-*/
