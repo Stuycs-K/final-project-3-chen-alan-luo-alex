@@ -220,7 +220,7 @@
                                 "clusterProjectileData": {
                                     "sprite": "projectiles/bomb.png",
                                     "type": "BOMB",
-                                    "damage": 1,
+                                    "damage": 2,
                                     "pierce": 1,
                                     "maxDistance": 100,
                                     "speed": 20,
@@ -232,6 +232,21 @@
                 }
             ],
             "2": [
+                {
+                    "name": "Bigger Bombs",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 400,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+
+                        "projectiles": {
+                            "bomb": {
+                                "explosionRadius": "+ 50",
+                                "damage": "+ 1"
+                            }
+                        }
+                    }
+                },
                 {
                     "name": "Missile Launcher",
                     "upgradeImage": "upgradeIcons/bombMissileLauncher.png",
