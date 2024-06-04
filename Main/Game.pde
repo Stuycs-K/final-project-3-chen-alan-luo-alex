@@ -307,7 +307,7 @@ public class Game{
      if (isInBoundsOfRectangle(mx, my, 820, 700, 100, 100) && selectedTower !=  null) {
         selectedTower.upgrade(0);  
         displayTowerDetails(selectedTower);
-        currencyManager.removeCurrency(
+        //currencyManager.removeCurrency();
         
       } else if (isInBoundsOfRectangle(mx, my, 940, 700, 100, 100) && selectedTower != null) {
           selectedTower.upgrade(1);  
@@ -332,7 +332,67 @@ public class Game{
 
     }
     
+// UPGRADE PANEL
 
 public class UpgradeButton {
+  private class UpgradeImageButton extends ImageButton {
+    public UpgradeImageButton(JSONObject definition) {
+      super(definition);
+    }
+    
+    public void onInput() {
+      
+    }
+  }
   
+  private TextLabel upgradeNameLabel;
+  private TextLabel costLabel;
+  private UpgradeImageButton imageButton;
+  
+  private Tower currentTower;
+  private int pathId;
+  
+  public UpgradeButton(int pathId) {
+    this.upgradeNameLabel = (TextLabel) guiManager.create("path1Label");
+    this.costLabel = (TextLabel) guiManager.create("path1Label");
+    this.imageButton = (UpgradeImageButton) guiManager.create("path1Button");
+    
+    PVector upgradeNamePosition = new PVector(this.imageButton.position.x, this.imageButton.position.y - this.imageButton.size.y);
+    this.upgradeNameLabel.setPosition(upgradeNamePosition);
+    
+    PVector costLabelPosition = new PVector(this.imageButton.position.x, this.imageButton.position.y + this.imageButton.size.y);
+    this.costLabel.setPosition(costLabelPosition);
+    
+    this.pathId = pathId;
+  }
+  
+  public void setVisible(boolean state) {
+    upgradeNameLabel.setVisible(state);
+    costLabel.setVisible(state);
+    imageButton.setVisible(state);
+  }
+  
+  public void setTower(Tower tower) {
+    if (tower == null) {
+      currentTower = null;
+      setVisible(false);
+      
+      return;
+    }
+    
+    TowerUpgradeManager upgrades = tower.upgrades;
+    TowerUpgrade nextUpgrade = upgrades.getNextUpgrades().get(pathId);
+    
+    if (nextUpgrade == null) {
+      
+    }
+  }
 }
+
+/*
+Hierarchy:
+
+TowerPanel
+    |
+PlaceTowerButton
+*/

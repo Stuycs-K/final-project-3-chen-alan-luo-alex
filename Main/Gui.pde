@@ -282,10 +282,10 @@ public class GuiBase {
   private color backgroundColor;
   private float backgroundTransparency; // 0 is fully transparent, 1 is fully solid
   
-  private PVector position;
-  private PVector size;
+  public PVector position;
+  public PVector size;
   
-  private boolean isVisible;
+  public boolean isVisible;
   
   private JSONObject definition;
   
