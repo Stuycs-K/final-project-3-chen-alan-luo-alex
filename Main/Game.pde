@@ -4,7 +4,7 @@ public class Game{
   public ArrayList<Bloon> bloons;
   public ArrayList<Projectile> projectiles;
   private HealthManager healthManager;
-  public CurrencyManager currencyManager;
+  private CurrencyManager currencyManager;
   private boolean gameActive;
   
   private float currencyPerPopMultiplier;
@@ -163,9 +163,22 @@ public class Game{
       Tower newTower = null;
       if(towerName.equals("DartMonkey")){
         newTower = new DartMonkey(x,y);
-
+        if(currencyManager.getCurrency() >= startingCost){
+          currencyManager.removeCurrency(startingCost);
+        }
+        else if(currencyManager.getCurrency() < startingCost){
+          
+          return;
+        }
       }else if(towerName.equals("BombShooter")){
         newTower = new BombShooter(x,y);
+        if(currencyManager.getCurrency() >= startingCost){
+          currencyManager.removeCurrency(startingCost);
+        }
+        else if(currencyManager.getCurrency() < startingCost){
+          return;
+        }
+   
     }
      if(newTower != null){
        towers.add(newTower);
@@ -501,13 +514,13 @@ public class TowerSelectButton {
     
     public void onInput() {
       int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
-      if(game.currencyManager.getCurrency() > startingCost){
-        game.currencyManager.removeCurrency(startingCost);
+      if(game.currencyManager.getCurrency() >= startingCost){
       }
-      else if(game.currencyManager.getCurrency() <= startingCost){
+      else if(game.currencyManager.getCurrency() < startingCost){
         return;
        }
       game.setCurrentTower(towerName);
+
     }
   }
   
