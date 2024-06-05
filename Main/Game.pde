@@ -35,7 +35,8 @@ public class Game{
 
   private PImage invalidUpgradeImage;
   
-  public UpgradePanel upgradePanel;
+  private UpgradePanel upgradePanel;
+  private TowerSelectionPanel towerSelectionPanel;
   
   public Game() {
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -166,13 +167,15 @@ public class Game{
     upgradePanel = new UpgradePanel();
     upgradePanel.setVisible(false);
     
-    towerLabel = (TextLabel) guiManager.create("towerLabel");
+    towerSelectionPanel = new TowerSelectionPanel();
+    
+    //towerLabel = (TextLabel) guiManager.create("towerLabel");
 
-    verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
-    towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonDartMonkey");
+    //verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
+    //towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonDartMonkey");
 
     placementLabel = (TextLabel) guiManager.create("placementLabel");
-    towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonBombShooter");
+    //towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonBombShooter");
     
     
    }
@@ -481,17 +484,34 @@ public class UpgradeButton {
 public class TowerSelectionPanel {
   private static final int ROW_PADDING = 10;
   private static final int COLUMN_PADDING = 10;
+  private static final int TOWER_BUTTONS_PER_ROW = 2;
   
   private ArrayList<TowerSelectButton> buttons;
+  private Frame verticalBackground;
+  private TextLabel header;
   
   public TowerSelectionPanel() {
     this.buttons = new ArrayList<TowerSelectButton>();
+    this.verticalBackground = (Frame) guiManager.create("verticalWoodenPadding");
+    this.header = (TextLabel) guiManager.create("towerLabel");
     
     HashMap<String, TowerPropertyTable> towerMap = towerPropertyLookup.getMap();
+    
+    int count = 0;
     for (String towerName : towerMap.keySet()) {
       TowerSelectButton selectButton = new TowerSelectButton(towerName);
       
+      int yMultiplier = count / TOWER_BUTTONS_PER_ROW;
+      int xMultiplier = count % TOWER_BUTTONS_PER_ROW;
+      
+      float originalX = selectButton.imageButton.position.x;
+      float originalY = selectButton.imageButton.position.y;
+      PVector position = new PVector(originalX + (selectButton.imageButton.size.x + ROW_PADDING) * xMultiplier, originalY + (selectButton.imageButton.size.y + COLUMN_PADDING) * yMultiplier);
+      selectButton.setPosition(position);
+      
       this.buttons.add(selectButton);
+      
+      count++;
     }
   }
 }
@@ -510,19 +530,23 @@ public class TowerSelectButton {
       PImage baseImage = towerPropertyLookup.getTowerProperties(towerName).getBaseSprite();
       this.setImage(baseImage);
     }
+    
+    public void onInput() {
+      game.setCurrentTower(towerName);
+    }
   }
   
   private String towerName;
-  private TowerSelectImageButton imageButton;
+  public TowerSelectImageButton imageButton;
   private TextLabel costLabel;
   
   public TowerSelectButton(String towerName) {
     this.towerName = towerName;
-    this.costLabel = (TextLabel) guiManager.create("towerLabel");
-    this.imageButton = new TowerSelectImageButton(guiManager.getGuiDefinition("towerButtonDartMonkey"));
+    this.costLabel = (TextLabel) guiManager.create("towerSelectCostLabel");
+    this.imageButton = new TowerSelectImageButton(guiManager.getGuiDefinition("towerSelectButton"));
     guiManager.createCustom((GuiBase) this.imageButton);
     
-    PVector costLabelPosition = new PVector(this.imageButton.position.x, this.imageButton.position.y - this.imageButton.size.y);
+    PVector costLabelPosition = new PVector(this.imageButton.position.x, this.imageButton.position.y + this.imageButton.size.y);
     this.costLabel.setPosition(costLabelPosition);
     
     this.imageButton.setTower(this.towerName);
