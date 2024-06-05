@@ -1,0 +1,28 @@
+{
+    "CheatMenuPanel": {
+        "className": "Frame",
+        "x": 0,
+        "y": 200,
+        "sizeX": 300,
+        "sizeY": 600,
+        "backgroundColor": "194 116 27",
+        "zIndex": 1
+    },
+    "BloonSpawnPanel": {
+        "className": "Frame",
+        "x": 0,
+        "y": 250,
+        "sizeX": 300,
+        "sizeY": 300,
+        "backgroundColor": "224 11 11",
+        "zIndex": 2
+    },
+    "SpawnBloonButton": {
+        "className": "ImageButton",
+        "x": 0,
+        "y": 260,
+        "sizeX": 50,
+        "sizeY": 50,
+        "zIndex": 100
+    }
+}
