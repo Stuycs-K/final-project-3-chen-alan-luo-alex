@@ -68,6 +68,12 @@
 - Add a ton of images for the tower sprites and upgrade icons
 - Fix small bugs with camo detection and add cash per wave
 
+## 6/3/2024
+- Cleanup GUI code with UpgradePanel and related classes
+
+## 6/4/2024
+- Cleanup GUI code with TowerSelectionPanel and related classes
+
 ## Alex Luo
 
 ### 5/22/2024
