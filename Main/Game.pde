@@ -163,13 +163,20 @@ public class Game{
       Tower newTower = null;
       if(towerName.equals("DartMonkey")){
         newTower = new DartMonkey(x,y);
-        if(currencyManager.getCurrency() > startingCost){
+        if(currencyManager.getCurrency() >= startingCost){
           currencyManager.removeCurrency(startingCost);
+        }
+        else if(currencyManager.getCurrency() < startingCost){
+          
+          return;
         }
       }else if(towerName.equals("BombShooter")){
         newTower = new BombShooter(x,y);
-        if(currencyManager.getCurrency() > startingCost){
+        if(currencyManager.getCurrency() >= startingCost){
           currencyManager.removeCurrency(startingCost);
+        }
+        else if(currencyManager.getCurrency() < startingCost){
+          return;
         }
    
     }
@@ -506,7 +513,14 @@ public class TowerSelectButton {
     }
     
     public void onInput() {
+      int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
+      if(game.currencyManager.getCurrency() >= startingCost){
+      }
+      else if(game.currencyManager.getCurrency() < startingCost){
+        return;
+       }
       game.setCurrentTower(towerName);
+
     }
   }
   
