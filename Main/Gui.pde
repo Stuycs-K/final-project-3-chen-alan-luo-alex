@@ -543,16 +543,12 @@ public class Frame extends GuiBase {
 }
 
 public class ImageButton extends ImageLabel implements Button {
-  private String towerType;
-  
   public ImageButton(JSONObject defintion){
     super(defintion);
-    this.towerType = readString(defintion, "towerType", "");
   }
   
   public ImageButton clone() {
     ImageButton clone = new ImageButton (getDefinition());
-    clone.setTowerType(this.towerType);
     return clone;
   }
   
@@ -560,19 +556,8 @@ public class ImageButton extends ImageLabel implements Button {
     return true;
   }
   
-  public void setTowerType(String towerType){
-    this.towerType = towerType;
-  }
-  
-  public String getTowerType(){
-    return towerType;
-  }
   
   public void onInput() {
-    if(!towerType.isEmpty()){
-      game.setCurrentTower(towerType);
-      guiManager.showText("Now placing: " + towerType);
-    }
     return;
   }
   

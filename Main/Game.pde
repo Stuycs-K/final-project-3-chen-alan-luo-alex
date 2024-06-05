@@ -13,23 +13,6 @@ public class Game{
   private Tower selectedTower;
   private boolean showTowerOptions;
 
-  private TextButton sellButton;
-  
-  private ImageLabel towerImage;
-  
-  private TextLabel sellLabel;
-  private TextLabel towerLabel;
-  private TextLabel path1Label;
-  private TextLabel path2Label;
-  
-  private Frame horizontalWoodenPadding;
-  private Frame verticalWoodenPadding;
-  
-  private ImageButton towerButtonDartMonkey;
-  private ImageButton towerButtonBombShooter;
-  private ImageButton path1Button;
-  private ImageButton path2Button;
-  
   private String currentTowerType = null;
   private TextLabel placementLabel;
 
@@ -168,16 +151,8 @@ public class Game{
     upgradePanel.setVisible(false);
     
     towerSelectionPanel = new TowerSelectionPanel();
-    
-    //towerLabel = (TextLabel) guiManager.create("towerLabel");
-
-    //verticalWoodenPadding = (Frame) guiManager.create("verticalWoodenPadding");
-    //towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonDartMonkey");
 
     placementLabel = (TextLabel) guiManager.create("placementLabel");
-    //towerButtonDartMonkey = (ImageButton) guiManager.create("towerButtonBombShooter");
-    
-    
    }
   
   public void placeTower(String towerName, int x, int y){
@@ -289,7 +264,6 @@ public class UpgradePanel {
     
     public void onInput() {
       if (currentTower == null) {
-        println("no tower");
         return;
       }
       
@@ -482,8 +456,8 @@ public class UpgradeButton {
 // TOWER SEELCTION SIDEBAR
 
 public class TowerSelectionPanel {
-  private static final int ROW_PADDING = 10;
-  private static final int COLUMN_PADDING = 10;
+  private static final int ROW_PADDING = 5;
+  private static final int COLUMN_PADDING = 5;
   private static final int TOWER_BUTTONS_PER_ROW = 2;
   
   private ArrayList<TowerSelectButton> buttons;
@@ -550,6 +524,7 @@ public class TowerSelectButton {
     this.costLabel.setPosition(costLabelPosition);
     
     this.imageButton.setTower(this.towerName);
+    this.costLabel.setText("$" + towerPropertyLookup.getTowerProperties(towerName).getBaseCost());
   }
   
   public void setPosition(PVector position) {

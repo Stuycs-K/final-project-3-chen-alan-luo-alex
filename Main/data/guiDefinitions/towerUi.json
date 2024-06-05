@@ -38,10 +38,13 @@
     },
     "verticalWoodenPadding": {
         "className": "Frame",
-        "x": 1050,
+        "x": "r 150",
         "y": 0,
         "sizeX": 200,
         "sizeY": 800,
+        "stroke": {
+            "type": "NONE"
+        },
         "backgroundColor": "139 69 30",
         "backgroundTransparency": 1,
         "zIndex": 0
@@ -59,11 +62,16 @@
     },
     "towerSelectButton": {
         "className": "ImageButton",
-        "x": "r 200",
+        "x": "r 125",
         "y": 100,
         "sizeX": 50,
         "sizeY": 50,
-        "zIndex": 2
+        "zIndex": 2,
+        "stroke": {
+            "type": "ROUND",
+            "weight": 3,
+            "color": "0 0 0"
+        }
     },
     "towerSelectCostLabel": {
         "className": "TextLabel",
@@ -79,26 +87,6 @@
         "textColor": "255 255 255",
         "textXAlignment": "LEFT",
         "textYAlignment": "CENTER"
-    },
-    "towerButtonDartMonkey": {
-        "className": "ImageButton",
-        "x": 1125,
-        "y": 100,
-        "sizeX": 50,
-        "sizeY": 50,
-        "image": "towers/dartmonkey.png",
-        "zIndex": 2,
-        "towerType": "DartMonkey"
-    },
-    "towerButtonBombShooter": {
-        "className": "ImageButton",
-        "x": 1060,
-        "y": 100,
-        "sizeX": 50,
-        "sizeY": 50,
-        "image": "towers/bombshooter.png",
-        "zIndex": 2,
-        "towerType": "BombShooter"
     },
     "towerImage": {
         "className": "ImageLabel",
