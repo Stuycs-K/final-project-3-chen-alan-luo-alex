@@ -16,6 +16,10 @@ public class TowerPropertyLookup {
   public TowerPropertyTable getTowerProperties(String towerName) {
     return towerPropertyMap.get(towerName);
   }
+  
+  public HashMap<String, TowerPropertyTable> getMap() {
+    return towerPropertyMap;
+  }
 }
 
 private class TowerPropertyTable {

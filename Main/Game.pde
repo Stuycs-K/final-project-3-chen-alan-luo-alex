@@ -475,3 +475,64 @@ public class UpgradeButton {
     costLabel.setText("$" + nextUpgrade.getUpgradeCost());
   }
 }
+
+// TOWER SEELCTION SIDEBAR
+
+public class TowerSelectionPanel {
+  private static final int ROW_PADDING = 10;
+  private static final int COLUMN_PADDING = 10;
+  
+  private ArrayList<TowerSelectButton> buttons;
+  
+  public TowerSelectionPanel() {
+    this.buttons = new ArrayList<TowerSelectButton>();
+    
+    HashMap<String, TowerPropertyTable> towerMap = towerPropertyLookup.getMap();
+    for (String towerName : towerMap.keySet()) {
+      TowerSelectButton selectButton = new TowerSelectButton(towerName);
+      
+      this.buttons.add(selectButton);
+    }
+  }
+}
+
+public class TowerSelectButton {
+  private class TowerSelectImageButton extends ImageButton {
+    private String towerName;
+    
+    public TowerSelectImageButton(JSONObject definition) {
+      super(definition); 
+    }
+    
+    public void setTower(String towerName) {
+      this.towerName = towerName;
+      
+      PImage baseImage = towerPropertyLookup.getTowerProperties(towerName).getBaseSprite();
+      this.setImage(baseImage);
+    }
+  }
+  
+  private String towerName;
+  private TowerSelectImageButton imageButton;
+  private TextLabel costLabel;
+  
+  public TowerSelectButton(String towerName) {
+    this.towerName = towerName;
+    this.costLabel = (TextLabel) guiManager.create("towerLabel");
+    this.imageButton = new TowerSelectImageButton(guiManager.getGuiDefinition("towerButtonDartMonkey"));
+    guiManager.createCustom((GuiBase) this.imageButton);
+    
+    PVector costLabelPosition = new PVector(this.imageButton.position.x, this.imageButton.position.y - this.imageButton.size.y);
+    this.costLabel.setPosition(costLabelPosition);
+    
+    this.imageButton.setTower(this.towerName);
+  }
+  
+  public void setPosition(PVector position) {
+    int deltaX = int(position.x - imageButton.position.x);
+    int deltaY = int(position.y - imageButton.position.y);
+    
+    imageButton.setPosition(position);
+    costLabel.translatePosition(deltaX, deltaY);
+  }
+}
