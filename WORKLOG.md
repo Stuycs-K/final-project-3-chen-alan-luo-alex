@@ -74,6 +74,9 @@
 ## 6/4/2024
 - Cleanup GUI code with TowerSelectionPanel and related classes
 
+## 6/5/2024
+- Write basic cheat menu, with buttons for spawning the different bloon variants and toggling modifiers and infinite cash / health buttons
+
 ## Alex Luo
 
 ### 5/22/2024
