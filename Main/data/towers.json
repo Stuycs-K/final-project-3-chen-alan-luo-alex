@@ -164,7 +164,11 @@
                     "speed": 14,
                     "sprite": "projectiles/bomb.png",
                     "maxDistance": 300,
-                    "explosionRadius": 50
+                    "explosionRadius": 50,
+                    "specialDamageProperties": {
+                        "popBlack": false,
+                        "popLead": true
+                    }
                 },
                 "clusterBomb": {
                     "type": "CLUSTER_BOMB",
@@ -182,6 +186,10 @@
                         "pierce": 1,
                         "maxDistance": 75,
                         "speed": 25
+                    },
+                    "specialDamageProperties": {
+                        "popBlack": false,
+                        "popLead": true
                     }
                 }
             }
@@ -227,7 +235,11 @@
                                     "explosionPierce": 5,
                                     "maxDistance": 100,
                                     "speed": 20,
-                                    "explosionRadius": 100
+                                    "explosionRadius": 100,
+                                    "specialDamageProperties": {
+                                        "popBlack": false,
+                                        "popLead": true
+                                    }
                                 }
                             }
                         }

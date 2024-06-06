@@ -58,10 +58,16 @@ public class Bomb extends Projectile{
   private void explode(ArrayList<Bloon> bloons){
     BombData bombData = (BombData) projectileData;
     
+    int bloonsHitByExplosion = 0;
+    
     for(Bloon bloon : bloons){
-      float distance = PVector.dist(new PVector(x, y), new PVector(bloon.getPosition().x, bloon.getPosition().y));
-      if(distance <= bombData.explosionRadius) {
-        bloon.damage(projectileData.damage);
+      if (bloonsHitByExplosion >= bombData.explosionPierce) {
+        return;
+      }
+      
+      if (circleIntersectsRectangle(new PVector(x, y), bombData.explosionRadius, bloon.getHitboxVertices())) {
+        bloon.damage((DamageProperties) bombData);
+        bloonsHitByExplosion++;
       }
     }
   }
@@ -69,15 +75,18 @@ public class Bomb extends Projectile{
 
 public class BombData extends ProjectileData {
   public float explosionRadius;
+  public int explosionPierce;
 
   public BombData(JSONObject projectileData) {
     super(projectileData);
     this.explosionRadius = projectileData.getFloat("explosionRadius", 150.0f);
+    this.explosionPierce = projectileData.getInt("explosionPierce", 10);
   }
            
   public void updateProperties(JSONObject data) {
     super.updateProperties(data);
     this.explosionRadius = readFloatDiff(data, "explosionRadius", this.explosionRadius);
+    this.explosionPierce = readIntDiff(data, "explosionPierce", this.explosionPierce);
   }
 }
 
