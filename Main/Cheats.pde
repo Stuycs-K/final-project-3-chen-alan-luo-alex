@@ -1,6 +1,7 @@
 public class CheatMenu {
   private BloonSpawnMenu bloonSpawnMenu;
   private CurrencyButton currencyButton;
+  private HealthButton healthButton;
   public boolean isEnabled;
   
   public CheatMenu() {
@@ -9,12 +10,16 @@ public class CheatMenu {
     this.currencyButton = new CurrencyButton(guiManager.getGuiDefinition("CurrencyButton"));
     guiManager.createCustom((GuiBase) this.currencyButton);
     
+    this.healthButton = new HealthButton(guiManager.getGuiDefinition("HealthButton"));
+    guiManager.createCustom((GuiBase) this.healthButton);
+    
     this.isEnabled = false;
   }
   
   public void setVisible(boolean state) {
     bloonSpawnMenu.setVisible(state);
     currencyButton.setVisible(state);
+    healthButton.setVisible(state);
     
     this.isEnabled = state;
   }
