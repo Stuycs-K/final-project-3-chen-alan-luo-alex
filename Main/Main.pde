@@ -72,5 +72,13 @@ void mousePressed(){
   
 }
 
-void KeyPressed(){
+void keyPressed(char input){
+  if (!game.gameActive) {
+    return;
+  }
+  
+  // Cheat menu keybind: c
+  if (input == 'c') {
+    game.cheatMenu.setVisible(!game.cheatMenu.isEnabled);
+  }
 }

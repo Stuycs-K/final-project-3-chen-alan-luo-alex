@@ -5,6 +5,9 @@
         "y": 200,
         "sizeX": 300,
         "sizeY": 600,
+        "stroke": {
+            "type": "NONE"
+        },
         "backgroundColor": "194 116 27",
         "zIndex": 1
     },
@@ -15,6 +18,9 @@
         "sizeX": 300,
         "sizeY": 300,
         "backgroundColor": "224 11 11",
+        "stroke": {
+            "type": "NONE"
+        },
         "zIndex": 2
     },
     "SpawnBloonButton": {
@@ -23,6 +29,9 @@
         "y": 260,
         "sizeX": 50,
         "sizeY": 50,
+        "stroke": {
+            "type": "NONE"
+        },
         "zIndex": 100
     },
     "ToggleCamoButton": {
@@ -31,6 +40,9 @@
         "y": 210,
         "sizeX": 50,
         "sizeY": 50,
+        "stroke": {
+            "type": "NONE"
+        },
         "zIndex": 100,
         "image": "camo/red.png"
     },
@@ -40,6 +52,9 @@
         "y": 210,
         "sizeX": 50,
         "sizeY": 50,
+        "stroke": {
+            "type": "NONE"
+        },
         "zIndex": 100,
         "image": "regrow/red.png"
     }

@@ -5,7 +5,7 @@ public class Game{
   public ArrayList<Projectile> projectiles;
   private HealthManager healthManager;
   private CurrencyManager currencyManager;
-  private boolean gameActive;
+  public boolean gameActive;
   
   private float currencyPerPopMultiplier;
   
@@ -15,9 +15,8 @@ public class Game{
 
   private String currentTowerType = null;
   private TextLabel placementLabel;
-
-  private PImage invalidUpgradeImage;
   
+  public CheatMenu cheatMenu;
   private UpgradePanel upgradePanel;
   private TowerSelectionPanel towerSelectionPanel;
   
@@ -40,7 +39,6 @@ public class Game{
     towers = new ArrayList<>();
     bloons = new ArrayList<>();
     projectiles = new ArrayList<Projectile>();
-    gameActive = true;
     
     currencyPerPopMultiplier = 1;
     
@@ -49,7 +47,6 @@ public class Game{
     
     waveManager = new WaveManager();
     
-    invalidUpgradeImage = loadImage("images/upgradeIcons/invalidUpgrade.png");
     showTowerOptions = false;
     setupGui();
   }
@@ -79,6 +76,8 @@ public class Game{
   }
 
   public void startGame(){
+    gameActive = true;
+    
     waveManager.setWave(0);
     waveManager.startNextWave();
     currencyManager.setCurrency(650);
@@ -151,6 +150,9 @@ public class Game{
     upgradePanel.setVisible(false);
     
     towerSelectionPanel = new TowerSelectionPanel();
+    
+    cheatMenu = new CheatMenu();
+    cheatMenu.setVisible(false);
 
     placementLabel = (TextLabel) guiManager.create("placementLabel");
    }

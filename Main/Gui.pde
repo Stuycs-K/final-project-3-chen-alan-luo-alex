@@ -1,4 +1,4 @@
-static final String[] GUI_DEFINITION_FILES = new String[] {"game.json", "towerUi.json"};
+static final String[] GUI_DEFINITION_FILES = new String[] {"game.json", "towerUi.json", "cheatMenu.json"};
 
 private class ZIndexSorter implements Comparator<GuiBase> {
   public int compare(GuiBase a, GuiBase b) {
@@ -78,6 +78,10 @@ public class GuiManager {
     boolean pressedSomething = false;
     
     for (GuiBase gui : guiList) {
+      if (!gui.isVisible()) {
+        continue;
+      }
+      
       if (!gui.isButton()) {
         continue;
       }
