@@ -31,18 +31,18 @@ void setup(){
   
   game = new Game();
   game.startGame();
-  
-  //JSONObject spawnInformation = new JSONObject();
-  //spawnInformation.setString("layerName", "MOAB");
-  
   /*
+  JSONObject spawnInformation = new JSONObject();
+  spawnInformation.setString("layerName", "Zebra");
+  
+  
   JSONObject modifiers = new JSONObject();
   //modifiers.setBoolean("camo", true);
-  modifiers.setBoolean("regrow", true);
-  spawnInformation.setJSONObject("modifiers", modifiers);*/
+  //modifiers.setBoolean("regrow", true);
+  spawnInformation.setJSONObject("modifiers", modifiers);
   
   //bloonSpawner.spawn(spawnInformation);
-  
+  */
 }
 
 void draw(){
@@ -72,5 +72,14 @@ void mousePressed(){
   
 }
 
-void KeyPressed(){
+void keyPressed(){
+  if (!game.gameActive) {
+    return;
+  }
+  
+  // Cheat menu keybind: c
+  
+  if (key == 'c') {
+    game.cheatMenu.setVisible(!game.cheatMenu.isEnabled);
+  }
 }

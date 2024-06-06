@@ -4,6 +4,7 @@ static final int END_POSITION_ID = -1;
 public class Map {
   private float pathWidth;
   private ArrayList<PVector> pathWaypointArray;
+  private PImage mapImage;
   
   private ArrayList<MapSegment> mapSegments;
   

@@ -1,0 +1,105 @@
+{
+    "CheatMenuPanel": {
+        "className": "Frame",
+        "x": 0,
+        "y": 200,
+        "sizeX": 300,
+        "sizeY": 600,
+        "stroke": {
+            "type": "NONE"
+        },
+        "backgroundColor": "194 116 27",
+        "zIndex": 1
+    },
+    "BloonSpawnPanel": {
+        "className": "Frame",
+        "x": 0,
+        "y": 250,
+        "sizeX": 300,
+        "sizeY": 300,
+        "backgroundColor": "224 11 11",
+        "stroke": {
+            "type": "NONE"
+        },
+        "zIndex": 2
+    },
+    "SpawnBloonButton": {
+        "className": "ImageButton",
+        "x": 0,
+        "y": 260,
+        "sizeX": 35,
+        "sizeY": 35,
+        "stroke": {
+            "type": "ROUND",
+            "weight": 2,
+            "color": "23 139 255"
+        },
+        "zIndex": 100
+    },
+    "ToggleCamoButton": {
+        "className": "ImageButton",
+        "x": 0,
+        "y": 210,
+        "sizeX": 50,
+        "sizeY": 50,
+        "stroke": {
+            "type": "NONE"
+        },
+        "zIndex": 100,
+        "image": "camo/red.png"
+    },
+    "ToggleRegrowButton": {
+        "className": "ImageButton",
+        "x": 55,
+        "y": 210,
+        "sizeX": 50,
+        "sizeY": 50,
+        "stroke": {
+            "type": "NONE"
+        },
+        "zIndex": 100,
+        "image": "regrow/red.png"
+    },
+    "CurrencyButton": {
+        "className": "TextButton",
+        "x": 10,
+        "y": 500,
+        "sizeX": 120,
+        "sizeY": 30,
+        "stroke": {
+            "type": "ROUND",
+            "weight": 2,
+            "color": "23 139 255"
+        },
+        "backgroundColor": "255 197 51",
+        "zIndex": 20,
+        "text": "MONEY !!!",
+        "textFont": "regularSmall",
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "textXOffset": 60,
+        "textYOffset": 15
+    },
+    "HealthButton": {
+        "className": "TextButton",
+        "x": 10,
+        "y": 460,
+        "sizeX": 120,
+        "sizeY": 30,
+        "stroke": {
+            "type": "ROUND",
+            "weight": 2,
+            "color": "23 139 255"
+        },
+        "backgroundColor": "204 0 0",
+        "zIndex": 20,
+        "text": "HEALTH !!!",
+        "textFont": "regularSmall",
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "textXOffset": 60,
+        "textYOffset": 15
+    }
+}

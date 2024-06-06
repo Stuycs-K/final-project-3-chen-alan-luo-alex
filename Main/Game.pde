@@ -5,7 +5,7 @@ public class Game{
   public ArrayList<Projectile> projectiles;
   private HealthManager healthManager;
   private CurrencyManager currencyManager;
-  private boolean gameActive;
+  public boolean gameActive;
   
   private float currencyPerPopMultiplier;
   
@@ -15,9 +15,8 @@ public class Game{
 
   private String currentTowerType = null;
   private TextLabel placementLabel;
-
-  private PImage invalidUpgradeImage;
   
+  public CheatMenu cheatMenu;
   private UpgradePanel upgradePanel;
   private TowerSelectionPanel towerSelectionPanel;
   
@@ -40,7 +39,6 @@ public class Game{
     towers = new ArrayList<>();
     bloons = new ArrayList<>();
     projectiles = new ArrayList<Projectile>();
-    gameActive = true;
     
     currencyPerPopMultiplier = 1;
     
@@ -49,7 +47,6 @@ public class Game{
     
     waveManager = new WaveManager();
     
-    invalidUpgradeImage = loadImage("images/upgradeIcons/invalidUpgrade.png");
     showTowerOptions = false;
     setupGui();
   }
@@ -79,6 +76,8 @@ public class Game{
   }
 
   public void startGame(){
+    gameActive = true;
+    
     waveManager.setWave(0);
     waveManager.startNextWave();
     currencyManager.setCurrency(650);
@@ -151,6 +150,9 @@ public class Game{
     upgradePanel.setVisible(false);
     
     towerSelectionPanel = new TowerSelectionPanel();
+    
+    cheatMenu = new CheatMenu();
+    cheatMenu.setVisible(false);
 
     placementLabel = (TextLabel) guiManager.create("placementLabel");
    }
@@ -163,13 +165,20 @@ public class Game{
       Tower newTower = null;
       if(towerName.equals("DartMonkey")){
         newTower = new DartMonkey(x,y);
-        if(currencyManager.getCurrency() > startingCost){
+        if(currencyManager.getCurrency() >= startingCost){
           currencyManager.removeCurrency(startingCost);
+        }
+        else if(currencyManager.getCurrency() < startingCost){
+          
+          return;
         }
       }else if(towerName.equals("BombShooter")){
         newTower = new BombShooter(x,y);
-        if(currencyManager.getCurrency() > startingCost){
+        if(currencyManager.getCurrency() >= startingCost){
           currencyManager.removeCurrency(startingCost);
+        }
+        else if(currencyManager.getCurrency() < startingCost){
+          return;
         }
    
     }
@@ -506,7 +515,14 @@ public class TowerSelectButton {
     }
     
     public void onInput() {
+      int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
+      if(game.currencyManager.getCurrency() >= startingCost){
+      }
+      else if(game.currencyManager.getCurrency() < startingCost){
+        return;
+       }
       game.setCurrentTower(towerName);
+
     }
   }
   

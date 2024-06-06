@@ -25,6 +25,10 @@ public class BloonPropertyLookup {
     }
   }
   
+  public ArrayList<BloonPropertyTable> getPropertyTables() {
+    return bloonPropertyTables;
+  }
+  
   public String getLayerNameFromId(int id) {
     return bloonPropertyTables.get(id).getLayerName();
   }
