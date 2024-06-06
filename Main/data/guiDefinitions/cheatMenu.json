@@ -24,5 +24,23 @@
         "sizeX": 50,
         "sizeY": 50,
         "zIndex": 100
+    },
+    "ToggleCamoButton": {
+        "className": "ImageButton",
+        "x": 0,
+        "y": 210,
+        "sizeX": 50,
+        "sizeY": 50,
+        "zIndex": 100,
+        "image": "camo/red.png"
+    },
+    "ToggleRegrowButton": {
+        "className": "ImageButton",
+        "x": 55,
+        "y": 210,
+        "sizeX": 50,
+        "sizeY": 50,
+        "zIndex": 100,
+        "image": "regrow/red.png"
     }
 }
