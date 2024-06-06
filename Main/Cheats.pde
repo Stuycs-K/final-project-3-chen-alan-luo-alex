@@ -45,7 +45,21 @@ public class BloonSpawnMenu {
     }
     
     public void setCamo(boolean state) {
+      JSONObject modifiers = currentSpawnParams.getJSONObject("modifiers");
+      
+      // Either change sprites to camo regrow or just regrow sprites
+      boolean isRegrow = !modifiers.isNull("regrow");
+      
+      if (!state) {
+        
+      }
       if (state) {
+        // Set sprites to camo regrow
+        if (!currentSpawnParams.getJSONObject("modifiers").isNull("regrow")) {
+          setImage(layerProperties.getSpriteVariant("camoRegrow"));
+        } else {
+          setImage(layerProperties.getSpriteVariant("camo"));
+        }
         
       } else {
         setImage(layerProperties.getSprite());
@@ -61,7 +75,7 @@ public class BloonSpawnMenu {
     }
     
     public void onInput() {
-      
+      bloonSpawner.spawn(this.currentSpawnParams);
     }
   }
   
@@ -74,7 +88,10 @@ public class BloonSpawnMenu {
     }
     
     public void onInput() {
-      
+      enabled = !enabled;
+      for (BloonSpawnButton button : buttons) {
+        button.setCamo(enabled);
+      }
     }
   }
   
@@ -87,7 +104,10 @@ public class BloonSpawnMenu {
     }
     
     public void onInput() {
-      
+      enabled = !enabled;
+      for (BloonSpawnButton button : buttons) {
+        button.setRegrow(enabled);
+      }
     }
   }
 
