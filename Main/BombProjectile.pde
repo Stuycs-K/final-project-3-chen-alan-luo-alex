@@ -1,3 +1,25 @@
+static boolean lineIntersectsCircle(PVector center, float radius, PVector lineStart, PVector lineEnd) {
+  float ab2, acab, h2;
+  PVector ac = PVector.sub(center, lineStart);
+  PVector ab = PVector.sub(lineEnd, lineStart);
+  
+  ab2 = PVector.dot(ab, ab);
+  acab = PVector.dot(ac, ab);
+  float t = acab / ab2;
+  
+  t = constrain(t, 0, 1);
+  PVector h = PVector.add(PVector.mult(ab, t), lineStart);
+  h.sub(center);
+  
+  h2 = PVector.dot(h, h);
+  
+  return h2 <= radius * radius;
+}
+
+static boolean circleIntersectsRectangle(PVector center, float radius, PVector rectCenter, float rectRadius) {
+  return true; 
+}
+
 public class Bomb extends Projectile{
   public Bomb(PVector origin, PVector goal, ProjectileData data) {
     super(origin, goal, data);
@@ -20,36 +42,6 @@ public class Bomb extends Projectile{
       }
     }
   }
-  //  if(isClusterBombs){
-  //    for(int i = 0; i < 8; i++){
-  //      float angle = TWO_PI/8;
-  //      float clusterTargetX = x * explosionRadius;
-  //      float clusterTargetY = y * explosionRadius;
-  //      projectiles.add(new BombProjectile(x,y,clusterTargetX,clusterTargetY, projectileData.damage/3, explosionRadius/3, false));
-  //    }
-  //  }
-  //}
-  
-  //public void drawProjectile(){
-  //  //implementing sprites later
-  //  pushMatrix();
-  //  translate(x,y);
-  //  float angle = atan2(targetY-y,targetX-x);
-  //  rotate(angle);
-  //  popMatrix();
-    
-  //}
-  
-    //private float explosionRadius;
-  //private boolean isClusterBombs;
-  //private ArrayList<Projectile> projectiles;
-  
-  //public BombProjectile(float x, float y, float targetX, float targetY, int damage, float explosionRadius, boolean isClusterBombs){
-  //  super(x,y,targetX,targetY,damage);
-  //  this.explosionRadius = explosionRadius;
-  //  this.isClusterBombs = isClusterBombs;
-  //  //will add sprites for bombs later
-  //}
 }
 
 public class BombData extends ProjectileData {
