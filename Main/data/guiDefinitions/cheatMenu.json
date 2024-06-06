@@ -59,5 +59,47 @@
         },
         "zIndex": 100,
         "image": "regrow/red.png"
+    },
+    "CurrencyButton": {
+        "className": "TextButton",
+        "x": 10,
+        "y": 500,
+        "sizeX": 120,
+        "sizeY": 30,
+        "stroke": {
+            "type": "ROUND",
+            "weight": 2,
+            "color": "23 139 255"
+        },
+        "backgroundColor": "255 197 51",
+        "zIndex": 20,
+        "text": "MONEY !!!",
+        "textFont": "regularSmall",
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "textXOffset": 60,
+        "textYOffset": 15
+    },
+    "HealthButton": {
+        "className": "TextButton",
+        "x": 10,
+        "y": 460,
+        "sizeX": 120,
+        "sizeY": 30,
+        "stroke": {
+            "type": "ROUND",
+            "weight": 2,
+            "color": "23 139 255"
+        },
+        "backgroundColor": "204 0 0",
+        "zIndex": 20,
+        "text": "HEALTH !!!",
+        "textFont": "regularSmall",
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "textXOffset": 60,
+        "textYOffset": 15
     }
 }

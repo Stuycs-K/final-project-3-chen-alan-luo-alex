@@ -31,7 +31,7 @@ void setup(){
   
   game = new Game();
   game.startGame();
-  
+  /*
   JSONObject spawnInformation = new JSONObject();
   spawnInformation.setString("layerName", "Zebra");
   
@@ -41,8 +41,8 @@ void setup(){
   //modifiers.setBoolean("regrow", true);
   spawnInformation.setJSONObject("modifiers", modifiers);
   
-  bloonSpawner.spawn(spawnInformation);
-  
+  //bloonSpawner.spawn(spawnInformation);
+  */
 }
 
 void draw(){
@@ -78,6 +78,7 @@ void keyPressed(){
   }
   
   // Cheat menu keybind: c
+  
   if (key == 'c') {
     game.cheatMenu.setVisible(!game.cheatMenu.isEnabled);
   }

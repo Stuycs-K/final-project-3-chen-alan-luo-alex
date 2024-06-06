@@ -1,16 +1,46 @@
 public class CheatMenu {
   private BloonSpawnMenu bloonSpawnMenu;
+  private CurrencyButton currencyButton;
   public boolean isEnabled;
   
   public CheatMenu() {
-    bloonSpawnMenu = new BloonSpawnMenu();
+    this.bloonSpawnMenu = new BloonSpawnMenu();
     
-    isEnabled = false;
+    this.currencyButton = new CurrencyButton(guiManager.getGuiDefinition("CurrencyButton"));
+    guiManager.createCustom((GuiBase) this.currencyButton);
+    
+    this.isEnabled = false;
   }
   
   public void setVisible(boolean state) {
     bloonSpawnMenu.setVisible(state);
+    currencyButton.setVisible(state);
+    
     this.isEnabled = state;
+  }
+}
+
+public class CurrencyButton extends TextButton {
+  private static final float CURRENCY_GIVEN = 1e7;
+  
+  public CurrencyButton(JSONObject definition) {
+    super(definition);
+  }
+  
+  public void onInput() {
+    game.currencyManager.rewardCurrency(CURRENCY_GIVEN);
+  }
+}
+
+public class HealthButton extends TextButton {
+  private static final int HEALTH_GIVEN = 10000000;
+  
+  public HealthButton(JSONObject definition) {
+    super(definition);
+  }
+  
+  public void onInput() {
+    game.healthManager.setHealth(game.healthManager.getCurrentHealth() + HEALTH_GIVEN);
   }
 }
 
@@ -23,6 +53,7 @@ public class BloonSpawnMenu {
   private CamoButton toggleCamoButton;
   private RegrowButton toggleRegrowButton;
   
+  // BLOON SPAWN BUTTON
   private class BloonSpawnButton extends ImageButton {
     private String layerName;
     private BloonPropertyTable layerProperties;
@@ -78,11 +109,36 @@ public class BloonSpawnMenu {
     }
     
     public void setRegrow(boolean state) {
-      if (state) {
-        
+      JSONObject modifiers = currentSpawnParams.getJSONObject("modifiers");
+      
+      // Either change sprites to camo regrow or just regrow sprites
+      boolean isCamo = !modifiers.isNull("camo");
+      
+      PImage spriteToApply;
+      
+      if (!state) {
+        // Set sprites to camo or normal
+        if (isCamo) {
+          spriteToApply = layerProperties.getSpriteVariant("camo");
+        } else {
+          spriteToApply = layerProperties.getSprite();
+        }
       } else {
-        setImage(layerProperties.getSprite());
+        // Set sprites to camo regrow
+        if (isCamo) {
+          spriteToApply = layerProperties.getSpriteVariant("camoRegrow");
+        } else {
+          spriteToApply = layerProperties.getSpriteVariant("regrow");
+        }
       }
+      
+      // For MOABs, which don't have camo or regrow sprites
+      if (spriteToApply == null) {
+        return;
+      }
+      modifiers.setBoolean("regrow", state);
+      
+      setImage(spriteToApply);
     }
     
     public void onInput() {
@@ -90,6 +146,7 @@ public class BloonSpawnMenu {
     }
   }
   
+  // TOGGLE CAMO BUTTON
   private class CamoButton extends ImageButton {
     private boolean enabled;
     
@@ -106,6 +163,7 @@ public class BloonSpawnMenu {
     }
   }
   
+  // TOGGLE REGROW BUTTON
   private class RegrowButton extends ImageButton {
     private boolean enabled;
     
