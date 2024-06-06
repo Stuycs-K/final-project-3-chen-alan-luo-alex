@@ -4,6 +4,8 @@ public class CheatMenu {
   
   public CheatMenu() {
     bloonSpawnMenu = new BloonSpawnMenu();
+    
+    isEnabled = false;
   }
   
   public void setVisible(boolean state) {
@@ -20,29 +22,42 @@ public class BloonSpawnMenu {
   private ArrayList<BloonSpawnButton> buttons;
   private CamoButton toggleCamoButton;
   private RegrowButton toggleRegrowButton;
-  private JSONObject currentSpawnParams;
-  
-  private BloonPropertyTable layerProperties;
   
   private class BloonSpawnButton extends ImageButton {
     private String layerName;
+    private BloonPropertyTable layerProperties;
+    private JSONObject currentSpawnParams;
     
     public BloonSpawnButton(JSONObject definition) {
       super(definition);
+      
+      this.currentSpawnParams = new JSONObject();
+      this.currentSpawnParams.setJSONObject("modifiers", new JSONObject());
     }
     
     public void setLayerName(String name) {
-      layerProperties = bloonPropertyLookup.getProperties(name);
+      this.layerName = name;
+      this.layerProperties = bloonPropertyLookup.getProperties(this.layerName);
+      
+      currentSpawnParams.setString("layerName", this.layerName);
       
       setImage(layerProperties.getSprite());
     }
     
-    public void setCamo() {
-      setImage(layerProperties.getSprite());
+    public void setCamo(boolean state) {
+      if (state) {
+        
+      } else {
+        setImage(layerProperties.getSprite());
+      }
     }
     
-    public void setRegrow() {
-      setImage(layerProperties.getSprite());
+    public void setRegrow(boolean state) {
+      if (state) {
+        
+      } else {
+        setImage(layerProperties.getSprite());
+      }
     }
     
     public void onInput() {
@@ -85,12 +100,23 @@ public class BloonSpawnMenu {
     
     buttons = new ArrayList<BloonSpawnButton>();
     
+    int count = 0;
     for (BloonPropertyTable table : bloonPropertyLookup.getPropertyTables()) {
       BloonSpawnButton spawnButton = new BloonSpawnButton(guiManager.getGuiDefinition("SpawnBloonButton"));
       guiManager.createCustom((GuiBase) spawnButton);
       
+      int yMultiplier = count / BUTTONS_PER_ROW;
+      int xMultiplier = count % BUTTONS_PER_ROW;
+      
+      float originalX = spawnButton.position.x;
+      float originalY = spawnButton.position.y;
+      PVector position = new PVector(originalX + (spawnButton.size.x + ROW_PADDING) * xMultiplier, originalY + (spawnButton.size.y + COLUMN_PADDING) * yMultiplier);
+      spawnButton.setPosition(position);
+      
       spawnButton.setLayerName(table.getLayerName());
       buttons.add(spawnButton);   
+      
+      count++;
     }
   }
   
