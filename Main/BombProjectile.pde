@@ -16,8 +16,31 @@ static boolean lineIntersectsCircle(PVector center, float radius, PVector lineSt
   return h2 <= radius * radius;
 }
 
-static boolean circleIntersectsRectangle(PVector center, float radius, PVector rectCenter, float rectRadius) {
-  return true; 
+static boolean pointInRectangle(PVector point, PVector[] vertices) {
+  float ab2, ad2, apab, apad;
+  
+  PVector a = vertices[0];
+  PVector b = vertices[1];
+  PVector d = vertices[3];
+  
+  PVector ab = PVector.sub(b, a);
+  PVector ad = PVector.sub(d, a);
+  PVector ap = PVector.sub(point, a);
+  
+  ab2 = PVector.dot(ab, ab);
+  ad2 = PVector.dot(ad, ad);
+  apab = PVector.dot(ap, ab);
+  apad = PVector.dot(ap, ad);
+  
+  return apab >= 0 && apab <= ab2 && apad >= 0 && apad <= ad2;
+}
+
+static boolean circleIntersectsRectangle(PVector center, float radius, PVector[] vertices) {
+  return (pointInRectangle(center, vertices) 
+    || lineIntersectsCircle(center, radius, vertices[0], vertices[1])
+    || lineIntersectsCircle(center, radius, vertices[1], vertices[2])
+    || lineIntersectsCircle(center, radius, vertices[2], vertices[3])
+    || lineIntersectsCircle(center, radius, vertices[3], vertices[0]));
 }
 
 public class Bomb extends Projectile{

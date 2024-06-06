@@ -133,6 +133,23 @@ public class Bloon {
     return isInBoundsOfRectangle(x, y, spriteX, spriteY, spriteSizeX, spriteSizeY);
   }
   
+  public PVector[] getHitboxVertices() {
+    PVector center = position;
+    float sizeMultiplier = propertiesTable.getFloatProperty("size", 1);
+    
+    float deltaW = sprite.width / 2 * sizeMultiplier;
+    float deltaH = sprite.height / 2 * sizeMultiplier;
+    
+    PVector[] vertices = new PVector[4];
+    
+    vertices[0] = new PVector(center.x - deltaW, center.y - deltaH);
+    vertices[1] = new PVector(center.x + deltaW, center.y - deltaH);
+    vertices[2] = new PVector(center.x + deltaW, center.y + deltaH);
+    vertices[3] = new PVector(center.x - deltaW, center.y + deltaH);
+    
+    return vertices;
+  }
+  
   public void setSprite(PImage sprite) {
     this.sprite = sprite;
   }
