@@ -125,8 +125,10 @@ public class BloonModifiersList {
     Set<String> keySet = modifiers.keys();
     for (String keyName : keySet) {
       try { // If our entry is "true," apply it with no extra information
-        modifiers.getBoolean(keyName);
-        addModifier(keyName);
+        if (modifiers.getBoolean(keyName) == true) {
+          addModifier(keyName);
+        };
+
       } catch (Exception exception) {
         
       }

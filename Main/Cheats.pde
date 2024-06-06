@@ -50,20 +50,31 @@ public class BloonSpawnMenu {
       // Either change sprites to camo regrow or just regrow sprites
       boolean isRegrow = !modifiers.isNull("regrow");
       
+      PImage spriteToApply;
+      
       if (!state) {
-        
-      }
-      if (state) {
-        // Set sprites to camo regrow
-        if (!currentSpawnParams.getJSONObject("modifiers").isNull("regrow")) {
-          setImage(layerProperties.getSpriteVariant("camoRegrow"));
+        // Set sprites to regrow or normal
+        if (isRegrow) {
+          spriteToApply = layerProperties.getSpriteVariant("regrow");
         } else {
-          setImage(layerProperties.getSpriteVariant("camo"));
+          spriteToApply = layerProperties.getSprite();
         }
-        
       } else {
-        setImage(layerProperties.getSprite());
+        // Set sprites to camo regrow
+        if (isRegrow) {
+          spriteToApply = layerProperties.getSpriteVariant("camoRegrow");
+        } else {
+          spriteToApply = layerProperties.getSpriteVariant("camo");
+        }
       }
+      
+      // For MOABs, which don't have camo or regrow sprites
+      if (spriteToApply == null) {
+        return;
+      }
+      modifiers.setBoolean("camo", state);
+      
+      setImage(spriteToApply);
     }
     
     public void setRegrow(boolean state) {
