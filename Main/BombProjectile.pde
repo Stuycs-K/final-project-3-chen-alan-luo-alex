@@ -147,7 +147,7 @@ public class ClusterBombData extends BombData {
         this.clusterProjectileData = createProjectileData(clusterProjectileJSON);
       } else { // Just update the properties
       
-        if (!clusterProjectileJSON.getString("type").equals(clusterProjectileData.type)) {
+        if (!clusterProjectileJSON.isNull("type") && !clusterProjectileJSON.getString("type").equals(clusterProjectileData.type)) {
           this.clusterProjectileData = createProjectileData(clusterProjectileJSON);
         }
         this.clusterProjectileData.updateProperties(clusterProjectileJSON);

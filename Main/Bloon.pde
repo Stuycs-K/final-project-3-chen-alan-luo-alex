@@ -180,6 +180,10 @@ public class Bloon {
     spriteRotation = rotation;
   }
   
+  public void setSpeedMultiplier(float multiplier) {
+    speedMultiplier = multiplier;
+  }
+  
   public void render() {
     if (isDead || reachedEnd) {
       return;
