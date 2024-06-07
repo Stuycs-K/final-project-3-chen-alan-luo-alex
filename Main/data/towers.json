@@ -164,7 +164,7 @@
                     "speed": 14,
                     "sprite": "projectiles/bomb.png",
                     "maxDistance": 300,
-                    "explosionRadius": 50,
+                    "explosionRadius": 60,
                     "specialDamageProperties": {
                         "popBlack": false,
                         "popLead": true
@@ -178,7 +178,7 @@
                     "speed": 14,
                     "sprite": "projectiles/bomb.png",
                     "maxDistance": 300,
-                    "explosionRadius": 50,
+                    "explosionRadius": 60,
                     "projectileCount": 8,
                     "clusterProjectileData": {
                         "sprite": "projectiles/bombFrag.png",
@@ -226,7 +226,7 @@
                         "sprite": "towers/bombClusterBombs.png",
                         "projectiles": {
                             "clusterBomb": {
-                                "projectileCount": 6,
+                                "projectileCount": 8,
                                 "clusterProjectileData": {
                                     "sprite": "projectiles/bomb.png",
                                     "type": "BOMB",
@@ -235,7 +235,7 @@
                                     "explosionPierce": 5,
                                     "maxDistance": 100,
                                     "speed": 20,
-                                    "explosionRadius": 100,
+                                    "explosionRadius": 75,
                                     "specialDamageProperties": {
                                         "popBlack": false,
                                         "popLead": true
