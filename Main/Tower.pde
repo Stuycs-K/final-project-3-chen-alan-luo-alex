@@ -217,18 +217,18 @@ public class Tower{
   }
   
   public void step(ArrayList<Bloon> bloons) {
-    ArrayList<PVector> targetPositions = getTargetPositions(bloons);
+    ArrayList<Bloon> targetBloons = getTargetBloons(bloons);
     
     for (TowerAction action : actionMap.values()) {
       if (!action.checkCooldown()) {
         continue;
       }
       
-      if (!action.shouldPerformAction(targetPositions)) {
+      if (!action.shouldPerformAction(targetBloons)) {
         continue;
       }
          
-      action.performAction(this, targetPositions, bloons);
+      action.performAction(this, targetBloons, bloons);
     }
   }
   
@@ -240,9 +240,9 @@ public class Tower{
     angle = atan2(targetY - y, targetX - x);
   }
   
-  // The base getTargetPositions only gets the position of the first Bloon in range
-  public ArrayList<PVector> getTargetPositions(ArrayList<Bloon> bloons) {
-    ArrayList<PVector> results = new ArrayList<PVector>();
+  // Only gets the first Bloon in range
+  public ArrayList<Bloon> getTargetBloons(ArrayList<Bloon> bloons) {
+    ArrayList<Bloon> results = new ArrayList<Bloon>();
     
     for (Bloon targetBloon : bloons) {
       if (!targetFilter.canAttack(targetBloon)) {
@@ -251,7 +251,7 @@ public class Tower{
       
       float distance = dist(x, y, targetBloon.position.x, targetBloon.position.y);
       if (distance <= range) {
-        results.add(targetBloon.position.copy());
+        results.add(targetBloon);
         break;
       }
     }
@@ -301,11 +301,6 @@ public class Tower{
   public int getTowerY(){
     return y;
   }
-  
-  public void setHitBox(int hitBoxX, int hitBoxY){
-    
-  }
-  
 }
 
 public class TowerUpgradeManager {
@@ -537,7 +532,7 @@ public class TowerAction {
     return false;
   }
   
-  public boolean shouldPerformAction(ArrayList<PVector> targets) {
+  public boolean shouldPerformAction(ArrayList<Bloon> targets) {
     return (targets.size() > 0);
   }
   
@@ -553,7 +548,7 @@ public class TowerAction {
     return actionType;
   }
   
-  public void performAction(Tower tower, ArrayList<PVector> targetPositions, ArrayList<Bloon> bloons) {
+  public void performAction(Tower tower, ArrayList<Bloon> targetBloons, ArrayList<Bloon> bloons) {
     return;
   }
 }
@@ -580,17 +575,17 @@ public class ProjectileSpawnAction extends TowerAction {
     properties.setString("projectile", this.projectileName);
   }
   
-  public void performAction(Tower tower, ArrayList<PVector> targetPositions, ArrayList<Bloon> bloons) {
+  public void performAction(Tower tower, ArrayList<Bloon> targetBloons, ArrayList<Bloon> bloons) {
     resetCooldown();
 
     ProjectileData data = tower.projectileMap.get(getSpawnedProjectileName());
     
-    for (PVector position : targetPositions) {
-      tower.projectiles.add(createProjectile(new PVector(tower.x, tower.y), new PVector(position.x, position.y), data));
+    for (Bloon bloon : targetBloons) {
+      tower.projectiles.add(createProjectile(new PVector(tower.x, tower.y), bloon.getPosition().copy(), data));
     }
     
-    if (targetPositions.size() > 0) {
-      tower.lookAt(targetPositions.get(targetPositions.size() - 1));
+    if (targetBloons.size() > 0) {
+      tower.lookAt(targetBloons.get(targetBloons.size() - 1).getPosition());
     }
 
   }
