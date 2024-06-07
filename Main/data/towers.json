@@ -244,6 +244,28 @@
                             }
                         }
                     }
+                },
+                {
+                    "name": "Bloon Impact",
+                    "upgradeImage": "upgradeIcons/bombBloonImpact.png",
+                    "cost": 4000,
+                    "changes": {
+                        "sprite": "towers/bombBloonImpact.png",
+                        "projectiles": {
+                            "clusterBomb": {
+                                "specialDamageProperties": {
+                                    "popBlack": true
+                                },
+                                "stunDuration": 1.4,
+                                "clusterProjectileData": {
+                                    "stunDuration": 1.4,
+                                    "specialDamageProperties": {
+                                        "popBlack": true
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             ],
             "2": [
