@@ -21,21 +21,41 @@ public class Game{
   private TowerSelectionPanel towerSelectionPanel;
   
   public Game() {
+    PImage mapImage = loadImage("images/map.png");
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
-    waypoints.add(new PVector(0, 100));
-    waypoints.add(new PVector(500, 300));
-    waypoints.add(new PVector(500, 100));
-    waypoints.add(new PVector(750, 100));
-    waypoints.add(new PVector(1000, 400));
-    waypoints.add(new PVector(1000, 600));
-    waypoints.add(new PVector(800, 600));
-    waypoints.add(new PVector(800, 400));
-    waypoints.add(new PVector(300, 400));
-    waypoints.add(new PVector(300, 700));
-    waypoints.add(new PVector(500, 700));
-    waypoints.add(new PVector(500, 550));
+    waypoints.add(new PVector(0, 200));
+    waypoints.add(new PVector(190, 200));
+    waypoints.add(new PVector(190, 320));
+    waypoints.add(new PVector(95, 320));
+    waypoints.add(new PVector(95, 700));
+    waypoints.add(new PVector(190,700));
+    waypoints.add(new PVector(190, 435));
+    waypoints.add(new PVector(305, 435));
+    waypoints.add(new PVector(305, 505));
+    waypoints.add(new PVector(385,505)); 
+    waypoints.add(new PVector(385, 335));
+    waypoints.add(new PVector(475, 335));
+    waypoints.add(new PVector(475, 595));
+    waypoints.add(new PVector(345, 595));
+    waypoints.add(new PVector(345, 705)); 
+    waypoints.add(new PVector(565, 705));
+    waypoints.add(new PVector(565, 555));
+    waypoints.add(new PVector(645, 555));
+    waypoints.add(new PVector(645, 605));
+    waypoints.add(new PVector(735, 605));
+    waypoints.add(new PVector(735, 465));
+    waypoints.add(new PVector(625, 465));
+    waypoints.add(new PVector(625, 330));
+    waypoints.add(new PVector(795, 330));
+    waypoints.add(new PVector(795, 215));
+    waypoints.add(new PVector(565, 215));
+    waypoints.add(new PVector(565, 105));
+    waypoints.add(new PVector(955, 105));
+    waypoints.add(new PVector(955, 742));
+    //waypoints.add(new PVector(
+   
   
-    map = new Map(waypoints, 7);
+    map = new Map(waypoints, 7, mapImage);
     towers = new ArrayList<>();
     bloons = new ArrayList<>();
     projectiles = new ArrayList<Projectile>();
@@ -522,7 +542,7 @@ public class TowerSelectButton {
         return;
        }
       game.setCurrentTower(towerName);
-
+      
     }
   }
   
