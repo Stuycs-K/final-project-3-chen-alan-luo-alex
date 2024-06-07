@@ -232,6 +232,7 @@ public class BloonModifier {
   
   public void setDuration(float duration) {
     this.duration = duration;
+    this.timeRemaining = duration;
   }
   
   public BloonModifier clone() {
@@ -265,7 +266,7 @@ public class BloonModifier {
   }
   
   public void onStep() {
-    if (duration == -1) {
+    if (duration <= -1) {
       return;
     }
     
@@ -358,7 +359,9 @@ public class Stun extends BloonModifier {
   }
   
   public Stun clone() {
-    return new Stun(); 
+    Stun newStun = new Stun();
+    newStun.setDuration(getDuration());
+    return newStun; 
   }
   
   public void onStep() {

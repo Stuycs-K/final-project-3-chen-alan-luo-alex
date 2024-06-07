@@ -67,6 +67,12 @@ public class Bomb extends Projectile{
       
       if (circleIntersectsRectangle(new PVector(x, y), bombData.explosionRadius, bloon.getHitboxVertices())) {
         bloon.damage((DamageProperties) bombData);
+        
+        if (bombData.stunDuration > 0) {
+          Stun stunModifier = new Stun();
+          stunModifier.setDuration(bombData.stunDuration);
+          bloon.getModifiersList().addModifier(stunModifier); 
+        }
         bloonsHitByExplosion++;
       }
     }
