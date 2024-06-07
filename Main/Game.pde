@@ -208,6 +208,14 @@ public class Game{
           return;
         }
    
+    }else if(towerName.equals("SuperMonkey")){
+        newTower = new SuperMonkey(x,y);
+        if(currencyManager.getCurrency() >= startingCost){
+          currencyManager.removeCurrency(startingCost);
+        }
+        else if(currencyManager.getCurrency() < startingCost){
+          return;
+        }
     }
      if(newTower != null){
        towers.add(newTower);
@@ -351,6 +359,7 @@ public class UpgradePanel {
     backgroundFrame.setVisible(state);
     towerSprite.setVisible(state);
     sellButton.setVisible(state);
+    towerNameLabel.setVisible(state);
     
     for (UpgradeButton button : upgradeButtons) {
       button.setVisible(state);

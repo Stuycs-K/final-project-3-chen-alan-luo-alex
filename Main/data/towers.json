@@ -321,5 +321,33 @@
                 }
             ]
         }
+    },
+    "SuperMonkey": {
+        "base": {
+            "cost": 3500,
+            "sprite": "towers/dart.png",
+            "range": 350,
+            "actions": {
+                "attack": {
+                    "cooldown": 0.06,
+                    "type": "PROJECTILE",
+                    "projectile": "dart"
+                }
+            },
+            "projectiles": {
+                "dart": {
+                    "damage": 1,
+                    "pierce": 1,
+                    "speed": 35,
+                    "sprite": "projectiles/dart.png",
+                    "maxDistance": 500
+                }
+            }
+        },
+
+        "upgrades": {
+            "1": [],
+            "2": []
+        }
     }
 }
