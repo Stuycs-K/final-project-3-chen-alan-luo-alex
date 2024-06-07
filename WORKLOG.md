@@ -77,6 +77,11 @@
 ## 6/5/2024
 - Write basic cheat menu, with buttons for spawning the different bloon variants and toggling modifiers and infinite cash / health buttons
 
+## 6/6/2024
+- Write stun modifier and add Bloon Impact upgrade for Bomb Shooter
+- Fix Cluster Bomb bugs
+- Improve explosion hits using new intersection methods
+
 ## Alex Luo
 
 ### 5/22/2024
