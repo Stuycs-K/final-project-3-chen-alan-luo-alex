@@ -34,6 +34,7 @@ public class Bloon {
   
   private boolean isDead;
   private boolean reachedEnd;
+  private boolean spawnedChildren;
   
   private long handle;
   private long parentHandle;
@@ -67,6 +68,7 @@ public class Bloon {
     
     this.reachedEnd = false;
     this.isDead = false;
+    this.spawnedChildren = false;
     
     // Assign the unique handle
     this.handle = CURRENT_BLOON_HANDLE;
@@ -294,10 +296,10 @@ public class Bloon {
     JSONArray children = propertiesTable.getChildren();
     
     // No children to spawn (i.e. we popped a red bloon)
-    if (children == null) {
+    if (children == null || spawnedChildren) {
       return; 
     }
-    
+    spawnedChildren = true;
     for (int i = 0; i < children.size(); i++) {
       JSONObject childrenSpawnInformation = children.getJSONObject(i);
       ArrayList<Bloon> spawnedChildren = bloonSpawner.spawnChildren(childrenSpawnInformation, this);
