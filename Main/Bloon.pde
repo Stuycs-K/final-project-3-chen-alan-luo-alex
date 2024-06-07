@@ -23,6 +23,7 @@ public class Bloon {
   private int layerId;
   private float layerHealth;
   private float speed;
+  private float speedMultiplier;
   private PImage sprite;
   private float spriteRotation;
   private BloonModifiersList modifiersList;
@@ -43,6 +44,7 @@ public class Bloon {
     BloonPropertyTable properties = bloonPropertyLookup.getProperties(layerName);
     this.propertiesTable = properties;
     
+    this.speedMultiplier = 1;
     applyProperties();
     
     JSONObject spawnPosition = spawnParams.getJSONObject("spawnPosition");
@@ -252,7 +254,11 @@ public class Bloon {
       return;
     }
     
-    float totalDistanceToMove = this.speed * (1 / frameRate);
+    if (this.speedMultiplier == 0) {
+      return;
+    }
+    
+    float totalDistanceToMove = this.speed * this.speedMultiplier * (1 / frameRate);
     
     while (true) {
       MapSegment segment = game.getMap().getMapSegment(positionId);

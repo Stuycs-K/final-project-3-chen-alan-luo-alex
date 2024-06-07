@@ -76,17 +76,20 @@ public class Bomb extends Projectile{
 public class BombData extends ProjectileData {
   public float explosionRadius;
   public int explosionPierce;
+  public float stunDuration;
 
   public BombData(JSONObject projectileData) {
     super(projectileData);
     this.explosionRadius = projectileData.getFloat("explosionRadius", 150.0f);
     this.explosionPierce = projectileData.getInt("explosionPierce", 10);
+    this.stunDuration = projectileData.getFloat("stunDuration", 0);
   }
            
   public void updateProperties(JSONObject data) {
     super.updateProperties(data);
     this.explosionRadius = readFloatDiff(data, "explosionRadius", this.explosionRadius);
     this.explosionPierce = readIntDiff(data, "explosionPierce", this.explosionPierce);
+    this.stunDuration = readFloatDiff(data, "stunDuration", this.stunDuration);
   }
 }
 
