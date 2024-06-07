@@ -115,5 +115,25 @@
         },
         "backgroundTransparency": 1.0,
         "zIndex": 3
+    },
+    "pauseButton":{
+        "className" : "TextButton",
+        "x": "r 125",
+        "y": 800,
+        "sizeX" : 100,
+        "sizeY" : 50,
+        "backgroundColor": "150 0 0",
+        "backgroundTransparency": 0.8,
+        "zIndex": 3,
+        "text": "pause",
+        "textSize": 16,
+        "textColor": "255 255 255",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "textXOffset": 50,
+        "textYOffset": 25
+
+
     }
+    
 }

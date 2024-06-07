@@ -374,6 +374,14 @@ public class TowerUpgradeManager {
       return false;
     }
     
+    int upgradeCost = upgrade.getUpgradeCost();
+    
+   if (game.getCurrencyManager().getCurrency() < upgradeCost) {
+    return false;  
+   }
+   
+   game.getCurrencyManager().removeCurrency(upgradeCost);
+    
     // First upgrade in this path, so increase paths upgraded
     if (currentUpgradeLevel == -1) {
       pathsUpgraded++; 
@@ -395,6 +403,8 @@ public class TowerUpgradeManager {
     if (currentUpgradeLevel + 1 > highestUpgradeLevel) {
       tower.setSpriteFromUpgrade(upgrade);
       highestUpgradeLevel = currentUpgradeLevel + 1;
+      
+
     }
 
     

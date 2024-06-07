@@ -15,10 +15,15 @@ public class Game{
 
   private String currentTowerType = null;
   private TextLabel placementLabel;
+  private TextButton pauseButton;
   
   public CheatMenu cheatMenu;
   private UpgradePanel upgradePanel;
   private TowerSelectionPanel towerSelectionPanel;
+  
+  private boolean isPaused = false;
+
+  
   
   public Game() {
     PImage mapImage = loadImage("images/map.png");
@@ -74,6 +79,7 @@ public class Game{
   public Map getMap() {
     return map;
   }
+  
   
   public void setCurrentTower(String towerType){
     this.currentTowerType = towerType;
@@ -175,6 +181,7 @@ public class Game{
     cheatMenu.setVisible(false);
 
     placementLabel = (TextLabel) guiManager.create("placementLabel");
+    pauseButton = (TextButton) guiManager.create("pauseButton");
    }
   
   public void placeTower(String towerName, int x, int y){
@@ -267,6 +274,7 @@ public class Game{
         return;
       }
     }
+    
     
 
     selectedTower = null;
