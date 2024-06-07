@@ -1,3 +1,48 @@
+static boolean lineIntersectsCircle(PVector center, float radius, PVector lineStart, PVector lineEnd) {
+  float ab2, acab, h2;
+  PVector ac = PVector.sub(center, lineStart);
+  PVector ab = PVector.sub(lineEnd, lineStart);
+  
+  ab2 = PVector.dot(ab, ab);
+  acab = PVector.dot(ac, ab);
+  float t = acab / ab2;
+  
+  t = constrain(t, 0, 1);
+  PVector h = PVector.add(PVector.mult(ab, t), lineStart);
+  h.sub(center);
+  
+  h2 = PVector.dot(h, h);
+  
+  return h2 <= radius * radius;
+}
+
+static boolean pointInRectangle(PVector point, PVector[] vertices) {
+  float ab2, ad2, apab, apad;
+  
+  PVector a = vertices[0];
+  PVector b = vertices[1];
+  PVector d = vertices[3];
+  
+  PVector ab = PVector.sub(b, a);
+  PVector ad = PVector.sub(d, a);
+  PVector ap = PVector.sub(point, a);
+  
+  ab2 = PVector.dot(ab, ab);
+  ad2 = PVector.dot(ad, ad);
+  apab = PVector.dot(ap, ab);
+  apad = PVector.dot(ap, ad);
+  
+  return apab >= 0 && apab <= ab2 && apad >= 0 && apad <= ad2;
+}
+
+static boolean circleIntersectsRectangle(PVector center, float radius, PVector[] vertices) {
+  return (pointInRectangle(center, vertices) 
+    || lineIntersectsCircle(center, radius, vertices[0], vertices[1])
+    || lineIntersectsCircle(center, radius, vertices[1], vertices[2])
+    || lineIntersectsCircle(center, radius, vertices[2], vertices[3])
+    || lineIntersectsCircle(center, radius, vertices[3], vertices[0]));
+}
+
 public class Bomb extends Projectile{
   public Bomb(PVector origin, PVector goal, ProjectileData data) {
     super(origin, goal, data);
@@ -13,56 +58,44 @@ public class Bomb extends Projectile{
   private void explode(ArrayList<Bloon> bloons){
     BombData bombData = (BombData) projectileData;
     
+    int bloonsHitByExplosion = 0;
+    
     for(Bloon bloon : bloons){
-      float distance = PVector.dist(new PVector(x, y), new PVector(bloon.getPosition().x, bloon.getPosition().y));
-      if(distance <= bombData.explosionRadius) {
-        bloon.damage(projectileData.damage);
+      if (bloonsHitByExplosion >= bombData.explosionPierce) {
+        return;
+      }
+      
+      if (circleIntersectsRectangle(new PVector(x, y), bombData.explosionRadius, bloon.getHitboxVertices())) {
+        bloon.damage((DamageProperties) bombData);
+        
+        if (bombData.stunDuration > 0) {
+          Stun stunModifier = new Stun();
+          stunModifier.setDuration(bombData.stunDuration);
+          bloon.getModifiersList().addModifier(stunModifier); 
+        }
+        bloonsHitByExplosion++;
       }
     }
   }
-  //  if(isClusterBombs){
-  //    for(int i = 0; i < 8; i++){
-  //      float angle = TWO_PI/8;
-  //      float clusterTargetX = x * explosionRadius;
-  //      float clusterTargetY = y * explosionRadius;
-  //      projectiles.add(new BombProjectile(x,y,clusterTargetX,clusterTargetY, projectileData.damage/3, explosionRadius/3, false));
-  //    }
-  //  }
-  //}
-  
-  //public void drawProjectile(){
-  //  //implementing sprites later
-  //  pushMatrix();
-  //  translate(x,y);
-  //  float angle = atan2(targetY-y,targetX-x);
-  //  rotate(angle);
-  //  popMatrix();
-    
-  //}
-  
-    //private float explosionRadius;
-  //private boolean isClusterBombs;
-  //private ArrayList<Projectile> projectiles;
-  
-  //public BombProjectile(float x, float y, float targetX, float targetY, int damage, float explosionRadius, boolean isClusterBombs){
-  //  super(x,y,targetX,targetY,damage);
-  //  this.explosionRadius = explosionRadius;
-  //  this.isClusterBombs = isClusterBombs;
-  //  //will add sprites for bombs later
-  //}
 }
 
 public class BombData extends ProjectileData {
   public float explosionRadius;
+  public int explosionPierce;
+  public float stunDuration;
 
   public BombData(JSONObject projectileData) {
     super(projectileData);
     this.explosionRadius = projectileData.getFloat("explosionRadius", 150.0f);
+    this.explosionPierce = projectileData.getInt("explosionPierce", 10);
+    this.stunDuration = projectileData.getFloat("stunDuration", 0);
   }
            
   public void updateProperties(JSONObject data) {
     super.updateProperties(data);
     this.explosionRadius = readFloatDiff(data, "explosionRadius", this.explosionRadius);
+    this.explosionPierce = readIntDiff(data, "explosionPierce", this.explosionPierce);
+    this.stunDuration = readFloatDiff(data, "stunDuration", this.stunDuration);
   }
 }
 
@@ -119,6 +152,10 @@ public class ClusterBombData extends BombData {
       if (this.clusterProjectileData == null) {
         this.clusterProjectileData = createProjectileData(clusterProjectileJSON);
       } else { // Just update the properties
+      
+        if (!clusterProjectileJSON.isNull("type") && !clusterProjectileJSON.getString("type").equals(clusterProjectileData.type)) {
+          this.clusterProjectileData = createProjectileData(clusterProjectileJSON);
+        }
         this.clusterProjectileData.updateProperties(clusterProjectileJSON);
       }
 

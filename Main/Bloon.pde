@@ -23,6 +23,7 @@ public class Bloon {
   private int layerId;
   private float layerHealth;
   private float speed;
+  private float speedMultiplier;
   private PImage sprite;
   private float spriteRotation;
   private BloonModifiersList modifiersList;
@@ -33,6 +34,7 @@ public class Bloon {
   
   private boolean isDead;
   private boolean reachedEnd;
+  private boolean spawnedChildren;
   
   private long handle;
   private long parentHandle;
@@ -43,6 +45,7 @@ public class Bloon {
     BloonPropertyTable properties = bloonPropertyLookup.getProperties(layerName);
     this.propertiesTable = properties;
     
+    this.speedMultiplier = 1;
     applyProperties();
     
     JSONObject spawnPosition = spawnParams.getJSONObject("spawnPosition");
@@ -65,6 +68,7 @@ public class Bloon {
     
     this.reachedEnd = false;
     this.isDead = false;
+    this.spawnedChildren = false;
     
     // Assign the unique handle
     this.handle = CURRENT_BLOON_HANDLE;
@@ -133,6 +137,23 @@ public class Bloon {
     return isInBoundsOfRectangle(x, y, spriteX, spriteY, spriteSizeX, spriteSizeY);
   }
   
+  public PVector[] getHitboxVertices() {
+    PVector center = position;
+    float sizeMultiplier = propertiesTable.getFloatProperty("size", 1);
+    
+    float deltaW = sprite.width / 2 * sizeMultiplier;
+    float deltaH = sprite.height / 2 * sizeMultiplier;
+    
+    PVector[] vertices = new PVector[4];
+    
+    vertices[0] = new PVector(center.x - deltaW, center.y - deltaH);
+    vertices[1] = new PVector(center.x + deltaW, center.y - deltaH);
+    vertices[2] = new PVector(center.x + deltaW, center.y + deltaH);
+    vertices[3] = new PVector(center.x - deltaW, center.y + deltaH);
+    
+    return vertices;
+  }
+  
   public void setSprite(PImage sprite) {
     this.sprite = sprite;
   }
@@ -159,6 +180,10 @@ public class Bloon {
   
   public void setSpriteRotation(float rotation) {
     spriteRotation = rotation;
+  }
+  
+  public void setSpeedMultiplier(float multiplier) {
+    speedMultiplier = multiplier;
   }
   
   public void render() {
@@ -235,7 +260,11 @@ public class Bloon {
       return;
     }
     
-    float totalDistanceToMove = this.speed * (1 / frameRate);
+    if (this.speedMultiplier == 0) {
+      return;
+    }
+    
+    float totalDistanceToMove = this.speed * this.speedMultiplier * (1 / frameRate);
     
     while (true) {
       MapSegment segment = game.getMap().getMapSegment(positionId);
@@ -267,10 +296,10 @@ public class Bloon {
     JSONArray children = propertiesTable.getChildren();
     
     // No children to spawn (i.e. we popped a red bloon)
-    if (children == null) {
+    if (children == null || spawnedChildren) {
       return; 
     }
-    
+    spawnedChildren = true;
     for (int i = 0; i < children.size(); i++) {
       JSONObject childrenSpawnInformation = children.getJSONObject(i);
       ArrayList<Bloon> spawnedChildren = bloonSpawner.spawnChildren(childrenSpawnInformation, this);

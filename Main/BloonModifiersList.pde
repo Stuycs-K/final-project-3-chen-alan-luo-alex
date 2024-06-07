@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class BloonModifiersList {
   private HashMap<String, BloonModifier> modifierMap;
   private Bloon bloon;
@@ -102,8 +104,22 @@ public class BloonModifiersList {
   public void stepModifiers() {
     setSprite();
     
-    for (BloonModifier modifier : modifierMap.values()) {
+    ArrayList<String> modifiersToRemove = new ArrayList<String>();
+    for (String modifierName : modifierMap.keySet()) {
+      BloonModifier modifier = modifierMap.get(modifierName);
+      
+      if (modifier.shouldRemove()) {
+        modifiersToRemove.add(modifierName);
+        
+        modifier.onRemove();
+        continue;
+      }
+      
       modifier.onStep();
+    }
+    
+    for (String modifierName : modifiersToRemove) {
+      modifierMap.remove(modifierName); 
     }
   }
   
@@ -169,14 +185,18 @@ public class BloonModifiersList {
 
 public class BloonModifier {
   private float duration;
+  private float timeRemaining;
   private String name;
   private Bloon bloon;
+  
+  private boolean shouldRemove;
   
   private JSONObject baseProperties;
   private JSONObject customProperties;
   
   public BloonModifier(String name, float duration) {
     this.duration = duration;
+    this.timeRemaining = duration;
     this.name = name;
     this.baseProperties = bloonPropertyLookup.getModifier(name);
   }
@@ -187,6 +207,10 @@ public class BloonModifier {
   
   public void setCustomProperties(JSONObject customProperties) {
     this.customProperties = customProperties; 
+  }
+  
+  public boolean shouldRemove() {
+    return shouldRemove;
   }
   
   public JSONObject getCustomProperties() {
@@ -208,6 +232,7 @@ public class BloonModifier {
   
   public void setDuration(float duration) {
     this.duration = duration;
+    this.timeRemaining = duration;
   }
   
   public BloonModifier clone() {
@@ -232,16 +257,25 @@ public class BloonModifier {
     return this.name;
   }
   
-  public void drawVisuals() {
-    return;
-  }
-  
   public void onStackAttempt(BloonModifier otherModifier) {
     return;
   }
   
+  public void setTimeRemaining(float time) {
+    this.timeRemaining = time;
+  }
+  
   public void onStep() {
-    drawVisuals();
+    if (duration <= -1) {
+      return;
+    }
+    
+    float deductTime = 1 / frameRate;
+    this.timeRemaining -= deductTime;
+    
+    if (this.timeRemaining <= 0) {
+      this.shouldRemove = true;
+    }
   }
   
   public void onRemove() {
@@ -316,5 +350,31 @@ public class Regrow extends BloonModifier {
     } else {
       cooldown++;
     }
+  }
+}
+
+public class Stun extends BloonModifier {
+  public Stun() {
+    super("stun");
+  }
+  
+  public Stun clone() {
+    Stun newStun = new Stun();
+    newStun.setDuration(getDuration());
+    return newStun; 
+  }
+  
+  public void onStep() {
+    super.onStep();
+    
+    getBloon().setSpeedMultiplier(0);
+  }
+  
+  public void onRemove() {
+    getBloon().setSpeedMultiplier(1);
+  }
+  
+  public void onStackAttempt(Stun otherModifier) {
+    setTimeRemaining(otherModifier.getDuration());
   }
 }

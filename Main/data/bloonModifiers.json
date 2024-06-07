@@ -12,6 +12,18 @@
         "heritable": false
     },
     {
+        "name": "frozen",
+        "heritable": true
+    },
+    {
+        "name": "slow",
+        "heritable": true
+    },
+    {
+        "name": "stun",
+        "heritable": true
+    },
+    {
         "name": "camo",
         "heritable": true
     },

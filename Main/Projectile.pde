@@ -219,6 +219,7 @@ public class ProjectileData extends DamageProperties {
       this.sprite = loadImage("images/" + spritePath);
     }
     
+    //this.type = readString(data, "type", this.type);
     this.pierce = readIntDiff(data, "pierce", this.pierce);
     this.speed = readIntDiff(data, "speed", this.speed);
     this.maxDistance = readFloatDiff(data, "maxDistance", this.maxDistance);

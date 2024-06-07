@@ -15,7 +15,7 @@
                 "dart": {
                     "damage": 1,
                     "pierce": 2,
-                    "speed": 15,
+                    "speed": 25,
                     "sprite": "projectiles/dart.png",
                     "maxDistance": 200
                 }
@@ -160,19 +160,25 @@
                     "type": "BOMB",
                     "damage": 1,
                     "pierce": 1,
-                    "speed": 12,
+                    "explosionPierce": 10,
+                    "speed": 14,
                     "sprite": "projectiles/bomb.png",
                     "maxDistance": 300,
-                    "explosionRadius": 50
+                    "explosionRadius": 60,
+                    "specialDamageProperties": {
+                        "popBlack": false,
+                        "popLead": true
+                    }
                 },
                 "clusterBomb": {
                     "type": "CLUSTER_BOMB",
                     "damage": 1,
                     "pierce": 1,
-                    "speed": 12,
+                    "explosionPierce": 10,
+                    "speed": 14,
                     "sprite": "projectiles/bomb.png",
                     "maxDistance": 300,
-                    "explosionRadius": 50,
+                    "explosionRadius": 60,
                     "projectileCount": 8,
                     "clusterProjectileData": {
                         "sprite": "projectiles/bombFrag.png",
@@ -180,6 +186,10 @@
                         "pierce": 1,
                         "maxDistance": 75,
                         "speed": 25
+                    },
+                    "specialDamageProperties": {
+                        "popBlack": false,
+                        "popLead": true
                     }
                 }
             }
@@ -216,15 +226,42 @@
                         "sprite": "towers/bombClusterBombs.png",
                         "projectiles": {
                             "clusterBomb": {
-                                "projectileCount": 6,
+                                "projectileCount": 8,
                                 "clusterProjectileData": {
                                     "sprite": "projectiles/bomb.png",
                                     "type": "BOMB",
                                     "damage": 2,
                                     "pierce": 10,
+                                    "explosionPierce": 5,
                                     "maxDistance": 100,
                                     "speed": 20,
-                                    "explosionRadius": 100
+                                    "explosionRadius": 75,
+                                    "specialDamageProperties": {
+                                        "popBlack": false,
+                                        "popLead": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Bloon Impact",
+                    "upgradeImage": "upgradeIcons/bombBloonImpact.png",
+                    "cost": 4000,
+                    "changes": {
+                        "sprite": "towers/bombBloonImpact.png",
+                        "projectiles": {
+                            "clusterBomb": {
+                                "specialDamageProperties": {
+                                    "popBlack": true
+                                },
+                                "stunDuration": 1.4,
+                                "clusterProjectileData": {
+                                    "stunDuration": 1.4,
+                                    "specialDamageProperties": {
+                                        "popBlack": true
+                                    }
                                 }
                             }
                         }
@@ -274,6 +311,7 @@
                         "sprite": "towers/bombMoabMauler.png",
                         "projectiles": {
                             "bomb": {
+                                "sprite": "projectiles/moabMaulerMissile.png",
                                 "specialDamageProperties": {
                                     "extraDamageToMoabs": "+ 10"
                                 }
