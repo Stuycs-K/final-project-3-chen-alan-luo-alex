@@ -338,7 +338,7 @@
     "SuperMonkey": {
         "base": {
             "cost": 3500,
-            "sprite": "towers/dart.png",
+            "sprite": "towers/superMonkey.png",
             "range": 350,
             "actions": {
                 "attack": {
@@ -364,7 +364,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 3500,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/superLaserBlasts.png",
                         "projectiles": {
                             "dart": {
                                 "pierce": "+ 1"
@@ -377,7 +377,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 5000,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/superPlasmaBlasts.png",
                         "actions": {
                             "attack": {
                                 "cooldown": 0.045
@@ -398,7 +398,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 16500,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/superSunGod.png",
                         "actions": {
                             "attack": {
                                 "type": "MULTI_PROJECTILE",
@@ -420,7 +420,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 1000,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/superSuperRange.png",
                         "range": "+ 40"
                     }
                 },
@@ -429,7 +429,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 1500,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/superEpicRange.png",
                         "range": "+ 30"
                     }
                 },
@@ -438,7 +438,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 9000,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/superRoboMonkey.png",
                         "projectiles": {
                             "dart": {
                                 "pierce": "+ 2"
