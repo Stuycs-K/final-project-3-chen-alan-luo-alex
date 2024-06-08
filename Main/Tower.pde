@@ -463,16 +463,24 @@ public class TowerUpgradeManager {
     if (projectileChanges != null) {
       for (String projectileName : (Set<String>) projectileChanges.keys()) {
         ProjectileData projectile = tower.projectileMap.get(projectileName);
+        // Not directly on the projectiles list, so treat the string as the action name and get the projectile used by that action
+        if (projectile == null) {
+           String actualProjectileName = ((ProjectileSpawnAction) tower.actionMap.get(projectileName)).getSpawnedProjectileName();
+           projectile = tower.projectileMap.get(actualProjectileName);
+        }
         
         JSONObject currentChanges = projectileChanges.getJSONObject(projectileName);
         
         String changedType = readString(currentChanges, "type", projectile.type);
         
+        // Same type? Update properties
         if (projectile.type.equals(changedType)) {
           projectile.updateProperties(currentChanges);
-        } else { // TODO
-          ProjectileData newProjectileData = createProjectileData(currentChanges);
+          return true;
         }
+        
+        ProjectileData newProjectileData = createProjectileData(currentChanges);
+        
         
       }
     }
