@@ -2,6 +2,10 @@ public class CheatMenu {
   private BloonSpawnMenu bloonSpawnMenu;
   private CurrencyButton currencyButton;
   private HealthButton healthButton;
+  private RemoveBloonsButton removeBloonsButton;
+  private SkipWaveButton skipWaveButton;
+  private StartNextWaveButton startNextWaveButton;
+  
   public boolean isEnabled;
   
   public CheatMenu() {
@@ -13,6 +17,15 @@ public class CheatMenu {
     this.healthButton = new HealthButton(guiManager.getGuiDefinition("HealthButton"));
     guiManager.createCustom((GuiBase) this.healthButton);
     
+    this.removeBloonsButton = new RemoveBloonsButton(guiManager.getGuiDefinition("RemoveBloonsButton"));
+    guiManager.createCustom((GuiBase) this.removeBloonsButton);
+    
+    this.skipWaveButton = new SkipWaveButton(guiManager.getGuiDefinition("SkipWaveButton"));
+    guiManager.createCustom((GuiBase) this.skipWaveButton);
+    
+    this.startNextWaveButton = new StartNextWaveButton(guiManager.getGuiDefinition("StartNextWaveButton"));
+    guiManager.createCustom((GuiBase) this.startNextWaveButton);
+    
     this.isEnabled = false;
   }
   
@@ -20,6 +33,9 @@ public class CheatMenu {
     bloonSpawnMenu.setVisible(state);
     currencyButton.setVisible(state);
     healthButton.setVisible(state);
+    removeBloonsButton.setVisible(state);
+    skipWaveButton.setVisible(state);
+    startNextWaveButton.setVisible(state);
     
     this.isEnabled = state;
   }
@@ -46,6 +62,37 @@ public class HealthButton extends TextButton {
   
   public void onInput() {
     game.healthManager.setHealth(game.healthManager.getCurrentHealth() + HEALTH_GIVEN);
+  }
+}
+
+public class RemoveBloonsButton extends TextButton {
+  public RemoveBloonsButton(JSONObject definition) {
+    super(definition);
+  }
+  
+  public void onInput() {
+    game.bloons.clear();
+  }
+}
+
+public class SkipWaveButton extends TextButton {
+  public SkipWaveButton(JSONObject definition) {
+    super(definition);
+  }
+  
+  public void onInput() {
+    game.waveManager.removeWaves();
+    game.waveManager.startNextWave();
+  }
+}
+
+public class StartNextWaveButton extends TextButton {
+  public StartNextWaveButton(JSONObject definition) {
+    super(definition);
+  }
+  
+  public void onInput() {
+    game.waveManager.startNextWave();
   }
 }
 

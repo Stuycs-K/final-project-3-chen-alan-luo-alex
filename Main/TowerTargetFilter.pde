@@ -38,6 +38,10 @@ public class TowerTargetFilter{
         continue;
       }
       
+      if (!canAttack(bloon)) {
+        continue;
+      }
+      
       if (dist(tower.x, tower.y, bloon.position.x, bloon.position.y) > tower.range) {
         continue;
       }
@@ -66,6 +70,10 @@ public class TowerTargetFilter{
         continue;
       }
       
+      if (!canAttack(bloon)) {
+        continue;
+      }
+      
       if (dist(tower.x, tower.y, bloon.position.x, bloon.position.y) > tower.range) {
         continue;
       }
@@ -91,6 +99,10 @@ public class TowerTargetFilter{
     
     for (Bloon bloon : game.bloons) {
       if (blacklist.indexOf(bloon) != -1) {
+        continue;
+      }
+      
+      if (!canAttack(bloon)) {
         continue;
       }
       

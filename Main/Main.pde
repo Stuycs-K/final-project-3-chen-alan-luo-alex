@@ -30,7 +30,7 @@ void setup(){
   guiManager = new GuiManager();
   
   game = new Game();
-  game.startGame();
+  
   /*
   JSONObject spawnInformation = new JSONObject();
   spawnInformation.setString("layerName", "Zebra");
@@ -48,8 +48,10 @@ void setup(){
 void draw(){
   background(255);
   game.render();
-  game.update();
-  
+  if(game.isGameActive()){
+    
+    game.update();
+  }
   // Render UI after everything else to ensure it ends up on top
   guiManager.render();
 
@@ -73,7 +75,7 @@ void mousePressed(){
 }
 
 void keyPressed(){
-  if (!game.gameActive) {
+  if (!game.isGameActive()) {
     return;
   }
   

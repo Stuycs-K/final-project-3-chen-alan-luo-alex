@@ -5,7 +5,7 @@ public class Game{
   public ArrayList<Projectile> projectiles;
   private HealthManager healthManager;
   private CurrencyManager currencyManager;
-  public boolean gameActive;
+  private boolean gameActive;
   
   private float currencyPerPopMultiplier;
   
@@ -16,6 +16,9 @@ public class Game{
   private String currentTowerType = null;
   private TextLabel placementLabel;
   private TextButton pauseButton;
+  private TextButton playButton;
+  private Frame startScreenBackground;
+  
   
   public CheatMenu cheatMenu;
   private UpgradePanel upgradePanel;
@@ -60,7 +63,7 @@ public class Game{
     //waypoints.add(new PVector(
    
   
-    map = new Map(waypoints, 7, mapImage);
+    map = new Map(waypoints, 9, mapImage);
     towers = new ArrayList<>();
     bloons = new ArrayList<>();
     projectiles = new ArrayList<Projectile>();
@@ -74,8 +77,11 @@ public class Game{
     
     showTowerOptions = false;
     setupGui();
+    
   }
-  
+  public boolean isGameActive() {
+    return gameActive;
+  }
   public Map getMap() {
     return map;
   }
@@ -93,6 +99,16 @@ public class Game{
     }
   }
   
+  
+  public void hideStartScreen(){
+    startScreenBackground.setVisible(false);
+    playButton.setVisible(false);
+  }
+  
+  
+  
+
+  
   public CurrencyManager getCurrencyManager() {
     return currencyManager;
   }
@@ -107,6 +123,8 @@ public class Game{
     waveManager.setWave(0);
     waveManager.startNextWave();
     currencyManager.setCurrency(650);
+    
+    hideStartScreen();
   }
   
    public void update(){
@@ -176,6 +194,11 @@ public class Game{
    }
   
   private void setupGui(){
+    
+    startScreenBackground = (Frame) guiManager.create("startScreenBackground");
+    
+    playButton = (TextButton) guiManager.create("playButton");
+    
     upgradePanel = new UpgradePanel();
     upgradePanel.setVisible(false);
     
@@ -186,40 +209,67 @@ public class Game{
 
     placementLabel = (TextLabel) guiManager.create("placementLabel");
     pauseButton = (TextButton) guiManager.create("pauseButton");
+    
+    
    }
   
   public void placeTower(String towerName, int x, int y){
-    if(!map.isOnPath(new PVector(x,y)) && currentTowerType != null){
+    PVector position = new PVector(x, y);
+    
+    // Do we even have a tower type selected?
+    if (currentTowerType == null) {
+      return;
+    }
+    
+    // Would we place it on the path?
+    if (map.isCircleOnPath(position, Tower.TOWER_FOOTPRINT_SIZE)) {
+      return;
+    }
+    
+    // Would it intersect with other towers?
+    for (Tower tower : towers) {
+      PVector towerPosition = new PVector(tower.x, tower.y);
       
-      int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
-      if(currencyManager.getCurrency() >= startingCost){
-        currencyManager.removeCurrency(startingCost);
-      }
-      else {
+      if (circleIntersectsCircle(position, Tower.TOWER_FOOTPRINT_SIZE, towerPosition, tower.footprint)) {
         return;
       }
-    
-      Tower newTower = null;
-      switch (towerName) {
-        case "DartMonkey":
-          newTower = new DartMonkey(x, y);
-          break;
-        case "BombShooter":
-          newTower = new BombShooter(x, y);
-          break;
-        case "SuperMonkey":
-          newTower = new SuperMonkey(x, y);
-          break;
-      }
-  
-     if(newTower != null){
-       towers.add(newTower);
-       selectedTower = null;
-       currentTowerType = null;
-       placementLabel.setVisible(false);
-     }
-      
     }
+      
+    int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
+    if(currencyManager.getCurrency() >= startingCost){
+      currencyManager.removeCurrency(startingCost);
+    }
+    else {
+      return;
+    }
+  
+    Tower newTower = null;
+    switch (towerName) {
+      case "DartMonkey":
+        newTower = new DartMonkey(x, y);
+        break;
+      case "BombShooter":
+        newTower = new BombShooter(x, y);
+        break;
+      case "SuperMonkey":
+        newTower = new SuperMonkey(x, y);
+        break;
+    }
+
+   if(newTower != null){
+     towers.add(newTower);
+     selectedTower = null;
+     currentTowerType = null;
+     placementLabel.setVisible(false);
+   }
+      
+    
+  }
+  
+  public void showTowerRange(Tower tower) {
+    stroke(255, 255, 255);
+    noFill();
+    circle(tower.x, tower.y, tower.range * 2);
   }
  
   public void selectTower(Tower tower){
@@ -235,35 +285,46 @@ public class Game{
       tower.draw();
       if(tower==selectedTower && currentTowerType == null){
         drawHighlightCircle(tower.x, tower.y);
+        showTowerRange(tower);
       }
     }
     
     for (Projectile projectile : projectiles) {
       projectile.drawProjectile();
     }
+    
+    if (!gameActive) {
+      startScreenBackground.render();
+      playButton.render();
+    }
   }
   
   private void drawHighlightCircle(int x, int y){
     stroke(255,204,0);
     noFill();
-    ellipse(x,y,100,100);
+    circle(x, y, 75);
   }
   
   public void mousePressed(int mx, int my) {
+    if (isInBoundsOfRectangleCentered(mx, my, 500,375,200,50)) {
+      startGame();
+      
+      return;
+    }
+    
    if (currentTowerType != null && !guiManager.mousePressed()) {
       placeTower(currentTowerType, mx, my);
       return;
-        }
+   }
     
+    PVector mousePosition = new PVector(mouseX, mouseY);
     for (Tower tower : towers) {
-      if (isInBoundsOfRectangleCentered(mouseX, mouseY, tower.x, tower.y, tower.sprite.width, tower.sprite.height)) {
+      if (pointInCircle(new PVector(tower.x, tower.y), tower.footprint, mousePosition)) {
         selectTower(tower);
         return;
       }
     }
     
-    
-
     selectedTower = null;
     upgradePanel.onTowerDeselect();
   }
@@ -348,6 +409,8 @@ public class UpgradePanel {
   public void onTowerSelect(Tower tower) {
     setVisible(true);
     displayTowerInformation(tower);
+    
+    sellButton.setText("Sell: " + int(tower.getSellPrice()));
   }
   
   public void onTowerUpgrade(Tower tower) {

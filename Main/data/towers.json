@@ -147,7 +147,7 @@
         "base": {
             "cost": 650,
             "sprite": "towers/bombshooter.png",
-            "range": 250,
+            "range": 150,
             "actions": {
                 "bombAttack": {
                     "cooldown": 1.5,
@@ -165,28 +165,6 @@
                     "sprite": "projectiles/bomb.png",
                     "maxDistance": 300,
                     "explosionRadius": 60,
-                    "specialDamageProperties": {
-                        "popBlack": false,
-                        "popLead": true
-                    }
-                },
-                "clusterBomb": {
-                    "type": "CLUSTER_BOMB",
-                    "damage": 1,
-                    "pierce": 1,
-                    "explosionPierce": 10,
-                    "speed": 14,
-                    "sprite": "projectiles/bomb.png",
-                    "maxDistance": 300,
-                    "explosionRadius": 60,
-                    "projectileCount": 8,
-                    "clusterProjectileData": {
-                        "sprite": "projectiles/bombFrag.png",
-                        "damage": 2,
-                        "pierce": 1,
-                        "maxDistance": 75,
-                        "speed": 25
-                    },
                     "specialDamageProperties": {
                         "popBlack": false,
                         "popLead": true
@@ -211,11 +189,6 @@
                     "cost": 300,
                     "changes": {
                         "sprite": "towers/bombFragBombs.png",
-                        "actions": {
-                            "bombAttack": {
-                                "projectile": "clusterBomb"
-                            }
-                        },
                         "projectiles": {
                             "bomb": {
                                 "type": "CLUSTER_BOMB",
@@ -238,8 +211,7 @@
                     "changes": {
                         "sprite": "towers/bombClusterBombs.png",
                         "projectiles": {
-                            "clusterBomb": {
-                                "projectileCount": 8,
+                            "bomb": {
                                 "clusterProjectileData": {
                                     "sprite": "projectiles/bomb.png",
                                     "type": "BOMB",
@@ -265,7 +237,7 @@
                     "changes": {
                         "sprite": "towers/bombBloonImpact.png",
                         "projectiles": {
-                            "clusterBomb": {
+                            "bomb": {
                                 "specialDamageProperties": {
                                     "popBlack": true
                                 },
@@ -339,7 +311,7 @@
         "base": {
             "cost": 3500,
             "sprite": "towers/superMonkey.png",
-            "range": 350,
+            "range": 250,
             "actions": {
                 "attack": {
                     "cooldown": 0.06,
@@ -425,7 +397,7 @@
                     "cost": 1000,
                     "changes": {
                         "sprite": "towers/superSuperRange.png",
-                        "range": "+ 40"
+                        "range": "+ 60"
                     }
                 },
                 {
@@ -434,7 +406,7 @@
                     "cost": 1500,
                     "changes": {
                         "sprite": "towers/superEpicRange.png",
-                        "range": "+ 30"
+                        "range": "+ 45"
                     }
                 },
                 {

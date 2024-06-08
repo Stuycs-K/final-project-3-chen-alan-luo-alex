@@ -88,23 +88,16 @@ private TowerAction createAction(String actionClass, JSONObject actionDefinition
 }
 
 public class Tower{
+  public static final float TOWER_FOOTPRINT_SIZE = 15;
+  
   public int x;
   public int y; 
-  public int radius;
   public int range;
-  public int fireRate; 
-  public int damage;
-  public int attackSpeed;
-  public int upgradeLevel;
-  public int attackCooldown;
   public ArrayList<Projectile> projectiles;
   public TowerTargetFilter targetFilter;
-  public ArrayList<PImage> sprites;
-  public int path;
   public float angle;
-  public int hitBoxX;
-  public int hitBoxY;
-  public int cost;
+  
+  public float footprint; // Hitbox radius (hitboxes are circles)
   
   private int totalCurrencySpent;
   public PImage sprite;
@@ -118,6 +111,7 @@ public class Tower{
     this.towerName = towerName;
     this.x = x;
     this.y = y;
+    this.footprint = TOWER_FOOTPRINT_SIZE;
     
     this.targetFilter = new TowerTargetFilter(this);
     this.angle = PI;
@@ -347,11 +341,12 @@ public class TowerUpgradeManager {
     
     int upgradeCost = upgrade.getUpgradeCost();
     
-   if (game.getCurrencyManager().getCurrency() < upgradeCost) {
-    return false;  
-   }
-   
-   game.getCurrencyManager().removeCurrency(upgradeCost);
+    if (game.getCurrencyManager().getCurrency() < upgradeCost) {
+     return false;  
+    }
+     
+    game.getCurrencyManager().removeCurrency(upgradeCost);
+    tower.increaseCurrencySpent(upgradeCost);
     
     // First upgrade in this path, so increase paths upgraded
     if (currentUpgradeLevel == -1) {
@@ -461,9 +456,7 @@ public class TowerUpgradeManager {
         newProperties.setJSONObject("properties", currentChanges);
         
         ProjectileData newProjectileData = createProjectileData(newProperties);
-        
         tower.projectileMap.put(projectileName, newProjectileData);
-        
       }
     }
     

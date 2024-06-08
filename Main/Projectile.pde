@@ -51,17 +51,6 @@ public class Projectile{
   
   private ArrayList<Long> hitBloons;
   
-  public Projectile(float x, float y, float targetX, float targetY, int damage){
-    this.x=x;
-    this.y=y;
-    this.targetX = targetX;
-    this.targetY = targetY;
-    this.finished = false;
-    this.dy= targetY - y;
-    this.dx= targetX -x;
-    this.distance = dist(x,y,targetX,targetY);
-  }
-  
   public ProjectileData projectileData;
   
   public Projectile(PVector origin, PVector goal, ProjectileData data) {
@@ -173,7 +162,7 @@ public class DamageProperties {
     this.extraDamageToMoabs = 0;
     
     this.damage = 1;
-
+    
     updateProperties(data);
   }
   
@@ -206,6 +195,11 @@ public class DamageProperties {
     this.extraDamageToMoabs = readIntDiff(target, "extraDamageToMoabs", this.extraDamageToMoabs);
     
     this.damage = readIntDiff(data, "damage", this.damage);
+    
+    JSONObject otherProperties = data.getJSONObject("properties");
+    if (otherProperties != null) {
+      updateProperties(otherProperties);
+    }
   }
 }
  
@@ -213,6 +207,7 @@ public class ProjectileData extends DamageProperties {
   public int pierce;
   public int speed;
   public PImage sprite;
+  public String spritePath;
   
   public String type;
   
@@ -227,6 +222,7 @@ public class ProjectileData extends DamageProperties {
   public void reconcileWithOther(JSONObject properties) {
     super.reconcileWithOther(properties);
     
+    properties.setString("sprite", this.spritePath);
     properties.setInt("pierce", this.pierce);
     properties.setInt("speed", this.speed);
     properties.setFloat("maxDistance", this.maxDistance);
@@ -234,16 +230,21 @@ public class ProjectileData extends DamageProperties {
   
   public void updateProperties(JSONObject data) {
     super.updateProperties(data);
-
+    
     if (!data.isNull("sprite")) {
       String spritePath = data.getString("sprite");
       this.sprite = loadImage("images/" + spritePath);
+      this.spritePath = spritePath;
     }
     
-    //this.type = readString(data, "type", this.type);
     this.pierce = readIntDiff(data, "pierce", this.pierce);
     this.speed = readIntDiff(data, "speed", this.speed);
     this.maxDistance = readFloatDiff(data, "maxDistance", this.maxDistance);
+    
+    JSONObject otherProperties = data.getJSONObject("properties");
+    if (otherProperties != null) {
+      updateProperties(otherProperties);
+    }
   }
   
 }
