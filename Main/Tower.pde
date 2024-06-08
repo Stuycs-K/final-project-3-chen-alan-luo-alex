@@ -88,6 +88,8 @@ private TowerAction createAction(String actionClass, JSONObject actionDefinition
 }
 
 public class Tower{
+  public static final float TOWER_FOOTPRINT_SIZE = 15;
+  
   public int x;
   public int y; 
   public int radius;
@@ -120,7 +122,7 @@ public class Tower{
     this.towerName = towerName;
     this.x = x;
     this.y = y;
-    this.footprint = 5;
+    this.footprint = TOWER_FOOTPRINT_SIZE;
     
     this.targetFilter = new TowerTargetFilter(this);
     this.angle = PI;

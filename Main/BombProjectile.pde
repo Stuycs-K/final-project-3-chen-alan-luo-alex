@@ -20,7 +20,7 @@ static boolean pointInCircle(PVector center, float radius, PVector point) {
   float dx = point.x - center.x;
   float dy = point.y - center.y;
   
-  return dx * dx + dy + dy <= radius * radius;
+  return dx * dx + dy * dy <= radius * radius;
 }
 
 static boolean circleIntersectsCircle(PVector center1, float radius1, PVector center2, float radius2) {

@@ -114,9 +114,9 @@ public class Map {
      return false;
   }
   
-  public boolean isTowerOnPath(Tower tower) {
+  public boolean isCircleOnPath(PVector center, float radius) {
     for (MapSegment segment : mapSegments) {
-      if (segment.isTowerInBounds(tower)) {
+      if (segment.isCircleInBounds(center, radius)) {
         return true; 
       }
     }

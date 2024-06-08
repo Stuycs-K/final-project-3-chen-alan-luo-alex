@@ -233,6 +233,10 @@ public class Bloon {
       return;
     }
     
+    if (isDead) {
+      return;
+    }
+    
     isDead = true;
     
     // Reward 1 money
