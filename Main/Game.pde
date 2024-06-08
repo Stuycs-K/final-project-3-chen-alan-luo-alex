@@ -240,6 +240,12 @@ public class Game{
       
     
   }
+  
+  public void showTowerRange(Tower tower) {
+    stroke(255, 255, 255);
+    noFill();
+    circle(tower.x, tower.y, tower.range * 2);
+  }
  
   public void selectTower(Tower tower){
     selectedTower = tower;
@@ -254,6 +260,7 @@ public class Game{
       tower.draw();
       if(tower==selectedTower && currentTowerType == null){
         drawHighlightCircle(tower.x, tower.y);
+        showTowerRange(tower);
       }
     }
     
@@ -265,7 +272,7 @@ public class Game{
   private void drawHighlightCircle(int x, int y){
     stroke(255,204,0);
     noFill();
-    ellipse(x,y,100,100);
+    circle(x, y, 75);
   }
   
   public void mousePressed(int mx, int my) {
