@@ -367,6 +367,7 @@
                         "sprite": "towers/superLaserBlasts.png",
                         "projectiles": {
                             "dart": {
+                                "sprite": "projectiles/laser.png",
                                 "pierce": "+ 1"
                             }
                         }
@@ -385,6 +386,7 @@
                         },
                         "projectiles": {
                             "dart": {
+                                "sprite": "projectiles/plasma.png",
                                 "pierce": "+ 1",
                                 "specialDamageProperties": {
                                     "popLead": true
@@ -401,13 +403,15 @@
                         "sprite": "towers/superSunGod.png",
                         "actions": {
                             "attack": {
+                                "cooldown": 0.04,
                                 "type": "MULTI_PROJECTILE",
                                 "projectileCount": 3,
-                                "angle": 0.3
+                                "angle": 0.2
                             }
                         },
                         "projectiles": {
                             "dart": {
+                                "sprite": "projectiles/sunBeam.png",
                                 "pierce": 15
                             }
                         }
