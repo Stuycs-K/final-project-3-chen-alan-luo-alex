@@ -5,7 +5,7 @@ public class Game{
   public ArrayList<Projectile> projectiles;
   private HealthManager healthManager;
   private CurrencyManager currencyManager;
-  public boolean gameActive;
+  private boolean gameActive;
   
   private float currencyPerPopMultiplier;
   
@@ -16,6 +16,9 @@ public class Game{
   private String currentTowerType = null;
   private TextLabel placementLabel;
   private TextButton pauseButton;
+  private TextButton playButton;
+  private Frame startScreenBackground;
+  
   
   public CheatMenu cheatMenu;
   private UpgradePanel upgradePanel;
@@ -74,8 +77,11 @@ public class Game{
     
     showTowerOptions = false;
     setupGui();
+    
   }
-  
+  public boolean isGameActive() {
+    return gameActive;
+  }
   public Map getMap() {
     return map;
   }
@@ -93,6 +99,16 @@ public class Game{
     }
   }
   
+  
+  public void hideStartScreen(){
+    startScreenBackground.setVisible(false);
+    playButton.setVisible(false);
+  }
+  
+  
+  
+
+  
   public CurrencyManager getCurrencyManager() {
     return currencyManager;
   }
@@ -107,6 +123,8 @@ public class Game{
     waveManager.setWave(0);
     waveManager.startNextWave();
     currencyManager.setCurrency(650);
+    
+    hideStartScreen();
   }
   
    public void update(){
@@ -176,6 +194,11 @@ public class Game{
    }
   
   private void setupGui(){
+    
+    startScreenBackground = (Frame) guiManager.create("startScreenBackground");
+    
+    playButton = (TextButton) guiManager.create("playButton");
+    
     upgradePanel = new UpgradePanel();
     upgradePanel.setVisible(false);
     
@@ -186,6 +209,8 @@ public class Game{
 
     placementLabel = (TextLabel) guiManager.create("placementLabel");
     pauseButton = (TextButton) guiManager.create("pauseButton");
+    
+    
    }
   
   public void placeTower(String towerName, int x, int y){
@@ -258,6 +283,11 @@ public class Game{
     for (Projectile projectile : projectiles) {
       projectile.drawProjectile();
     }
+    
+    if (!gameActive) {
+      startScreenBackground.render();
+      playButton.render();
+    }
   }
   
   private void drawHighlightCircle(int x, int y){
@@ -271,6 +301,14 @@ public class Game{
       placeTower(currentTowerType, mx, my);
       return;
         }
+        
+   
+    
+    if (isInBoundsOfRectangleCentered(mx, my, 500,375,200,50)) {
+      startGame();
+      
+      return;
+    }
     
     for (Tower tower : towers) {
       if (isInBoundsOfRectangleCentered(mouseX, mouseY, tower.x, tower.y, tower.sprite.width, tower.sprite.height)) {
