@@ -169,28 +169,6 @@
                         "popBlack": false,
                         "popLead": true
                     }
-                },
-                "clusterBomb": {
-                    "type": "CLUSTER_BOMB",
-                    "damage": 1,
-                    "pierce": 1,
-                    "explosionPierce": 10,
-                    "speed": 14,
-                    "sprite": "projectiles/bomb.png",
-                    "maxDistance": 300,
-                    "explosionRadius": 60,
-                    "projectileCount": 8,
-                    "clusterProjectileData": {
-                        "sprite": "projectiles/bombFrag.png",
-                        "damage": 2,
-                        "pierce": 1,
-                        "maxDistance": 75,
-                        "speed": 25
-                    },
-                    "specialDamageProperties": {
-                        "popBlack": false,
-                        "popLead": true
-                    }
                 }
             }
         },
@@ -234,7 +212,6 @@
                         "sprite": "towers/bombClusterBombs.png",
                         "projectiles": {
                             "bomb": {
-                                "projectileCount": 8,
                                 "clusterProjectileData": {
                                     "sprite": "projectiles/bomb.png",
                                     "type": "BOMB",

@@ -174,7 +174,12 @@ public class ClusterBombData extends BombData {
   public ClusterBombData(JSONObject projectileData) {
     super(projectileData);
     
-    this.projectileCount = readInt(projectileData, "projectileCount", 4);
+    JSONObject target = projectileData.getJSONObject("properties");
+    if (target == null) {
+      target = projectileData;
+    }
+    
+    this.projectileCount = readInt(target, "projectileCount", 4);
   }
   
   public void reconcileWithOther(JSONObject properties) {
@@ -203,7 +208,6 @@ public class ClusterBombData extends BombData {
       // Create the projectile data if it doesn't exist
       if (this.clusterProjectileData == null) {
         this.clusterProjectileData = createProjectileData(clusterProjectileJSON);
-        println(clusterProjectileData);
       } else { // Just update the properties
       
         if (!clusterProjectileJSON.isNull("type") && !clusterProjectileJSON.getString("type").equals(clusterProjectileData.type)) {   

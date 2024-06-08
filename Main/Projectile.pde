@@ -180,16 +180,11 @@ public class DamageProperties {
   }
   
   public void updateProperties(JSONObject data) {
-    JSONObject parentTarget = data.getJSONObject("properties");
-    if (parentTarget == null) {
-      parentTarget = data;
-    }
-    
-    JSONObject specialDamageProperties = parentTarget.getJSONObject("specialDamageProperties");
+    JSONObject specialDamageProperties = data.getJSONObject("specialDamageProperties");
     
     JSONObject target = specialDamageProperties;
     if (target == null) {
-      target = parentTarget;
+      target = data;
     }
     
     // These are either in a subtable ("specialDamageProperties") or direct children of data
@@ -199,7 +194,12 @@ public class DamageProperties {
     this.extraDamageToCeramics = readIntDiff(target, "extraDamageToCeramics", this.extraDamageToCeramics);
     this.extraDamageToMoabs = readIntDiff(target, "extraDamageToMoabs", this.extraDamageToMoabs);
     
-    this.damage = readIntDiff(target, "damage", this.damage);
+    this.damage = readIntDiff(data, "damage", this.damage);
+    
+    JSONObject otherProperties = data.getJSONObject("properties");
+    if (otherProperties != null) {
+      updateProperties(otherProperties);
+    }
   }
 }
  
@@ -231,20 +231,20 @@ public class ProjectileData extends DamageProperties {
   public void updateProperties(JSONObject data) {
     super.updateProperties(data);
     
-    JSONObject target = data.getJSONObject("properties");
-    if (target == null) {
-      target = data;
-    }
-
-    if (!target.isNull("sprite")) {
-      String spritePath = target.getString("sprite");
+    if (!data.isNull("sprite")) {
+      String spritePath = data.getString("sprite");
       this.sprite = loadImage("images/" + spritePath);
       this.spritePath = spritePath;
     }
     
-    this.pierce = readIntDiff(target, "pierce", this.pierce);
-    this.speed = readIntDiff(target, "speed", this.speed);
-    this.maxDistance = readFloatDiff(target, "maxDistance", this.maxDistance);
+    this.pierce = readIntDiff(data, "pierce", this.pierce);
+    this.speed = readIntDiff(data, "speed", this.speed);
+    this.maxDistance = readFloatDiff(data, "maxDistance", this.maxDistance);
+    
+    JSONObject otherProperties = data.getJSONObject("properties");
+    if (otherProperties != null) {
+      updateProperties(otherProperties);
+    }
   }
   
 }
