@@ -1,7 +1,9 @@
 public class TowerTargetFilter{
   private boolean canDetectCamo;
+  private Tower tower;
   
-  public TowerTargetFilter(){
+  public TowerTargetFilter(Tower tower){
+    this.tower = tower;
     this.canDetectCamo = false;
   }
   
@@ -21,4 +23,11 @@ public class TowerTargetFilter{
     
     return true;
   }
+  
+  public Bloon getFirst() {
+    ArrayList<MapSegment> mapSegments = new ArrayList<MapSegment>();
+    
+    return null;
+  }
+  
 }

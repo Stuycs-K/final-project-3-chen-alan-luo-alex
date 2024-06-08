@@ -385,7 +385,10 @@
                         },
                         "projectiles": {
                             "dart": {
-                                "pierce": "+ 1"
+                                "pierce": "+ 1",
+                                "specialDamageProperties": {
+                                    "popLead": true
+                                }
                             }
                         }
                     }
@@ -428,6 +431,19 @@
                     "changes": {
                         "sprite": "towers/bombExtraRange.png",
                         "range": "+ 30"
+                    }
+                },
+                {
+                    "name": "Robo Monkey",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 9000,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "projectiles": {
+                            "dart": {
+                                "pierce": "+ 2"
+                            }
+                        }
                     }
                 }
             ]

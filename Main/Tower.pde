@@ -114,30 +114,12 @@ public class Tower{
   public HashMap<String, ProjectileData> projectileMap;
   public TowerUpgradeManager upgrades;
   
-  public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius, int cost){
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    this.range = range;
-    this.fireRate = fireRate;
-    this.damage = damage;
-    this.attackSpeed = attackSpeed;
-    this.upgradeLevel = 0;
-    this.attackCooldown = 0;
-    this.projectiles = new ArrayList<Projectile>();
-    this.targetFilter = new TowerTargetFilter();
-    this.angle = PI;
-    this.cost = cost;
-    
-    this.actionMap = new HashMap<String, TowerAction>();
-  }
-  
   public Tower(String towerName, int x, int y) {
     this.towerName = towerName;
     this.x = x;
     this.y = y;
     
-    this.targetFilter = new TowerTargetFilter();
+    this.targetFilter = new TowerTargetFilter(this);
     this.angle = PI;
     
     // Only set the base properties
