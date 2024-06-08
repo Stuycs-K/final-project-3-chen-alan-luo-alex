@@ -353,7 +353,7 @@
                     "pierce": 1,
                     "speed": 35,
                     "sprite": "projectiles/dart.png",
-                    "maxDistance": 500
+                    "maxDistance": 1000
                 }
             }
         },

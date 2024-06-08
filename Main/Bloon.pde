@@ -26,6 +26,7 @@ public class Bloon {
   private float speedMultiplier;
   private PImage sprite;
   private float spriteRotation;
+  private float distanceTraveled; // For first or last targeting
   private BloonModifiersList modifiersList;
   private BloonPropertyTable propertiesTable;
   
@@ -69,6 +70,8 @@ public class Bloon {
     this.reachedEnd = false;
     this.isDead = false;
     this.spawnedChildren = false;
+    
+    this.distanceTraveled = 0;
     
     // Assign the unique handle
     this.handle = CURRENT_BLOON_HANDLE;
@@ -119,12 +122,6 @@ public class Bloon {
   
   public PImage getSprite() {
      return sprite;
-  }
-  
-  public PVector getMoveDirection() {
-    MapSegment segment = game.getMap().getMapSegment(positionId);
-    PVector direction = PVector.sub(segment.getEnd(), segment.getStart()).normalize();    
-    return direction;
   }
   
   public boolean isInBounds(int x, int y) {
@@ -253,6 +250,14 @@ public class Bloon {
     render();
   }
   
+  public float getDistanceTraveled() {
+    return distanceTraveled;
+  }
+  
+  public void setDistanceTraveled(float distanceTraveled) {
+    this.distanceTraveled = distanceTraveled;
+  }
+  
   public void move() {
     // We reached the end !
     if (positionId >= game.getMap().getSegmentCount()) {
@@ -265,6 +270,7 @@ public class Bloon {
     }
     
     float totalDistanceToMove = this.speed * this.speedMultiplier * (1 / frameRate);
+    this.distanceTraveled += totalDistanceToMove;
     
     while (true) {
       MapSegment segment = game.getMap().getMapSegment(positionId);

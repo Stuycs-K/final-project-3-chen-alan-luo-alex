@@ -226,16 +226,10 @@ public class Tower{
   public ArrayList<Bloon> getTargetBloons(ArrayList<Bloon> bloons) {
     ArrayList<Bloon> results = new ArrayList<Bloon>();
     
-    for (Bloon targetBloon : bloons) {
-      if (!targetFilter.canAttack(targetBloon)) {
-        continue;
-      }
-      
-      float distance = dist(x, y, targetBloon.position.x, targetBloon.position.y);
-      if (distance <= range) {
-        results.add(targetBloon);
-        break;
-      }
+    Bloon target = targetFilter.getFirst();
+    
+    if (target != null) {
+      results.add(target);
     }
     
     return results;

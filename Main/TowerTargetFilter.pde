@@ -24,10 +24,61 @@ public class TowerTargetFilter{
     return true;
   }
   
+  // Not great, but it'll do...
   public Bloon getFirst() {
-    ArrayList<MapSegment> mapSegments = new ArrayList<MapSegment>();
+    return getFirst(new ArrayList<Bloon>()); 
+  }
+  
+  public Bloon getFirst(ArrayList<Bloon> blacklist) {
+    float maxDistance = -1;
+    Bloon firstBloon = null;
     
-    return null;
+    for (Bloon bloon : game.bloons) {
+      if (blacklist.indexOf(bloon) != -1) {
+        continue;
+      }
+      
+      if (dist(tower.x, tower.y, bloon.position.x, bloon.position.y) > tower.range) {
+        continue;
+      }
+      
+      float distanceTraveled = bloon.getDistanceTraveled();
+      
+      if (distanceTraveled > maxDistance) {
+        maxDistance = distanceTraveled;
+        firstBloon = bloon;
+      }
+    }
+    
+    return firstBloon;
+  }
+  
+  public Bloon getLast() {
+    return getLast(new ArrayList<Bloon>()); 
+  }
+  
+  public Bloon getLast(ArrayList<Bloon> blacklist) {
+    float minDistance = Float.MAX_VALUE;
+    Bloon lastBloon = null;
+    
+    for (Bloon bloon : game.bloons) {
+      if (blacklist.indexOf(bloon) != -1) {
+        continue;
+      }
+      
+      if (dist(tower.x, tower.y, bloon.position.x, bloon.position.y) > tower.range) {
+        continue;
+      }
+      
+      float distanceTraveled = bloon.getDistanceTraveled();
+      
+      if (distanceTraveled < minDistance) {
+        minDistance = distanceTraveled;
+        lastBloon = bloon;
+      }
+    }
+    
+    return lastBloon;
   }
   
 }
