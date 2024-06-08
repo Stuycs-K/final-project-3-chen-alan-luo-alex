@@ -479,8 +479,14 @@ public class TowerUpgradeManager {
           return true;
         }
         
-        ProjectileData newProjectileData = createProjectileData(currentChanges);
+        JSONObject newProperties = new JSONObject();
+        projectile.reconcileWithOther(newProperties);
+        newProperties.setString("type", changedType);
+        newProperties.setJSONObject("properties", currentChanges);
         
+        ProjectileData newProjectileData = createProjectileData(newProperties);
+        
+        tower.projectileMap.put(projectileName, newProjectileData);
         
       }
     }

@@ -215,6 +215,19 @@
                             "bombAttack": {
                                 "projectile": "clusterBomb"
                             }
+                        },
+                        "projectiles": {
+                            "bomb": {
+                                "type": "CLUSTER_BOMB",
+                                "projectileCount": 8,
+                                "clusterProjectileData": {
+                                    "sprite": "projectiles/bombFrag.png",
+                                    "damage": 2,
+                                    "pierce": 1,
+                                    "maxDistance": 75,
+                                    "speed": 25
+                                }
+                            }
                         }
                     }
                 },
@@ -344,7 +357,6 @@
                 }
             }
         },
-
         "upgrades": {
             "1": [],
             "2": []
