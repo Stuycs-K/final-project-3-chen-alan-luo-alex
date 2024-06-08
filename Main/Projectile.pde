@@ -51,17 +51,6 @@ public class Projectile{
   
   private ArrayList<Long> hitBloons;
   
-  public Projectile(float x, float y, float targetX, float targetY, int damage){
-    this.x=x;
-    this.y=y;
-    this.targetX = targetX;
-    this.targetY = targetY;
-    this.finished = false;
-    this.dy= targetY - y;
-    this.dx= targetX -x;
-    this.distance = dist(x,y,targetX,targetY);
-  }
-  
   public ProjectileData projectileData;
   
   public Projectile(PVector origin, PVector goal, ProjectileData data) {
@@ -173,7 +162,7 @@ public class DamageProperties {
     this.extraDamageToMoabs = 0;
     
     this.damage = 1;
-
+    
     updateProperties(data);
   }
   
@@ -191,11 +180,16 @@ public class DamageProperties {
   }
   
   public void updateProperties(JSONObject data) {
-    JSONObject specialDamageProperties = data.getJSONObject("specialDamageProperties");
+    JSONObject parentTarget = data.getJSONObject("properties");
+    if (parentTarget == null) {
+      parentTarget = data;
+    }
+    
+    JSONObject specialDamageProperties = parentTarget.getJSONObject("specialDamageProperties");
     
     JSONObject target = specialDamageProperties;
     if (target == null) {
-      target = data;
+      target = parentTarget;
     }
     
     // These are either in a subtable ("specialDamageProperties") or direct children of data
@@ -205,7 +199,7 @@ public class DamageProperties {
     this.extraDamageToCeramics = readIntDiff(target, "extraDamageToCeramics", this.extraDamageToCeramics);
     this.extraDamageToMoabs = readIntDiff(target, "extraDamageToMoabs", this.extraDamageToMoabs);
     
-    this.damage = readIntDiff(data, "damage", this.damage);
+    this.damage = readIntDiff(target, "damage", this.damage);
   }
 }
  
@@ -213,6 +207,7 @@ public class ProjectileData extends DamageProperties {
   public int pierce;
   public int speed;
   public PImage sprite;
+  public String spritePath;
   
   public String type;
   
@@ -227,6 +222,7 @@ public class ProjectileData extends DamageProperties {
   public void reconcileWithOther(JSONObject properties) {
     super.reconcileWithOther(properties);
     
+    properties.setString("sprite", this.spritePath);
     properties.setInt("pierce", this.pierce);
     properties.setInt("speed", this.speed);
     properties.setFloat("maxDistance", this.maxDistance);
@@ -234,16 +230,21 @@ public class ProjectileData extends DamageProperties {
   
   public void updateProperties(JSONObject data) {
     super.updateProperties(data);
+    
+    JSONObject target = data.getJSONObject("properties");
+    if (target == null) {
+      target = data;
+    }
 
-    if (!data.isNull("sprite")) {
-      String spritePath = data.getString("sprite");
+    if (!target.isNull("sprite")) {
+      String spritePath = target.getString("sprite");
       this.sprite = loadImage("images/" + spritePath);
+      this.spritePath = spritePath;
     }
     
-    //this.type = readString(data, "type", this.type);
-    this.pierce = readIntDiff(data, "pierce", this.pierce);
-    this.speed = readIntDiff(data, "speed", this.speed);
-    this.maxDistance = readFloatDiff(data, "maxDistance", this.maxDistance);
+    this.pierce = readIntDiff(target, "pierce", this.pierce);
+    this.speed = readIntDiff(target, "speed", this.speed);
+    this.maxDistance = readFloatDiff(target, "maxDistance", this.maxDistance);
   }
   
 }

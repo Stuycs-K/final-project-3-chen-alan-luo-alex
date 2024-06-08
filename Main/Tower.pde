@@ -92,21 +92,10 @@ public class Tower{
   
   public int x;
   public int y; 
-  public int radius;
   public int range;
-  public int fireRate; 
-  public int damage;
-  public int attackSpeed;
-  public int upgradeLevel;
-  public int attackCooldown;
   public ArrayList<Projectile> projectiles;
   public TowerTargetFilter targetFilter;
-  public ArrayList<PImage> sprites;
-  public int path;
   public float angle;
-  public int hitBoxX;
-  public int hitBoxY;
-  public int cost;
   
   public float footprint; // Hitbox radius (hitboxes are circles)
   
@@ -467,9 +456,7 @@ public class TowerUpgradeManager {
         newProperties.setJSONObject("properties", currentChanges);
         
         ProjectileData newProjectileData = createProjectileData(newProperties);
-        
         tower.projectileMap.put(projectileName, newProjectileData);
-        
       }
     }
     

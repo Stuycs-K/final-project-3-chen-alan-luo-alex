@@ -211,11 +211,6 @@
                     "cost": 300,
                     "changes": {
                         "sprite": "towers/bombFragBombs.png",
-                        "actions": {
-                            "bombAttack": {
-                                "projectile": "clusterBomb"
-                            }
-                        },
                         "projectiles": {
                             "bomb": {
                                 "type": "CLUSTER_BOMB",
@@ -238,7 +233,7 @@
                     "changes": {
                         "sprite": "towers/bombClusterBombs.png",
                         "projectiles": {
-                            "clusterBomb": {
+                            "bomb": {
                                 "projectileCount": 8,
                                 "clusterProjectileData": {
                                     "sprite": "projectiles/bomb.png",
@@ -265,7 +260,7 @@
                     "changes": {
                         "sprite": "towers/bombBloonImpact.png",
                         "projectiles": {
-                            "clusterBomb": {
+                            "bomb": {
                                 "specialDamageProperties": {
                                     "popBlack": true
                                 },

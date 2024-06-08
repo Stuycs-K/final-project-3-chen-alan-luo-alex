@@ -103,9 +103,15 @@ public class BombData extends ProjectileData {
 
   public BombData(JSONObject projectileData) {
     super(projectileData);
-    this.explosionRadius = projectileData.getFloat("explosionRadius", 150.0f);
-    this.explosionPierce = projectileData.getInt("explosionPierce", 10);
-    this.stunDuration = projectileData.getFloat("stunDuration", 0);
+    
+    JSONObject target = projectileData.getJSONObject("properties");
+    if (target == null) {
+      target = projectileData;
+    }
+    
+    this.explosionRadius = target.getFloat("explosionRadius", 150.0f);
+    this.explosionPierce = target.getInt("explosionPierce", 10);
+    this.stunDuration = target.getFloat("stunDuration", 0);
   }
   
   public void reconcileWithOther(JSONObject properties) {
@@ -118,9 +124,15 @@ public class BombData extends ProjectileData {
            
   public void updateProperties(JSONObject data) {
     super.updateProperties(data);
-    this.explosionRadius = readFloatDiff(data, "explosionRadius", this.explosionRadius);
-    this.explosionPierce = readIntDiff(data, "explosionPierce", this.explosionPierce);
-    this.stunDuration = readFloatDiff(data, "stunDuration", this.stunDuration);
+    
+    JSONObject target = data.getJSONObject("properties");
+    if (target == null) {
+      target = data;
+    }
+    
+    this.explosionRadius = readFloatDiff(target, "explosionRadius", this.explosionRadius);
+    this.explosionPierce = readIntDiff(target, "explosionPierce", this.explosionPierce);
+    this.stunDuration = readFloatDiff(target, "stunDuration", this.stunDuration);
   }
 }
 
@@ -141,7 +153,7 @@ public class ClusterBomb extends Bomb {
     
     ClusterBombData clusterBombData = (ClusterBombData) projectileData;
     ProjectileData clusterProjectileData = clusterBombData.clusterProjectileData;
-    
+
     PVector origin = new PVector(x, y);
     float anglePerProjectile = TAU / clusterBombData.projectileCount;
     for (int i = 0; i < clusterBombData.projectileCount; i++) {
@@ -149,7 +161,7 @@ public class ClusterBomb extends Bomb {
       PVector direction = projectileDirection.rotate(anglePerProjectile * i).normalize();
       
       Projectile clusterProjectileObject = createProjectile(origin, PVector.add(origin, direction), clusterProjectileData);
-      
+
       game.projectiles.add(clusterProjectileObject);
     }
   }
@@ -178,20 +190,33 @@ public class ClusterBombData extends BombData {
   public void updateProperties(JSONObject data) {
     super.updateProperties(data);
     
-    this.projectileCount = readIntDiff(data, "projectileCount", this.projectileCount);
+    JSONObject target = data.getJSONObject("properties");
+    if (target == null) {
+      target = data;
+    }
     
-    JSONObject clusterProjectileJSON = data.getJSONObject("clusterProjectileData");
+    this.projectileCount = readIntDiff(target, "projectileCount", this.projectileCount);
+    
+    JSONObject clusterProjectileJSON = target.getJSONObject("clusterProjectileData");
     if (clusterProjectileJSON != null) {
       
       // Create the projectile data if it doesn't exist
       if (this.clusterProjectileData == null) {
         this.clusterProjectileData = createProjectileData(clusterProjectileJSON);
+        println(clusterProjectileData);
       } else { // Just update the properties
       
-        if (!clusterProjectileJSON.isNull("type") && !clusterProjectileJSON.getString("type").equals(clusterProjectileData.type)) {
-          this.clusterProjectileData = createProjectileData(clusterProjectileJSON);
+        if (!clusterProjectileJSON.isNull("type") && !clusterProjectileJSON.getString("type").equals(clusterProjectileData.type)) {   
+          JSONObject newProperties = new JSONObject();
+          this.clusterProjectileData.reconcileWithOther(newProperties);
+          newProperties.setString("type", clusterProjectileJSON.getString("type"));
+          newProperties.setJSONObject("properties", clusterProjectileJSON);
+          
+          this.clusterProjectileData = createProjectileData(newProperties);
+
+        } else {
+          this.clusterProjectileData.updateProperties(clusterProjectileJSON);
         }
-        this.clusterProjectileData.updateProperties(clusterProjectileJSON);
       }
 
     }
