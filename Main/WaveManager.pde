@@ -1,5 +1,6 @@
 private class WaveSpawn extends Thread {
   private String name;
+  private int waveNumber;
   private JSONObject waveSpawnInformation;
   private HashMap<String, WaveSpawn> otherWaveSpawns;
   
@@ -7,6 +8,7 @@ private class WaveSpawn extends Thread {
 
   public WaveSpawn(String name, JSONObject waveSpawnInformation, HashMap<String, WaveSpawn> otherWaveSpawns) {
     this.name = name;
+    this.waveNumber = Integer.parseInt(name.split(" ")[1]);
     this.waveSpawnInformation = waveSpawnInformation;
     this.otherWaveSpawns = otherWaveSpawns;
     
@@ -57,7 +59,7 @@ private class WaveSpawn extends Thread {
         // Do we need to wait for any other thread?
         if (!waveSpawnInformation.isNull("waitForAllSpawned")) {
           String subwaveName = waveSpawnInformation.getString("waitForAllSpawned");
-          WaveSpawn subwave = otherWaveSpawns.get(subwaveName);
+          WaveSpawn subwave = otherWaveSpawns.get(subwaveName + " " + waveNumber);
           
           // Not finished spawning, so keep waiting
           if (!subwave.finishedSpawning()) {
@@ -153,8 +155,8 @@ public class WaveManager {
     
     Set<String> keySet = spawns.keys();
     for (String keyName : keySet) {
-      WaveSpawn waveSpawn = new WaveSpawn(keyName, spawns.getJSONObject(keyName), currentWaveSpawns);
-      currentWaveSpawns.put(keyName, waveSpawn);
+      WaveSpawn waveSpawn = new WaveSpawn(keyName + " " + currentWaveNumber, spawns.getJSONObject(keyName), currentWaveSpawns);
+      currentWaveSpawns.put(keyName + " " + currentWaveNumber, waveSpawn);
     }
     
     for (WaveSpawn waveSpawn : currentWaveSpawns.values()) {

@@ -147,7 +147,7 @@
         "base": {
             "cost": 650,
             "sprite": "towers/bombshooter.png",
-            "range": 250,
+            "range": 150,
             "actions": {
                 "bombAttack": {
                     "cooldown": 1.5,
@@ -339,7 +339,7 @@
         "base": {
             "cost": 3500,
             "sprite": "towers/superMonkey.png",
-            "range": 350,
+            "range": 250,
             "actions": {
                 "attack": {
                     "cooldown": 0.06,
@@ -425,7 +425,7 @@
                     "cost": 1000,
                     "changes": {
                         "sprite": "towers/superSuperRange.png",
-                        "range": "+ 40"
+                        "range": "+ 60"
                     }
                 },
                 {
@@ -434,7 +434,7 @@
                     "cost": 1500,
                     "changes": {
                         "sprite": "towers/superEpicRange.png",
-                        "range": "+ 30"
+                        "range": "+ 45"
                     }
                 },
                 {

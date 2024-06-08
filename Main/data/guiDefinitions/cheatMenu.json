@@ -101,5 +101,68 @@
         "textYAlignment": "CENTER",
         "textXOffset": 60,
         "textYOffset": 15
+    },
+    "RemoveBloonsButton": {
+        "className": "TextButton",
+        "x": 10,
+        "y": 540,
+        "sizeX": 120,
+        "sizeY": 30,
+        "stroke": {
+            "type": "ROUND",
+            "weight": 2,
+            "color": "23 139 255"
+        },
+        "backgroundColor": "139 0 0",
+        "zIndex": 20,
+        "text": "REMOVE BLOONS",
+        "textFont": "regularSmall",
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "textXOffset": 60,
+        "textYOffset": 15
+    },
+    "SkipWaveButton": {
+        "className": "TextButton",
+        "x": 10,
+        "y": 580,
+        "sizeX": 120,
+        "sizeY": 30,
+        "stroke": {
+            "type": "ROUND",
+            "weight": 2,
+            "color": "23 139 255"
+        },
+        "backgroundColor": "0 255 0",
+        "zIndex": 20,
+        "text": "SKIP WAVE",
+        "textFont": "regularSmall",
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "textXOffset": 60,
+        "textYOffset": 15
+    },
+    "StartNextWaveButton": {
+        "className": "TextButton",
+        "x": 10,
+        "y": 620,
+        "sizeX": 120,
+        "sizeY": 30,
+        "stroke": {
+            "type": "ROUND",
+            "weight": 2,
+            "color": "23 139 255"
+        },
+        "backgroundColor": "8 143 143",
+        "zIndex": 20,
+        "text": "START NEXT WAVE",
+        "textFont": "regularSmall",
+        "textColor": "0 0 0",
+        "textXAlignment": "CENTER",
+        "textYAlignment": "CENTER",
+        "textXOffset": 60,
+        "textYOffset": 15
     }
 }
