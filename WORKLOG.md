@@ -82,6 +82,10 @@
 - Fix Cluster Bomb bugs
 - Improve explosion hits using new intersection methods
 
+## 6/7/2024
+- Add Super Monkey tower and its upgrades
+- Cleanup some of the tower upgrade parsing code
+
 ## Alex Luo
 
 ### 5/22/2024

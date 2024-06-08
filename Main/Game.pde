@@ -192,35 +192,26 @@ public class Game{
     if(!map.isOnPath(new PVector(x,y)) && currentTowerType != null){
       
       int startingCost = towerPropertyLookup.getTowerProperties(towerName).getBaseCost();
+      if(currencyManager.getCurrency() >= startingCost){
+        currencyManager.removeCurrency(startingCost);
+      }
+      else {
+        return;
+      }
     
       Tower newTower = null;
-      if(towerName.equals("DartMonkey")){
-        newTower = new DartMonkey(x,y);
-        if(currencyManager.getCurrency() >= startingCost){
-          currencyManager.removeCurrency(startingCost);
-        }
-        else if(currencyManager.getCurrency() < startingCost){
-          
-          return;
-        }
-      }else if(towerName.equals("BombShooter")){
-        newTower = new BombShooter(x,y);
-        if(currencyManager.getCurrency() >= startingCost){
-          currencyManager.removeCurrency(startingCost);
-        }
-        else if(currencyManager.getCurrency() < startingCost){
-          return;
-        }
-   
-    }else if(towerName.equals("SuperMonkey")){
-        newTower = new SuperMonkey(x,y);
-        if(currencyManager.getCurrency() >= startingCost){
-          currencyManager.removeCurrency(startingCost);
-        }
-        else if(currencyManager.getCurrency() < startingCost){
-          return;
-        }
-    }
+      switch (towerName) {
+        case "DartMonkey":
+          newTower = new DartMonkey(x, y);
+          break;
+        case "BombShooter":
+          newTower = new BombShooter(x, y);
+          break;
+        case "SuperMonkey":
+          newTower = new SuperMonkey(x, y);
+          break;
+      }
+  
      if(newTower != null){
        towers.add(newTower);
        selectedTower = null;
@@ -228,25 +219,9 @@ public class Game{
        placementLabel.setVisible(false);
      }
       
+    }
   }
-  }
-  
-    //  newTower = new BombShooter(x,y);
-    //}else if (towerName.equals("IceMonkey")){
-    //  newTower = new IceMonkey(x,y);
-    //}else if(towerName.equals("SuperMonkey")){
-    //  newTower = new SuperMonkey(x,y);
-      
-    
  
-      //println("New tower cost: " + newTower.getCost() + ", current currency: " + currency);
-      //if(currency >= newTower.getCost()){
-     
-      //  currency -= newTower.getCost();
-        //println("tower placed at: " + x + "," + y);
-    //}else{
-    //  println("not enough money");
-    //}
   public void selectTower(Tower tower){
     selectedTower = tower;
     showTowerOptions = true;
