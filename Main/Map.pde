@@ -8,9 +8,10 @@ public class Map {
   
   private ArrayList<MapSegment> mapSegments;
   
-  public Map(ArrayList<PVector> pathWaypointArray, float pathWidth) {
+  public Map(ArrayList<PVector> pathWaypointArray, float pathWidth, PImage mapImage) {
     this.pathWaypointArray = pathWaypointArray;
     this.pathWidth = pathWidth;
+    this.mapImage = mapImage;
     
     this.mapSegments = new ArrayList<MapSegment>();
     
@@ -85,11 +86,14 @@ public class Map {
   }
   
   public void drawPath() {
+    if(mapImage != null){
+      image(mapImage, 0, 0);
+    }
+    
     for (MapSegment segment : mapSegments) {
        PVector[] vertices = segment.vertices;
-       strokeWeight(1);
-       stroke(0);
-       fill(255, 255, 255);
+       noFill();
+       noStroke();
        beginShape();
        
        for (int i = 0; i < 4; i++) {

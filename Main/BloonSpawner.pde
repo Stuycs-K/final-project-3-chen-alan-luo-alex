@@ -83,11 +83,15 @@ public class BloonSpawner {
     for (Bloon newBloon : createdBloons) {
       newBloon.getModifiersList().copyModifiers(heritableModifiers);
       
+      // Set parent handle so certain attacks don't hit them too many times
       long parentHandle = parent.getParentHandle();
       if (parentHandle == -1) {
         parentHandle = parent.getHandle();
       }
       newBloon.setParentHandle(parentHandle);
+      
+      // Set distance traveled
+      newBloon.setDistanceTraveled(parent.getDistanceTraveled());
     }
 
     return createdBloons;

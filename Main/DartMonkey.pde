@@ -130,13 +130,14 @@ public class MultiProjectileSpawnAction extends ProjectileSpawnAction {
     properties.setFloat("angle", this.angle);
   }
   
-  public void performAction(Tower tower, ArrayList<PVector> targetPositions, ArrayList<Bloon> bloons) {
+  public void performAction(Tower tower, ArrayList<Bloon> targetBloons, ArrayList<Bloon> bloons) {
     resetCooldown();
 
     PVector towerPosition = new PVector(tower.x, tower.y);
     ProjectileData data = tower.projectileMap.get(getSpawnedProjectileName());
     
-    for (PVector position : targetPositions) {
+    for (Bloon bloon : targetBloons) {
+      PVector position = bloon.getPosition();
       
       // Pattern: 0, -0, angle, -angle, angle * 2, -angle * 2
       for (int i = 0; i < projectileCount; i++) {
@@ -159,8 +160,8 @@ public class MultiProjectileSpawnAction extends ProjectileSpawnAction {
       
     }
     
-    if (targetPositions.size() > 0) {
-      tower.lookAt(targetPositions.get(targetPositions.size() - 1));
+    if (targetBloons.size() > 0) {
+      tower.lookAt(targetBloons.get(targetBloons.size() - 1).getPosition());
     }
 
   }

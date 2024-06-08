@@ -98,7 +98,7 @@ public class Tower{
   public int upgradeLevel;
   public int attackCooldown;
   public ArrayList<Projectile> projectiles;
-  private TowerTargetFilter targetFilter;
+  public TowerTargetFilter targetFilter;
   public ArrayList<PImage> sprites;
   public int path;
   public float angle;
@@ -114,30 +114,12 @@ public class Tower{
   public HashMap<String, ProjectileData> projectileMap;
   public TowerUpgradeManager upgrades;
   
-  public Tower(int x, int y, int range, int fireRate, int damage, int attackSpeed, int radius, int cost){
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    this.range = range;
-    this.fireRate = fireRate;
-    this.damage = damage;
-    this.attackSpeed = attackSpeed;
-    this.upgradeLevel = 0;
-    this.attackCooldown = 0;
-    this.projectiles = new ArrayList<Projectile>();
-    this.targetFilter = new TowerTargetFilter();
-    this.angle = PI;
-    this.cost = cost;
-    
-    this.actionMap = new HashMap<String, TowerAction>();
-  }
-  
   public Tower(String towerName, int x, int y) {
     this.towerName = towerName;
     this.x = x;
     this.y = y;
     
-    this.targetFilter = new TowerTargetFilter();
+    this.targetFilter = new TowerTargetFilter(this);
     this.angle = PI;
     
     // Only set the base properties
@@ -217,18 +199,18 @@ public class Tower{
   }
   
   public void step(ArrayList<Bloon> bloons) {
-    ArrayList<PVector> targetPositions = getTargetPositions(bloons);
+    ArrayList<Bloon> targetBloons = getTargetBloons(bloons);
     
     for (TowerAction action : actionMap.values()) {
       if (!action.checkCooldown()) {
         continue;
       }
       
-      if (!action.shouldPerformAction(targetPositions)) {
+      if (!action.shouldPerformAction(targetBloons)) {
         continue;
       }
          
-      action.performAction(this, targetPositions, bloons);
+      action.performAction(this, targetBloons, bloons);
     }
   }
   
@@ -240,20 +222,14 @@ public class Tower{
     angle = atan2(targetY - y, targetX - x);
   }
   
-  // The base getTargetPositions only gets the position of the first Bloon in range
-  public ArrayList<PVector> getTargetPositions(ArrayList<Bloon> bloons) {
-    ArrayList<PVector> results = new ArrayList<PVector>();
+  // Only gets the first Bloon in range
+  public ArrayList<Bloon> getTargetBloons(ArrayList<Bloon> bloons) {
+    ArrayList<Bloon> results = new ArrayList<Bloon>();
     
-    for (Bloon targetBloon : bloons) {
-      if (!targetFilter.canAttack(targetBloon)) {
-        continue;
-      }
-      
-      float distance = dist(x, y, targetBloon.position.x, targetBloon.position.y);
-      if (distance <= range) {
-        results.add(targetBloon.position.copy());
-        break;
-      }
+    Bloon target = targetFilter.getFirst();
+    
+    if (target != null) {
+      results.add(target);
     }
     
     return results;
@@ -301,11 +277,6 @@ public class Tower{
   public int getTowerY(){
     return y;
   }
-  
-  public void setHitBox(int hitBoxX, int hitBoxY){
-    
-  }
-  
 }
 
 public class TowerUpgradeManager {
@@ -374,6 +345,14 @@ public class TowerUpgradeManager {
       return false;
     }
     
+    int upgradeCost = upgrade.getUpgradeCost();
+    
+   if (game.getCurrencyManager().getCurrency() < upgradeCost) {
+    return false;  
+   }
+   
+   game.getCurrencyManager().removeCurrency(upgradeCost);
+    
     // First upgrade in this path, so increase paths upgraded
     if (currentUpgradeLevel == -1) {
       pathsUpgraded++; 
@@ -395,6 +374,8 @@ public class TowerUpgradeManager {
     if (currentUpgradeLevel + 1 > highestUpgradeLevel) {
       tower.setSpriteFromUpgrade(upgrade);
       highestUpgradeLevel = currentUpgradeLevel + 1;
+      
+
     }
 
     
@@ -458,16 +439,30 @@ public class TowerUpgradeManager {
     if (projectileChanges != null) {
       for (String projectileName : (Set<String>) projectileChanges.keys()) {
         ProjectileData projectile = tower.projectileMap.get(projectileName);
+        // Not directly on the projectiles list, so treat the string as the action name and get the projectile used by that action
+        if (projectile == null) {
+           String actualProjectileName = ((ProjectileSpawnAction) tower.actionMap.get(projectileName)).getSpawnedProjectileName();
+           projectile = tower.projectileMap.get(actualProjectileName);
+        }
         
         JSONObject currentChanges = projectileChanges.getJSONObject(projectileName);
         
         String changedType = readString(currentChanges, "type", projectile.type);
         
+        // Same type? Update properties
         if (projectile.type.equals(changedType)) {
           projectile.updateProperties(currentChanges);
-        } else { // TODO
-          ProjectileData newProjectileData = createProjectileData(currentChanges);
+          return true;
         }
+        
+        JSONObject newProperties = new JSONObject();
+        projectile.reconcileWithOther(newProperties);
+        newProperties.setString("type", changedType);
+        newProperties.setJSONObject("properties", currentChanges);
+        
+        ProjectileData newProjectileData = createProjectileData(newProperties);
+        
+        tower.projectileMap.put(projectileName, newProjectileData);
         
       }
     }
@@ -527,7 +522,7 @@ public class TowerAction {
     return false;
   }
   
-  public boolean shouldPerformAction(ArrayList<PVector> targets) {
+  public boolean shouldPerformAction(ArrayList<Bloon> targets) {
     return (targets.size() > 0);
   }
   
@@ -543,7 +538,7 @@ public class TowerAction {
     return actionType;
   }
   
-  public void performAction(Tower tower, ArrayList<PVector> targetPositions, ArrayList<Bloon> bloons) {
+  public void performAction(Tower tower, ArrayList<Bloon> targetBloons, ArrayList<Bloon> bloons) {
     return;
   }
 }
@@ -570,17 +565,17 @@ public class ProjectileSpawnAction extends TowerAction {
     properties.setString("projectile", this.projectileName);
   }
   
-  public void performAction(Tower tower, ArrayList<PVector> targetPositions, ArrayList<Bloon> bloons) {
+  public void performAction(Tower tower, ArrayList<Bloon> targetBloons, ArrayList<Bloon> bloons) {
     resetCooldown();
 
     ProjectileData data = tower.projectileMap.get(getSpawnedProjectileName());
     
-    for (PVector position : targetPositions) {
-      tower.projectiles.add(createProjectile(new PVector(tower.x, tower.y), new PVector(position.x, position.y), data));
+    for (Bloon bloon : targetBloons) {
+      tower.projectiles.add(createProjectile(new PVector(tower.x, tower.y), bloon.getPosition().copy(), data));
     }
     
-    if (targetPositions.size() > 0) {
-      tower.lookAt(targetPositions.get(targetPositions.size() - 1));
+    if (targetBloons.size() > 0) {
+      tower.lookAt(targetBloons.get(targetBloons.size() - 1).getPosition());
     }
 
   }

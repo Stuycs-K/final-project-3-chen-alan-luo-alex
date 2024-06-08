@@ -177,6 +177,19 @@ public class DamageProperties {
     updateProperties(data);
   }
   
+  public void reconcileWithOther(JSONObject properties) {
+    JSONObject specialDamageProperties = new JSONObject();
+    specialDamageProperties.setBoolean("popLead", this.popLead);
+    specialDamageProperties.setBoolean("popFrozen", this.popFrozen);
+    specialDamageProperties.setBoolean("popBlack", this.popBlack);
+    specialDamageProperties.setInt("extraDamageToCeramics", this.extraDamageToCeramics);
+    specialDamageProperties.setInt("extraDamageToMoabs", this.extraDamageToMoabs);
+    
+    properties.setJSONObject("specialDamageProperties", specialDamageProperties);
+    
+    properties.setInt("damage", this.damage);
+  }
+  
   public void updateProperties(JSONObject data) {
     JSONObject specialDamageProperties = data.getJSONObject("specialDamageProperties");
     
@@ -209,6 +222,14 @@ public class ProjectileData extends DamageProperties {
   public ProjectileData(JSONObject projectileData) {
      super(projectileData);
      this.type = readString(projectileData, "type", "BASE");
+  }
+  
+  public void reconcileWithOther(JSONObject properties) {
+    super.reconcileWithOther(properties);
+    
+    properties.setInt("pierce", this.pierce);
+    properties.setInt("speed", this.speed);
+    properties.setFloat("maxDistance", this.maxDistance);
   }
   
   public void updateProperties(JSONObject data) {

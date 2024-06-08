@@ -90,6 +90,14 @@ public class BombData extends ProjectileData {
     this.explosionPierce = projectileData.getInt("explosionPierce", 10);
     this.stunDuration = projectileData.getFloat("stunDuration", 0);
   }
+  
+  public void reconcileWithOther(JSONObject properties) {
+    super.reconcileWithOther(properties);
+    
+    properties.setFloat("explosionRadius", this.explosionRadius);
+    properties.setInt("explosionPierce", this.explosionPierce);
+    properties.setFloat("stunDuration", this.stunDuration);
+  }
            
   public void updateProperties(JSONObject data) {
     super.updateProperties(data);
@@ -138,6 +146,16 @@ public class ClusterBombData extends BombData {
     super(projectileData);
     
     this.projectileCount = readInt(projectileData, "projectileCount", 4);
+  }
+  
+  public void reconcileWithOther(JSONObject properties) {
+    super.reconcileWithOther(properties);
+    
+    properties.setInt("projectileCount", this.projectileCount);
+    
+    JSONObject clusterData = new JSONObject();
+    clusterProjectileData.reconcileWithOther(clusterData);
+    properties.setJSONObject("clusterProjectileData", clusterData);
   }
   
   public void updateProperties(JSONObject data) {
