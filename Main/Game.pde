@@ -373,6 +373,8 @@ public class UpgradePanel {
   public void onTowerSelect(Tower tower) {
     setVisible(true);
     displayTowerInformation(tower);
+    
+    sellButton.setText("Sell: " + int(tower.getSellPrice()));
   }
   
   public void onTowerUpgrade(Tower tower) {
