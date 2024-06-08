@@ -110,6 +110,10 @@ public class Game{
   }
   
    public void update(){
+     if(isPaused){
+       return;
+     }
+     
     if (healthManager.didLose()) {
       waveManager.removeWaves();
       println("YOU LOSE");

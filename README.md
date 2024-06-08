@@ -2,5 +2,12 @@
 # APCS2 Final Project
 THIS DOCUMENT IS REQUIRED
 ## Group Info
+
+Group Name: Blooners
+Period 3, Alan Chen, Alex Luo
+
 ## Overview
+
+A simple recreation of BTD5 that consists of towers, a map, bloons that travel through the map, wave development(and respective bloons of such waves), and a simple GUI. 
+
 ## Instructions
