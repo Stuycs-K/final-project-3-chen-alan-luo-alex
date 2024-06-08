@@ -98,7 +98,7 @@ public class Tower{
   public int upgradeLevel;
   public int attackCooldown;
   public ArrayList<Projectile> projectiles;
-  private TowerTargetFilter targetFilter;
+  public TowerTargetFilter targetFilter;
   public ArrayList<PImage> sprites;
   public int path;
   public float angle;

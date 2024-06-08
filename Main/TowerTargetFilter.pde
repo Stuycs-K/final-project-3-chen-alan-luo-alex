@@ -81,4 +81,31 @@ public class TowerTargetFilter{
     return lastBloon;
   }
   
+  public Bloon getClosest() {
+    return getLast(new ArrayList<Bloon>()); 
+  }
+  
+  public Bloon getClosest(ArrayList<Bloon> blacklist) {
+    float minDistance = Float.MAX_VALUE;
+    Bloon closestBloon = null;
+    
+    for (Bloon bloon : game.bloons) {
+      if (blacklist.indexOf(bloon) != -1) {
+        continue;
+      }
+      
+      float distance = dist(tower.x, tower.y, bloon.position.x, bloon.position.y);
+      if (distance > tower.range) {
+        continue;
+      }
+      
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestBloon = bloon;
+      }
+    }
+    
+    return closestBloon;
+  }
+  
 }
