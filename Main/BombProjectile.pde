@@ -16,6 +16,23 @@ static boolean lineIntersectsCircle(PVector center, float radius, PVector lineSt
   return h2 <= radius * radius;
 }
 
+static boolean pointInCircle(PVector center, float radius, PVector point) {
+  float dx = point.x - center.x;
+  float dy = point.y - center.y;
+  
+  return dx * dx + dy + dy <= radius * radius;
+}
+
+static boolean circleIntersectsCircle(PVector center1, float radius1, PVector center2, float radius2) {
+  float radiiSum = radius1 + radius2;
+  float radiiDifference = radius1 - radius2;
+  
+  float dx = center1.x - center2.x;
+  float dy = center1.y - center2.y;
+  
+  return radiiDifference * radiiDifference <= dx * dx + dy * dy && dx * dx + dy * dy <= radiiSum * radiiSum; 
+}
+
 static boolean pointInRectangle(PVector point, PVector[] vertices) {
   float ab2, ad2, apab, apad;
   

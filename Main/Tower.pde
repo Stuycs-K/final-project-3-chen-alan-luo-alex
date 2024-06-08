@@ -106,6 +106,8 @@ public class Tower{
   public int hitBoxY;
   public int cost;
   
+  public float footprint; // Hitbox radius (hitboxes are circles)
+  
   private int totalCurrencySpent;
   public PImage sprite;
   public String towerName;
@@ -118,6 +120,7 @@ public class Tower{
     this.towerName = towerName;
     this.x = x;
     this.y = y;
+    this.footprint = 5;
     
     this.targetFilter = new TowerTargetFilter(this);
     this.angle = PI;

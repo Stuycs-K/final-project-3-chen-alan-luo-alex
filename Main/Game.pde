@@ -60,7 +60,7 @@ public class Game{
     //waypoints.add(new PVector(
    
   
-    map = new Map(waypoints, 7, mapImage);
+    map = new Map(waypoints, 9, mapImage);
     towers = new ArrayList<>();
     bloons = new ArrayList<>();
     projectiles = new ArrayList<Projectile>();
@@ -255,8 +255,9 @@ public class Game{
       return;
         }
     
+    PVector mousePosition = new PVector(mouseX, mouseY);
     for (Tower tower : towers) {
-      if (isInBoundsOfRectangleCentered(mouseX, mouseY, tower.x, tower.y, tower.sprite.width, tower.sprite.height)) {
+      if (pointInCircle(new PVector(tower.x, tower.y), tower.footprint, mousePosition)) {
         selectTower(tower);
         return;
       }
