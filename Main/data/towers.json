@@ -358,8 +358,79 @@
             }
         },
         "upgrades": {
-            "1": [],
-            "2": []
+            "1": [
+                {
+                    "name": "Laser Blasts",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 3500,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "projectiles": {
+                            "dart": {
+                                "pierce": "+ 1"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Plasma Blasts",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 5000,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "actions": {
+                            "attack": {
+                                "cooldown": 0.045
+                            }
+                        },
+                        "projectiles": {
+                            "dart": {
+                                "pierce": "+ 1"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Sun God",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 16500,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "actions": {
+                            "attack": {
+                                "type": "MULTI_PROJECTILE",
+                                "projectileCount": 3,
+                                "angle": 0.3
+                            }
+                        },
+                        "projectiles": {
+                            "dart": {
+                                "pierce": 15
+                            }
+                        }
+                    }
+                }
+            ],
+            "2": [
+                {
+                    "name": "Super Range",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 1000,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "range": "+ 40"
+                    }
+                },
+                {
+                    "name": "Epic Range",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 1500,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "range": "+ 30"
+                    }
+                }
+            ]
         }
     }
 }
