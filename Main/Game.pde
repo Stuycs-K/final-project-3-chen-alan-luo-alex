@@ -306,7 +306,7 @@ public class Game{
   }
   
   public void mousePressed(int mx, int my) {
-    if (isInBoundsOfRectangleCentered(mx, my, 500,375,200,50)) {
+    if (isInBoundsOfRectangleCentered(mx, my, 500,375,200,50) && !gameActive) {
       startGame();
       
       return;
