@@ -641,27 +641,40 @@
             ],
             "2": [
                 {
-                    "name": "Sharp Shots",
-                    "upgradeImage": "upgradeIcons/dartSharpShots.png",
-                    "cost": 140,
+                    "name": "Faster Firing",
+                    "upgradeImage": "upgradeIcons/faster.png",
+                    "cost": 400,
                     "changes": {
-                        "sprite": "towers/longRangeDarts.png"
+                        "sprite": "towers/faster.png",
+                        "actions": {
+                            "attack": {
+                                "cooldown": 0.35
+                            }
+                        }
+                        
                     }
                 },
                 {
-                    "name": "Razor Sharp Shots",
-                    "upgradeImage": "upgradeIcons/dartRazorSharpShots.png",
-                    "cost": 170,
+                    "name": "Night Vision Goggles",
+                    "upgradeImage": "upgradeIcons/nightvis.png",
+                    "cost": 300,
                     "changes": {
-                        "sprite": "towers/enhancedEyesight.png"
+                        "sprite": "towers/nightvis.png",
+                        "detectCamo": true
                     }
                 },
                 {
-                    "name": "Triple Darts",
-                    "upgradeImage": "upgradeIcons/dartTripleDarts.png",
-                    "cost": 330,
+                    "name": "Semi-Automatic Rifle",
+                    "upgradeImage": "upgradeIcons/semiauto.png",
+                    "cost": 3500,
                     "changes": {
-                        "sprite": "towers/tripleDarts.png"
+                        "sprite": "towers/semiauto.png",
+                        "actions":{
+                            "attack" : {
+                                "cooldown" : 0.15,
+                                "damage": "+15"
+                            }
+                        }
                     }
                 }
             ]
