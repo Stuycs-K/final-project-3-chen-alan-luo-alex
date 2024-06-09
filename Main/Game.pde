@@ -82,6 +82,7 @@ public class Game{
     currencyManager = new CurrencyManager();
     
     waveManager = new WaveManager();
+   isSpeedDoubled = false;
     
     showTowerOptions = false;
     setupGui();
@@ -165,7 +166,7 @@ public class Game{
 
   public void startGame(){
     gameActive = true;
-    
+
     waveManager.setWave(0);
     waveManager.startNextWave();
     currencyManager.setCurrency(650);
@@ -182,21 +183,7 @@ public class Game{
        return;
      }
      
-     performUpdate();
-     
-     if(isSpeedDoubled){
-       performUpdate();
-     }
-   }
-   private void performUpdate() {
-    if (healthManager.didLose()) {
-      gameActive = false;
-      showEndScreen();
-      println("YOU LOSE");
-      return;
-    }
-    // TODO
-    if (waveManager.waveFinishedSpawning() && bloons.isEmpty()) {
+     if (waveManager.waveFinishedSpawning() && bloons.isEmpty()) {
       
       if (waveManager.isLastWave()) {
         return;
@@ -205,6 +192,18 @@ public class Game{
       waveManager.startNextWave();
     }
     
+     performUpdate();
+   }
+   
+   
+   private void performUpdate() {
+    if (healthManager.didLose()) {
+      gameActive = false;
+      showEndScreen();
+      println("YOU LOSE");
+      return;
+    }
+
     ArrayList<Bloon> scheduledForRemoval = new ArrayList<Bloon>();
     for (Bloon bloon : bloons) {
       if (bloon.shouldRemove()) {
@@ -217,6 +216,9 @@ public class Game{
         continue;
       }
       
+      if (isSpeedDoubled) {
+        bloon.step();
+      }
       bloon.step();
     }
     // Remove bloons that need to be removed
@@ -225,6 +227,9 @@ public class Game{
     // Any random untracked projectile
     ArrayList<Projectile> projectileScheduled = new ArrayList<>();
     for (Projectile projectile : projectiles) {
+      if (isSpeedDoubled) {
+        projectile.update(bloons);
+      }
       projectile.update(bloons);
       if(projectile.finished) {
         projectileScheduled.add(projectile);
@@ -234,10 +239,16 @@ public class Game{
    
     
     for(Tower tower: towers){
+      if (isSpeedDoubled) {
+        tower.step(bloons);
+      }
       tower.step(bloons);
-      //tower.attack(bloons);
+
       ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
       for(Projectile projectile : tower.projectiles){
+        if (isSpeedDoubled) {
+          projectile.update(bloons);
+        }
         projectile.update(bloons);
         if(projectile.finished){
           projectilesToRemove.add(projectile);
@@ -248,7 +259,6 @@ public class Game{
     
     // Insert all bloons that have been created
     bloonSpawner.emptyQueue();
-    
    }
    
   
@@ -316,6 +326,9 @@ public class Game{
         break;
       case "NinjaMonkey":
         newTower = new NinjaMonkey(x, y);
+        break;
+      case "SniperMonkey":
+        newTower = new SniperMonkey(x,y);
         break;
     }
 

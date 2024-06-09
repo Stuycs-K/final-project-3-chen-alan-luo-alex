@@ -571,100 +571,57 @@
     },
     "SniperMonkey": {
         "base": {
-            "cost": 300,
+            "cost": 350,
             "sprite": "towers/snipermonkey.png",
-            "range": 150,
+            "range": 100000,
             "actions": {
-                "dartAttack": {
-                    "cooldown": 0.9,
-                    "type": "PROJECTILE",
-                    "projectile": "dart"
+                "attack": {
+                    "cooldown": 0.45,
+                    "type": "DIRECT_DAMAGE",
+                    "damage":2
                 }
             },
             "projectiles": {
-                "dart": {
-                    "damage": 1,
-                    "pierce": 2,
-                    "speed": 25,
-                    "sprite": "projectiles/dart.png",
-                    "maxDistance": 200
-                }
             }
         },
         "upgrades": {
             "1": [
                 {
-                    "name": "Long Range Darts",
-                    "upgradeImage": "upgradeIcons/dartLongRangeDarts.png",
-                    "cost": 90,
+                    "name": "Full Metal Jacket",
+                    "upgradeImage": "upgradeIcons/fullmetaljacket.png",
+                    "cost": 300,
                     "changes": {
-                        "sprite": "towers/longRangeDarts.png",
-                        "range": "+ 25",
-                        "projectiles": {
-                            "dart": {
-                                "maxDistance": "+ 50"
-                            }
-                        }
+                        "sprite": "towers/fullmetaljacket.png",
+                        "damage": "+ 3"
+  
                     }
                 },
                 {
-                    "name": "Enhanced Eyesight",
-                    "upgradeImage": "upgradeIcons/dartEnhancedEyesight.png",
-                    "cost": 120,
+                    "name": "Point Five Oh",
+                    "upgradeImage": "upgradeIcons/pointfive.png",
+                    "cost": 2200,
                     "changes": {
-                        "sprite": "towers/enhancedEyesight.png",
-                        "range": "+ 25",
+                        "sprite": "towers/fivepoint.png",
+                        "damage": "+ 3",
                         "detectCamo": true
                     }
                 },
                 {
-                    "name": "Spike-o-Pult",
-                    "upgradeImage": "upgradeIcons/dartSpikeOPult.png",
-                    "cost": 500,
+                    "name": "Deadly Precision",
+                    "upgradeImage": "upgradeIcons/deadly.png",
+                    "cost": 3400,
                     "changes": {
-                        "sprite": "towers/spikeOPult.png",
-                        "actions": {
-                            "dartAttack": {
-                                "cooldown": 1.54
-                            }
-                        },
-                        "projectiles": {
-                            "dart": {
-                                "damage": 2,
-                                "pierce": 18,
-                                "speed": 10,
-                                "maxDistance": 400,
-                                "sprite": "projectiles/spikeOPult.png"
-                            }
-                        }
+                        "sprite": "towers/deadly.png",
+                        "damage" : "+ 10"
                     }
                 },
                 {
-                    "name": "Juggernaut",
-                    "upgradeImage": "upgradeIcons/dartJuggernaut.png",
-                    "cost": 1500,
+                    "name": "Cripple Moab",
+                    "upgradeImage": "upgradeIcons/moabcripple.png",
+                    "cost": 10600,
                     "changes": {
-                        "sprite": "towers/juggernaut.png",
-                        "range": 225,
-                        "actions": {
-                            "dartAttack": {
-                                "cooldown": 1.4
-                            }
-                        },
-                        "projectiles": {
-                            "dart": {
-                                "damage": 4,
-                                "pierce": 100,
-                                "speed": 18,
-                                "maxDistance": 1000,
-                                "sprite": "projectiles/juggernaut.png",
-                                "specialDamageProperties": {
-                                    "popLead": true,
-                                    "popFrozen": true,
-                                    "extraDamageToCeramics": 4
-                                }
-                            }
-                        }
+                        "sprite": "towers/moabcrippler.png",
+                        "damage": "+ 20"
                     }
                 }
             ],
@@ -674,12 +631,8 @@
                     "upgradeImage": "upgradeIcons/dartSharpShots.png",
                     "cost": 140,
                     "changes": {
-                        "sprite": "towers/longRangeDarts.png",
-                        "projectiles": {
-                            "dart": {
-                                "pierce": "+ 1"
-                            }
-                        }
+                        "sprite": "towers/longRangeDarts.png"
+        
                     }
                 },
                 {
@@ -687,12 +640,8 @@
                     "upgradeImage": "upgradeIcons/dartRazorSharpShots.png",
                     "cost": 170,
                     "changes": {
-                        "sprite": "towers/enhancedEyesight.png",
-                        "projectiles": {
-                            "dart": {
-                                "pierce": "+ 1"
-                            }
-                        }
+                        "sprite": "towers/enhancedEyesight.png"
+                
                     }
                 },
                 {
@@ -700,14 +649,8 @@
                     "upgradeImage": "upgradeIcons/dartTripleDarts.png",
                     "cost": 330,
                     "changes": {
-                        "sprite": "towers/tripleDarts.png",
-                        "actions": {
-                            "dartAttack": {
-                                "type": "MULTI_PROJECTILE",
-                                "projectileCount": 3,
-                                "angle": 0.43
-                            }
-                        }
+                        "sprite": "towers/tripleDarts.png"
+    
                     }
                 }
             ]

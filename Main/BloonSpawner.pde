@@ -26,7 +26,7 @@ public class BloonSpawner {
     for (int j = 0; j < numberOfChildren; j++) {
       float distanceOffset = -1 * spawnSpacing * j; // The first child will spawn in the exact same position; subsequent bloons will spawn behind
       
-      int currentSegmentId = currentMapSegmentId;
+      int currentSegmentId = currentMapSegmentId; 
       PVector finalSpawnPosition = startPosition;
       
       while (true) {
@@ -151,7 +151,6 @@ public class BloonSpawner {
   // Actually spawns the bloons
   public void emptyQueue() {
     for (Bloon bloon : createdBloonQueue) {
-      
       // If we've killed the bloon to trigger the children spawn because we did a lot of damage
       if (bloon.shouldRemove()) {
         continue;

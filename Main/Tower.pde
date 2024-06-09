@@ -80,6 +80,9 @@ private TowerAction createAction(String actionClass, JSONObject actionDefinition
     case "MULTI_PROJECTILE":
       action = new MultiProjectileSpawnAction(actionDefinition);
       break;
+    case "DIRECT_DAMAGE":
+      action = new DirectDamageAction(actionDefinition);
+      break;
     default:
       action = new TowerAction(actionDefinition);
   }
@@ -579,5 +582,31 @@ public class ProjectileSpawnAction extends TowerAction {
       tower.lookAt(targetBloons.get(targetBloons.size() - 1).getPosition());
     }
 
+  }
+}
+
+public class DirectDamageAction extends TowerAction{
+  private int damage;
+  
+  public DirectDamageAction(JSONObject actionData){
+    super(actionData);
+    
+  }
+  
+  public void setProperties(JSONObject actionData){
+    super.setProperties(actionData);
+    this.damage = readInt(actionData, "damage", this.damage);
+  }
+  
+  public void performAction(Tower tower, ArrayList<Bloon> targetBloons, ArrayList<Bloon> bloons){
+    resetCooldown();
+    
+    for(Bloon bloon: targetBloons){
+      bloon.damage(damage);
+    }
+    
+    if(targetBloons.size() > 0){
+      tower.lookAt(targetBloons.get(targetBloons.size() - 1).getPosition());
+    }
   }
 }
