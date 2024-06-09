@@ -246,7 +246,7 @@
                         "sprite": "towers/bombExtraRange.png",
                         "projectiles": {
                             "shuriken": {
-                                "distractionChance": 0.15
+                                "blowbackChance": 1
                             }
                         }
                     }
@@ -267,7 +267,7 @@
                         "projectiles": {
                             "flashBomb": {
                                 "type": "BOMB",
-                                "distractionChance": 0.3,
+                                "blowbackChance": 0.3,
                                 "damage": 3,
                                 "pierce": 1,
                                 "explosionPierce": 30,

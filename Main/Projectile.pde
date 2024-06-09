@@ -90,6 +90,15 @@ public class Projectile{
     this.direction = new PVector(dx, dy);
   }
   
+  private void applyBlowback(Bloon bloon) {
+    if (Math.random() > this.projectileData.blowbackChance) {
+      return;
+    }
+    
+    Blowback blowbackEffect = new Blowback();
+    bloon.getModifiersList().addModifier(blowbackEffect); 
+  }
+  
   public void update(ArrayList<Bloon> bloons){
     if (distanceTraveled > projectileData.maxDistance) {
       finished = true;
@@ -124,6 +133,7 @@ public class Projectile{
              continue;
            }
            
+           applyBlowback(bloon);
            float damageDealt = bloon.damage((DamageProperties) projectileData);
            // No damage, so destroy the projectile (we hit a lead bloon with a dart, for example)
            if (damageDealt == -1.0f) {
@@ -131,11 +141,11 @@ public class Projectile{
              break;
            }
            
+           // We tried damaging a dead bloon (in the same frame), so don't count it !
            if (damageDealt != -2.0f) {
              hitBloons.add(bloon.getHandle());
            }
 
-           
            if (hitBloons.size() >= projectileData.pierce) {
              finished = true;
              break;  
@@ -173,6 +183,8 @@ public class DamageProperties {
   public int extraDamageToCeramics;
   public int extraDamageToMoabs;
   
+  public float blowbackChance;
+  
   public DamageProperties(JSONObject data) {
     // By default, we assume damage can't pop lead
     // By default, we assume the projectile is sharp (can't pop lead)
@@ -184,6 +196,7 @@ public class DamageProperties {
     this.extraDamageToMoabs = 0;
     
     this.damage = 1;
+    this.blowbackChance = 0;
     
     updateProperties(data);
   }
@@ -199,6 +212,7 @@ public class DamageProperties {
     properties.setJSONObject("specialDamageProperties", specialDamageProperties);
     
     properties.setInt("damage", this.damage);
+    properties.setFloat("blowbackChance", this.blowbackChance);
   }
   
   public void updateProperties(JSONObject data) {
@@ -217,6 +231,7 @@ public class DamageProperties {
     this.extraDamageToMoabs = readIntDiff(target, "extraDamageToMoabs", this.extraDamageToMoabs);
     
     this.damage = readIntDiff(data, "damage", this.damage);
+    this.blowbackChance = readFloatDiff(data, "blowbackChance", this.blowbackChance);
     
     JSONObject otherProperties = data.getJSONObject("properties");
     if (otherProperties != null) {

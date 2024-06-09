@@ -365,6 +365,11 @@ public class Stun extends BloonModifier {
   }
   
   public void onStep() {
+    // DON'T stun bloons that are being blown back. Stun them when they're finished getting blown
+    if (getBloon().getModifiersList().hasModifier("blowback")) {
+      return;
+    }
+    
     super.onStep();
     
     getBloon().setSpeedMultiplier(0);
@@ -383,12 +388,64 @@ public class Blowback extends BloonModifier {
   private float unitsBlownback;
   private PVector goalPosition;
   
+  private PVector lastDirection;
+  
+  public Blowback(float unitsBlownback, PVector goalPosition) {
+    super("blowback");
+    
+    this.unitsBlownback = unitsBlownback;
+    this.goalPosition = goalPosition;
+  }
+  
   public Blowback(float unitsBlownback) {
     super("blowback");
     
     this.unitsBlownback = unitsBlownback;
-    
+  }
+  
+  public Blowback() {
+    this(100); 
+  }
+  
+  public void onStep() {
     Bloon bloon = getBloon();
+    if (goalPosition == null) {
+      return;
+    }
+    
+    float distanceToGoal = PVector.dist(bloon.position, this.goalPosition);
+    
+    if (distanceToGoal <= 5) {
+      this.shouldRemove = true;
+      return;
+    }
+    
+    // Stop the bloon from moving normally!
+    bloon.setSpeedMultiplier(0);
+    
+    // We're going to use the bloon's speed value
+    PVector direction = PVector.sub(this.goalPosition, bloon.position).normalize();
+    
+    if (lastDirection != null) {
+      // This means we're snapping back and forth between the goal position
+      if (direction.dot(lastDirection) == 0) {
+        this.shouldRemove = true;
+        return;
+      }
+    }
+    lastDirection = direction;
+    
+    direction.mult(bloon.speed / frameRate);
+    
+    bloon.position.add(direction);
+  }
+  
+  public void setBloon(Bloon bloon) {
+    super.setBloon(bloon);
+    
+    if (goalPosition != null) {
+      return;
+    }
     
     // Get the position unitsBlownback units back
     PVector finalPosition = bloon.position;
@@ -397,7 +454,7 @@ public class Blowback extends BloonModifier {
     while (true) {
       MapSegment segment = game.getMap().getMapSegment(bloon.positionId);
       
-      PVector direction = PVector.sub(segment.getEnd(), segment.getStart()).normalize();
+      PVector direction = PVector.sub(segment.getStart(), segment.getEnd()).normalize();
       float distanceToStart = PVector.dist(finalPosition, segment.getStart());
       
       // The final position is going to be in the bounds of the current segment
@@ -417,37 +474,15 @@ public class Blowback extends BloonModifier {
       }
     }
     
-    this.goalPosition = finalPosition;
-  }
-  
-  public Blowback() {
-    this(100); 
-  }
-  
-  public void onStep() {
-    Bloon bloon = getBloon();
-    float distanceToGoal = PVector.dist(bloon.position, this.goalPosition);
-    
-    if (distanceToGoal <= 0.01) {
-      this.shouldRemove = true;
-      return;
-    }
-    
-    // Stop the bloon from moving normally!
-    bloon.setSpeedMultiplier(0);
-    
-    // We're going to use the bloon's speed value
-    PVector direction = PVector.sub(this.goalPosition, bloon.position).normalize();
-    direction.mult(bloon.speed);
-    
-    bloon.position.add(direction);
+    this.goalPosition = finalPosition; 
   }
   
   public void onRemove() {
+    getBloon().position = goalPosition;
     getBloon().setSpeedMultiplier(1);
   }
   
   public Blowback clone() {
-    return new Blowback(this.unitsBlownback);
+    return new Blowback(this.unitsBlownback, this.goalPosition);
   }
 }
