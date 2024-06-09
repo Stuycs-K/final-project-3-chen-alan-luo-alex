@@ -154,7 +154,6 @@ public class Game{
 
   public void startGame(){
     gameActive = true;
-    isPaused = false;
     
     waveManager.setWave(0);
     waveManager.startNextWave();
@@ -163,8 +162,8 @@ public class Game{
     hideStartScreen();
   }
   
-  public void togglePause(){
-    isPaused = !isPaused;
+  public void togglePause(boolean isPaused){
+    this.isPaused = isPaused;
   }
   
    public void update(){
@@ -697,11 +696,25 @@ public class ReplayButton extends TextButton{
 }
 
 public class PauseButton extends TextButton{
+  private boolean isPaused;
+  
   public PauseButton (JSONObject defintion){
     super(defintion);
+    this.isPaused = false;
  }
  
  public void onInput(){
-   game.togglePause();
+   isPaused = !isPaused;
+   game.togglePause(isPaused);
+   updateText();
  }
+ 
+ private void updateText(){
+   if(isPaused){
+     setText("Unpause");
+     
+ } else{
+   setText("Pause");
+ }
+}
 }
