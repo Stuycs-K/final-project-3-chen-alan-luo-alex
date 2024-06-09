@@ -86,6 +86,11 @@
 - Add Super Monkey tower and its upgrades
 - Cleanup some of the tower upgrade parsing code
 
+## 6/8/2024
+- Add Ninja Monkey tower and its upgrades
+- Add skip wave, start wave, remove bloons buttons to cheat menu
+- Improve tower placement and selection
+
 ## Alex Luo
 
 ### 5/22/2024
