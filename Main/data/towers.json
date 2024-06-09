@@ -382,6 +382,7 @@
                         "sprite": "towers/bombBloonImpact.png",
                         "projectiles": {
                             "bomb": {
+                                "explosionPierce": "+ 30",
                                 "specialDamageProperties": {
                                     "popBlack": true
                                 },
@@ -407,6 +408,7 @@
                         "projectiles": {
                             "bomb": {
                                 "explosionRadius": "+ 50",
+                                "explosionPierce": "+ 10",
                                 "damage": "+ 1"
                             }
                         }
@@ -426,6 +428,7 @@
                         "range": "+ 50",
                         "projectiles": {
                             "bomb": {
+                                "explosionPierce": "+ 10",
                                 "speed": "+ 5",
                                 "damage": "+ 1"
                             }
@@ -519,7 +522,7 @@
                         "sprite": "towers/superSunGod.png",
                         "actions": {
                             "attack": {
-                                "cooldown": 0.04,
+                                "cooldown": 0.03,
                                 "type": "MULTI_PROJECTILE",
                                 "projectileCount": 3,
                                 "angle": 0.2
