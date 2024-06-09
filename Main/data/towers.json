@@ -246,7 +246,7 @@
                         "sprite": "towers/ninjaSharpShurikens.png",
                         "projectiles": {
                             "shuriken": {
-                                "blowbackChance": 1
+                                "blowbackChance": 0.15
                             }
                         }
                     }
@@ -267,7 +267,7 @@
                         "projectiles": {
                             "flashBomb": {
                                 "type": "BOMB",
-                                "blowbackChance": 0.3,
+                                "blowbackChance": 0.5,
                                 "damage": 3,
                                 "pierce": 1,
                                 "explosionPierce": 30,
@@ -578,11 +578,10 @@
                 "attack": {
                     "cooldown": 0.45,
                     "type": "DIRECT_DAMAGE",
-                    "damage":2
+                    "damage": 2
                 }
             },
-            "projectiles": {
-            }
+            "projectiles": {}
         },
         "upgrades": {
             "1": [
@@ -592,8 +591,11 @@
                     "cost": 300,
                     "changes": {
                         "sprite": "towers/fullmetaljacket.png",
-                        "damage": "+ 3"
-  
+                        "actions": {
+                            "attack": {
+                                "damage": "+ 3"
+                            }
+                        }
                     }
                 },
                 {
@@ -602,7 +604,11 @@
                     "cost": 2200,
                     "changes": {
                         "sprite": "towers/fivepoint.png",
-                        "damage": "+ 3",
+                        "actions": {
+                            "attack": {
+                                "damage": "+ 3"
+                            }
+                        },
                         "detectCamo": true
                     }
                 },
@@ -612,7 +618,11 @@
                     "cost": 3400,
                     "changes": {
                         "sprite": "towers/deadly.png",
-                        "damage" : "+ 10"
+                        "actions": {
+                            "attack": {
+                                "damage": "+ 10"
+                            }
+                        }
                     }
                 },
                 {
@@ -621,7 +631,11 @@
                     "cost": 10600,
                     "changes": {
                         "sprite": "towers/moabcrippler.png",
-                        "damage": "+ 20"
+                        "actions": {
+                            "attack": {
+                                "damage": "+ 20"
+                            }
+                        }
                     }
                 }
             ],
@@ -632,7 +646,6 @@
                     "cost": 140,
                     "changes": {
                         "sprite": "towers/longRangeDarts.png"
-        
                     }
                 },
                 {
@@ -641,7 +654,6 @@
                     "cost": 170,
                     "changes": {
                         "sprite": "towers/enhancedEyesight.png"
-                
                     }
                 },
                 {
@@ -650,7 +662,6 @@
                     "cost": 330,
                     "changes": {
                         "sprite": "towers/tripleDarts.png"
-    
                     }
                 }
             ]
