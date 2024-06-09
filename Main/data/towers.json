@@ -633,15 +633,14 @@
                     "name": "Point Five Oh",
                     "upgradeImage": "upgradeIcons/pointfive.png",
                     "cost": 2200,
+                    "description": "Increases damage again by 3 again",
                     "changes": {
                         "sprite": "towers/fivepoint.png",
-                        "description": "Increases damage again by 3!",
                         "actions": {
                             "attack": {
                                 "damage": "+ 3"
                             }
-                        },
-                        "detectCamo": true
+                        }
                     }
                 },
                 {
@@ -662,9 +661,9 @@
                     "name": "Cripple Moab",
                     "upgradeImage": "upgradeIcons/moabcripple.png",
                     "cost": 10600,
+                    "description": "Increases damage again by 20 and attacks stun MOABs for 1 second",
                     "changes": {
                         "sprite": "towers/moabcrippler.png",
-                        "description": "Increases damage again by 20!",
                         "actions": {
                             "attack": {
                                 "damage": "+ 20",
@@ -679,15 +678,14 @@
                     "name": "Faster Firing",
                     "upgradeImage": "upgradeIcons/faster.png",
                     "cost": 400,
-                    "description": "Increases the firing speed",
+                    "description": "Increases firing speed",
                     "changes": {
                         "sprite": "towers/faster.png",
                         "actions": {
                             "attack": {
-                                "cooldown": 1.25
+                                "cooldown": "* 0.6"
                             }
                         }
-                        
                     }
                 },
                 {
@@ -704,13 +702,13 @@
                     "name": "Semi-Automatic Rifle",
                     "upgradeImage": "upgradeIcons/semiauto.png",
                     "cost": 3500,
-                    "description": "much faster firing and higher damage",
+                    "description": "Much faster firing",
                     "changes": {
                         "sprite": "towers/semiauto.png",
-                        "actions":{
-                            "attack" : {
-                                "cooldown" : 0.55,
-                                "damage": "+15"
+                        "actions": {
+                            "attack": {
+                                "cooldown": "* 0.25",
+                                "damage": "+ 1"
                             }
                         }
                     }
