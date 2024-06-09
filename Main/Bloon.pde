@@ -191,7 +191,7 @@ public class Bloon {
     if (isDead || reachedEnd) {
       return;
     }
-    
+
     pushMatrix();
     
     translate(position.x, position.y);
@@ -273,8 +273,6 @@ public class Bloon {
   public void step() {
     modifiersList.stepModifiers();
     move();
-
-    render();
   }
   
   public float getDistanceTraveled() {
