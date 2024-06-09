@@ -20,6 +20,8 @@ public class Game{
   private Frame startScreenBackground;
   private Frame endScreenBackground;
   private ReplayButton replayButton;
+  private SpeedButton speedButton;
+  private boolean isSpeedDoubled;
   
   
   public CheatMenu cheatMenu;
@@ -30,9 +32,10 @@ public class Game{
 
   
   
-  public Game(PlayButton playButton, ReplayButton replayButton, PauseButton pauseButton) {
+  public Game(PlayButton playButton, ReplayButton replayButton, PauseButton pauseButton, SpeedButton speedButton) {
     this.playButton = playButton;
     this.replayButton = replayButton;
+    this.speedButton = speedButton;
         
     PImage mapImage = loadImage("images/map.png");
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
@@ -93,6 +96,14 @@ public class Game{
   }
   public Map getMap() {
     return map;
+  }
+  
+  public boolean isSpeedDoubled(){
+    return isSpeedDoubled;
+  }
+  
+  public void setSpeedDoubled(boolean isSpeedDoubled){
+    this.isSpeedDoubled = isSpeedDoubled;
   }
   
   
@@ -171,6 +182,13 @@ public class Game{
        return;
      }
      
+     performUpdate();
+     
+     if(isSpeedDoubled){
+       performUpdate();
+     }
+   }
+   private void performUpdate() {
     if (healthManager.didLose()) {
       gameActive = false;
       showEndScreen();
@@ -232,6 +250,7 @@ public class Game{
     bloonSpawner.emptyQueue();
     
    }
+   
   
   private void setupGui(){
     
@@ -715,6 +734,30 @@ public class PauseButton extends TextButton{
      
  } else{
    setText("Pause");
- }
+   }
+  }
+}
+
+public class SpeedButton extends TextButton{
+  private boolean isSpeedDoubled;
+  
+  public SpeedButton(JSONObject defintion){
+    super(defintion);
+    this.isSpeedDoubled = false;
+    updateText();
+  }
+  
+  public void onInput(){
+    isSpeedDoubled = !isSpeedDoubled;
+    game.setSpeedDoubled(isSpeedDoubled);
+    updateText();
+  }
+  
+  public void updateText(){
+    if(isSpeedDoubled){
+      setText("Normal Speed");
+    }else{
+      setText("Double Speed");
+  }
 }
 }
