@@ -140,9 +140,8 @@ public class Game{
     towers.clear();
     bloons.clear();
     projectiles.clear();
-    healthManager = new HealthManager(200);
-    currencyManager = new CurrencyManager();
-    waveManager = new WaveManager();
+    healthManager.setHealth(200);
+
     gameActive = false;
     isPaused = false;
     showTowerOptions = false;
@@ -151,7 +150,6 @@ public class Game{
     placementLabel.setVisible(false);
     hideEndScreen();
     cheatMenu.setVisible(false);
-    setupGui();
   }
   
 
