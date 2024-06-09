@@ -77,7 +77,9 @@ public class GuiManager {
   public boolean mousePressed() {
     boolean pressedSomething = false;
     
-    for (GuiBase gui : guiList) {
+    
+    List<GuiBase> guiListCopy = new ArrayList<>(guiList);
+    for (GuiBase gui : guiListCopy) {
       if (!gui.isVisible()) {
         continue;
       }

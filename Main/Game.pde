@@ -16,19 +16,27 @@ public class Game{
   private String currentTowerType = null;
   private TextLabel placementLabel;
   private TextButton pauseButton;
-  private TextButton playButton;
+  private PlayButton playButton;
   private Frame startScreenBackground;
+  private Frame endScreenBackground;
+  private ReplayButton replayButton;
+  private SpeedButton speedButton;
+  private boolean isSpeedDoubled;
   
   
   public CheatMenu cheatMenu;
   private UpgradePanel upgradePanel;
   private TowerSelectionPanel towerSelectionPanel;
   
-  private boolean isPaused = false;
+  private boolean isPaused;
 
   
   
-  public Game() {
+  public Game(PlayButton playButton, ReplayButton replayButton, PauseButton pauseButton, SpeedButton speedButton) {
+    this.playButton = playButton;
+    this.replayButton = replayButton;
+    this.speedButton = speedButton;
+        
     PImage mapImage = loadImage("images/map.png");
     ArrayList<PVector> waypoints = new ArrayList<PVector>();
     waypoints.add(new PVector(0, 200));
@@ -79,11 +87,23 @@ public class Game{
     setupGui();
     
   }
+  public boolean isPaused(){
+    return isPaused;
+  }
+  
   public boolean isGameActive() {
     return gameActive;
   }
   public Map getMap() {
     return map;
+  }
+  
+  public boolean isSpeedDoubled(){
+    return isSpeedDoubled;
+  }
+  
+  public void setSpeedDoubled(boolean isSpeedDoubled){
+    this.isSpeedDoubled = isSpeedDoubled;
   }
   
   
@@ -105,7 +125,33 @@ public class Game{
     playButton.setVisible(false);
   }
   
+  public void showEndScreen(){
+    endScreenBackground.setVisible(true);
+    replayButton.setVisible(true);
+  }
   
+  public void hideEndScreen(){
+    endScreenBackground.setVisible(false);
+    replayButton.setVisible(false);
+  }
+  
+  public void resetGame(){
+    towers.clear();
+    bloons.clear();
+    projectiles.clear();
+    healthManager = new HealthManager(200);
+    currencyManager = new CurrencyManager();
+    waveManager = new WaveManager();
+    gameActive = false;
+    isPaused = false;
+    showTowerOptions = false;
+    selectedTower = null;
+    currentTowerType = null;
+    placementLabel.setVisible(false);
+    hideEndScreen();
+    cheatMenu.setVisible(false);
+    setupGui();
+  }
   
 
   
@@ -127,13 +173,25 @@ public class Game{
     hideStartScreen();
   }
   
+  public void togglePause(boolean isPaused){
+    this.isPaused = isPaused;
+  }
+  
    public void update(){
-     if(isPaused){
+     if(!gameActive || isPaused){
        return;
      }
      
+     performUpdate();
+     
+     if(isSpeedDoubled){
+       performUpdate();
+     }
+   }
+   private void performUpdate() {
     if (healthManager.didLose()) {
-      waveManager.removeWaves();
+      gameActive = false;
+      showEndScreen();
       println("YOU LOSE");
       return;
     }
@@ -192,13 +250,16 @@ public class Game{
     bloonSpawner.emptyQueue();
     
    }
+   
   
   private void setupGui(){
     
     startScreenBackground = (Frame) guiManager.create("startScreenBackground");
     
-    playButton = (TextButton) guiManager.create("playButton");
+    endScreenBackground = (Frame) guiManager.create("endScreenBackground");
+    endScreenBackground.setVisible(false);
     
+
     upgradePanel = new UpgradePanel();
     upgradePanel.setVisible(false);
     
@@ -208,7 +269,6 @@ public class Game{
     cheatMenu.setVisible(false);
 
     placementLabel = (TextLabel) guiManager.create("placementLabel");
-    pauseButton = (TextButton) guiManager.create("pauseButton");
     
     
    }
@@ -292,6 +352,10 @@ public class Game{
       }
     }
     
+    for (Bloon bloon : bloons) {
+       bloon.render(); 
+    }
+    
     for (Projectile projectile : projectiles) {
       projectile.drawProjectile();
     }
@@ -309,11 +373,6 @@ public class Game{
   }
   
   public void mousePressed(int mx, int my) {
-    if (isInBoundsOfRectangleCentered(mx, my, 500,375,200,50) && !gameActive) {
-      startGame();
-      
-      return;
-    }
     
    if (currentTowerType != null && !guiManager.mousePressed()) {
       placeTower(currentTowerType, mx, my);
@@ -632,4 +691,73 @@ public class TowerSelectButton {
     imageButton.setPosition(position);
     costLabel.translatePosition(deltaX, deltaY);
   }
+}
+
+public class PlayButton extends TextButton{
+  public PlayButton(JSONObject defintion){
+    super(defintion);
+  }
+  public void onInput(){
+    game.startGame();
+  }
+}
+
+public class ReplayButton extends TextButton{
+  public ReplayButton(JSONObject defintion){
+    super(defintion);
+  }
+  
+  public void onInput(){
+    game.resetGame();
+    game.startGame();
+    
+  }
+}
+
+public class PauseButton extends TextButton{
+  private boolean isPaused;
+  
+  public PauseButton (JSONObject defintion){
+    super(defintion);
+    this.isPaused = false;
+ }
+ 
+ public void onInput(){
+   isPaused = !isPaused;
+   game.togglePause(isPaused);
+   updateText();
+ }
+ 
+ private void updateText(){
+   if(isPaused){
+     setText("Unpause");
+     
+ } else{
+   setText("Pause");
+   }
+  }
+}
+
+public class SpeedButton extends TextButton{
+  private boolean isSpeedDoubled;
+  
+  public SpeedButton(JSONObject defintion){
+    super(defintion);
+    this.isSpeedDoubled = false;
+    updateText();
+  }
+  
+  public void onInput(){
+    isSpeedDoubled = !isSpeedDoubled;
+    game.setSpeedDoubled(isSpeedDoubled);
+    updateText();
+  }
+  
+  public void updateText(){
+    if(isSpeedDoubled){
+      setText("Normal Speed");
+    }else{
+      setText("Double Speed");
+  }
+}
 }
