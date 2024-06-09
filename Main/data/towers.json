@@ -143,6 +143,104 @@
             ]
         }
     },
+    "NinjaMonkey": {
+        "base": {
+            "cost": 500,
+            "sprite": "towers/bombshooter.png",
+            "range": 150,
+            "detectCamo": true,
+            "actions": {
+                "shurikenAttack": {
+                    "cooldown": 0.85,
+                    "type": "PROJECTILE",
+                    "projectile": "shuriken"
+                }
+            },
+            "projectiles": {
+                "shuriken": {
+                    "damage": 1,
+                    "pierce": 2,
+                    "speed": 20,
+                    "sprite": "projectiles/dart.png",
+                    "maxDistance": 300
+                }
+            }
+        },
+        "upgrades": {
+            "1": [
+                {
+                    "name": "Ninja Discipline",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 300,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "actions": {
+                            "shurikenAttack": {
+                                "cooldown": "* 0.6"
+                            }
+                        },
+                        "range": "+ 25"
+                    }
+                },
+                {
+                    "name": "Sharp Shurikens",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 350,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "projectiles": {
+                            "shuriken": {
+                                "pierce": "+ 2"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Double Shot",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 850,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "actions": {
+                            "shurikenAttack": {
+                                "type": "MULTI_PROJECTILE",
+                                "projectileCount": 2,
+                                "angle": 0.15
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Bloonjitsu",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 2750,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "actions": {
+                            "shurikenAttack": {
+                                "projectileCount": 5
+                            }
+                        }
+                    }
+                }
+            ],
+            "2": [
+                {
+                    "name": "Seeking Shuriken",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 250,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "projectiles": {
+                            "shuriken": {
+                                "pierce": "+ 2"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    },
     "BombShooter": {
         "base": {
             "cost": 650,

@@ -254,6 +254,9 @@ public class Game{
       case "SuperMonkey":
         newTower = new SuperMonkey(x, y);
         break;
+      case "NinjaMonkey":
+        newTower = new NinjaMonkey(x, y);
+        break;
     }
 
    if(newTower != null){

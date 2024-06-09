@@ -546,7 +546,12 @@ public class ProjectileSpawnAction extends TowerAction {
   public void setProperties(JSONObject actionData) {
     super.setProperties(actionData);
     
-    this.projectileName = readString(actionData, "projectile", this.projectileName); 
+    this.projectileName = readString(actionData, "projectile", this.projectileName);
+    
+    JSONObject otherProperties = actionData.getJSONObject("properties");
+    if (otherProperties != null) {
+      setProperties(otherProperties);
+    }
   }
   
   public String getSpawnedProjectileName() {

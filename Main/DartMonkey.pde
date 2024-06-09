@@ -118,10 +118,13 @@ public class MultiProjectileSpawnAction extends ProjectileSpawnAction {
   public void setProperties(JSONObject actionData) {
     super.setProperties(actionData);
     
-    JSONObject specialProperties = actionData.getJSONObject("properties");
-
-    this.projectileCount = readInt(specialProperties, "projectileCount", 1);
-    this.angle = readFloat(specialProperties, "angle", 0);
+    this.projectileCount = readInt(actionData, "projectileCount", this.projectileCount);
+    this.angle = readFloat(actionData, "angle", this.angle);
+    
+    JSONObject otherProperties = actionData.getJSONObject("properties");
+    if (otherProperties != null) {
+      setProperties(otherProperties);
+    }
   }
   
   public void reconcileWithOther(JSONObject properties) {
