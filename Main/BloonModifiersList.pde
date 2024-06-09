@@ -110,7 +110,7 @@ public class BloonModifiersList {
       
       if (modifier.shouldRemove()) {
         modifiersToRemove.add(modifierName);
-        
+        println("REMOVE " + modifierName);
         modifier.onRemove();
         continue;
       }
@@ -129,7 +129,9 @@ public class BloonModifiersList {
   
   public void copyModifiers(ArrayList<BloonModifier> modifiers) {
     for (BloonModifier modifier : modifiers) {
-      addModifier(modifier.clone());
+      BloonModifier cloned = modifier.clone();
+      addModifier(cloned);
+      println("ADDED FROM COPY " + cloned);
     }
   }
   
@@ -143,7 +145,7 @@ public class BloonModifiersList {
       try { // If our entry is "true," apply it with no extra information
         if (modifiers.getBoolean(keyName) == true) {
           addModifier(keyName);
-        };
+        }
 
       } catch (Exception exception) {
         
@@ -169,16 +171,21 @@ public class BloonModifiersList {
   
   public void addModifier(BloonModifier newModifier) {
      newModifier.setBloon(bloon);
-     modifierMap.put(newModifier.getName(), newModifier);
+     modifierMap.put(newModifier.getModifierName(), newModifier);
+     println("MAP GET " + modifierMap + " " + bloon.getLayerId());
   }
   
-  public void addModifierNoStack(BloonModifier newModifier) {
+  public void addModifierWithStack(BloonModifier newModifier) {
     BloonModifier existingModifier = getModifierByName(newModifier.getModifierName());
+    
+    println(modifierMap + " " + bloon.getLayerId());
+    
     if (existingModifier == null) {
+      println("ADD MODIFIER FROM WITH STACK " + newModifier + " " + bloon.getLayerId());
       addModifier(newModifier); 
       return;
     }
-    
+
     existingModifier.onStackAttempt(newModifier);
   }
 }
@@ -199,6 +206,7 @@ public class BloonModifier {
     this.timeRemaining = duration;
     this.name = name;
     this.baseProperties = bloonPropertyLookup.getModifier(name);
+    this.shouldRemove = false;
   }
   
   public BloonModifier(String name) {
@@ -394,6 +402,7 @@ public class Blowback extends BloonModifier {
     super("blowback");
     
     this.unitsBlownback = unitsBlownback;
+    
     this.goalPosition = goalPosition;
   }
   
@@ -415,7 +424,8 @@ public class Blowback extends BloonModifier {
     
     float distanceToGoal = PVector.dist(bloon.position, this.goalPosition);
     
-    if (distanceToGoal <= 5) {
+    if (distanceToGoal <= bloon.speed / frameRate) {
+
       this.shouldRemove = true;
       return;
     }
@@ -426,15 +436,16 @@ public class Blowback extends BloonModifier {
     // We're going to use the bloon's speed value
     PVector direction = PVector.sub(this.goalPosition, bloon.position).normalize();
     
+    
     if (lastDirection != null) {
       // This means we're snapping back and forth between the goal position
-      if (direction.dot(lastDirection) == 0) {
+      if (direction.dot(lastDirection) < 0.1) {
         this.shouldRemove = true;
         return;
       }
     }
     lastDirection = direction;
-    
+   
     direction.mult(bloon.speed / frameRate);
     
     bloon.position.add(direction);
@@ -442,8 +453,8 @@ public class Blowback extends BloonModifier {
   
   public void setBloon(Bloon bloon) {
     super.setBloon(bloon);
-    
-    if (goalPosition != null) {
+
+    if (this.goalPosition != null) {
       return;
     }
     
@@ -477,12 +488,13 @@ public class Blowback extends BloonModifier {
     this.goalPosition = finalPosition; 
   }
   
-  public void onRemove() {
+  public void onRemove() {      
     getBloon().position = goalPosition;
     getBloon().setSpeedMultiplier(1);
   }
   
   public Blowback clone() {
-    return new Blowback(this.unitsBlownback, this.goalPosition);
+    Blowback newEffect = new Blowback(this.unitsBlownback, this.goalPosition);
+    return newEffect;
   }
 }

@@ -96,7 +96,8 @@ public class Projectile{
     }
     
     Blowback blowbackEffect = new Blowback();
-    bloon.getModifiersList().addModifier(blowbackEffect); 
+    println("APPLY FROM PROJECITLE " + blowbackEffect + " " + bloon.getLayerId());
+    bloon.getModifiersList().addModifierWithStack(blowbackEffect); 
   }
   
   public void update(ArrayList<Bloon> bloons){
@@ -133,18 +134,20 @@ public class Projectile{
              continue;
            }
            
-           applyBlowback(bloon);
-           float damageDealt = bloon.damage((DamageProperties) projectileData);
-           // No damage, so destroy the projectile (we hit a lead bloon with a dart, for example)
-           if (damageDealt == -1.0f) {
+           float result = bloon.tryDamage((DamageProperties) projectileData);
+           
+           if (result == -1.0f) {
              finished = true;
              break;
            }
            
-           // We tried damaging a dead bloon (in the same frame), so don't count it !
-           if (damageDealt != -2.0f) {
-             hitBloons.add(bloon.getHandle());
+           if (result == -2.0f) {
+             continue; 
            }
+           
+           applyBlowback(bloon);
+           float damageDealt = bloon.damage((DamageProperties) projectileData);
+           hitBloons.add(bloon.getHandle());       
 
            if (hitBloons.size() >= projectileData.pierce) {
              finished = true;
