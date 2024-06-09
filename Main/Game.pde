@@ -26,11 +26,11 @@ public class Game{
   private UpgradePanel upgradePanel;
   private TowerSelectionPanel towerSelectionPanel;
   
-  private boolean isPaused = false;
+  private boolean isPaused;
 
   
   
-  public Game(PlayButton playButton, ReplayButton replayButton) {
+  public Game(PlayButton playButton, ReplayButton replayButton, PauseButton pauseButton) {
     this.playButton = playButton;
     this.replayButton = replayButton;
         
@@ -84,6 +84,10 @@ public class Game{
     setupGui();
     
   }
+  public boolean isPaused(){
+    return isPaused;
+  }
+  
   public boolean isGameActive() {
     return gameActive;
   }
@@ -128,6 +132,7 @@ public class Game{
     currencyManager = new CurrencyManager();
     waveManager = new WaveManager();
     gameActive = false;
+    isPaused = false;
     showTowerOptions = false;
     selectedTower = null;
     currentTowerType = null;
@@ -149,6 +154,7 @@ public class Game{
 
   public void startGame(){
     gameActive = true;
+    isPaused = false;
     
     waveManager.setWave(0);
     waveManager.startNextWave();
@@ -157,8 +163,12 @@ public class Game{
     hideStartScreen();
   }
   
+  public void togglePause(){
+    isPaused = !isPaused;
+  }
+  
    public void update(){
-     if(isPaused){
+     if(!gameActive || isPaused){
        return;
      }
      
@@ -241,7 +251,6 @@ public class Game{
     cheatMenu.setVisible(false);
 
     placementLabel = (TextLabel) guiManager.create("placementLabel");
-    pauseButton = (TextButton) guiManager.create("pauseButton");
     
     
    }
@@ -323,6 +332,10 @@ public class Game{
         drawHighlightCircle(tower.x, tower.y);
         showTowerRange(tower);
       }
+    }
+    
+    for (Bloon bloon : bloons) {
+       bloon.render(); 
     }
     
     for (Projectile projectile : projectiles) {
@@ -681,4 +694,14 @@ public class ReplayButton extends TextButton{
     game.startGame();
     
   }
+}
+
+public class PauseButton extends TextButton{
+  public PauseButton (JSONObject defintion){
+    super(defintion);
+ }
+ 
+ public void onInput(){
+   game.togglePause();
+ }
 }

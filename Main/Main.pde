@@ -16,6 +16,7 @@ ArrayList<Tower>towers;
 
 private PlayButton playButton;
 private ReplayButton replayButton;
+private PauseButton pauseButton;
 
 void setup(){
   size(1200, 800);
@@ -39,8 +40,11 @@ void setup(){
   replayButton = new ReplayButton(guiManager.getGuiDefinition("replayButton"));
   guiManager.createCustom((GuiBase) replayButton);
   replayButton.setVisible(false);
+  
+  pauseButton = new PauseButton(guiManager.getGuiDefinition("pauseButton"));
+  guiManager.createCustom((GuiBase) pauseButton);
     
-  game = new Game(playButton, replayButton);
+  game = new Game(playButton, replayButton, pauseButton);
   /*
   JSONObject spawnInformation = new JSONObject();
   spawnInformation.setString("layerName", "Zebra");
@@ -58,7 +62,7 @@ void setup(){
 void draw(){
   background(255);
   game.render();
-  if(game.isGameActive()){
+  if(game.isGameActive() && !game.isPaused()){
     
     game.update();
   }

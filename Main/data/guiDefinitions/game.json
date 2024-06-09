@@ -119,7 +119,7 @@
     "pauseButton":{
         "className" : "TextButton",
         "x": "r 125",
-        "y": 800,
+        "y": 600,
         "sizeX" : 100,
         "sizeY" : 50,
         "backgroundColor": "150 0 0",
