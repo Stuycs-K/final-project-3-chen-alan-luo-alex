@@ -233,7 +233,7 @@
                         "sprite": "towers/bombExtraRange.png",
                         "projectiles": {
                             "shuriken": {
-                                "pierce": "+ 2"
+                                "type": "SEEKING"
                             }
                         }
                     }
