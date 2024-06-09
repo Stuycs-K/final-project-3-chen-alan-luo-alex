@@ -124,3 +124,49 @@
 ### 5/28/2024
  - implemented rotating towers and rotating projectiles
  - added sprites for darts
+
+ ### 5/29/2024
+ - added the upgradeTower button functions(the base which later became part of the GUI)
+ - added UI for the tower label
+
+ ### 5/30/2024
+- added sell button
+- added bomb projectiles (clusterbombs and bombs)
+- wrote bomb class (stats were later put in a JSON in accordance to the new tower class)
+- wrote bombShooter attack 
+
+### 5/31/2024
+- added imageButton class 
+- added towerButton(an imageButton) (to place towers)
+
+### 6/2/2024
+ - added bombshooter upgrades in the JSON
+ - added tower highlighting 
+ - added horizontal tower interface 
+ - added imageButtons for dartmonkey
+
+### 6/3/2024
+ - upgraded costs (so they are BTD5 like)
+ - fixed currency for selling towers
+ - added an alpha updating horizontal GUI for upgrades
+
+### 6/5/2024
+ - added map
+ - fixed currency so that it accounts for placing towers(and not having enough)
+
+### 6/7/2024
+ - added upgrade costs (in terms of functionality with currency)
+ - fix map segments to account for new map
+
+### 6/8/2024
+ - added a start screen and play button
+ - added an end screen and pause button 
+ - added a speed up/pause button
+
+### 6/9/2024
+ - added snipermonkey class
+ - added it's respective upgrades and PNGS
+
+
+
+ 
