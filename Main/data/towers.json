@@ -591,7 +591,11 @@
                     "cost": 300,
                     "changes": {
                         "sprite": "towers/fullmetaljacket.png",
-                        "damage": "+ 3"
+                        "actions": {
+                            "attack": {
+                                "damage": "+ 3"
+                            }
+                        }
                     }
                 },
                 {
@@ -600,7 +604,11 @@
                     "cost": 2200,
                     "changes": {
                         "sprite": "towers/fivepoint.png",
-                        "damage": "+ 3",
+                        "actions": {
+                            "attack": {
+                                "damage": "+ 3"
+                            }
+                        },
                         "detectCamo": true
                     }
                 },
@@ -610,7 +618,11 @@
                     "cost": 3400,
                     "changes": {
                         "sprite": "towers/deadly.png",
-                        "damage": "+ 10"
+                        "actions": {
+                            "attack": {
+                                "damage": "+ 10"
+                            }
+                        }
                     }
                 },
                 {
@@ -619,7 +631,11 @@
                     "cost": 10600,
                     "changes": {
                         "sprite": "towers/moabcrippler.png",
-                        "damage": "+ 20"
+                        "actions": {
+                            "attack": {
+                                "damage": "+ 20"
+                            }
+                        }
                     }
                 }
             ],

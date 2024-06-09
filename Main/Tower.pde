@@ -124,6 +124,9 @@ public class Tower{
     JSONObject baseProperties = properties.getBaseProperties();
     this.range = baseProperties.getInt("range");
     
+    boolean detectCamo = readBoolean(baseProperties, "detectCamo", targetFilter.canDetectCamo());
+    targetFilter.setCamoDetection(detectCamo);
+    
     this.totalCurrencySpent = properties.getBaseCost();
     
     // First, load the base tower sprite
@@ -595,7 +598,9 @@ public class DirectDamageAction extends TowerAction{
   
   public void setProperties(JSONObject actionData){
     super.setProperties(actionData);
-    this.damage = readInt(actionData, "damage", this.damage);
+    this.damage = readIntDiff(actionData, "damage", this.damage);
+    
+    println(damage);
   }
   
   public void performAction(Tower tower, ArrayList<Bloon> targetBloons, ArrayList<Bloon> bloons){
