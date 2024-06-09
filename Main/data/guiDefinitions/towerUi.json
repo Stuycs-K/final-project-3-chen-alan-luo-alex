@@ -118,6 +118,23 @@
         "sizeY": 100,
         "zIndex": 1
     },
+    "upgradeDescription": {
+        "className": "TextLabel",
+        "x": "r 400",
+        "y": "r 175",
+        "sizeX": 100,
+        "sizeY": 60,
+        "stroke": {
+            "type": "NONE"
+        },
+        "backgroundColor": "91 91 91",
+        "textColor": "255 255 255",
+        "textXAlignment": "LEFT",
+        "textYAlignment": "CENTER",
+        "textFont": "regularSmall",
+        "textBounded": true,
+        "zIndex": 100
+    },
     "upgradeLabel": {
         "className": "TextLabel",
         "x": "r 400",
