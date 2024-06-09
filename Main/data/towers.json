@@ -244,7 +244,11 @@
                     "cost": 350,
                     "changes": {
                         "sprite": "towers/bombExtraRange.png",
-                        "distractionChance": 0.3
+                        "projectiles": {
+                            "shuriken": {
+                                "distractionChance": 0.15
+                            }
+                        }
                     }
                 },
                 {
@@ -263,6 +267,7 @@
                         "projectiles": {
                             "flashBomb": {
                                 "type": "BOMB",
+                                "distractionChance": 0.3,
                                 "damage": 3,
                                 "pierce": 1,
                                 "explosionPierce": 30,
