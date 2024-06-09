@@ -167,6 +167,10 @@ public class Bloon {
     return positionId;
   }
   
+  public int getLayerId() {
+    return layerId;
+  }
+  
   public BloonPropertyTable getProperties() {
     return propertiesTable; 
   }
@@ -211,30 +215,47 @@ public class Bloon {
     applyProperties();
   }
   
-  public boolean damage(DamageProperties damageProperties) {
-    return damage(damageProperties.damage, damageProperties);
-  }
-  
-  public boolean damage(float count, DamageProperties damageProperties) {
-    float finalDamage = modifiersList.getDamage(count, damageProperties);
+  public int tryDamage(DamageProperties damageProperties) {
+    float finalDamage = modifiersList.getDamage(damageProperties.damage, damageProperties);
     
+    // -1 indicates failed to damage
     if (finalDamage == -1) {
-      return false;
-    }
-    
-    damage(finalDamage);
-    return true;
-  }
-  
-  public void damage(float count) {
-    // Just damage the layer
-    if (count < layerHealth) {
-      layerHealth -= count;
-      return;
+      return -1;
     }
     
     if (isDead) {
-      return;
+      return -2;
+    }
+    
+    return 0;
+  }
+  
+  public float damage(DamageProperties damageProperties) {
+    return damage(damageProperties.damage, damageProperties);
+  }
+  
+  public float damage(float count, DamageProperties damageProperties) {
+    float finalDamage = modifiersList.getDamage(count, damageProperties);
+    
+    // -1 indicates failed to damage
+    if (finalDamage == -1) {
+      return -1.0f;
+    }
+    
+    if (isDead) {
+      return -2.0f;
+    }
+    
+    boolean didDamage = damage(finalDamage);
+    
+    return finalDamage;
+  }
+  
+  public boolean damage(float count) {
+    // Just damage the layer
+    if (count < layerHealth) {
+      layerHealth -= count;
+      return true;
     }
     
     isDead = true;
@@ -246,11 +267,13 @@ public class Bloon {
     float excessDamage = count - layerHealth;
     handleLayerDeath(excessDamage);
     
+    return true;
   }
   
   public void step() {
-    move();
     modifiersList.stepModifiers();
+    move();
+
     render();
   }
   
@@ -279,7 +302,7 @@ public class Bloon {
     while (true) {
       MapSegment segment = game.getMap().getMapSegment(positionId);
 
-      PVector direction = PVector.sub(segment.getEnd(), segment.getStart()).normalize();
+      PVector direction = PVector.sub(segment.getEnd(), position).normalize();
       
       float remainingDistanceToEnd = PVector.dist(position, segment.getEnd());
       

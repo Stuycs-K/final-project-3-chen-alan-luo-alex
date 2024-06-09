@@ -10,6 +10,9 @@ Projectile createProjectile(PVector origin, PVector goal, ProjectileData data) {
     case "CLUSTER_BOMB":
       projectile = new ClusterBomb(origin, goal, (ClusterBombData) data);
       break;
+    case "SEEKING":
+      projectile  = new SeekingProjectile(origin, goal, data);
+      break;
     default:
       projectile = new Projectile(origin, goal, data);
   }
@@ -32,6 +35,8 @@ ProjectileData createProjectileData(JSONObject definition) {
     case "CLUSTER_BOMB":
       projectileData = new ClusterBombData(definition);
       break;
+    case "SEEKING":
+      projectileData = new ProjectileData(definition);
     default:
       projectileData = new ProjectileData(definition);
   }
@@ -46,10 +51,11 @@ public class Projectile{
   public float dx, dy;
   public float distance;
   
-  private float distanceTraveled;
+  public float distanceTraveled;
   public PVector direction;
   
-  private ArrayList<Long> hitBloons;
+  public ArrayList<Long> hitBloons;
+  public int lifetime;
   
   public ProjectileData projectileData;
   
@@ -68,8 +74,29 @@ public class Projectile{
     this.projectileData = data;
     
     this.direction = new PVector(dx, dy);
+    this.lifetime = 0;
     
     this.hitBloons = new ArrayList<Long>(); // For pierce, contains bloon handles
+  }
+  
+  public void setGoalPosition(PVector goal) {
+    this.targetX = goal.x;
+    this.targetY = goal.y;
+    
+    this.dy = targetY - y;
+    this.dx = targetX - x;
+    this.distance = dist(x, y, targetX, targetY);
+    
+    this.direction = new PVector(dx, dy);
+  }
+  
+  private void applyBlowback(Bloon bloon) {
+    if (Math.random() > this.projectileData.blowbackChance) {
+      return;
+    }
+    
+    Blowback blowbackEffect = new Blowback();
+    bloon.getModifiersList().addModifierWithStack(blowbackEffect); 
   }
   
   public void update(ArrayList<Bloon> bloons){
@@ -86,6 +113,7 @@ public class Projectile{
       finished = true;
     }
     
+    lifetime++;
     if(!finished){
     
       if (distance>0){
@@ -105,15 +133,21 @@ public class Projectile{
              continue;
            }
            
-           boolean didDamage = bloon.damage((DamageProperties) projectileData);
-           // No damage, so destroy the projectile (we hit a lead bloon with a dart, for example)
-           if (!didDamage) {
+           float result = bloon.tryDamage((DamageProperties) projectileData);
+           
+           if (result == -1.0f) {
              finished = true;
              break;
            }
            
-           hitBloons.add(bloon.getHandle());
+           if (result == -2.0f) {
+             continue; 
+           }
            
+           applyBlowback(bloon);
+           float damageDealt = bloon.damage((DamageProperties) projectileData);
+           hitBloons.add(bloon.getHandle());       
+
            if (hitBloons.size() >= projectileData.pierce) {
              finished = true;
              break;  
@@ -151,6 +185,8 @@ public class DamageProperties {
   public int extraDamageToCeramics;
   public int extraDamageToMoabs;
   
+  public float blowbackChance;
+  
   public DamageProperties(JSONObject data) {
     // By default, we assume damage can't pop lead
     // By default, we assume the projectile is sharp (can't pop lead)
@@ -162,6 +198,7 @@ public class DamageProperties {
     this.extraDamageToMoabs = 0;
     
     this.damage = 1;
+    this.blowbackChance = 0;
     
     updateProperties(data);
   }
@@ -177,6 +214,7 @@ public class DamageProperties {
     properties.setJSONObject("specialDamageProperties", specialDamageProperties);
     
     properties.setInt("damage", this.damage);
+    properties.setFloat("blowbackChance", this.blowbackChance);
   }
   
   public void updateProperties(JSONObject data) {
@@ -195,6 +233,7 @@ public class DamageProperties {
     this.extraDamageToMoabs = readIntDiff(target, "extraDamageToMoabs", this.extraDamageToMoabs);
     
     this.damage = readIntDiff(data, "damage", this.damage);
+    this.blowbackChance = readFloatDiff(data, "blowbackChance", this.blowbackChance);
     
     JSONObject otherProperties = data.getJSONObject("properties");
     if (otherProperties != null) {

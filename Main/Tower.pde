@@ -376,6 +376,39 @@ public class TowerUpgradeManager {
     
     JSONObject upgradeChanges = upgrade.getChanges();
     
+    // And then projectiles
+    JSONObject projectileChanges = upgradeChanges.getJSONObject("projectiles");
+    
+    if (projectileChanges != null) {
+      for (String projectileName : (Set<String>) projectileChanges.keys()) {
+        ProjectileData projectile = tower.projectileMap.get(projectileName);
+                
+        JSONObject currentChanges = projectileChanges.getJSONObject(projectileName);
+        
+        // Not directly on the projectiles list, so create a new projectile
+        if (projectile == null) {
+          tower.projectileMap.put(projectileName, createProjectileData(currentChanges));
+          continue;
+        }
+
+        String changedType = readString(currentChanges, "type", projectile.type);
+        
+        // Same type? Update properties
+        if (projectile.type.equals(changedType)) {
+          projectile.updateProperties(currentChanges);
+          return true;
+        }
+        
+        JSONObject newProperties = new JSONObject();
+        projectile.reconcileWithOther(newProperties);
+        newProperties.setString("type", changedType);
+        newProperties.setJSONObject("properties", currentChanges);
+        
+        ProjectileData newProjectileData = createProjectileData(newProperties);
+        tower.projectileMap.put(projectileName, newProjectileData);
+      }
+    }
+    
     // Now update actions
     JSONObject actionChanges = upgradeChanges.getJSONObject("actions");
     if (actionChanges != null) {
@@ -428,37 +461,7 @@ public class TowerUpgradeManager {
     }
 
     
-    // And then projectiles
-    JSONObject projectileChanges = upgradeChanges.getJSONObject("projectiles");
     
-    if (projectileChanges != null) {
-      for (String projectileName : (Set<String>) projectileChanges.keys()) {
-        ProjectileData projectile = tower.projectileMap.get(projectileName);
-        // Not directly on the projectiles list, so treat the string as the action name and get the projectile used by that action
-        if (projectile == null) {
-           String actualProjectileName = ((ProjectileSpawnAction) tower.actionMap.get(projectileName)).getSpawnedProjectileName();
-           projectile = tower.projectileMap.get(actualProjectileName);
-        }
-        
-        JSONObject currentChanges = projectileChanges.getJSONObject(projectileName);
-        
-        String changedType = readString(currentChanges, "type", projectile.type);
-        
-        // Same type? Update properties
-        if (projectile.type.equals(changedType)) {
-          projectile.updateProperties(currentChanges);
-          return true;
-        }
-        
-        JSONObject newProperties = new JSONObject();
-        projectile.reconcileWithOther(newProperties);
-        newProperties.setString("type", changedType);
-        newProperties.setJSONObject("properties", currentChanges);
-        
-        ProjectileData newProjectileData = createProjectileData(newProperties);
-        tower.projectileMap.put(projectileName, newProjectileData);
-      }
-    }
     
     return true;
   }

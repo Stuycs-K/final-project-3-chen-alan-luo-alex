@@ -110,7 +110,6 @@ public class BloonModifiersList {
       
       if (modifier.shouldRemove()) {
         modifiersToRemove.add(modifierName);
-        
         modifier.onRemove();
         continue;
       }
@@ -129,7 +128,8 @@ public class BloonModifiersList {
   
   public void copyModifiers(ArrayList<BloonModifier> modifiers) {
     for (BloonModifier modifier : modifiers) {
-      addModifier(modifier.clone());
+      BloonModifier cloned = modifier.clone();
+      addModifier(cloned);
     }
   }
   
@@ -143,7 +143,7 @@ public class BloonModifiersList {
       try { // If our entry is "true," apply it with no extra information
         if (modifiers.getBoolean(keyName) == true) {
           addModifier(keyName);
-        };
+        }
 
       } catch (Exception exception) {
         
@@ -169,16 +169,17 @@ public class BloonModifiersList {
   
   public void addModifier(BloonModifier newModifier) {
      newModifier.setBloon(bloon);
-     modifierMap.put(newModifier.getName(), newModifier);
+     modifierMap.put(newModifier.getModifierName(), newModifier);
   }
   
-  public void addModifierNoStack(BloonModifier newModifier) {
+  public void addModifierWithStack(BloonModifier newModifier) {
     BloonModifier existingModifier = getModifierByName(newModifier.getModifierName());
+    
     if (existingModifier == null) {
       addModifier(newModifier); 
       return;
     }
-    
+
     existingModifier.onStackAttempt(newModifier);
   }
 }
@@ -189,7 +190,7 @@ public class BloonModifier {
   private String name;
   private Bloon bloon;
   
-  private boolean shouldRemove;
+  public boolean shouldRemove;
   
   private JSONObject baseProperties;
   private JSONObject customProperties;
@@ -199,6 +200,7 @@ public class BloonModifier {
     this.timeRemaining = duration;
     this.name = name;
     this.baseProperties = bloonPropertyLookup.getModifier(name);
+    this.shouldRemove = false;
   }
   
   public BloonModifier(String name) {
@@ -365,6 +367,11 @@ public class Stun extends BloonModifier {
   }
   
   public void onStep() {
+    // DON'T stun bloons that are being blown back. Stun them when they're finished getting blown
+    if (getBloon().getModifiersList().hasModifier("blowback")) {
+      return;
+    }
+    
     super.onStep();
     
     getBloon().setSpeedMultiplier(0);
@@ -376,5 +383,111 @@ public class Stun extends BloonModifier {
   
   public void onStackAttempt(Stun otherModifier) {
     setTimeRemaining(otherModifier.getDuration());
+  }
+}
+
+public class Blowback extends BloonModifier {
+  private float unitsBlownback;
+  private PVector goalPosition;
+  
+  private PVector lastDirection;
+  
+  public Blowback(float unitsBlownback, PVector goalPosition) {
+    super("blowback");
+    
+    this.unitsBlownback = unitsBlownback;
+    
+    this.goalPosition = goalPosition;
+  }
+  
+  public Blowback(float unitsBlownback) {
+    super("blowback");
+    
+    this.unitsBlownback = unitsBlownback;
+  }
+  
+  public Blowback() {
+    this(100); 
+  }
+  
+  public void onStep() {
+    Bloon bloon = getBloon();
+    if (goalPosition == null) {
+      return;
+    }
+    
+    float distanceToGoal = PVector.dist(bloon.position, this.goalPosition);
+    
+    if (distanceToGoal <= bloon.speed / frameRate) {
+
+      this.shouldRemove = true;
+      return;
+    }
+    
+    // Stop the bloon from moving normally!
+    bloon.setSpeedMultiplier(0);
+    
+    // We're going to use the bloon's speed value
+    PVector direction = PVector.sub(this.goalPosition, bloon.position).normalize();
+    
+    if (lastDirection != null) {
+      // This means we're snapping back and forth between the goal position
+      if (direction.dot(lastDirection) < 0.1) {
+        this.shouldRemove = true;
+        return;
+      }
+    }
+    lastDirection = direction;
+   
+    direction.mult(bloon.speed / frameRate);
+    
+    bloon.position.add(direction);
+  }
+  
+  public void setBloon(Bloon bloon) {
+    super.setBloon(bloon);
+
+    if (this.goalPosition != null) {
+      return;
+    }
+    
+    // Get the position unitsBlownback units back
+    PVector finalPosition = bloon.position.copy();
+    float totalDistanceToMove = unitsBlownback;
+    
+    while (true) {
+      MapSegment segment = game.getMap().getMapSegment(bloon.positionId);
+      
+      PVector direction = PVector.sub(segment.getStart(), segment.getEnd()).normalize();
+      float distanceToStart = PVector.dist(finalPosition, segment.getStart());
+      
+      // The final position is going to be in the bounds of the current segment
+      if (totalDistanceToMove <= distanceToStart) {
+        finalPosition = PVector.add(finalPosition, direction.mult(totalDistanceToMove));
+        break;
+      } else {
+        finalPosition = segment.getStart().copy();
+        totalDistanceToMove -= distanceToStart;
+        
+        bloon.positionId -= 1;
+        
+        // Limit bloons to the start of the map
+        if (bloon.positionId < 0) {
+          break;
+        }
+      }
+    }
+    
+    this.goalPosition = finalPosition.copy(); 
+  }
+  
+  public void onRemove() {
+    Bloon bloon = getBloon();
+    bloon.setSpeedMultiplier(1);
+  }
+  
+  public Blowback clone() {
+    Blowback newEffect = new Blowback(this.unitsBlownback, this.goalPosition);
+    return newEffect;
   }
 }
