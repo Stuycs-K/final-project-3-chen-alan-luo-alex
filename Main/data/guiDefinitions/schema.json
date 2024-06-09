@@ -7,6 +7,10 @@
         "regularSmall": {
             "path": "LuckiestGuyRegular.ttf",
             "size": 12
+        },
+        "regularSmaller": {
+            "path": "LuckiestGuyRegular.ttf",
+            "size": 10
         }
     }
 }

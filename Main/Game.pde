@@ -567,7 +567,7 @@ public class UpgradeButton {
         return;
       }
       
-      this.upgradeDescription.setText("jfdkdfs fjdslfjdskjfdsjfkd\nsjfdksjfdskjflds");
+      this.upgradeDescription.setText(nextUpgrade.getDescription());
     
       this.upgradeDescription.setVisible(true);
     }

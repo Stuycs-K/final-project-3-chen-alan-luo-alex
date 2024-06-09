@@ -123,15 +123,16 @@
         "x": "r 400",
         "y": "r 175",
         "sizeX": 100,
-        "sizeY": 60,
+        "sizeY": 80,
         "stroke": {
             "type": "NONE"
         },
         "backgroundColor": "91 91 91",
         "textColor": "255 255 255",
         "textXAlignment": "LEFT",
-        "textYAlignment": "CENTER",
-        "textFont": "regularSmall",
+        "textYOffset": 5,
+        "textYAlignment": "TOP",
+        "textFont": "regularSmaller",
         "textBounded": true,
         "zIndex": 100
     },
