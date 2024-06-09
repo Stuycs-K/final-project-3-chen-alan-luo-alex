@@ -237,6 +237,47 @@
                             }
                         }
                     }
+                },
+                {
+                    "name": "Distraction",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 350,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "distractionChance": 0.3
+                    }
+                },
+                {
+                    "name": "Flash Bomb",
+                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "cost": 2950,
+                    "changes": {
+                        "sprite": "towers/bombExtraRange.png",
+                        "actions": {
+                            "flashBombAttack": {
+                                "cooldown": 2,
+                                "type": "PROJECTILE",
+                                "projectile": "flashBomb"
+                            }
+                        },
+                        "projectiles": {
+                            "flashBomb": {
+                                "type": "BOMB",
+                                "damage": 3,
+                                "pierce": 1,
+                                "explosionPierce": 30,
+                                "speed": 20,
+                                "sprite": "projectiles/bomb.png",
+                                "maxDistance": 500,
+                                "explosionRadius": 60,
+                                "stunDuration": 1.3,
+                                "specialDamageProperties": {
+                                    "popBlack": false,
+                                    "popLead": true
+                                }
+                            }
+                        }
+                    }
                 }
             ]
         }
