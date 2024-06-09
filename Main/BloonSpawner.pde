@@ -24,6 +24,15 @@ public class BloonSpawner {
     int currentMapSegmentId = parent.getPositionId();
 
     for (int j = 0; j < numberOfChildren; j++) {
+      
+      if (parent.getModifiersList().hasModifier("blowback")) {
+        Bloon newBloon = new Bloon(layerName, startPosition);
+        createdBloonQueue.add(newBloon);
+        
+        createdBloons.add(newBloon);
+        continue;
+      }
+      
       float distanceOffset = -1 * spawnSpacing * j; // The first child will spawn in the exact same position; subsequent bloons will spawn behind
       
       int currentSegmentId = currentMapSegmentId; 
