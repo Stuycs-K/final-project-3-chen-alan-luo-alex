@@ -55,6 +55,7 @@ public class Projectile{
   public PVector direction;
   
   public ArrayList<Long> hitBloons;
+  public int lifetime;
   
   public ProjectileData projectileData;
   
@@ -73,6 +74,7 @@ public class Projectile{
     this.projectileData = data;
     
     this.direction = new PVector(dx, dy);
+    this.lifetime = 0;
     
     this.hitBloons = new ArrayList<Long>(); // For pierce, contains bloon handles
   }
@@ -102,6 +104,7 @@ public class Projectile{
       finished = true;
     }
     
+    lifetime++;
     if(!finished){
     
       if (distance>0){
@@ -121,14 +124,17 @@ public class Projectile{
              continue;
            }
            
-           boolean didDamage = bloon.damage((DamageProperties) projectileData);
+           float damageDealt = bloon.damage((DamageProperties) projectileData);
            // No damage, so destroy the projectile (we hit a lead bloon with a dart, for example)
-           if (!didDamage) {
+           if (damageDealt == -1.0f) {
              finished = true;
              break;
            }
            
-           hitBloons.add(bloon.getHandle());
+           if (damageDealt != -2.0f) {
+             hitBloons.add(bloon.getHandle());
+           }
+
            
            if (hitBloons.size() >= projectileData.pierce) {
              finished = true;

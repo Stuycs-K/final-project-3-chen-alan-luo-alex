@@ -13,6 +13,7 @@ public class SeekingProjectile extends Projectile {
     Bloon closest = null;
     float closestDistance = Float.MAX_VALUE;
     for (Bloon bloon : game.bloons) {
+      // Don't home in on the same enemy
       if (hitBloons.indexOf(bloon.getHandle()) != -1 || hitBloons.indexOf(bloon.getParentHandle()) != -1) {
         continue;
       }
@@ -27,60 +28,12 @@ public class SeekingProjectile extends Projectile {
   }
   
   public void update(ArrayList<Bloon> bloons){
-    if (distanceTraveled > projectileData.maxDistance) {
-      finished = true;
-    }
+    super.update(bloons);
     
-    if (hitBloons.size() >= projectileData.pierce) {
-      finished = true;
-    }
-    
-    // Out of bounds
-    if (x < 0 || x > width || y < 0 || y > height) {
-      finished = true;
-    }
-    
-    Bloon target = getTargetBloon();
-    if (target != null) {
-      setGoalPosition(target.position);
-    }
-    
-    if (!finished) {
-    
-      if (distance>0){
-        float stepX = (dx/distance) * projectileData.speed;
-        float stepY = (dy/distance) * projectileData.speed;
-        x += stepX;
-        y += stepY;
-        
-        distanceTraveled += Math.sqrt((double) stepX * stepX + (double) stepY * stepY);
-        
-        
-        for (int i = 0; i < bloons.size(); i++) {
-          Bloon bloon = bloons.get(i);
-
-          if(bloon.isInBounds(int(x), int(y))){
-            // Don't hit the same bloon twice
-            if (hitBloons.indexOf(bloon.getHandle()) != -1 || hitBloons.indexOf(bloon.getParentHandle()) != -1) {
-              continue;
-            }
-           
-            boolean didDamage = bloon.damage((DamageProperties) projectileData);
-            // No damage, so destroy the projectile (we hit a lead bloon with a dart, for example)
-            if (!didDamage) {
-              finished = true;
-              break;
-            }
-           
-            hitBloons.add(bloon.getHandle());
-           
-            if (hitBloons.size() >= projectileData.pierce) {
-              finished = true;
-              break;  
-            }
-    
-         }
-       }
+    if (lifetime > 10) {
+      Bloon target = getTargetBloon();
+      if (target != null) {
+        setGoalPosition(target.position);
       }
     }
   }  

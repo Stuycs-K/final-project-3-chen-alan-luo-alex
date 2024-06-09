@@ -211,30 +211,36 @@ public class Bloon {
     applyProperties();
   }
   
-  public boolean damage(DamageProperties damageProperties) {
+  public float damage(DamageProperties damageProperties) {
     return damage(damageProperties.damage, damageProperties);
   }
   
-  public boolean damage(float count, DamageProperties damageProperties) {
+  public float damage(float count, DamageProperties damageProperties) {
     float finalDamage = modifiersList.getDamage(count, damageProperties);
     
+    // -1 indicates failed to damage
     if (finalDamage == -1) {
-      return false;
+      return -1.0f;
     }
     
-    damage(finalDamage);
-    return true;
+    boolean didDamage = damage(finalDamage);
+    
+    // -2 means we tried damaging something that's dead 
+    if (!didDamage) {
+      return -2.0f;
+    }
+    return finalDamage;
   }
   
-  public void damage(float count) {
+  public boolean damage(float count) {
     // Just damage the layer
     if (count < layerHealth) {
       layerHealth -= count;
-      return;
+      return true;
     }
     
     if (isDead) {
-      return;
+      return false;
     }
     
     isDead = true;
@@ -246,6 +252,7 @@ public class Bloon {
     float excessDamage = count - layerHealth;
     handleLayerDeath(excessDamage);
     
+    return true;
   }
   
   public void step() {

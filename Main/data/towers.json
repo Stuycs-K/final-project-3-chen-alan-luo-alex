@@ -160,9 +160,9 @@
                 "shuriken": {
                     "damage": 1,
                     "pierce": 2,
-                    "speed": 20,
+                    "speed": 18,
                     "sprite": "projectiles/dart.png",
-                    "maxDistance": 300
+                    "maxDistance": 800
                 }
             }
         },
