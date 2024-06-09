@@ -140,9 +140,8 @@ public class Game{
     towers.clear();
     bloons.clear();
     projectiles.clear();
-    healthManager = new HealthManager(200);
-    currencyManager = new CurrencyManager();
-    waveManager = new WaveManager();
+    healthManager.setHealth(200);
+
     gameActive = false;
     isPaused = false;
     showTowerOptions = false;
@@ -151,7 +150,6 @@ public class Game{
     placementLabel.setVisible(false);
     hideEndScreen();
     cheatMenu.setVisible(false);
-    setupGui();
   }
   
 
@@ -516,10 +514,20 @@ public class UpgradeButton {
   private class UpgradeImageButton extends ImageButton {
     private Tower currentTower;
     private int pathId;
+    private TextLabel upgradeDescription;
     
     public UpgradeImageButton(JSONObject definition) {
       super(definition);
       this.currentTower = null;
+      
+      this.upgradeDescription = (TextLabel) guiManager.create("upgradeDescription");  
+    }
+    
+    public void setPosition(PVector position) {
+      super.setPosition(position);
+      
+      PVector descriptionPosition = new PVector(this.position.x, this.position.y - upgradeDescription.size.y - 25);
+      this.upgradeDescription.setPosition(descriptionPosition); 
     }
     
     public void setPathId(int pathId) {
@@ -534,6 +542,12 @@ public class UpgradeButton {
       }
     }
     
+    public void setVisible(boolean state) {
+      super.setVisible(state);
+      
+      this.upgradeDescription.setVisible(false);
+    }
+    
     public void onInput() {
       if (currentTower == null) {
         return;
@@ -542,6 +556,24 @@ public class UpgradeButton {
       currentTower.upgrade(pathId);
       game.upgradePanel.onTowerUpgrade(currentTower);
       // Remove money
+    }
+    
+    public void onHover() {
+      TowerUpgradeManager upgrades = currentTower.upgrades;
+      TowerUpgrade nextUpgrade = upgrades.getNextUpgrades().get(pathId);
+      
+      // Don't display the tooltip if there's no upgrade
+      if (nextUpgrade == null) {
+        return;
+      }
+      
+      this.upgradeDescription.setText(nextUpgrade.getDescription());
+    
+      this.upgradeDescription.setVisible(true);
+    }
+    
+    public void onLeave() {
+      this.upgradeDescription.setVisible(false);
     }
   }
 

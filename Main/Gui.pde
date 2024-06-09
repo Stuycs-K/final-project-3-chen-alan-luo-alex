@@ -66,6 +66,10 @@ public class GuiManager {
   
   public void mouseMoved() {
     for (GuiBase gui : guiList) {
+      if (!gui.isVisible()) {
+        continue;
+      }
+      
       if (gui.isMouseInBounds()) {
         gui.onHover();
       } else {
@@ -596,6 +600,7 @@ public class TextLabel extends GuiBase {
   private color textColor;
   private int textXAlignment;
   private int textYAlignment;
+  private boolean textBounded;
   
   private PFont textFont;
   
@@ -627,6 +632,8 @@ public class TextLabel extends GuiBase {
     this.textPositionOffset = new PVector(xOffset, yOffset);
     this.textColor = readColor(definition, "textColor");
     this.text = readString(definition, "text", "");
+    
+    this.textBounded = readBoolean(definition, "textBounded", false);
     
     String textXAlignmentName = readString(definition, "textXAlignment", "CENTER");
     String textYAlignmentName = readString(definition, "textYAlignment", "TOP");
@@ -679,7 +686,13 @@ public class TextLabel extends GuiBase {
 
     PVector position = getPosition();
     textAlign(this.textXAlignment, this.textYAlignment);
-    text(this.text, position.x + this.textPositionOffset.x, position.y + this.textPositionOffset.y);
+    
+    if (!textBounded) {
+      text(this.text, position.x + this.textPositionOffset.x, position.y + this.textPositionOffset.y);
+    } else {
+      text(this.text, position.x + this.textPositionOffset.x, position.y + this.textPositionOffset.y, size.x, size.y);
+    }
+
 
   }
 }

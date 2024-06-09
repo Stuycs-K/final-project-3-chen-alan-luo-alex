@@ -402,7 +402,7 @@ public class TowerUpgradeManager {
         // Same type? Update properties
         if (projectile.type.equals(changedType)) {
           projectile.updateProperties(currentChanges);
-          return true;
+          continue;
         }
         
         JSONObject newProperties = new JSONObject();
@@ -429,7 +429,6 @@ public class TowerUpgradeManager {
         }  
         
         // Update an existing action instead
-        
 
         String actionChangesType = readString(currentActionChanges, "type", action.getActionType());
         
@@ -457,7 +456,7 @@ public class TowerUpgradeManager {
           
           // The properties specific to this action type are put in the "properties" table
           newProperties.setJSONObject("properties", currentActionChanges);
-          
+
           TowerAction newAction = createAction(actionChangesType, newProperties);
           tower.actionMap.put(actionName, newAction); // Replace the old action with the new
           
@@ -590,6 +589,7 @@ public class ProjectileSpawnAction extends TowerAction {
 
 public class DirectDamageAction extends TowerAction{
   private int damage;
+  private float stunDuration;
   
   public DirectDamageAction(JSONObject actionData){
     super(actionData);
@@ -599,14 +599,20 @@ public class DirectDamageAction extends TowerAction{
   public void setProperties(JSONObject actionData){
     super.setProperties(actionData);
     this.damage = readIntDiff(actionData, "damage", this.damage);
-    
-    println(damage);
+    this.stunDuration = readFloatDiff(actionData, "stunDuration", this.stunDuration);
   }
   
   public void performAction(Tower tower, ArrayList<Bloon> targetBloons, ArrayList<Bloon> bloons){
     resetCooldown();
     
     for(Bloon bloon: targetBloons){
+      
+      if (this.stunDuration > 0) {
+        Stun stunModifier = new Stun();
+        stunModifier.setDuration(this.stunDuration);
+        bloon.getModifiersList().addModifierWithStack(stunModifier); 
+      }
+      
       bloon.damage(damage);
     }
     

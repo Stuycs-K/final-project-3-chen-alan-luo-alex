@@ -125,6 +125,15 @@ private class TowerUpgrade {
     return upgradeImage;
   }
   
+  public String getDescription() {
+    String description = upgradeData.getString("description");
+    if (description == null) {
+      return "";
+    }
+    
+    return description;
+  }
+  
   public PImage getSprite() {
     return sprite;
   }

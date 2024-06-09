@@ -27,6 +27,7 @@
                     "name": "Long Range Darts",
                     "upgradeImage": "upgradeIcons/dartLongRangeDarts.png",
                     "cost": 90,
+                    "description": "Increases range",
                     "changes": {
                         "sprite": "towers/longRangeDarts.png",
                         "range": "+ 25",
@@ -41,6 +42,7 @@
                     "name": "Enhanced Eyesight",
                     "upgradeImage": "upgradeIcons/dartEnhancedEyesight.png",
                     "cost": 120,
+                    "description": "Increases range and grants camo detection",
                     "changes": {
                         "sprite": "towers/enhancedEyesight.png",
                         "range": "+ 25",
@@ -51,6 +53,7 @@
                     "name": "Spike-o-Pult",
                     "upgradeImage": "upgradeIcons/dartSpikeOPult.png",
                     "cost": 500,
+                    "description": "Shoots a slow moving spiked ball with a lot of pierce",
                     "changes": {
                         "sprite": "towers/spikeOPult.png",
                         "actions": {
@@ -73,6 +76,7 @@
                     "name": "Juggernaut",
                     "upgradeImage": "upgradeIcons/dartJuggernaut.png",
                     "cost": 1500,
+                    "description": "Projectile deals increased damage to ceramics and travels faster",
                     "changes": {
                         "sprite": "towers/juggernaut.png",
                         "range": 225,
@@ -103,6 +107,7 @@
                     "name": "Sharp Shots",
                     "upgradeImage": "upgradeIcons/dartSharpShots.png",
                     "cost": 140,
+                    "description": "Increases pierce by 1",
                     "changes": {
                         "sprite": "towers/longRangeDarts.png",
                         "projectiles": {
@@ -116,6 +121,7 @@
                     "name": "Razor Sharp Shots",
                     "upgradeImage": "upgradeIcons/dartRazorSharpShots.png",
                     "cost": 170,
+                    "description": "Increases pierce by 1, again",
                     "changes": {
                         "sprite": "towers/enhancedEyesight.png",
                         "projectiles": {
@@ -129,6 +135,7 @@
                     "name": "Triple Darts",
                     "upgradeImage": "upgradeIcons/dartTripleDarts.png",
                     "cost": 330,
+                    "description": "Shoots THREE darts !",
                     "changes": {
                         "sprite": "towers/tripleDarts.png",
                         "actions": {
@@ -172,6 +179,7 @@
                     "name": "Ninja Discipline",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 300,
+                    "description": "Attacks faster and has increased range",
                     "changes": {
                         "sprite": "towers/ninjaNinjaDiscipline.png",
                         "actions": {
@@ -186,6 +194,7 @@
                     "name": "Sharp Shurikens",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 350,
+                    "description": "Shurikens pop 4 bloons each",
                     "changes": {
                         "sprite": "towers/ninjaSharpShurikens.png",
                         "projectiles": {
@@ -199,6 +208,7 @@
                     "name": "Double Shot",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 850,
+                    "description": "Throws 2 shurikens per attack",
                     "changes": {
                         "sprite": "towers/ninjaDoubleShot.png",
                         "actions": {
@@ -214,6 +224,7 @@
                     "name": "Bloonjitsu",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 2750,
+                    "description": "Throws 5 shurikens per attack",
                     "changes": {
                         "sprite": "towers/ninjaBloonjitsu.png",
                         "actions": {
@@ -229,6 +240,7 @@
                     "name": "Seeking Shuriken",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 250,
+                    "description": "Shurikens track bloons automatically",
                     "changes": {
                         "sprite": "towers/ninjaNinjaDiscipline.png",
                         "projectiles": {
@@ -242,6 +254,7 @@
                     "name": "Distraction",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 350,
+                    "description": "Attacks have a chance to confuse and knockback bloons",
                     "changes": {
                         "sprite": "towers/ninjaSharpShurikens.png",
                         "projectiles": {
@@ -255,6 +268,7 @@
                     "name": "Flash Bomb",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 2950,
+                    "description": "Gains a flash bomb attack, which stuns and distracts bloons",
                     "changes": {
                         "sprite": "towers/ninjaFlashBomb.png",
                         "actions": {
@@ -322,6 +336,7 @@
                     "name": "Extra Range",
                     "upgradeImage": "upgradeIcons/bombExtraRange.png",
                     "cost": 200,
+                    "description": "Don't have to explain this one, right?",
                     "changes": {
                         "sprite": "towers/bombExtraRange.png",
                         "range": "+ 50"
@@ -331,6 +346,7 @@
                     "name": "Frag Bombs",
                     "upgradeImage": "upgradeIcons/bombFragBombs.png",
                     "cost": 300,
+                    "description": "Bombs explode into 8 fragments, damaging more bloons",
                     "changes": {
                         "sprite": "towers/bombFragBombs.png",
                         "projectiles": {
@@ -352,6 +368,7 @@
                     "name": "Cluster Bombs",
                     "upgradeImage": "upgradeIcons/bombClusterBombs.png",
                     "cost": 500,
+                    "description": "Fragments become individual bombs",
                     "changes": {
                         "sprite": "towers/bombClusterBombs.png",
                         "projectiles": {
@@ -378,10 +395,12 @@
                     "name": "Bloon Impact",
                     "upgradeImage": "upgradeIcons/bombBloonImpact.png",
                     "cost": 4000,
+                    "description": "All bombs stun bloons for 1.4 seconds",
                     "changes": {
                         "sprite": "towers/bombBloonImpact.png",
                         "projectiles": {
                             "bomb": {
+                                "explosionPierce": "+ 30",
                                 "specialDamageProperties": {
                                     "popBlack": true
                                 },
@@ -402,11 +421,13 @@
                     "name": "Bigger Bombs",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 400,
+                    "description": "Bombs have increased explosion radius, damage and pierce",
                     "changes": {
                         "sprite": "towers/bombExtraRange.png",
                         "projectiles": {
                             "bomb": {
                                 "explosionRadius": "+ 50",
+                                "explosionPierce": "+ 10",
                                 "damage": "+ 1"
                             }
                         }
@@ -416,6 +437,7 @@
                     "name": "Missile Launcher",
                     "upgradeImage": "upgradeIcons/bombMissileLauncher.png",
                     "cost": 400,
+                    "description": "Attacks faster with greater range",
                     "changes": {
                         "sprite": "towers/bombMissileLauncher.png",
                         "actions": {
@@ -426,6 +448,7 @@
                         "range": "+ 50",
                         "projectiles": {
                             "bomb": {
+                                "explosionPierce": "+ 10",
                                 "speed": "+ 5",
                                 "damage": "+ 1"
                             }
@@ -436,6 +459,7 @@
                     "name": "MOAB Mauler",
                     "upgradeImage": "upgradeIcons/bombMoabMauler.png",
                     "cost": 900,
+                    "description": "+10 damage to MOABs",
                     "changes": {
                         "sprite": "towers/bombMoabMauler.png",
                         "projectiles": {
@@ -479,6 +503,7 @@
                     "name": "Laser Blasts",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 3500,
+                    "description": "Shoots lasers with +1 pierce",
                     "changes": {
                         "sprite": "towers/superLaserBlasts.png",
                         "projectiles": {
@@ -493,6 +518,7 @@
                     "name": "Plasma Blasts",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 5000,
+                    "description": "Shoots plasma (can pop Lead) with +1 pierce",
                     "changes": {
                         "sprite": "towers/superPlasmaBlasts.png",
                         "actions": {
@@ -515,11 +541,12 @@
                     "name": "Sun God",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 16500,
+                    "description": "Fires 3 sun beams per attack",
                     "changes": {
                         "sprite": "towers/superSunGod.png",
                         "actions": {
                             "attack": {
-                                "cooldown": 0.04,
+                                "cooldown": 0.03,
                                 "type": "MULTI_PROJECTILE",
                                 "projectileCount": 3,
                                 "angle": 0.2
@@ -539,6 +566,7 @@
                     "name": "Super Range",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 1000,
+                    "description": "Increases range",
                     "changes": {
                         "sprite": "towers/superSuperRange.png",
                         "range": "+ 60"
@@ -548,6 +576,7 @@
                     "name": "Epic Range",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 1500,
+                    "description": "Increases range... even more",
                     "changes": {
                         "sprite": "towers/superEpicRange.png",
                         "range": "+ 45"
@@ -557,6 +586,7 @@
                     "name": "Robo Monkey",
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 9000,
+                    "description": "Gains a second attack, which targets the last bloon",
                     "changes": {
                         "sprite": "towers/superRoboMonkey.png",
                         "projectiles": {
@@ -576,7 +606,7 @@
             "range": 100000,
             "actions": {
                 "attack": {
-                    "cooldown": 0.45,
+                    "cooldown": 2.25,
                     "type": "DIRECT_DAMAGE",
                     "damage": 2
                 }
@@ -633,7 +663,8 @@
                         "sprite": "towers/moabcrippler.png",
                         "actions": {
                             "attack": {
-                                "damage": "+ 20"
+                                "damage": "+ 20",
+                                "stunDuration": 1
                             }
                         }
                     }
