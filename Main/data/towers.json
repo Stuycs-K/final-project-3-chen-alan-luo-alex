@@ -177,7 +177,7 @@
             "1": [
                 {
                     "name": "Ninja Discipline",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/ninjaNinjaDiscipline.png",
                     "cost": 300,
                     "description": "Attacks faster and has increased range",
                     "changes": {
@@ -192,7 +192,7 @@
                 },
                 {
                     "name": "Sharp Shurikens",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/ninjaSharpShurikens.png",
                     "cost": 350,
                     "description": "Shurikens pop 4 bloons each",
                     "changes": {
@@ -206,7 +206,7 @@
                 },
                 {
                     "name": "Double Shot",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/ninjaDoubleShot.png",
                     "cost": 850,
                     "description": "Throws 2 shurikens per attack",
                     "changes": {
@@ -222,7 +222,7 @@
                 },
                 {
                     "name": "Bloonjitsu",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/ninjaBloonjitsu.png",
                     "cost": 2750,
                     "description": "Throws 5 shurikens per attack",
                     "changes": {
@@ -238,7 +238,7 @@
             "2": [
                 {
                     "name": "Seeking Shuriken",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/ninjaSeekingShurikens.png",
                     "cost": 250,
                     "description": "Shurikens track bloons automatically",
                     "changes": {
@@ -252,7 +252,7 @@
                 },
                 {
                     "name": "Distraction",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/ninjaDistraction.png",
                     "cost": 350,
                     "description": "Attacks have a chance to confuse and knockback bloons",
                     "changes": {
@@ -266,7 +266,7 @@
                 },
                 {
                     "name": "Flash Bomb",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/ninjaFlashBomb.png",
                     "cost": 2950,
                     "description": "Gains a flash bomb attack, which stuns and distracts bloons",
                     "changes": {
@@ -501,7 +501,7 @@
             "1": [
                 {
                     "name": "Laser Blasts",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/superLaserBlasts.png",
                     "cost": 3500,
                     "description": "Shoots lasers with +1 pierce",
                     "changes": {
@@ -516,7 +516,7 @@
                 },
                 {
                     "name": "Plasma Blasts",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/superPlasmaBlasts.png",
                     "cost": 5000,
                     "description": "Shoots plasma (can pop Lead) with +1 pierce",
                     "changes": {
@@ -539,7 +539,7 @@
                 },
                 {
                     "name": "Sun God",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/superSunGod.png",
                     "cost": 16500,
                     "description": "Fires 3 sun beams per attack",
                     "changes": {
@@ -564,7 +564,7 @@
             "2": [
                 {
                     "name": "Super Range",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/superSuperRange.png",
                     "cost": 1000,
                     "description": "Increases range",
                     "changes": {
@@ -574,7 +574,7 @@
                 },
                 {
                     "name": "Epic Range",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/superEpicRange.png",
                     "cost": 1500,
                     "description": "Increases range... even more",
                     "changes": {
@@ -584,7 +584,7 @@
                 },
                 {
                     "name": "Robo Monkey",
-                    "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
+                    "upgradeImage": "upgradeIcons/superRoboMonkey.png",
                     "cost": 9000,
                     "description": "Gains a second attack, which targets the last bloon",
                     "changes": {
