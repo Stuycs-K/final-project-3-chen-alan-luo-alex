@@ -246,7 +246,6 @@
                         "sprite": "towers/bombExtraRange.png",
                         "projectiles": {
                             "shuriken": {
-                                "pierce": 1,
                                 "blowbackChance": 1
                             }
                         }

@@ -96,7 +96,6 @@ public class Projectile{
     }
     
     Blowback blowbackEffect = new Blowback();
-    println("APPLY FROM PROJECITLE " + blowbackEffect + " " + bloon.getLayerId());
     bloon.getModifiersList().addModifierWithStack(blowbackEffect); 
   }
   

@@ -110,7 +110,6 @@ public class BloonModifiersList {
       
       if (modifier.shouldRemove()) {
         modifiersToRemove.add(modifierName);
-        println("REMOVE " + modifierName);
         modifier.onRemove();
         continue;
       }
@@ -131,7 +130,6 @@ public class BloonModifiersList {
     for (BloonModifier modifier : modifiers) {
       BloonModifier cloned = modifier.clone();
       addModifier(cloned);
-      println("ADDED FROM COPY " + cloned);
     }
   }
   
@@ -172,16 +170,12 @@ public class BloonModifiersList {
   public void addModifier(BloonModifier newModifier) {
      newModifier.setBloon(bloon);
      modifierMap.put(newModifier.getModifierName(), newModifier);
-     println("MAP GET " + modifierMap + " " + bloon.getLayerId());
   }
   
   public void addModifierWithStack(BloonModifier newModifier) {
     BloonModifier existingModifier = getModifierByName(newModifier.getModifierName());
     
-    println(modifierMap + " " + bloon.getLayerId());
-    
     if (existingModifier == null) {
-      println("ADD MODIFIER FROM WITH STACK " + newModifier + " " + bloon.getLayerId());
       addModifier(newModifier); 
       return;
     }
@@ -436,7 +430,6 @@ public class Blowback extends BloonModifier {
     // We're going to use the bloon's speed value
     PVector direction = PVector.sub(this.goalPosition, bloon.position).normalize();
     
-    
     if (lastDirection != null) {
       // This means we're snapping back and forth between the goal position
       if (direction.dot(lastDirection) < 0.1) {
@@ -459,7 +452,7 @@ public class Blowback extends BloonModifier {
     }
     
     // Get the position unitsBlownback units back
-    PVector finalPosition = bloon.position;
+    PVector finalPosition = bloon.position.copy();
     float totalDistanceToMove = unitsBlownback;
     
     while (true) {
@@ -485,12 +478,12 @@ public class Blowback extends BloonModifier {
       }
     }
     
-    this.goalPosition = finalPosition; 
+    this.goalPosition = finalPosition.copy(); 
   }
   
-  public void onRemove() {      
-    getBloon().position = goalPosition;
-    getBloon().setSpeedMultiplier(1);
+  public void onRemove() {
+    Bloon bloon = getBloon();
+    bloon.setSpeedMultiplier(1);
   }
   
   public Blowback clone() {
