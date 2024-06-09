@@ -589,6 +589,7 @@ public class ProjectileSpawnAction extends TowerAction {
 
 public class DirectDamageAction extends TowerAction{
   private int damage;
+  private float stunDuration;
   
   public DirectDamageAction(JSONObject actionData){
     super(actionData);
@@ -598,12 +599,20 @@ public class DirectDamageAction extends TowerAction{
   public void setProperties(JSONObject actionData){
     super.setProperties(actionData);
     this.damage = readIntDiff(actionData, "damage", this.damage);
+    this.stunDuration = readFloatDiff(actionData, "stunDuration", this.stunDuration);
   }
   
   public void performAction(Tower tower, ArrayList<Bloon> targetBloons, ArrayList<Bloon> bloons){
     resetCooldown();
     
     for(Bloon bloon: targetBloons){
+      
+      if (this.stunDuration > 0) {
+        Stun stunModifier = new Stun();
+        stunModifier.setDuration(this.stunDuration);
+        bloon.getModifiersList().addModifierWithStack(stunModifier); 
+      }
+      
       bloon.damage(damage);
     }
     

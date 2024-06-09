@@ -579,7 +579,7 @@
             "range": 100000,
             "actions": {
                 "attack": {
-                    "cooldown": 0.45,
+                    "cooldown": 2.25,
                     "type": "DIRECT_DAMAGE",
                     "damage": 2
                 }
@@ -636,7 +636,8 @@
                         "sprite": "towers/moabcrippler.png",
                         "actions": {
                             "attack": {
-                                "damage": "+ 20"
+                                "damage": "+ 20",
+                                "stunDuration": 1
                             }
                         }
                     }

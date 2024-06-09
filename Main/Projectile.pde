@@ -135,6 +135,7 @@ public class Projectile{
            
            float result = bloon.tryDamage((DamageProperties) projectileData);
            
+           // We hit a lead bloon with a sharp projectile or something we can't damage
            if (result == -1.0f) {
              finished = true;
              break;
