@@ -679,9 +679,9 @@
                     "name": "Faster Firing",
                     "upgradeImage": "upgradeIcons/faster.png",
                     "cost": 400,
+                    "description": "Increases the firing speed",
                     "changes": {
                         "sprite": "towers/faster.png",
-                        "description": "Increases the firing speed",
                         "actions": {
                             "attack": {
                                 "cooldown": 1.25
