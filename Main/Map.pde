@@ -69,7 +69,7 @@ public class Map {
   }
   
   public MapSegment getMapSegment(int id) {
-    if (id >= mapSegments.size()) {
+    if (id >= mapSegments.size() || id < 0) {
       return null;
     }
     return mapSegments.get(id);

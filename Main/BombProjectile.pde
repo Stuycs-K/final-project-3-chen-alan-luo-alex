@@ -86,7 +86,7 @@ public class Bomb extends Projectile{
         if (bombData.stunDuration > 0) {
           Stun stunModifier = new Stun();
           stunModifier.setDuration(bombData.stunDuration);
-          bloon.getModifiersList().addModifier(stunModifier); 
+          bloon.getModifiersList().addModifierWithStack(stunModifier); 
         }
         
         bloon.damage((DamageProperties) bombData);

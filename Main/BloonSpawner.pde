@@ -27,6 +27,8 @@ public class BloonSpawner {
       
       if (parent.getModifiersList().hasModifier("blowback")) {
         Bloon newBloon = new Bloon(layerName, startPosition);
+        newBloon.positionId = parent.positionId;
+        
         createdBloonQueue.add(newBloon);
         
         createdBloons.add(newBloon);
