@@ -14,7 +14,8 @@ GuiManager guiManager;
 
 ArrayList<Tower>towers;
 
-
+private PlayButton playButton;
+private ReplayButton replayButton;
 
 void setup(){
   size(1200, 800);
@@ -29,8 +30,17 @@ void setup(){
   fontManager = new FontManager();
   guiManager = new GuiManager();
   
-  game = new Game();
   
+  
+  playButton = new PlayButton(guiManager.getGuiDefinition("playButton"));
+  guiManager.createCustom((GuiBase) playButton);
+  playButton.setVisible(true);
+  
+  replayButton = new ReplayButton(guiManager.getGuiDefinition("replayButton"));
+  guiManager.createCustom((GuiBase) replayButton);
+  replayButton.setVisible(false);
+    
+  game = new Game(playButton, replayButton);
   /*
   JSONObject spawnInformation = new JSONObject();
   spawnInformation.setString("layerName", "Zebra");

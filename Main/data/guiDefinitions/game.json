@@ -157,7 +157,34 @@
         "textColor" : "255 255 255",
         "textXAlignment" : "CENTER",
         "textYAlignment" : "CENTER",
-        "textXOffset": 50,
+        "textXOffset": 100,
+        "textYOffset": 25,
+        "zIndex" : 511111
+    },
+    "endScreenBackground":{
+        "className" : "Frame",
+        "x" : "0",
+        "y" : "0",
+        "sizeX" : 1200,
+        "sizeY" : 800,
+        "backgroundColor" : "0 0 0",
+        "backgroundTransparency" : 1,
+        "zIndex" : 511110
+    },
+    "replayButton":{
+        "className" : "TextButton",
+        "x" : "500",
+        "y" : "375",
+        "sizeX" : 200,
+        "sizeY" : 50,
+        "backgroundColor" :"255 0 0",
+        "backgroundTransparency" : 1,
+        "text" : "Replay",
+        "textSize" : 24,
+        "textColor" : "255 255 255",
+        "textXAlignment" : "CENTER",
+        "textYAlignment" : "CENTER",
+        "textXOffset": 100,
         "textYOffset": 25,
         "zIndex" : 511111
     }
