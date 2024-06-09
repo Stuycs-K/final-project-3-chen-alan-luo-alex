@@ -619,6 +619,7 @@
                     "name": "Full Metal Jacket",
                     "upgradeImage": "upgradeIcons/fullmetaljacket.png",
                     "cost": 300,
+                    "description": "Increases damage by 3",
                     "changes": {
                         "sprite": "towers/fullmetaljacket.png",
                         "actions": {
@@ -634,6 +635,7 @@
                     "cost": 2200,
                     "changes": {
                         "sprite": "towers/fivepoint.png",
+                        "description": "Increases damage again by 3!",
                         "actions": {
                             "attack": {
                                 "damage": "+ 3"
@@ -646,6 +648,7 @@
                     "name": "Deadly Precision",
                     "upgradeImage": "upgradeIcons/deadly.png",
                     "cost": 3400,
+                    "description": "Increases damage again by 10!",
                     "changes": {
                         "sprite": "towers/deadly.png",
                         "actions": {
@@ -661,6 +664,7 @@
                     "cost": 10600,
                     "changes": {
                         "sprite": "towers/moabcrippler.png",
+                        "description": "Increases damage again by 20!",
                         "actions": {
                             "attack": {
                                 "damage": "+ 20",
@@ -677,9 +681,10 @@
                     "cost": 400,
                     "changes": {
                         "sprite": "towers/faster.png",
+                        "description": "Increases the firing speed",
                         "actions": {
                             "attack": {
-                                "cooldown": 0.35
+                                "cooldown": 1.25
                             }
                         }
                         
@@ -689,6 +694,7 @@
                     "name": "Night Vision Goggles",
                     "upgradeImage": "upgradeIcons/nightvis.png",
                     "cost": 300,
+                    "description": "Allows the tower to see camo",
                     "changes": {
                         "sprite": "towers/nightvis.png",
                         "detectCamo": true
@@ -698,11 +704,12 @@
                     "name": "Semi-Automatic Rifle",
                     "upgradeImage": "upgradeIcons/semiauto.png",
                     "cost": 3500,
+                    "description": "much faster firing and higher damage",
                     "changes": {
                         "sprite": "towers/semiauto.png",
                         "actions":{
                             "attack" : {
-                                "cooldown" : 0.15,
+                                "cooldown" : 0.55,
                                 "damage": "+15"
                             }
                         }
