@@ -469,12 +469,16 @@ public class Blowback extends BloonModifier {
         finalPosition = segment.getStart().copy();
         totalDistanceToMove -= distanceToStart;
         
-        bloon.positionId -= 1;
+        int nextPositionId = bloon.positionId - 1;
         
         // Limit bloons to the start of the map
-        if (bloon.positionId < 0) {
+        if (nextPositionId < 0) {
+          finalPosition = game.getMap().getMapSegment(0).getStart();
+          bloon.positionId = 0;
           break;
         }
+        
+        bloon.positionId -= 1;
       }
     }
     
