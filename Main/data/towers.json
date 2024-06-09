@@ -146,7 +146,7 @@
     "NinjaMonkey": {
         "base": {
             "cost": 500,
-            "sprite": "towers/bombshooter.png",
+            "sprite": "towers/ninjaMonkey.png",
             "range": 150,
             "detectCamo": true,
             "actions": {
@@ -161,7 +161,7 @@
                     "damage": 1,
                     "pierce": 2,
                     "speed": 18,
-                    "sprite": "projectiles/dart.png",
+                    "sprite": "projectiles/shuriken.png",
                     "maxDistance": 800
                 }
             }
@@ -173,7 +173,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 300,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/ninjaNinjaDiscipline.png",
                         "actions": {
                             "shurikenAttack": {
                                 "cooldown": "* 0.6"
@@ -187,7 +187,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 350,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/ninjaSharpShurikens.png",
                         "projectiles": {
                             "shuriken": {
                                 "pierce": "+ 2"
@@ -200,7 +200,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 850,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/ninjaDoubleShot.png",
                         "actions": {
                             "shurikenAttack": {
                                 "type": "MULTI_PROJECTILE",
@@ -215,7 +215,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 2750,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/ninjaBloonjitsu.png",
                         "actions": {
                             "shurikenAttack": {
                                 "projectileCount": 5
@@ -230,7 +230,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 250,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/ninjaNinjaDiscipline.png",
                         "projectiles": {
                             "shuriken": {
                                 "type": "SEEKING"
@@ -243,7 +243,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 350,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/ninjaSharpShurikens.png",
                         "projectiles": {
                             "shuriken": {
                                 "blowbackChance": 1
@@ -256,7 +256,7 @@
                     "upgradeImage": "upgradeIcons/bombBiggerBombs.png",
                     "cost": 2950,
                     "changes": {
-                        "sprite": "towers/bombExtraRange.png",
+                        "sprite": "towers/ninjaFlashBomb.png",
                         "actions": {
                             "flashBombAttack": {
                                 "cooldown": 2,
