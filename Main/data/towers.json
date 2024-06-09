@@ -246,7 +246,7 @@
                         "sprite": "towers/ninjaSharpShurikens.png",
                         "projectiles": {
                             "shuriken": {
-                                "blowbackChance": 1
+                                "blowbackChance": 0.15
                             }
                         }
                     }
@@ -267,7 +267,7 @@
                         "projectiles": {
                             "flashBomb": {
                                 "type": "BOMB",
-                                "blowbackChance": 0.3,
+                                "blowbackChance": 0.5,
                                 "damage": 3,
                                 "pierce": 1,
                                 "explosionPierce": 30,
@@ -578,11 +578,10 @@
                 "attack": {
                     "cooldown": 0.45,
                     "type": "DIRECT_DAMAGE",
-                    "damage":2
+                    "damage": 2
                 }
             },
-            "projectiles": {
-            }
+            "projectiles": {}
         },
         "upgrades": {
             "1": [
@@ -593,7 +592,6 @@
                     "changes": {
                         "sprite": "towers/fullmetaljacket.png",
                         "damage": "+ 3"
-  
                     }
                 },
                 {
@@ -612,7 +610,7 @@
                     "cost": 3400,
                     "changes": {
                         "sprite": "towers/deadly.png",
-                        "damage" : "+ 10"
+                        "damage": "+ 10"
                     }
                 },
                 {
@@ -632,7 +630,6 @@
                     "cost": 140,
                     "changes": {
                         "sprite": "towers/longRangeDarts.png"
-        
                     }
                 },
                 {
@@ -641,7 +638,6 @@
                     "cost": 170,
                     "changes": {
                         "sprite": "towers/enhancedEyesight.png"
-                
                     }
                 },
                 {
@@ -650,7 +646,6 @@
                     "cost": 330,
                     "changes": {
                         "sprite": "towers/tripleDarts.png"
-    
                     }
                 }
             ]
