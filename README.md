@@ -54,4 +54,5 @@ Hovering over an upgrade button will enable a tooltip with a short description o
 - At higher waves, the high volumes of bloons and their children will create pretty bad lag. Lag will slow down everything, as simulation is tied to the frame rate.
 - Some towers do not have fourth upgrades on certain paths because those upgrades would either be too big of an endeavour to implement (e.g. Super Monkey's Temple of the Sun God) or involves abilities, which we never planned on creating (e.g. most of the 4th upgrades on path 2).
 - There is no way to pause a wave from spawning, unfortunately.
+- There is a lose screen, but there is no win screen. When you win, the game will freeze, and you have to restart to replay.
 
