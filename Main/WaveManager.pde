@@ -49,7 +49,7 @@ private class WaveSpawn extends Thread {
     }
    
     finishedSpawning = true;
-  }
+  }  
   
   public void run() {
     try {

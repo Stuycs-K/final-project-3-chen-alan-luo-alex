@@ -40,6 +40,8 @@ public class Bloon {
   private long handle;
   private long parentHandle;
   
+  public ArrayList<Integer> parentHistory;
+  
   public Bloon(JSONObject spawnParams) {
     String layerName = spawnParams.getString("layerName");
     
@@ -72,6 +74,7 @@ public class Bloon {
     this.spawnedChildren = false;
     
     this.distanceTraveled = 0;
+    this.parentHistory = new ArrayList<Integer>();
     
     // Assign the unique handle
     this.handle = CURRENT_BLOON_HANDLE;
@@ -95,6 +98,18 @@ public class Bloon {
   
   public long getParentHandle() {
     return parentHandle;
+  }
+  
+  public void setParent(Bloon parent) {
+    this.parentHandle = parent.getParentHandle();
+    if (this.parentHandle == -1) {
+      this.parentHandle = parent.getHandle();
+    }
+      
+    this.parentHistory = new ArrayList<>(parent.parentHistory);
+    this.parentHistory.add(parent.layerId);
+    
+    this.setDistanceTraveled(parent.getDistanceTraveled());
   }
   
   public void setParentHandle(long handle) {

@@ -58,7 +58,7 @@ public class Projectile{
   public int lifetime;
   
   public ProjectileData projectileData;
-  
+    
   public Projectile(PVector origin, PVector goal, ProjectileData data) {
     this.x = origin.x;
     this.y = origin.y;

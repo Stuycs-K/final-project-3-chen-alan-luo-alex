@@ -342,12 +342,17 @@ public class Regrow extends BloonModifier {
     Bloon bloon = getBloon();
     BloonPropertyTable properties = bloon.getProperties();
     
+    ArrayList<Integer> parentNames = bloon.parentHistory;
+    
     if (properties.getLayerName().equals(getCustomProperties().getString("maxLayerName"))) {
+      parentNames.clear();
       return;
     }
     
     if (cooldown >= regrowRate) {
-      bloon.setLayer(properties.getLayerId() + 1);
+      bloon.setLayer(parentNames.get(parentNames.size() - 1));
+      parentNames.remove(parentNames.size() - 1);
+      
       cooldown = 0;
     } else {
       cooldown++;
