@@ -619,6 +619,7 @@
                     "name": "Full Metal Jacket",
                     "upgradeImage": "upgradeIcons/fullmetaljacket.png",
                     "cost": 300,
+                    "description": "Increases damage by 3",
                     "changes": {
                         "sprite": "towers/fullmetaljacket.png",
                         "actions": {
@@ -632,20 +633,21 @@
                     "name": "Point Five Oh",
                     "upgradeImage": "upgradeIcons/pointfive.png",
                     "cost": 2200,
+                    "description": "Increases damage again by 3 again",
                     "changes": {
                         "sprite": "towers/fivepoint.png",
                         "actions": {
                             "attack": {
                                 "damage": "+ 3"
                             }
-                        },
-                        "detectCamo": true
+                        }
                     }
                 },
                 {
                     "name": "Deadly Precision",
                     "upgradeImage": "upgradeIcons/deadly.png",
                     "cost": 3400,
+                    "description": "Increases damage again by 10!",
                     "changes": {
                         "sprite": "towers/deadly.png",
                         "actions": {
@@ -659,6 +661,7 @@
                     "name": "Cripple Moab",
                     "upgradeImage": "upgradeIcons/moabcripple.png",
                     "cost": 10600,
+                    "description": "Increases damage again by 20 and attacks stun MOABs for 1 second",
                     "changes": {
                         "sprite": "towers/moabcrippler.png",
                         "actions": {
@@ -675,20 +678,21 @@
                     "name": "Faster Firing",
                     "upgradeImage": "upgradeIcons/faster.png",
                     "cost": 400,
+                    "description": "Increases firing speed",
                     "changes": {
                         "sprite": "towers/faster.png",
                         "actions": {
                             "attack": {
-                                "cooldown": 0.35
+                                "cooldown": "* 0.6"
                             }
                         }
-                        
                     }
                 },
                 {
                     "name": "Night Vision Goggles",
                     "upgradeImage": "upgradeIcons/nightvis.png",
                     "cost": 300,
+                    "description": "Allows the tower to see camo",
                     "changes": {
                         "sprite": "towers/nightvis.png",
                         "detectCamo": true
@@ -698,12 +702,13 @@
                     "name": "Semi-Automatic Rifle",
                     "upgradeImage": "upgradeIcons/semiauto.png",
                     "cost": 3500,
+                    "description": "Much faster firing",
                     "changes": {
                         "sprite": "towers/semiauto.png",
-                        "actions":{
-                            "attack" : {
-                                "cooldown" : 0.15,
-                                "damage": "+15"
+                        "actions": {
+                            "attack": {
+                                "cooldown": "* 0.25",
+                                "damage": "+ 1"
                             }
                         }
                     }

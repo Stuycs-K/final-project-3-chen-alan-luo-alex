@@ -132,6 +132,9 @@ public class BloonSpawnMenu {
       
       // Either change sprites to camo regrow or just regrow sprites
       boolean isRegrow = !modifiers.isNull("regrow");
+      if (isRegrow == true) {
+        isRegrow = modifiers.getBoolean("regrow"); 
+      }
       
       PImage spriteToApply;
       
@@ -165,6 +168,9 @@ public class BloonSpawnMenu {
       
       // Either change sprites to camo regrow or just regrow sprites
       boolean isCamo = !modifiers.isNull("camo");
+      if (isCamo == true) {
+        isCamo = modifiers.getBoolean("camo"); 
+      }
       
       PImage spriteToApply;
       
