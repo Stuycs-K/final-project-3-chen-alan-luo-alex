@@ -91,6 +91,11 @@
 - Add skip wave, start wave, remove bloons buttons to cheat menu
 - Improve tower placement and selection
 
+## 6/9/2024
+- Fix various bugs with tower upgrades
+- Add tower upgrade descriptions for UI
+- Add missing images for upgrade icons and tower sprites
+
 ## Alex Luo
 
 ### 5/22/2024
@@ -166,7 +171,7 @@
 ### 6/9/2024
  - added snipermonkey class
  - added it's respective upgrades and PNGS
-
+ - created the video presentation
 
 
  
